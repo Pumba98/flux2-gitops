@@ -1,0 +1,30 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: metallb-source
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://github.com/metallb/metallb.git
+  ref:
+    # renovate: registryUrl=https://metallb.github.io/metallb chart=metallb
+    tag: 0.13.7
+  ignore: |
+    # exclude all
+    /*
+    # include deploy crds dir
+    !/config/crd/*
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: metallb-crds
+  namespace: flux-system
+spec:
+  interval: 15m
+  prune: false
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: metallb-source

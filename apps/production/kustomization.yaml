@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../all/namespaces.yaml
+- ../all/authelia
+- ../all/cert-exporter
+- ../all/cert-manager
+- ../all/csi-driver-smb
+- ../all/descheduler
+- ../all/external-dns
+- ../all/flux-system
+- ../all/goldilocks
+- ../all/homer
+- ../all/ingress-nginx
+- ../all/jd2
+- ../all/kube-prometheus-stack
+- ../all/kube-vip
+- ../all/kured
+- ../all/loki
+- ../all/longhorn
+- ../all/metallb
+- ../all/metrics-server
+- ../all/minio
+- ../all/paperless-ngx
+- ../all/pod-gateway-vpn
+- ../all/rancher
+- ../all/system-upgrade-controller

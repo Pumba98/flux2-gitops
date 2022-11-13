@@ -1,0 +1,108 @@
+name: Create Helm Diff
+
+on: # yamllint disable-line rule:truthy
+  pull_request:
+    branches:
+    - main
+    paths:
+    - "apps/**.yaml"
+
+env:
+  conf_live_branch: main
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-20.04
+    outputs:
+      yaml_files: "${{ steps.filter.outputs.yaml_files }}"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Get changes
+      uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        list-files: json
+        filters: |
+          yaml:
+            - added|modified: "apps/**/*.yaml"
+
+  helm:
+    name: Diff HelmReleases
+    runs-on: ubuntu-20.04
+    if: ${{ needs.changes.outputs.yaml_files != '[]' }}
+    needs: changes
+    strategy:
+      matrix:
+        file: ${{ fromJson(needs.changes.outputs.yaml_files ) }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Checkout live branch
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ env.conf_live_branch }}
+        path: live
+    - name: Setup Kubernetes Tools
+      uses: yokawasa/action-setup-kube-tools@v0.9.2
+      with:
+        setup-tools: |
+          helmv3
+          yq
+    - name: Create diff
+      id: diff
+      run: |
+        hr_chart=$(yq e .spec.chart.spec.chart ${{ matrix.file }})
+        hr_chart_source=$(yq e .spec.chart.spec.sourceRef.name ${{ matrix.file }})
+        for file in $(find charts -name '*.yaml'); do
+            if [[ $(yq e .metadata.name ${file}) != ${hr_chart_source} ]]; then continue; fi
+            hr_url=$(yq e .spec.url ${file}); break;
+        done
+        hr_live_version=$(yq e .spec.chart.spec.version live/${{ matrix.file }})
+        hr_pr_version=$(yq e .spec.chart.spec.version ${{ matrix.file }})
+
+        if [ "$hr_live_version" = "$hr_pr_version" ]; then
+          echo "::set-output name=message::$(echo "$message")"
+          exit 0
+        fi
+
+        helm repo add pr "$hr_url"
+        chart_live=$(helm show chart pr/"$hr_chart" --version "$hr_live_version" || true)
+        chart_pr=$(helm show chart pr/"$hr_chart" --version "$hr_pr_version" || true)
+        chart_diff=$((diff -u <(echo "$chart_live") <(echo "$chart_pr") || true) | tail +3)
+        values_live=$(helm show values pr/"$hr_chart" --version "$hr_live_version" || true)
+        values_pr=$(helm show values pr/"$hr_chart" --version "$hr_pr_version" || true)
+        values_diff=$((diff -u <(echo "$values_live") <(echo "$values_pr") || true) | tail +3)
+
+        message="**Helm Diff**"$'\n'$'\n'
+        message="$message"$'\n'"\`Chart.yaml\`:"$'\n'$'\n'
+        if [ -z "$chart_diff" ]; then
+            message="$message"'```'$'\n'"No changes in detected in Chart.yaml"$'\n''```'
+        else
+            message="$message"'```diff'$'\n'"$chart_diff"$'\n''```'
+        fi
+        message="$message"$'\n'$'\n'$'\n'"\`Values.yaml\`:"$'\n'$'\n'
+        if [ -z "$values_diff" ]; then
+            message="$message"'```'$'\n'"No changes in detected in Values.yaml"$'\n''```'
+        else
+            message="$message"'```diff'$'\n'"$values_diff"$'\n''```'
+        fi
+        echo "::set-output name=message::$(echo "$message" | jq --raw-input --slurp)"
+
+    - name: Find Comment
+      uses: peter-evans/find-comment@v2
+      id: fc
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: Helm Diff
+
+    - name: Create or update comment
+      uses: peter-evans/create-or-update-comment@v2
+      if: "${{ steps.diff.outputs.message != '' }}"
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body: "${{ fromJSON(steps.diff.outputs.message) }}"
+        edit-mode: replace

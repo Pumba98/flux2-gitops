@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+  namespace: flux-system
+data:
+  LB_IP_NGINX_INGRESS: 192.168.100.210
+  KUBEVIP_ADDRESS: 192.168.100.200
