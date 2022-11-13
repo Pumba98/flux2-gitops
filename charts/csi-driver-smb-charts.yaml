@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: csi-driver-smb-charts
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+  timeout: 2m

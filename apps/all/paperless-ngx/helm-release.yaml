@@ -1,0 +1,69 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: paperless-ngx
+  namespace: selfhosted
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.2.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  values:
+    image:
+      repository: ghcr.io/paperless-ngx/paperless-ngx
+      tag: 1.9.2
+    env:
+      COMPOSE_PROJECT_NAME: paperless-ngx
+      PAPERLESS_TIME_ZONE: Europe/Berlin
+      PAPERLESS_URL: http{{if ne ( len .Values.ingress.main.tls ) 0 }}s{{end}}://{{ (first .Values.ingress.main.hosts).host }}
+      PAPERLESS_DBHOST: paperless-ngx-postgresql
+      PAPERLESS_DBNAME: paperless-ngx
+      PAPERLESS_DBUSER: paperless-ngx
+      PAPERLESS_DBPASS: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
+      PAPERLESS_REDIS: redis://paperless-ngx-redis-master:6379
+      USERMAP_UID: 33
+      USERMAP_GID: 33
+      PAPERLESS_CONSUMPTION_DIR: /paperless/consume
+      PAPERLESS_DATA_DIR: /paperless/data
+      PAPERLESS_MEDIA_ROOT: /paperless/media
+      PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
+      PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: true
+      PAPERLESS_CONSUMER_POLLING: 60
+      PAPERLESS_CONSUMER_DELETE_DUPLICATES: true
+      PAPERLESS_CONSUMER_RECURSIVE: true
+      PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: true
+      PAPERLESS_OCR_LANGUAGE: deu+eng
+      PAPERLESS_SECRET_KEY: ${SECRET_PAPERLESS_NGX_SECRET_KEY}
+    service:
+      main:
+        ports:
+          http:
+            port: 8000
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
+          external-dns/is-public: "true"
+          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+        hosts:
+          - host: paperless.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - paperless.${SECRET_DOMAIN}
+    persistence:
+      data:
+        enabled: true
+        mountPath: /paperless
+        existingClaim: paperless-ngx-data

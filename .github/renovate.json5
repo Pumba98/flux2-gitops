@@ -1,0 +1,88 @@
+{
+  "enabled": true,
+  "semanticCommits": "enabled",
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Renovate Dashboard",
+  "suppressNotifications": ["prIgnoreNotification"],
+  "rebaseWhen": "behind-base-branch",
+  "flux": {
+    "fileMatch": [ "^[^\\.]*\\.ya?ml$" ]
+  },
+  "helm-values": {
+    "fileMatch": [ "^apps/[^\\.]*\\.ya?ml$" ]
+  },
+  "kubernetes": {
+    "fileMatch": [ "^apps/[^\\.]*\\.ya?ml$" ]
+  },
+  "regexManagers": [
+    // regexManager to read and process k3s Releases
+    {
+      "fileMatch": [ "^[^\\.]*\\.ya?ml$", "README.md" ],
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>.*?)\n *version: (?<currentValue>.*)\n",
+        "datasource=(?<datasource>\\S+) depName=(?<depName>.*?)\"\n.*k8s\-(?<currentValue>.*)\-orange",
+        "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
+    },
+  ],
+  "packageRules": [
+    {
+      "description": "Disable kubernetes-api",
+      "matchManagers": ["kubernetes"],
+      "matchDatasources": ["kubernetes-api"],
+      "enabled": false
+    },
+    // setup datasources
+    {
+      "matchDatasources": ["helm"],
+      "separateMinorPatch": true,
+      "ignoreDeprecated": true
+    },
+    // global docker datasource settings
+    {
+      "matchDatasources": ["docker"],
+      "enabled": true,
+      "commitMessageTopic": "container image {{depName}}",
+      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
+      "matchUpdateTypes": ["major", "minor", "patch"],
+    },
+    // add labels according to package and update types
+    {
+      "matchUpdateTypes": ["major"],
+      "labels": ["dep/major"]
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "labels": ["dep/minor"]
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "labels": ["dep/patch"]
+    },
+    {
+      "matchDatasources": ["helm"],
+      "addLabels": ["renovate/helm"]
+    },
+    {
+      "matchDatasources": ["docker"],
+      "addLabels": ["renovate/image"]
+    },
+    {
+      "matchPackageNames": ["fluxcd/flux2"],
+      "addLabels": ["renovate/flux2"]
+    },
+    {
+      "matchPackageNames": ["k3s-io/k3s"],
+      "addLabels": ["renovate/k3s"],
+      "separateMinorPatch": true,
+      "separateMultipleMajor": true
+    },
+    // custom version schemes
+    {
+      "matchDatasources": ["docker"],
+      "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z(-(?<compatibility>.*))?$",
+      "matchPackageNames": ["minio/minio"],
+    },
+  ]
+}

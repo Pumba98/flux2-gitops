@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: cert-manager-prometheus-servicemonitor
+  namespace: cert-manager
+  labels:
+    name: cert-manager-prometheus-servicemonitor
+spec:
+  selector:
+    matchLabels:
+      app: cert-manager
+  namespaceSelector:
+    matchNames:
+    - cert-manager
+  endpoints:
+  - targetPort: 9402

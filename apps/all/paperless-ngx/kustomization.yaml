@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- helm-release.yaml
+- paperless-ngx-pvc.yaml
+- postgresql-helm-release.yaml
+- paperless-ngx-postgresql-pvc.yaml
+- redis-helm-release.yaml
+- paperless-ngx-redis-pvc.yaml

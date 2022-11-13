@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: paperless-ngx-static-pv
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: smb
+  mountOptions:
+    - dir_mode=0770
+    - file_mode=0660
+    - uid=33
+    - gid=33
+  csi:
+    driver: smb.csi.k8s.io
+    volumeHandle: paperless-ngx-smb-volume
+    volumeAttributes:
+      source: "${SECRET_CIFS_SHARE}/paperless-ngx"
+    nodeStageSecretRef:
+      name: smb-secrets
+      namespace: kube-system
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-ngx-data
+  namespace: selfhosted
+spec:
+  volumeName: paperless-ngx-static-pv
+  storageClassName: smb
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
