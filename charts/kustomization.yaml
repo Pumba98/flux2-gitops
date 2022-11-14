@@ -21,4 +21,3 @@ resources:
 - minio-charts.yaml
 - prometheus-charts.yaml
 - rancher-latest-charts.yaml
-- truecharts-charts.yaml
