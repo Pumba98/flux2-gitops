@@ -15,11 +15,14 @@ spec:
         name: joe-elliott-charts
         namespace: flux-system
   values:
-    image:
-      args:
-        # - --secrets-annotation-selector=cert-manager.io/certificate-name
-        - --secrets-include-glob=*.crt
-        - --logtostderr
+    certManager:
+      image:
+        args:
+          # - --secrets-annotation-selector=cert-manager.io/certificate-name
+          - --secrets-include-glob=*.crt
+          - --logtostderr
+          - --include-cert-glob=*
+          - --include-kubeconfig-glob=*
     service:
       serviceMonitor:
         create: true
