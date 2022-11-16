@@ -2,9 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: joe-elliott-charts
+  name: enix-charts
   namespace: flux-system
 spec:
   interval: 30m
-  url: https://joe-elliott.github.io/cert-exporter
+  url: https://charts.enix.io
   timeout: 2m

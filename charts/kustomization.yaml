@@ -8,12 +8,12 @@ resources:
 - csi-driver-smb-charts.yaml
 - descheduler-charts.yaml
 - dysnix-charts.yaml
+- enix-charts.yaml
 - external-dns-charts.yaml
 - fairwinds-charts.yaml
 - grafana-charts.yaml
 - ingress-nginx-charts.yaml
 - jetstack-charts.yaml
-- joe-elliott-charts.yaml
 - kubereboot-charts.yaml
 - longhorn-charts.yaml
 - metallb-charts.yaml

@@ -103,6 +103,8 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/default
+      plugins:
+        - grafana-piechart-panel
       dashboards:
         default:
           # # Ref: https://grafana.com/grafana/dashboards/13502
@@ -118,6 +120,10 @@ spec:
             datasource: Prometheus
           ingress-nginx:
             gnetId: 9614
+            revision: 1
+            datasource: Prometheus
+          certificate-exporter:
+            gnetId: 13922
             revision: 1
             datasource: Prometheus
           cert-manager:
