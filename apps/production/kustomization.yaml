@@ -25,3 +25,4 @@ resources:
 - ../all/pod-gateway-vpn
 - ../all/rancher
 - ../all/system-upgrade-controller
+- ../all/weave-gitops
