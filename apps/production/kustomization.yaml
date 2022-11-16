@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - ../all/namespaces.yaml
 - ../all/authelia
-- ../all/cert-exporter
+- ../all/certificate-exporter
 - ../all/cert-manager
 - ../all/csi-driver-smb
 - ../all/descheduler
