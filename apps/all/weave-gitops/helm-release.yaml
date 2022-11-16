@@ -1,0 +1,37 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: weave-gitops
+  namespace: flux-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: weave-gitops
+      version: 4.0.7
+      sourceRef:
+        kind: HelmRepository
+        name: weave-gitops-charts
+        namespace: flux-system
+  values:
+    adminUser:
+      create: true
+      username: admin
+      passwordHash: $2a$12$HQu99eymhRdEq9qZqqXqcewgY4HoRGPhxtlA5/l4E34p3lt1VNHz6
+    ingress:
+      enabled: true
+      className: nginx
+      annotations:
+        external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
+        external-dns/is-public: "true"
+        nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
+        nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+      hosts:
+        - host: gitops.${SECRET_DOMAIN}
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - gitops.${SECRET_DOMAIN}
