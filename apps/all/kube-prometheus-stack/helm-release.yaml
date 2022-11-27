@@ -34,7 +34,8 @@ spec:
       enabled: false
     alertmanager:
       image:
-        repository: quay.io/prometheus/alertmanager
+        registry: quay.io
+        repository: prometheus/alertmanager
         tag: v0.24.0
       ingress:
         enabled: true
@@ -163,7 +164,8 @@ spec:
           - "grafana.${SECRET_DOMAIN}"
     prometheus:
       image:
-        repository: quay.io/prometheus/prometheus
+        registry: quay.io
+        repository: prometheus/prometheus
         tag: v2.40.3
       ingress:
         enabled: true
