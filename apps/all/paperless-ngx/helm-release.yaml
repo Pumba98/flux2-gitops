@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/paperless-ngx/paperless-ngx
-      tag: 1.9.2
+      tag: 1.10.0
     env:
       COMPOSE_PROJECT_NAME: paperless-ngx
       PAPERLESS_TIME_ZONE: Europe/Berlin
