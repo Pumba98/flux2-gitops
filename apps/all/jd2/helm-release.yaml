@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: jlesage/jdownloader-2
-      tag: v22.11.1
+      tag: v22.12.1
       pullPolicy: IfNotPresent
     service:
       main:
