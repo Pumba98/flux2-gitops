@@ -16,9 +16,6 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    image:
-      repository: ghcr.io/kubereboot/kured
-      tag: 1.11.0
     updateStrategy: RollingUpdate
     configuration:
       prometheusUrl: "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
