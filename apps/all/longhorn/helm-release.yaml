@@ -37,6 +37,7 @@ spec:
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       backupTarget: s3://longhorn@us-east-1/
       backupTargetCredentialSecret: longhorn-system-secrets
+      restoreVolumeRecurringJobs: true
       defaultLonghornStaticStorageClass: longhorn-backup
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       orphanAutoDeletion: true
