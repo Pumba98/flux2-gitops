@@ -21,6 +21,7 @@
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>.*?)\n *version: (?<currentValue>.*)\n",
         "datasource=(?<datasource>\\S+) depName=(?<depName>.*?)\"\n.*k8s\-(?<currentValue>.*)\-orange",
+        "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
         "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/",
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
