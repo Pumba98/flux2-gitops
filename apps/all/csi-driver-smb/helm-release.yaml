@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: csi-driver-smb
-      version: v1.9.0
+      version: v1.10.0
       sourceRef:
         kind: HelmRepository
         name: csi-driver-smb-charts
