@@ -22,14 +22,28 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: ingress-nginx-configs
+  name: ingress-nginx-certs
   namespace: flux-system
 spec:
-  path: ./apps/all/ingress-nginx/configs
+  path: ./apps/all/ingress-nginx/certs
   interval: 10m
   prune: true
   dependsOn:
     - name: cert-manager-app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: ingress-nginx-monitoring
+  namespace: flux-system
+spec:
+  path: ./apps/all/ingress-nginx/monitoring
+  interval: 10m
+  prune: true
+  dependsOn:
     - name: kube-prometheus-stack-app
   sourceRef:
     kind: GitRepository
