@@ -4,5 +4,3 @@ resources:
 - namespace.yaml
 - helm-release.yaml
 - secret.sops.yaml
-- service-monitor.yaml
-- prometheus-rules.yaml
