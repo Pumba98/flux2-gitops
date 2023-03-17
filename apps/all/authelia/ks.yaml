@@ -9,7 +9,7 @@ spec:
   interval: 10m
   prune: true
   dependsOn:
-    - name: nginx-ingress-app
+    - name: ingress-nginx-app
     - name: longhorn-app
     - name: kube-prometheus-stack-app
   sourceRef:

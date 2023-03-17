@@ -28,6 +28,7 @@ spec:
   prune: true
   dependsOn:
     - name: cert-manager-app
+    - name: kube-prometheus-stack-app
   sourceRef:
     kind: GitRepository
     name: flux-system
