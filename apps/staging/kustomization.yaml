@@ -29,4 +29,4 @@ resources:
 
 patchesStrategicMerge:
 - longhorn/ks.yaml
-- ingress-nginx/wildcard-certificate.yaml
+- ingress-nginx/ks.yaml
