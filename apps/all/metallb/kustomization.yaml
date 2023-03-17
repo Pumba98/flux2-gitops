@@ -1,33 +1,4 @@
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-metadata:
-  name: metallb-app
-  namespace: flux-system
-spec:
-  path: ./apps/all/metallb/app
-  interval: 10m
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: metallb
-      namespace: metallb-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: metallb-configs
-  namespace: flux-system
-spec:
-  path: ./apps/all/metallb/configs
-  interval: 10m
-  prune: true
-  dependsOn:
-    - name: metallb-app
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
+resources:
+- metallb.yaml
