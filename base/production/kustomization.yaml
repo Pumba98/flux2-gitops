@@ -6,5 +6,4 @@ resources:
 - configs.yaml
 - ../flux-system
 - ../../charts
-- crds.yaml
 - apps.yaml

@@ -15,5 +15,3 @@ spec:
         name: metallb-charts
         namespace: flux-system
   values:
-    crds:
-      enabled: false

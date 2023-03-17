@@ -1,10 +1,33 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
-resources:
-- namespace.yaml
-- helm-release.yaml
-- longhorn-system-secrets.sops.yaml
-- storageclass.yaml
-- recurringjobs-release.yaml
-- service-monitor.yaml
-- prometheus-rules.yaml
+metadata:
+  name: longhorn-app
+  namespace: flux-system
+spec:
+  path: ./apps/all/longhorn/app
+  interval: 10m
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: longhorn
+      namespace: longhorn-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: longhorn-recurring-jobs
+  namespace: flux-system
+spec:
+  path: ./apps/all/longhorn/recurring-jobs
+  interval: 10m
+  prune: true
+  dependsOn:
+    - name: longhorn-app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system

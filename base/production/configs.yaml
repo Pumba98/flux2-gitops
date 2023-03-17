@@ -5,8 +5,8 @@ metadata:
   name: configs
   namespace: flux-system
 spec:
-  interval: 10m0s
   path: ./configs/production
+  interval: 10m
   prune: true
   sourceRef:
     kind: GitRepository

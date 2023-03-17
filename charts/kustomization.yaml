@@ -7,7 +7,6 @@ resources:
 - bjw-s-charts.yaml
 - csi-driver-smb-charts.yaml
 - descheduler-charts.yaml
-- dysnix-charts.yaml
 - enix-charts.yaml
 - external-dns-charts.yaml
 - fairwinds-charts.yaml

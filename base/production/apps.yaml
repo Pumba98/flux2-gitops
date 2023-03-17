@@ -5,10 +5,8 @@ metadata:
   name: apps
   namespace: flux-system
 spec:
-  interval: 10m0s
-  dependsOn:
-  - name: crds
   path: ./apps/production
+  interval: 10m
   prune: true
   sourceRef:
     kind: GitRepository
