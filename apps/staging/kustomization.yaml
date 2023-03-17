@@ -28,6 +28,5 @@ resources:
 - ../all/weave-gitops
 
 patchesStrategicMerge:
-- longhorn/helm-release.yaml
-- longhorn/storageclass.yaml
+- longhorn/longhorn.yaml
 - ingress-nginx/wildcard-certificate.yaml
