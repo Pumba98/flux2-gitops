@@ -28,5 +28,5 @@ resources:
 - ../all/weave-gitops
 
 patchesStrategicMerge:
-- longhorn/longhorn.yaml
+- longhorn/ks.yaml
 - ingress-nginx/wildcard-certificate.yaml

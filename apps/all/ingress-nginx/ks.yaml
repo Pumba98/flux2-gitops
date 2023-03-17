@@ -2,32 +2,35 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: longhorn-app
+  name: ingress-nginx-app
   namespace: flux-system
 spec:
-  path: ./apps/all/longhorn/app
+  path: ./apps/all/ingress-nginx/app
   interval: 10m
   prune: true
+  dependsOn:
+    - name: metallb-app
   sourceRef:
     kind: GitRepository
     name: flux-system
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: longhorn
-      namespace: longhorn-system
+      name: ingress-nginx
+      namespace: networking
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: longhorn-recurring-jobs
+  name: ingress-nginx-configs
   namespace: flux-system
 spec:
-  path: ./apps/all/longhorn/recurring-jobs
+  path: ./apps/all/ingress-nginx/configs
   interval: 10m
   prune: true
   dependsOn:
-    - name: longhorn-app
+    - name: cert-manager-app
+    - name: kube-prometheus-stack-app
   sourceRef:
     kind: GitRepository
     name: flux-system
