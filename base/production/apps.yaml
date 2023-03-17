@@ -26,3 +26,28 @@ spec:
       name: shared-secrets
     - kind: Secret
       name: cluster-secrets
+  patches:
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+        kind: Kustomization
+        metadata:
+          name: name
+        spec:
+          decryption:
+            provider: sops
+            secretRef:
+              name: sops-gpg
+          postBuild:
+            substitute: {}
+            substituteFrom:
+            - kind: ConfigMap
+              name: shared-settings
+            - kind: ConfigMap
+              name: cluster-settings
+            - kind: Secret
+              name: shared-secrets
+            - kind: Secret
+              name: cluster-secrets
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
