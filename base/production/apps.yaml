@@ -8,6 +8,8 @@ spec:
   path: ./apps/production
   interval: 10m
   prune: true
+  dependsOn:
+    - name: configs
   sourceRef:
     kind: GitRepository
     name: flux-system
