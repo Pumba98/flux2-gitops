@@ -1,0 +1,32 @@
+{
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major"],
+      "labels": ["dep/major"]
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "labels": ["dep/minor"]
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "labels": ["dep/patch"]
+    },
+    {
+      "matchDatasources": ["helm"],
+      "addLabels": ["renovate/helm"]
+    },
+    {
+      "matchDatasources": ["docker"],
+      "addLabels": ["renovate/image"]
+    },
+    {
+      "matchPackageNames": ["fluxcd/flux2"],
+      "addLabels": ["renovate/flux2"]
+    },
+    {
+      "matchPackageNames": ["k3s-io/k3s"],
+      "addLabels": ["renovate/k3s"]
+    },
+  ]
+}
