@@ -1,0 +1,22 @@
+---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: k3s-server
+spec:
+  # renovate: datasource=github-releases depName=k3s-io/k3s
+  version: v1.24.11+k3s1
+  concurrency: 1
+  serviceAccountName: system-upgrade
+  nodeSelector:
+    matchExpressions:
+    - key: node-role.kubernetes.io/master
+      operator: In
+      values:
+      - "true"
+  tolerations:
+  - key: CriticalAddonsOnly
+    operator: Exists
+  cordon: true
+  upgrade:
+    image: rancher/k3s-upgrade

@@ -1,0 +1,35 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: minio
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: minio
+      version: 4.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: minio-charts
+        namespace: flux-system
+  values:
+    rootUser: "${SECRET_MINIO_ACCESSKEY}"
+    rootPassword: "${SECRET_MINIO_SECRETKEY}"
+    mode: standalone
+    replicas: 1
+    resources:
+      requests:
+        memory: null
+    persistence:
+      enabled: true
+      existingClaim: minio-data
+    consoleIngress:
+      enabled: false
+      ingressClassName: nginx
+      path: /
+      hosts:
+        - minio.${SECRET_DOMAIN}
+      tls:
+        - hosts:
+            - minio.${SECRET_DOMAIN}

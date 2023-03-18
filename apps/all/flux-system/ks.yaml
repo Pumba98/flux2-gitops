@@ -1,0 +1,30 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: flux-system-configs
+  namespace: flux-system
+spec:
+  path: ./apps/all/flux-system/configs
+  targetNamespace: flux-system
+  interval: 10m
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: flux-system-monitoring
+  namespace: flux-system
+spec:
+  path: ./apps/all/flux-system/monitoring
+  targetNamespace: flux-system
+  interval: 10m
+  prune: true
+  dependsOn:
+    - name: kube-prometheus-stack-app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system

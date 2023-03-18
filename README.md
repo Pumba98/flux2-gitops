@@ -22,8 +22,7 @@ The Git repository contains the following directories:
 │  ├─📁 flux-system  # flux & gitops operator
 │  └─📁 production   # flux configuration per cluster
 ├─📁 charts          # helm chart repos
-├─📁 config          # configs per cluster
-└─📁 crds            # custom resources required by apps
+└─📁 config          # configs per cluster
 ```
 
 ## :computer:&nbsp; Software
