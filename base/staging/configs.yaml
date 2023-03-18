@@ -5,8 +5,9 @@ metadata:
   name: configs
   namespace: flux-system
 spec:
-  interval: 10m0s
   path: ./configs/staging
+  targetNamespace: flux-system
+  interval: 10m
   prune: true
   sourceRef:
     kind: GitRepository

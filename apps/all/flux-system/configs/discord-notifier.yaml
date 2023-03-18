@@ -1,0 +1,39 @@
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta2
+kind: Provider
+metadata:
+  name: discord
+spec:
+  type: discord
+  username: Flux
+  channel: flux
+  secretRef:
+    name: discord-webhook-secret
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta2
+kind: Alert
+metadata:
+  name: home-cluster
+spec:
+  providerRef:
+    name: discord
+  eventSeverity: info
+  eventSources:
+    - kind: GitRepository
+      name: '*'
+    # - kind: Kustomization
+    #   name: '*'
+  suspend: false
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta2
+kind: Alert
+metadata:
+  name: helmreleases
+spec:
+  providerRef:
+    name: discord
+  eventSeverity: info
+  eventSources:
+    - kind: HelmRelease
+      name: '*'
+  suspend: false

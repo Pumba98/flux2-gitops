@@ -1,0 +1,14 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: kube-vip-app
+  namespace: flux-system
+spec:
+  path: ./apps/all/kube-vip/app
+  targetNamespace: kube-system
+  interval: 10m
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system

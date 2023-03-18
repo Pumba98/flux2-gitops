@@ -1,0 +1,19 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: charts
+  namespace: flux-system
+spec:
+  path: ./charts
+  targetNamespace: flux-system
+  interval: 10m
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  validation: client
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg

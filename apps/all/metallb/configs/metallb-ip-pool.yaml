@@ -1,0 +1,8 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: l2-pool
+spec:
+  addresses:
+  - "${LB_IP_NGINX_INGRESS}/32"
