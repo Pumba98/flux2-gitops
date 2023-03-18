@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./configs/production
+  targetNamespace: flux-system
   interval: 10m
   prune: true
   sourceRef:

@@ -6,10 +6,12 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/staging
+  targetNamespace: flux-system
   interval: 10m
   prune: true
   dependsOn:
     - name: configs
+    - name: charts
   sourceRef:
     kind: GitRepository
     name: flux-system
