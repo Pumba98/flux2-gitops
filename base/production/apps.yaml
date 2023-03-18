@@ -6,7 +6,6 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/production
-  targetNamespace: flux-system
   interval: 10m
   prune: true
   dependsOn:
