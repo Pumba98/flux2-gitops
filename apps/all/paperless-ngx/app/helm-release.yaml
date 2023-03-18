@@ -13,6 +13,9 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
+  dependsOn:
+    - name: paperless-ngx-redis
+    - name: paperless-ngx-postgresql
   values:
     image:
       repository: ghcr.io/paperless-ngx/paperless-ngx
