@@ -6,6 +6,7 @@
     ":rebaseStalePrs",
     ":separateMultipleMajorReleases",
     ":separatePatchReleases",
+    "github>Pumba98/flux2-gitops//.github/renovate/commitMessage.json5",
     "github>Pumba98/flux2-gitops//.github/renovate/labels.json5"
   ],
   "dependencyDashboardTitle": "Renovate Dashboard",
