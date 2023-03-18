@@ -89,6 +89,7 @@ spec:
           - homer.${SECRET_DOMAIN}
           - prometheus.${SECRET_DOMAIN}
           - alert-manager.${SECRET_DOMAIN}
+          - goldilocks.${SECRET_DOMAIN}
       session:
         name: authelia_session
         same_site: lax
@@ -113,6 +114,7 @@ spec:
         disable_startup_check: true
         smtp:
           enabled: true
+          enabledSecret: true
           host: smtp.fastmail.com
           port: 465
           username: mail@${SECRET_DOMAIN}
