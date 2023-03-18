@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/weave-gitops/app
+  targetNamespace: flux-system
   interval: 10m
   prune: true
   dependsOn:

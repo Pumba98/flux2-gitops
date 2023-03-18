@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/rancher/app
+  targetNamespace: cattle-system
   interval: 10m
   prune: true
   dependsOn:

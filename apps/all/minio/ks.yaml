@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/minio/app
+  targetNamespace: selfhosted
   interval: 10m
   prune: true
   dependsOn:

@@ -3,7 +3,6 @@ apiVersion: longhorn.io/v1beta2
 kind: RecurringJob
 metadata:
   name: snapshot-6h
-  namespace: longhorn-system
 spec:
   name: snapshot-6h
   cron: "0 */6 * * *"

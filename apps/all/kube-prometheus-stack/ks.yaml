@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/kube-prometheus-stack/app
+  targetNamespace: monitoring
   interval: 10m
   prune: true
   dependsOn:
@@ -26,6 +27,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/kube-prometheus-stack/prometheus-rules
+  targetNamespace: monitoring
   interval: 10m
   prune: true
   dependsOn:

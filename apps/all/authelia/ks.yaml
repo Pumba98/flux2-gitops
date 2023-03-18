@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/authelia/app
+  targetNamespace: networking
   interval: 10m
   prune: true
   dependsOn:

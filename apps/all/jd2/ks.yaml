@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/jd2/app
+  targetNamespace: vpn
   interval: 10m
   prune: true
   dependsOn:
@@ -20,4 +21,4 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: jd2
-      namespace: selfhosted
+      namespace: vpn

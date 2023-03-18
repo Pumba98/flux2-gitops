@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/external-dns/app
+  targetNamespace: networking
   interval: 10m
   prune: true
   sourceRef:

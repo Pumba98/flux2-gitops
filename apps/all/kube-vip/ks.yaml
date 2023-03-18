@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/kube-vip/app
+  targetNamespace: kube-system
   interval: 10m
   prune: true
   sourceRef:

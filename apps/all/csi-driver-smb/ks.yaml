@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/csi-driver-smb/app
+  targetNamespace: kube-system
   interval: 10m
   prune: true
   sourceRef:

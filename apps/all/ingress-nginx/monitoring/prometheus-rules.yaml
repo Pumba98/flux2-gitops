@@ -3,7 +3,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: ingress-nginx
-  namespace: networking
 spec:
   groups:
     - name: nginx

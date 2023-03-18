@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/cert-manager/app
+  targetNamespace: cert-manager
   interval: 10m
   prune: true
   sourceRef:
@@ -24,6 +25,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/cert-manager/issuers
+  targetNamespace: cert-manager
   interval: 10m
   prune: true
   dependsOn:
@@ -39,6 +41,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/cert-manager/monitoring
+  targetNamespace: cert-manager
   interval: 10m
   prune: true
   dependsOn:

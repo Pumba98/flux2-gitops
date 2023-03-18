@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/pod-gateway-vpn/app
+  targetNamespace: networking
   interval: 10m
   prune: true
   dependsOn:

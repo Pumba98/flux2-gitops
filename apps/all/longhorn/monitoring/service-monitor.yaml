@@ -1,16 +1,15 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: ingress-nginx-prometheus-servicemonitor
+  name: longhorn-prometheus-servicemonitor
   labels:
     name: longhorn-prometheus-servicemonitor
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: ingress-nginx
+      app: longhorn-manager
   namespaceSelector:
     matchNames:
-      - networking
+    - longhorn-system
   endpoints:
-    - port: metrics
-      interval: 30s
+  - port: manager

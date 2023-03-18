@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/system-upgrade-controller/app
+  targetNamespace: system-upgrade
   interval: 10m
   prune: true
   sourceRef:
@@ -24,6 +25,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/all/system-upgrade-controller/plans
+  targetNamespace: system-upgrade
   interval: 10m
   prune: true
   dependsOn:
