@@ -3,5 +3,3 @@ kind: Kustomization
 resources:
 - backup-daily.yaml
 - snapshot-6h.yaml
-- service-monitor.yaml
-- prometheus-rules.yaml
