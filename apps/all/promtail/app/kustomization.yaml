@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
 - helm-release.yaml
 - prometheus-rules.yaml
-- dashboard.yaml
