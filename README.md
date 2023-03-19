@@ -113,3 +113,70 @@ kubectl apply --kustomize=./base/staging
 ```
 
 </details>
+
+<details>
+    <summary>:construction: PostgreSQL Major Version Upgrade</summary>
+<br>
+
+Based on [https://github.com/bitnami/charts/issues/1798#issuecomment-699056263](https://github.com/bitnami/charts/issues/1798#issuecomment-699056263)
+
+1. Preparation
+
+```sh
+export NAMESPACE=selfhosted
+export APPLICATION_DEPLOYMENT=paperless-ngx
+export POSTGRES_DEPLOYMENT=${APPLICATION_DEPLOYMENT}-postgresql
+export POSTGRES_MAJOR_VERSION=12
+export POSTGRES_PVC_SIZE=4Gi
+export POSTGRES_DB=${APPLICATION_DEPLOYMENT}
+export POSTGRES_USERNAME=${APPLICATION_DEPLOYMENT}
+export POSTGRES_PASSWORD=yourSecretPassword
+```
+
+Note: `POSTGRES_MAJOR_VERSION` is the helm version, not postgresql version.
+
+2. Scale down application that uses the database
+
+```sh
+kubectl scale deployment ${APPLICATION_DEPLOYMENT} -n ${NAMESPACE} --replicas 0
+```
+
+3. Deploy new major version of the database
+
+```sh
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+
+helm install ${POSTGRES_DEPLOYMENT}-upgrade bitnami/postgresql --version ${POSTGRES_MAJOR_VERSION} -n ${NAMESPACE} --wait \
+    --set auth.username=${POSTGRES_USERNAME} \
+    --set auth.password=${POSTGRES_PASSWORD} \
+    --set auth.database=${POSTGRES_DB} \
+    --set primary.persistence.size=${POSTGRES_PVC_SIZE}
+```
+
+4. Migrate data to new postgresql deployment
+
+```sh
+kubectl exec -it ${POSTGRES_DEPLOYMENT}-upgrade-0 -n ${NAMESPACE} -- bash -c "export PGPASSWORD=${POSTGRES_PASSWORD}; time pg_dump -h ${POSTGRES_DEPLOYMENT} -U ${POSTGRES_USERNAME} | psql -U ${POSTGRES_USERNAME}"
+```
+
+From here on you have multiple possibilities, e.g. just use your app with the new db deployment.
+
+I personally prefer to backup the volume of the new DB, uninstall both database deployments & delete their PVCs.
+
+After that I restore the backup of the PVC with the name of the old database deployment & upgrade my Helmrelease version.
+
+```sh
+helm uninstall ${POSTGRES_DEPLOYMENT}-upgrade -n ${NAMESPACE}
+kubectl scale sts ${POSTGRES_DEPLOYMENT} -n ${NAMESPACE} --replicas 0
+```
+
+The volume deletion and restore is done in Longhorn UI. Afterwards helm upgrade for the postgresql deployments can be done.
+
+5. Scale up application that uses the database
+
+```sh
+kubectl scale deployment ${APPLICATION_DEPLOYMENT} -n ${NAMESPACE} --replicas 1
+```
+
+</details>
