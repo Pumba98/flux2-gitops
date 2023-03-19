@@ -28,6 +28,14 @@ spec:
         retention_period: 7d
       rulerConfig:
         alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
+    write:
+      replicas: 0
+    read:
+      replicas: 0
+    backend:
+      replicas: 0
+    gateway:
+      enabled: false
     singleBinary:
       replicas: 1
       persistence:
