@@ -7,7 +7,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: loki-stack
+      chart: loki
       version: 2.9.9
       sourceRef:
         kind: HelmRepository
@@ -19,48 +19,39 @@ spec:
       image:
         repository: grafana/loki
         tag: 2.7.4
-      isDefault: false
-      config:
-        table_manager:
-          retention_deletes_enabled: true
-          retention_period: 168h
-        ruler:
-          storage:
-            type: local
-            local:
-              directory: /rules
-          rule_path: /tmp/scratch
-          alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
-          ring:
-            kvstore:
-              store: inmemory
-          enable_api: true
+      auth_enabled: false
+      storage:
+        type: filesystem
+      commonConfig:
+        replication_factor: 1
+      limits_config:
+        retention_period: 7d
+      rulerConfig:
+        alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
+    singleBinary:
       persistence:
-        enabled: true
         size: 20Gi
-        storageClassName: longhorn-xfs
-      serviceMonitor:
-        enabled: true
-      alerting_groups:
-        #
-        # PostgreSQL
-        #
-        - name: postgresql
-          rules:
-            - alert: PostgreSQLReadOnlyFS
-              expr: |
-                sum by (app) (count_over_time({app_kubernetes_io_name="postgresql"} |~ "Read-only file system"[2m])) > 0
-              for: 0m
-              labels:
-                severity: critical
-                category: logs
-              annotations:
-                summary: "PostgreSQL has read-only file system"
-    promtail:
-      serviceMonitor:
-        enabled: true
-      tolerations:
-        - effect: NoSchedule
-          operator: Exists
-        - effect: NoExecute
-          operator: Exists
+        storageClass: longhorn-xfs
+    test:
+      enabled: false
+    monitoring:
+      selfMonitoring:
+        enabled: false
+      lokiCanary:
+        enabled: false
+      rules:
+        additionalGroups:
+          #
+          # PostgreSQL
+          #
+          - name: postgresql
+            rules:
+              - alert: PostgreSQLReadOnlyFS
+                expr: |
+                  sum by (app) (count_over_time({app_kubernetes_io_name="postgresql"} |~ "Read-only file system"[2m])) > 0
+                for: 0m
+                labels:
+                  severity: critical
+                  category: logs
+                annotations:
+                  summary: "PostgreSQL has read-only file system"
