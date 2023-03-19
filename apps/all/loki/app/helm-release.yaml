@@ -29,6 +29,7 @@ spec:
       rulerConfig:
         alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
     singleBinary:
+      replicas: 1
       persistence:
         size: 20Gi
         storageClass: longhorn-xfs
