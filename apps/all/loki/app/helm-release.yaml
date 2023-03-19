@@ -34,8 +34,6 @@ spec:
       replicas: 0
     backend:
       replicas: 0
-    gateway:
-      enabled: false
     singleBinary:
       replicas: 1
       persistence:
