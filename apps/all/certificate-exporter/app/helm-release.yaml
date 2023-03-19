@@ -14,6 +14,10 @@ spec:
         name: enix-charts
         namespace: flux-system
   values:
+    secretsExporter:
+      resources:
+        limits:
+          cpu: null
     hostPathsExporter:
       daemonSets:
         cp:
@@ -56,3 +60,6 @@ spec:
             - /var/lib/rancher/k3s/agent/client-kube-proxy.crt
             - /var/lib/rancher/k3s/agent/server-ca.crt
             - /var/lib/rancher/k3s/agent/serving-kubelet.crt
+      resources:
+        limits:
+          cpu: null
