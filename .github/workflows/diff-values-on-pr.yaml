@@ -99,7 +99,7 @@ jobs:
         body-includes: Helm Diff
 
     - name: Create or update comment
-      uses: peter-evans/create-or-update-comment@v2
+      uses: peter-evans/create-or-update-comment@v3
       if: "${{ steps.diff.outputs.message != '' }}"
       with:
         comment-id: ${{ steps.fc.outputs.comment-id }}
