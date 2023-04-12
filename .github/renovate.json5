@@ -11,6 +11,7 @@
   ],
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
+  "branchTopic": "{{{depNameSanitized}}}-{{{newMajor}}}{{#if separateMinorPatch}}.{{{newMinor}}}{{/if}}.x{{#if isLockfileUpdate}}-lockfile{{/if}}",
   "flux": {
     "fileMatch": [ "^[^\\.]*\\.ya?ml$" ]
   },
