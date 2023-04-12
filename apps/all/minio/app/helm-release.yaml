@@ -14,6 +14,9 @@ spec:
         name: minio-charts
         namespace: flux-system
   values:
+    image:
+      repository: quay.io/minio/minio
+      tag: RELEASE.2023-02-10T18-48-39Z
     rootUser: "${SECRET_MINIO_ACCESSKEY}"
     rootPassword: "${SECRET_MINIO_SECRETKEY}"
     mode: standalone
