@@ -8,12 +8,16 @@ spec:
   chart:
     spec:
       chart: rancher
-      version: 2.7.1
+      version: 2.7.2
       sourceRef:
         kind: HelmRepository
         name: rancher-latest
         namespace: flux-system
   values:
+    global:
+      cattle:
+        psp:
+          enabled: false # Disable PSP for k8s 1.25+
     replicas: 1
     hostname: rancher.${SECRET_DOMAIN}
     tls: external
