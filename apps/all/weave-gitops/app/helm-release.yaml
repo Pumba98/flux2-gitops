@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: weave-gitops
-      version: 4.0.17
+      version: 4.0.19
       sourceRef:
         kind: HelmRepository
         name: weave-gitops-charts
@@ -16,8 +16,8 @@ spec:
   values:
     adminUser:
       create: true
-      username: admin
-      passwordHash: $2a$12$HQu99eymhRdEq9qZqqXqcewgY4HoRGPhxtlA5/l4E34p3lt1VNHz6
+      createSecret: false
+      secretName: weave-gitops-secrets
     ingress:
       enabled: true
       className: nginx
