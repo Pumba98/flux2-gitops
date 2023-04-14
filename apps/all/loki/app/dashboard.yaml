@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: loki-dashboard
   labels:
-    grafana_dashboard: 1
+    grafana_dashboard: "1"
 data:
   dashboard.json: |
     {
@@ -230,7 +230,7 @@ data:
       },
       "timepicker": {},
       "timezone": "",
-      "title": "Pod Logs",
+      "title": "Loki Logs",
       "uid": "VPRrQyg7z",
       "version": 1,
       "weekStart": ""
