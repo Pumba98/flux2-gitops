@@ -18,7 +18,7 @@ spec:
     loki:
       image:
         repository: grafana/loki
-        tag: 2.8.1
+        tag: 2.8.2
       auth_enabled: false
       storage:
         type: filesystem
