@@ -15,8 +15,8 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: b4bz/homer
-      tag: v23.02.2
+      repository: ghcr.io/bastienwirtz/homer
+      tag: v23.05.1
       pullPolicy: IfNotPresent
     service:
       main:
