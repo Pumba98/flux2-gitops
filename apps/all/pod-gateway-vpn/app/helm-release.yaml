@@ -39,7 +39,7 @@ spec:
         gluetun:
           image: 
             repository: qmcgaw/gluetun
-            tag: v3.34.0
+            tag: v3.34.1
         env:
         - name: FIREWALL
           value: "off"
