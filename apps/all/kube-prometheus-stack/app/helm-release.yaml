@@ -88,7 +88,7 @@ spec:
       enabled: true
       image:
         repository: grafana/grafana
-        tag: 10.0.0
+        tag: 10.0.1
       admin:
         existingSecret: grafana-secrets
       dashboardProviders:
