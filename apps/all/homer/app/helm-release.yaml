@@ -52,7 +52,7 @@ spec:
         enabled: true
         image:
           repository: codercom/code-server
-          tag: 4.14.0
+          tag: 4.14.1
         workingDir: /www/assets
         args:
         - --user-data-dir
