@@ -26,4 +26,5 @@ resources:
 - ../all/promtail
 - ../all/rancher
 - ../all/system-upgrade-controller
+- ../all/tandoor-receipes
 - ../all/weave-gitops
