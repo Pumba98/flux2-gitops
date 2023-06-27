@@ -82,6 +82,7 @@ spec:
           domain:
           - grafana.${SECRET_DOMAIN}
           - gitops.${SECRET_DOMAIN}
+          - receipes.${SECRET_DOMAIN}
           # - rancher.${SECRET_DOMAIN}
         # Applications without auth but low security requirements
         - policy: one_factor
