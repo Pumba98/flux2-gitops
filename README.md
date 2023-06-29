@@ -1,5 +1,5 @@
 [//]: # "renovate: datasource=github-releases depName=k3s-io/k3s"
-[![k3s](https://img.shields.io/badge/k8s-v1.25.11+k3s1-orange?style=for-the-badge&logo=kubernetes)](https://k3s.io/)
+[![k3s](https://img.shields.io/badge/k8s-v1.26.6+k3s1-orange?style=for-the-badge&logo=kubernetes)](https://k3s.io/)
 [![flux](https://img.shields.io/badge/GitOps-Flux-blue?style=for-the-badge&logo=git)](https://fluxcd.io/)
 [![renovate](https://img.shields.io/badge/renovate-enabled-brightgreen?style=for-the-badge&logo=renovatebot)](https://github.com/renovatebot/renovate)
 
@@ -47,6 +47,7 @@ The following apps are installed on the clusters.
 | [MinIO](https://min.io/)                                                          | Amazon S3 compatible high Performance Object Storage          |
 | [Authelia](https://www.authelia.com)                                              | SSO & 2FA authentication server for Cluster Web Apps          |
 | [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx)                   | Document management system                                    |
+| [Tandoor-Receipes](https://github.com/TandoorRecipes/recipes)                     | Receipe Manager and Meal Planner                              |
 | [Rancher](https://rancher.com/products/rancher)                                   | Kubernetes Management Dashboard                               |
 | [Homer](https://github.com/bastienwirtz/homer)                                    | Static dashboard for the cluster applications                 |
 | [Pod-Gateway](https://github.com/k8s-at-home/pod-gateway)                         | Route traffic through a VPN gateway                           |
