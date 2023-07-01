@@ -75,7 +75,6 @@ spec:
           domain:
           - paperless.${SECRET_DOMAIN}
           - longhorn.${SECRET_DOMAIN}
-          - homer-config.${SECRET_DOMAIN}
           - jd2.${SECRET_DOMAIN}
         # Applications with built-in auth
         - policy: one_factor
