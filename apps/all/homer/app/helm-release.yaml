@@ -43,38 +43,27 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: homer-config
+        type: emptyDir
         mountPath: /www/assets
+      configfiles:
+        enabled: true
+        type: configMap
+        name: homer-config
+        mountPath: "-"
     podSecurityContext:
       fsGroup: 1000
-    addons:
-      codeserver:
-        enabled: true
-        image:
-          repository: codercom/code-server
-          tag: 4.14.1
-        workingDir: /www/assets
+    initContainers:
+      copy-config:
+        image: ghcr.io/onedr0p/alpine:3.18.2
+        command:
+          - "/bin/sh"
+          - -c
         args:
-        - --user-data-dir
-        - /www/assets/.vscode
-        - --auth
-        - none
-        ingress:
-          enabled: true
-          ingressClassName: nginx
-          annotations:
-            external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
-            external-dns/is-public: "true"
-            nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
-            nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-          hosts:
-          - host: "homer-config.${SECRET_DOMAIN}"
-            paths:
-            - path: /
-              pathType: Prefix
-          tls:
-          - hosts:
-            - "homer-config.${SECRET_DOMAIN}"
+          - envsubst < /configs/config.yml > /www/assets/config.yml;
+        env:
+          SECRET_DOMAIN: ${SECRET_DOMAIN}
         volumeMounts:
-        - name: config
-          mountPath: /www/assets
+          - name: config
+            mountPath: /www/assets
+          - name: configfiles
+            mountPath: /configs
