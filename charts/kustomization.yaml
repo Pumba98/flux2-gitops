@@ -20,4 +20,5 @@ resources:
 - minio-charts.yaml
 - prometheus-charts.yaml
 - rancher-latest-charts.yaml
+- stakater-charts.yaml
 - weave-gitops-charts.yaml

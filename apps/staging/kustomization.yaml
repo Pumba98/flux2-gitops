@@ -25,7 +25,9 @@ resources:
 - ../all/pod-gateway-vpn
  ../all/promtail
 - ../all/rancher
+- ../all/reloader
 # - ../all/system-upgrade-controller
+- ../all/tandoor-receipes
 - ../all/weave-gitops
 
 patchesStrategicMerge:
