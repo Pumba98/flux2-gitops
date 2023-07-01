@@ -18,6 +18,9 @@ spec:
       repository: ghcr.io/bastienwirtz/homer
       tag: v23.05.1
       pullPolicy: IfNotPresent
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
     service:
       main:
         ports:
