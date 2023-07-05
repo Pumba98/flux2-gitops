@@ -67,12 +67,21 @@ jobs:
           exit 0
         fi
 
-        helm repo add pr "$hr_url"
-        chart_live=$(helm show chart pr/"$hr_chart" --version "$hr_live_version" || true)
-        chart_pr=$(helm show chart pr/"$hr_chart" --version "$hr_pr_version" || true)
+        if [[ $hr_url == oci* ]] ;
+        then
+          chart_live=$(helm show chart $hr_url/"$hr_chart" --version "$hr_live_version" || true)
+          chart_pr=$(helm show chart $hr_url/"$hr_chart" --version "$hr_pr_version" || true)
+          values_live=$(helm show values $hr_url/"$hr_chart" --version "$hr_live_version" || true)
+          values_pr=$(helm show values $hr_url/"$hr_chart" --version "$hr_pr_version" || true)
+        else
+          helm repo add pr "$hr_url"
+          chart_live=$(helm show chart pr/"$hr_chart" --version "$hr_live_version" || true)
+          chart_pr=$(helm show chart pr/"$hr_chart" --version "$hr_pr_version" || true)
+          values_live=$(helm show values pr/"$hr_chart" --version "$hr_live_version" || true)
+          values_pr=$(helm show values pr/"$hr_chart" --version "$hr_pr_version" || true)
+        fi
+
         chart_diff=$((diff -u <(echo "$chart_live") <(echo "$chart_pr") || true) | tail +3)
-        values_live=$(helm show values pr/"$hr_chart" --version "$hr_live_version" || true)
-        values_pr=$(helm show values pr/"$hr_chart" --version "$hr_pr_version" || true)
         values_diff=$((diff -u <(echo "$values_live") <(echo "$values_pr") || true) | tail +3)
 
         message="**Helm Diff**"$'\n'$'\n'
