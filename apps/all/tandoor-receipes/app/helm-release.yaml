@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: ghcr.io/tandoorrecipes/recipes
-      tag: 1.5.3
+      tag: 1.5.4
     env:
       SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
       TIMEZONE: Europe/Berlin
