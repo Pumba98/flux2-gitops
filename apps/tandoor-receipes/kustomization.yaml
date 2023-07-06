@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- helm-release.yaml
-- tandoor-receipes-pvc.yaml
-- postgresql-helm-release.yaml
-- tandoor-receipes-postgresql-pvc.yaml
+- pvc-postgresql.yaml
+- pvc-tandoor-receipes.yaml
+- hr-postgresql.yaml
+- hr-tandoor-receipes.yaml

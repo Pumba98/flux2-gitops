@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
 - postgresql-rules.yaml
 - redis-rules.yaml
-- host-monitoring-rules.yaml
+- node-rules.yaml

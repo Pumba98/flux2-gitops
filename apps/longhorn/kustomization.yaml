@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- namespace.yaml
-- helm-release.yaml
-- longhorn-system-secrets.sops.yaml
-- storageclass.yaml
+- ns-longhorn.yaml
+- secret-longhorn-system.sops.yaml
+- hr-longhorn.yaml
+- sc-longhorn.yaml
