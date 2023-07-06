@@ -22,7 +22,9 @@ spec:
     env:
       SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
       TIMEZONE: Europe/Berlin
+      DB_ENGINE: django.db.backends.postgresql
       POSTGRES_HOST: tandoor-receipes-postgresql
+      POSTGRES_PORT: "5432"
       POSTGRES_DB: tandoor-receipes
       POSTGRES_USER: tandoor-receipes
       POSTGRES_PASSWORD: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
