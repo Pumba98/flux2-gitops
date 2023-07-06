@@ -17,7 +17,7 @@ The Git repository contains the following directories:
 📁
 ├─📁 apps            # apps available for intallation
 ├─📁 cluster-apps    # kustomization and overlays for app installations per cluster
-|  ├─📁 staging
+│  ├─📁 staging
 │  └─📁 production
 ├─📁 charts          # helm chart repos
 ├─📁 configs         # configs per cluster
