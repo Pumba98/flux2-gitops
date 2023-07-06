@@ -5,7 +5,7 @@ metadata:
   name: apps
   namespace: flux-system
 spec:
-  path: ./clusters/production
+  path: ./base/production
   interval: 10m
   prune: true
   dependsOn:
