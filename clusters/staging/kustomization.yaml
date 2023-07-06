@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../namespaces.yaml
+- ../authelia.yaml
+- ../certificate-exporter.yaml
+- ../cert-manager.yaml
+- ../csi-driver-smb.yaml
+- ../descheduler.yaml
+- ../external-dns.yaml
+- ../flux-system.yaml
+- ../goldilocks.yaml
+- ../homer.yaml
+- ../ingress-nginx.yaml
+- ../jd2.yaml
+- ../kube-prometheus-stack.yaml
+- ../kube-vip.yaml
+- ../kured.yaml
+- ../loki.yaml
+- ../longhorn.yaml
+- ../metallb.yaml
+- ../metrics-server.yaml
+- ../minio.yaml
+- ../paperless-ngx.yaml
+- ../pod-gateway-vpn.yaml
+- ../promtail.yaml
+- ../rancher.yaml
+- ../reloader.yaml
+# - ../system-upgrade-controller.yaml
+- ../tandoor-receipes.yaml
+- ../weave-gitops.yaml
+
+patchesStrategicMerge:
+- longhorn.yaml
+- ingress-nginx.yaml

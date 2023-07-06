@@ -5,7 +5,7 @@ metadata:
   name: apps
   namespace: flux-system
 spec:
-  path: ./apps/staging
+  path: ./clusters/staging
   interval: 10m
   prune: true
   dependsOn:
