@@ -13,7 +13,7 @@ env:
 jobs:
   changes:
     name: Detect changes
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       yaml_files: "${{ steps.filter.outputs.yaml_files }}"
     steps:
@@ -30,7 +30,7 @@ jobs:
 
   helm:
     name: Diff HelmReleases
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: ${{ needs.changes.outputs.yaml_files != '[]' }}
     needs: changes
     strategy:
