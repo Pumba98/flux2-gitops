@@ -5,7 +5,7 @@ metadata:
   name: homer-app
   namespace: flux-system
 spec:
-  path: ./apps/all/homer
+  path: ./apps/homer
   targetNamespace: selfhosted
   interval: 10m
   prune: true

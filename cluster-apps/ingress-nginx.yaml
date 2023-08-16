@@ -5,7 +5,7 @@ metadata:
   name: ingress-nginx-app
   namespace: flux-system
 spec:
-  path: ./apps/all/ingress-nginx
+  path: ./apps/ingress-nginx
   targetNamespace: networking
   interval: 10m
   prune: true
@@ -26,7 +26,7 @@ metadata:
   name: ingress-nginx-certs
   namespace: flux-system
 spec:
-  path: ./apps/all/ingress-nginx/certs
+  path: ./apps/ingress-nginx/certs
   targetNamespace: networking
   interval: 10m
   prune: true
@@ -42,7 +42,7 @@ metadata:
   name: ingress-nginx-monitoring
   namespace: flux-system
 spec:
-  path: ./apps/all/ingress-nginx/monitoring
+  path: ./apps/ingress-nginx/monitoring
   targetNamespace: networking
   interval: 10m
   prune: true
