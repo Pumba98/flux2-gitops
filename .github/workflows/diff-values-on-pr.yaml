@@ -5,7 +5,7 @@ on: # yamllint disable-line rule:truthy
     branches:
     - main
     paths:
-    - "apps/**.yaml"
+    - "apps/hr-**.yaml"
 
 env:
   conf_live_branch: main
@@ -26,7 +26,7 @@ jobs:
         list-files: json
         filters: |
           yaml:
-            - added|modified: "apps/**/*.yaml"
+            - added|modified: "apps/**/hr-*.yaml"
 
   helm:
     name: Diff HelmReleases

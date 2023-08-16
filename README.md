@@ -15,14 +15,16 @@ The Git repository contains the following directories:
 
 ```sh
 📁
-├─📁 apps
-│  ├─📁 all          # apps available for intallation
-│  └─📁 production   # kustomization and overlays for app installations per cluster
-├─📁 base
-│  ├─📁 flux-system  # flux & gitops operator
-│  └─📁 production   # flux configuration per cluster
+├─📁 apps            # apps available for intallation
+├─📁 cluster-apps    # kustomization and overlays for app installations per cluster
+│  ├─📁 staging
+│  └─📁 production
 ├─📁 charts          # helm chart repos
-└─📁 config          # configs per cluster
+├─📁 configs         # configs per cluster
+└─📁 base
+   ├─📁 flux-system  # flux & gitops operator
+   ├─📁 staging      # flux configuration per cluster
+   └─📁 production   # flux configuration per cluster
 ```
 
 ## :computer:&nbsp; Software

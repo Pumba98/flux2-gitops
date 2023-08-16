@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1m
   ref:
-    branch: feature/remove-crds
+    branch: rework/folder-structure
   url: ssh://git@github.com/Pumba98/flux2-gitops
   secretRef:
     name: flux-system
