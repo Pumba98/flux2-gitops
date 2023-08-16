@@ -5,7 +5,7 @@ metadata:
   name: system-upgrade-controller-app
   namespace: flux-system
 spec:
-  path: ./apps/system-upgrade-controller/app
+  path: ./apps/system-upgrade-controller
   targetNamespace: system-upgrade
   interval: 10m
   prune: true

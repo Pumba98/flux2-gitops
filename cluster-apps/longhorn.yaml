@@ -5,7 +5,7 @@ metadata:
   name: longhorn-app
   namespace: flux-system
 spec:
-  path: ./apps/longhorn/app
+  path: ./apps/longhorn
   targetNamespace: longhorn-system
   interval: 10m
   prune: true

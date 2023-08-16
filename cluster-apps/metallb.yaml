@@ -5,7 +5,7 @@ metadata:
   name: metallb-app
   namespace: flux-system
 spec:
-  path: ./apps/metallb/app
+  path: ./apps/metallb
   targetNamespace: metallb-system
   interval: 10m
   prune: true

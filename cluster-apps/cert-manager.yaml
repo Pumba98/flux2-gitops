@@ -5,7 +5,7 @@ metadata:
   name: cert-manager-app
   namespace: flux-system
 spec:
-  path: ./apps/cert-manager/app
+  path: ./apps/cert-manager
   targetNamespace: cert-manager
   interval: 10m
   prune: true
