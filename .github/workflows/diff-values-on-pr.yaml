@@ -5,7 +5,7 @@ on: # yamllint disable-line rule:truthy
     branches:
     - main
     paths:
-    - "apps/hr-**.yaml"
+    - "apps/**/hr-*.yaml"
 
 env:
   conf_live_branch: main
