@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: ghcr.io/bastienwirtz/homer
-      tag: v23.05.1
+      tag: v23.09.1
       pullPolicy: IfNotPresent
     controller:
       annotations:
