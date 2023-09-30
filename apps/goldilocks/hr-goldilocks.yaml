@@ -19,10 +19,6 @@ spec:
     dashboard:
       enabled: true
       replicaCount: 1
-      resources:
-        limits:
-          cpu: null
-          memory: null
       ingress:
         enabled: true
         ingressClassName: nginx
@@ -39,8 +35,3 @@ spec:
         tls:
           - hosts:
               - "goldilocks.${SECRET_DOMAIN}"
-    controller:
-      resources:
-        limits:
-          cpu: null
-          memory: null
