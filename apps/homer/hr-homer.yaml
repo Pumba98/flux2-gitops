@@ -57,7 +57,7 @@ spec:
       fsGroup: 1000
     initContainers:
       copy-config:
-        image: ghcr.io/onedr0p/alpine:3.18.5
+        image: ghcr.io/onedr0p/alpine:3.19.0
         command:
           - "/bin/sh"
           - -c
