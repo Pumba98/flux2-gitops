@@ -14,21 +14,23 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
   values:
-    image:
-      repository: jlesage/jdownloader-2
-      tag: v23.11.2
-      pullPolicy: IfNotPresent
+  main:
+    containers:
+      main:
+        image:
+          repository: jlesage/jdownloader-2
+          tag: v23.11.2
+          pullPolicy: IfNotPresent
+        env:
+          KEEP_APP_RUNNING: true
     service:
       main:
         ports:
           http:
             port: 5800
-    env:
-      KEEP_APP_RUNNING: true
     ingress:
       main:
-        enabled: true
-        ingressClassName: "nginx"
+        className: "nginx"
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
           external-dns/is-public: "true"
@@ -38,16 +40,16 @@ spec:
         - host: jd2.${SECRET_DOMAIN}
           paths:
           - path: /
-            pathType: Prefix
+            service:
+              name: main
+              port: http
         tls:
         - hosts:
           - jd2.${SECRET_DOMAIN}
     persistence:
       config:
-        enabled: true
         mountPath: "/config"
         size: 1Gi
       output:
-        enabled: true
         existingClaim: jd2-output
         mountPath: "/output"

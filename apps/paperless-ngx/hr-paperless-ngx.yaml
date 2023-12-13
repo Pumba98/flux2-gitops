@@ -17,31 +17,35 @@ spec:
     - name: paperless-ngx-redis
     - name: paperless-ngx-postgresql
   values:
-    image:
-      repository: ghcr.io/paperless-ngx/paperless-ngx
-      tag: 2.1.2
-    env:
-      COMPOSE_PROJECT_NAME: paperless-ngx
-      PAPERLESS_TIME_ZONE: Europe/Berlin
-      PAPERLESS_URL: http{{if ne ( len .Values.ingress.main.tls ) 0 }}s{{end}}://{{ (first .Values.ingress.main.hosts).host }}
-      PAPERLESS_DBHOST: paperless-ngx-postgresql
-      PAPERLESS_DBNAME: paperless-ngx
-      PAPERLESS_DBUSER: paperless-ngx
-      PAPERLESS_DBPASS: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
-      PAPERLESS_REDIS: redis://paperless-ngx-redis-master:6379
-      USERMAP_UID: 33
-      USERMAP_GID: 33
-      PAPERLESS_CONSUMPTION_DIR: /paperless/consume
-      PAPERLESS_DATA_DIR: /paperless/data
-      PAPERLESS_MEDIA_ROOT: /paperless/media
-      PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
-      PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: true
-      PAPERLESS_CONSUMER_POLLING: 60
-      PAPERLESS_CONSUMER_DELETE_DUPLICATES: true
-      PAPERLESS_CONSUMER_RECURSIVE: true
-      PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: true
-      PAPERLESS_OCR_LANGUAGE: deu+eng
-      PAPERLESS_SECRET_KEY: ${SECRET_PAPERLESS_NGX_SECRET_KEY}
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/paperless-ngx/paperless-ngx
+              tag: 2.1.2
+            env:
+              COMPOSE_PROJECT_NAME: paperless-ngx
+              PAPERLESS_TIME_ZONE: Europe/Berlin
+              PAPERLESS_URL: http{{if ne ( len .Values.ingress.main.tls ) 0 }}s{{end}}://{{ (first .Values.ingress.main.hosts).host }}
+              PAPERLESS_DBHOST: paperless-ngx-postgresql
+              PAPERLESS_DBNAME: paperless-ngx
+              PAPERLESS_DBUSER: paperless-ngx
+              PAPERLESS_DBPASS: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
+              PAPERLESS_REDIS: redis://paperless-ngx-redis-master:6379
+              USERMAP_UID: 33
+              USERMAP_GID: 33
+              PAPERLESS_CONSUMPTION_DIR: /paperless/consume
+              PAPERLESS_DATA_DIR: /paperless/data
+              PAPERLESS_MEDIA_ROOT: /paperless/media
+              PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
+              PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: true
+              PAPERLESS_CONSUMER_POLLING: 60
+              PAPERLESS_CONSUMER_DELETE_DUPLICATES: true
+              PAPERLESS_CONSUMER_RECURSIVE: true
+              PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: true
+              PAPERLESS_OCR_LANGUAGE: deu+eng
+              PAPERLESS_SECRET_KEY: ${SECRET_PAPERLESS_NGX_SECRET_KEY}
     service:
       main:
         ports:
@@ -49,8 +53,7 @@ spec:
             port: 8000
     ingress:
       main:
-        enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
           external-dns/is-public: "true"
@@ -60,12 +63,13 @@ spec:
           - host: paperless.${SECRET_DOMAIN}
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - paperless.${SECRET_DOMAIN}
     persistence:
       data:
-        enabled: true
         mountPath: /paperless
         existingClaim: paperless-ngx-data
