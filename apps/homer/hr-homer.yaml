@@ -39,11 +39,6 @@ spec:
               - envsubst < /configs/config.yml > /www/assets/config.yml;
             env:
               SECRET_DOMAIN: ${SECRET_DOMAIN}
-            volumeMounts:
-              - name: config
-                mountPath: /www/assets
-              - name: configfiles
-                mountPath: /configs
     service:
       main:
         ports:
@@ -69,9 +64,12 @@ spec:
           - "homer.${SECRET_DOMAIN}"
     persistence:
       config:
+        enabled: true
         type: emptyDir
-        mountPath: /www/assets
-      configfiles:
+        globalMounts:
+        - path: /www/assets
+      templates:
         type: configMap
         name: homer-config
-        mountPath: "-"
+        globalMounts:
+        - path: "/configs"
