@@ -8,19 +8,40 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
   values:
-    image:
-      repository: ghcr.io/bastienwirtz/homer
-      tag: v23.10.1
-      pullPolicy: IfNotPresent
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
+    defaultPodOptions:
+      scurityContext:
+        fsGroup: 1000
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/bastienwirtz/homer
+              tag: v23.10.1
+              pullPolicy: IfNotPresent
+        initContainers:
+          copy-config:
+            image: ghcr.io/onedr0p/alpine:3.19.0
+            command:
+              - "/bin/sh"
+              - -c
+            args:
+              - envsubst < /configs/config.yml > /www/assets/config.yml;
+            env:
+              SECRET_DOMAIN: ${SECRET_DOMAIN}
+            volumeMounts:
+              - name: config
+                mountPath: /www/assets
+              - name: configfiles
+                mountPath: /configs
     service:
       main:
         ports:
@@ -28,8 +49,7 @@ spec:
             port: 8080
     ingress:
       main:
-        enabled: true
-        ingressClassName: "nginx"
+        className: "nginx"
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
           external-dns/is-public: "true"
@@ -39,34 +59,17 @@ spec:
         - host: "homer.${SECRET_DOMAIN}"
           paths:
           - path: /
-            pathType: Prefix
+            service:
+              name: main
+              port: http
         tls:
         - hosts:
           - "homer.${SECRET_DOMAIN}"
     persistence:
       config:
-        enabled: true
         type: emptyDir
         mountPath: /www/assets
       configfiles:
-        enabled: true
         type: configMap
         name: homer-config
         mountPath: "-"
-    podSecurityContext:
-      fsGroup: 1000
-    initContainers:
-      copy-config:
-        image: ghcr.io/onedr0p/alpine:3.19.0
-        command:
-          - "/bin/sh"
-          - -c
-        args:
-          - envsubst < /configs/config.yml > /www/assets/config.yml;
-        env:
-          SECRET_DOMAIN: ${SECRET_DOMAIN}
-        volumeMounts:
-          - name: config
-            mountPath: /www/assets
-          - name: configfiles
-            mountPath: /configs
