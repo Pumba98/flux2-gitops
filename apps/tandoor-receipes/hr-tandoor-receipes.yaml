@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -16,26 +16,30 @@ spec:
   dependsOn:
     - name: tandoor-receipes-postgresql
   values:
-    image:
-      repository: ghcr.io/tandoorrecipes/recipes
-      tag: 1.5.10
-    env:
-      SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
-      TIMEZONE: Europe/Berlin
-      DB_ENGINE: django.db.backends.postgresql
-      POSTGRES_HOST: tandoor-receipes-postgresql
-      POSTGRES_PORT: "5432"
-      POSTGRES_DB: tandoor-receipes
-      POSTGRES_USER: tandoor-receipes
-      POSTGRES_PASSWORD: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
-      # Serve mediafiles directly using gunicorn. Basically everyone recommends not doing this. Please use any of the examples
-      # provided that include an additional nxginx container to handle media file serving.
-      # If you know what you are doing turn this back on (1) to serve media files using djangos serve() method.
-      # when unset: 1 (true) - this is temporary until an appropriate amount of time has passed for everyone to migrate
-      GUNICORN_MEDIA: 1
-      ENABLE_SIGNUP: 0
-      ENABLE_METRICS: 1
-      ENABLE_PDF_EXPORT: 1
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/tandoorrecipes/recipes
+              tag: 1.5.10
+            env:
+              SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
+              TIMEZONE: Europe/Berlin
+              DB_ENGINE: django.db.backends.postgresql
+              POSTGRES_HOST: tandoor-receipes-postgresql
+              POSTGRES_PORT: "5432"
+              POSTGRES_DB: tandoor-receipes
+              POSTGRES_USER: tandoor-receipes
+              POSTGRES_PASSWORD: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
+              # Serve mediafiles directly using gunicorn. Basically everyone recommends not doing this. Please use any of the examples
+              # provided that include an additional nxginx container to handle media file serving.
+              # If you know what you are doing turn this back on (1) to serve media files using djangos serve() method.
+              # when unset: 1 (true) - this is temporary until an appropriate amount of time has passed for everyone to migrate
+              GUNICORN_MEDIA: 1
+              ENABLE_SIGNUP: 0
+              ENABLE_METRICS: 1
+              ENABLE_PDF_EXPORT: 1
     service:
       main:
         ports:
@@ -43,8 +47,7 @@ spec:
             port: 8080
     ingress:
       main:
-        enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
           external-dns/is-public: "true"
@@ -54,16 +57,16 @@ spec:
           - host: receipes.${SECRET_DOMAIN}
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - receipes.${SECRET_DOMAIN}
     persistence:
       static:
-        enabled: true
         mountPath: /opt/recipes/staticfiles
         existingClaim: tandoor-receipes-static
       media:
-        enabled: true
         mountPath: /opt/recipes/mediafiles
         existingClaim: tandoor-receipes-media
