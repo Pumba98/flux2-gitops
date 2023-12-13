@@ -29,7 +29,9 @@ spec:
               pullPolicy: IfNotPresent
         initContainers:
           copy-config:
-            image: ghcr.io/onedr0p/alpine:3.19.0
+            image:
+              repository: ghcr.io/onedr0p/alpine
+              tag: 3.19.0
             command:
               - "/bin/sh"
               - -c
