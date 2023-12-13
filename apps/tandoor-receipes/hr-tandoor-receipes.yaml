@@ -65,8 +65,10 @@ spec:
               - receipes.${SECRET_DOMAIN}
     persistence:
       static:
-        mountPath: /opt/recipes/staticfiles
         existingClaim: tandoor-receipes-static
+        globalMounts:
+        - path: /opt/recipes/staticfiles
       media:
-        mountPath: /opt/recipes/mediafiles
         existingClaim: tandoor-receipes-media
+        globalMounts:
+        - path: /opt/recipes/mediafiles

@@ -52,4 +52,5 @@ spec:
           size: 1Gi
         output:
           existingClaim: jd2-output
-          mountPath: "/output"
+          globalMounts:
+            - path: "/output"

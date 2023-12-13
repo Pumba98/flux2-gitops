@@ -71,5 +71,6 @@ spec:
               - paperless.${SECRET_DOMAIN}
     persistence:
       data:
-        mountPath: /paperless
         existingClaim: paperless-ngx-data
+        globalMounts:
+        - path: /paperless
