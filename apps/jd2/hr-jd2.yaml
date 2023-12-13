@@ -22,37 +22,37 @@ spec:
               repository: jlesage/jdownloader-2
               tag: v23.11.2
               pullPolicy: IfNotPresent
-          env:
-            KEEP_APP_RUNNING: true
-  service:
-    main:
-      ports:
-        http:
-          port: 5800
-  ingress:
-    main:
-      enabled: true
-      className: "nginx"
-      annotations:
-        external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
-        external-dns/is-public: "true"
-        nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
-        nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-      hosts:
-      - host: jd2.${SECRET_DOMAIN}
-        paths:
-        - path: /
-          service:
-            name: main
-            port: http
-      tls:
-      - hosts:
-        - jd2.${SECRET_DOMAIN}
-  persistence:
-    config:
-      mountPath: "/config"
-      size: 1Gi
-    output:
-      existingClaim: jd2-output
-      globalMounts:
-        - path: "/output"
+            env:
+              KEEP_APP_RUNNING: true
+    service:
+      main:
+        ports:
+          http:
+            port: 5800
+    ingress:
+      main:
+        enabled: true
+        className: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
+          external-dns/is-public: "true"
+          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+        hosts:
+        - host: jd2.${SECRET_DOMAIN}
+          paths:
+          - path: /
+            service:
+              name: main
+              port: http
+        tls:
+        - hosts:
+          - jd2.${SECRET_DOMAIN}
+    persistence:
+      config:
+        mountPath: "/config"
+        size: 1Gi
+      output:
+        existingClaim: jd2-output
+        globalMounts:
+          - path: "/output"
