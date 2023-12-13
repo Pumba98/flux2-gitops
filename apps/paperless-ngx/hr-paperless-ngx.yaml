@@ -53,6 +53,7 @@ spec:
             port: 8000
     ingress:
       main:
+        enabled: true
         className: nginx
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
