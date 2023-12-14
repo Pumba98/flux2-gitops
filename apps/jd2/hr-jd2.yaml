@@ -50,6 +50,7 @@ spec:
           - jd2.${SECRET_DOMAIN}
     persistence:
       config:
+        enabled: true
         mountPath: "/config"
         size: 1Gi
       output:
