@@ -76,6 +76,7 @@ spec:
           - paperless.${SECRET_DOMAIN}
           - longhorn.${SECRET_DOMAIN}
           - jd2.${SECRET_DOMAIN}
+          - metube.${SECRET_DOMAIN}
         # Applications with built-in auth
         - policy: one_factor
           domain:
