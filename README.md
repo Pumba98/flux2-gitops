@@ -121,6 +121,54 @@ kubectl apply --kustomize=./base/staging
     <summary>:construction: PostgreSQL Major Version Upgrade</summary>
 <br>
 
+I now use a [tianon/postgres-upgrade](https://github.com/tianon/docker-postgres-upgrade) init-container for PostgreSQL Major Upgrades.
+
+**Always take backups, dataloss is possible**. Old data gets removed and replaced by output of pg_upgrade.
+
+```yaml
+## Init Container for Major PostgreSQL Upgrades, not needed permanently
+initContainers:
+- name: pg-upgrade
+  image: tianon/postgres-upgrade:15-to-16
+  securityContext:
+    runAsUser: 0
+    runAsGroup: 0
+  volumeMounts:
+  - name: data
+    mountPath: /bitnami/postgresql
+  env:
+  - name: "PG_OLD"
+    value: "15"
+  - name: "PG_NEW"
+    value: "16"
+  command:
+  - /bin/bash
+  - -c
+  - |
+    if [[ $(< /bitnami/postgresql/data/PG_VERSION) -eq $PG_NEW ]]; then echo "PostgreSQL is already up2date"; exit 0; fi
+    if [[ "$PGBINOLD" != "/usr/lib/postgresql/$PG_OLD/bin" ]]; then echo "Wrong postgres-upgrade image"; exit -1; fi
+    if [[ "$PGBINNEW" != "/usr/lib/postgresql/$PG_NEW/bin" ]]; then echo "Wrong postgres-upgrade image"; exit -1; fi
+    echo "Upgrading PostgreSQL from $PG_OLD to $PG_NEW"
+    cp -r /bitnami/postgresql/data /var/lib/postgresql/$PG_OLD
+    usermod -u 1001 postgres
+    groupmod -g 1001 postgres
+    chown -R postgres:postgres /var/lib/postgresql
+    su postgres -c 'PGDATA="$PGDATANEW" eval "initdb $POSTGRES_INITDB_ARGS"'
+    cp -p $PG_NEW/data/postgresql.conf $PG_NEW/data/pg_hba.conf $PG_OLD/data/
+    chmod 700 $PG_OLD/data
+    gosu postgres pg_upgrade
+    gosu postgres pg_ctl -D /var/lib/postgresql/$PG_NEW/data -l logfile start
+    gosu postgres /usr/lib/postgresql/$PG_NEW/bin/vacuumdb --all --analyze-in-stages
+    gosu postgres pg_ctl -D /var/lib/postgresql/$PG_NEW/data -l logfile stop
+    rm /var/lib/postgresql/$PG_NEW/data/pg_hba.conf /var/lib/postgresql/$PG_NEW/data/postgresql.conf
+    rm -rf /bitnami/postgresql/data
+    mv /var/lib/postgresql/$PG_NEW/data /bitnami/postgresql/
+```
+
+<details>
+    <summary>:construction: Previous Manual Upgrade Approach</summary>
+<br>
+
 Based on [https://github.com/bitnami/charts/issues/1798#issuecomment-699056263](https://github.com/bitnami/charts/issues/1798#issuecomment-699056263)
 
 1. Preparation
@@ -182,4 +230,5 @@ The volume deletion and restore is done in Longhorn UI. Afterwards helm upgrade 
 kubectl scale deployment ${APPLICATION_DEPLOYMENT} -n ${NAMESPACE} --replicas 1
 ```
 
+</details>
 </details>
