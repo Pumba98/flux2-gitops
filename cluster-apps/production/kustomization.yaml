@@ -21,6 +21,7 @@ resources:
 - ../longhorn.yaml
 - ../metallb.yaml
 - ../metrics-server.yaml
+- ../metube.yaml
 - ../minio.yaml
 - ../paperless-ngx.yaml
 - ../pod-gateway-vpn.yaml
