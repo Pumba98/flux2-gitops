@@ -17,7 +17,7 @@ spec:
     driver: smb.csi.k8s.io
     volumeHandle: metube-smb-volume
     volumeAttributes:
-      source: "${SECRET_CIFS_SHARE}/metube"
+      source: "${SECRET_CIFS_SHARE}/downloads"
     nodeStageSecretRef:
       name: smb-secrets
       namespace: kube-system

@@ -17,7 +17,7 @@ spec:
     driver: smb.csi.k8s.io
     volumeHandle: jd2-smb-volume
     volumeAttributes:
-      source: "${SECRET_CIFS_SHARE}/jd2"
+      source: "${SECRET_CIFS_SHARE}/downloads"
     nodeStageSecretRef:
       name: smb-secrets
       namespace: kube-system
