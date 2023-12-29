@@ -5,7 +5,7 @@ metadata:
   name: k3s-agent
 spec:
   # renovate: datasource=github-releases depName=k3s-io/k3s
-  version: v1.27.8+k3s1
+  version: v1.27.9+k3s1
   concurrency: 1
   serviceAccountName: system-upgrade
   nodeSelector:
