@@ -6,6 +6,7 @@ resources:
 - ../authelia.yaml
 - ../certificate-exporter.yaml
 - ../cert-manager.yaml
+- ../cloudflared.yaml
 - ../csi-driver-smb.yaml
 - ../descheduler.yaml
 - ../external-dns-bind.yaml
