@@ -22,7 +22,7 @@ spec:
     hostname: rancher.${SECRET_DOMAIN}
     tls: external
     ingress:
-      ingressClassName: nginx
+      ingressclassName: nginx-external
       extraAnnotations:
         external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
         external-dns/is-public: "true"

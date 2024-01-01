@@ -38,5 +38,4 @@ spec:
     provider: cloudflare
     extraArgs:
       - --cloudflare-proxied
-      - --annotation-filter=external-dns/is-public in (true)
-      - --ingress-class=nginx
+      - --ingress-class=nginx-external
