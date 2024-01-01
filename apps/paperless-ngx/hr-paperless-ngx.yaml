@@ -68,7 +68,8 @@ spec:
                   name: main
                   port: http
         tls:
-          - hosts:
+          - secretName: paperless-tls
+            hosts:
               - paperless.${SECRET_DOMAIN}
     persistence:
       data:

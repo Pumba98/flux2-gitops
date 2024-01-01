@@ -46,7 +46,8 @@ spec:
               name: main
               port: http
         tls:
-        - hosts:
+        - secretName: jd2-tls
+          hosts:
           - jd2.${SECRET_DOMAIN}
     persistence:
       config:
