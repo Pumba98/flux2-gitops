@@ -24,6 +24,12 @@ spec:
         name: nginx-external
         controllerValue: "k8s.io/ingress-nginx-external"
         default: false
+      admissionWebhooks:
+        objectSelector:
+          matchExpressions:
+            - key: ingress-class
+              operator: In
+              values: ["nginx-external"]
       service:
         type: LoadBalancer
         loadBalancerIP: "${LB_IP_NGINX_INGRESS_EXTERNAL}"

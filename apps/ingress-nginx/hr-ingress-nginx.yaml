@@ -24,6 +24,12 @@ spec:
         name: nginx
         controllerValue: "k8s.io/ingress-nginx"
         default: true
+      admissionWebhooks:
+        objectSelector:
+          matchExpressions:
+            - key: ingress-class
+              operator: In
+              values: ["nginx"]
       service:
         type: LoadBalancer
         loadBalancerIP: "${LB_IP_NGINX_INGRESS}"
