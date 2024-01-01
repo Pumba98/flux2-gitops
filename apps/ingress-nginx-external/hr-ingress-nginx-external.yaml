@@ -18,11 +18,11 @@ spec:
       image:
         repository: registry.k8s.io/ingress-nginx/controller
         tag: v1.9.5
-      ingressClass: nginx-external
       kind: DaemonSet
       ingressClassRessource:
         enabled: true
         name: nginx-external
+        controllerValue: "k8s.io/ingress-nginx-external"
         default: false
       service:
         type: LoadBalancer
