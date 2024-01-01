@@ -62,7 +62,8 @@ spec:
                   name: main
                   port: http
         tls:
-          - hosts:
+          - secretName: tandoor-receipes-tls
+            hosts:
               - receipes.${SECRET_DOMAIN}
     persistence:
       static:

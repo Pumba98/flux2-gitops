@@ -33,5 +33,6 @@ spec:
               - path: /
                 type: ImplementationSpecific
         tls:
-          - hosts:
+          - secretName: goldilocks-tls
+            hosts:
               - "goldilocks.${SECRET_DOMAIN}"

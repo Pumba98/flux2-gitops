@@ -32,5 +32,6 @@ spec:
             - path: /
               pathType: Prefix
       tls:
-        - hosts:
+        - secretName: weave-gitops-tls
+          hosts:
             - gitops.${SECRET_DOMAIN}

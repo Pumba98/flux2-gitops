@@ -61,7 +61,8 @@ spec:
               name: main
               port: http
         tls:
-        - hosts:
+        - secretName: homer-tls
+          hosts:
           - "homer.${SECRET_DOMAIN}"
     persistence:
       config:

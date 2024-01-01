@@ -48,7 +48,8 @@ spec:
         hosts:
         - "alert-manager.${SECRET_DOMAIN}"
         tls:
-        - hosts:
+        - secretName: alertmanager-tls
+          hosts:
           - "alert-manager.${SECRET_DOMAIN}"
       config:
         global:
@@ -159,7 +160,8 @@ spec:
         hosts:
         - "grafana.${SECRET_DOMAIN}"
         tls:
-        - hosts:
+        - secretName: grafana-tls
+          hosts:
           - "grafana.${SECRET_DOMAIN}"
     prometheus:
       image:
@@ -178,7 +180,8 @@ spec:
         hosts:
         - "prometheus.${SECRET_DOMAIN}"
         tls:
-        - hosts:
+        - secretName: prometheus-tls
+          hosts:
           - "prometheus.${SECRET_DOMAIN}"
       prometheusSpec:
         ruleSelectorNilUsesHelmValues: false
