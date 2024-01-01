@@ -21,7 +21,7 @@ spec:
       - name: CF_API_TOKEN
         valueFrom:
           secretKeyRef:
-            name: external-dns-secrets
+            name: external-dns-cloudflare-secrets
             key: cloudflare_api_token
     resources:
       requests:
