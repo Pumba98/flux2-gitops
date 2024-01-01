@@ -23,7 +23,7 @@ spec:
       className: nginx-external
       annotations:
         external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
-        external-dns/is-public: "true"
+        kubernetes.io/tls-acme: "true"
         nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
         nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
       hosts:
