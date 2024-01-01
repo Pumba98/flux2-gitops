@@ -19,7 +19,7 @@ spec:
         repository: registry.k8s.io/ingress-nginx/controller
         tag: v1.9.5
       kind: DaemonSet
-      ingressClassRessource:
+      ingressClassResource:
         enabled: true
         name: nginx-external
         controllerValue: "k8s.io/ingress-nginx-external"
