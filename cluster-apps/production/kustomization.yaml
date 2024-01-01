@@ -14,6 +14,7 @@ resources:
 - ../goldilocks.yaml
 - ../homer.yaml
 - ../ingress-nginx.yaml
+- ../ingress-nginx-external.yaml
 - ../jd2.yaml
 - ../kube-prometheus-stack.yaml
 - ../kube-vip.yaml

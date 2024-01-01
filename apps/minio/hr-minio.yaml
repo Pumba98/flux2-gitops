@@ -29,7 +29,7 @@ spec:
       existingClaim: minio-data
     consoleIngress:
       enabled: false
-      ingressClassName: nginx
+      ingressclassName: nginx-external
       path: /
       hosts:
         - minio.${SECRET_DOMAIN}

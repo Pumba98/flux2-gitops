@@ -1,13 +1,13 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: ingress-nginx-prometheus-servicemonitor
+  name: ingress-nginx-external-prometheus-servicemonitor
   labels:
-    name: ingress-nginx-prometheus-servicemonitor
+    name: ingress-nginx-external-prometheus-servicemonitor
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/name: ingress-nginx-external
   namespaceSelector:
     matchNames:
       - networking

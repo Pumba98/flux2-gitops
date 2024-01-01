@@ -20,7 +20,7 @@ spec:
       passwordHash: $2a$12$HQu99eymhRdEq9qZqqXqcewgY4HoRGPhxtlA5/l4E34p3lt1VNHz6
     ingress:
       enabled: true
-      className: nginx
+      className: nginx-external
       annotations:
         external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
         external-dns/is-public: "true"
