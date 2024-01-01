@@ -18,11 +18,11 @@ spec:
       image:
         repository: registry.k8s.io/ingress-nginx/controller
         tag: v1.9.5
-      ingressClass: nginx
       kind: DaemonSet
       ingressClassRessource:
         enabled: true
         name: nginx
+        controllerValue: "k8s.io/ingress-nginx"
         default: true
       service:
         type: LoadBalancer
