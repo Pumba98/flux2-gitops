@@ -27,3 +27,7 @@ spec:
       nameservers:
       - "1.1.1.1"
       - "8.8.8.8"
+    ingressShim:
+      defaultIssuerName: letsencrypt-prod
+      defaultIssuerKind: ClusterIssuer
+      defaultIssuerGroup: cert-manager.io
