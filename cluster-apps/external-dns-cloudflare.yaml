@@ -2,10 +2,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: external-dns-app
+  name: external-dns-cloudflare-app
   namespace: flux-system
 spec:
-  path: ./apps/external-dns
+  path: ./apps/external-dns-cloudflare
   targetNamespace: networking
   interval: 10m
   prune: true
@@ -15,5 +15,5 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: external-dns
+      name: external-dns-cloudflare
       namespace: networking

@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: external-dns
+  name: external-dns-cloudflare
 spec:
   interval: 5m
   chart:
@@ -39,3 +39,4 @@ spec:
     extraArgs:
       - --cloudflare-proxied
       - --annotation-filter=external-dns/is-public in (true)
+      - --ingress-class=nginx
