@@ -39,7 +39,7 @@ spec:
       ingress:
         enabled: true
         pathType: Prefix
-        ingressClassName: "nginx"
+        ingressClassName: "nginx-external"
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
           kubernetes.io/tls-acme: "true"
@@ -150,7 +150,7 @@ spec:
       ingress:
         enabled: true
         pathType: Prefix
-        ingressClassName: "nginx"
+        ingressclassName: "nginx-external"
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
           kubernetes.io/tls-acme: "true"
@@ -169,7 +169,7 @@ spec:
       ingress:
         enabled: true
         pathType: Prefix
-        ingressClassName: "nginx"
+        ingressClassName: "nginx-external"
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
           kubernetes.io/tls-acme: "true"
