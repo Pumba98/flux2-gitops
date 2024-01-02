@@ -54,6 +54,7 @@ spec:
         enabled: true
         mountPath: "/config"
         size: 1Gi
+        storageClass: longhorn-backup
       output:
         existingClaim: jd2-output
         globalMounts:
