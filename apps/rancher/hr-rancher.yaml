@@ -20,7 +20,7 @@ spec:
           enabled: false # Disable PSP for k8s 1.25+
     replicas: 1
     hostname: rancher.${SECRET_DOMAIN}
-    tls: external
+    tls: ingress
     ingress:
       ingressClassName: nginx-external
       extraAnnotations:
