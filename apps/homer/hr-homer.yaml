@@ -27,18 +27,6 @@ spec:
               repository: ghcr.io/bastienwirtz/homer
               tag: v23.10.1
               pullPolicy: IfNotPresent
-        initContainers:
-          copy-config:
-            image:
-              repository: ghcr.io/onedr0p/alpine
-              tag: 3.19.0
-            command:
-              - "/bin/sh"
-              - -c
-            args:
-              - envsubst < /configs/config.yml > /www/assets/config.yml;
-            env:
-              SECRET_DOMAIN: ${SECRET_DOMAIN}
     service:
       main:
         ports:
@@ -67,11 +55,9 @@ spec:
     persistence:
       config:
         enabled: true
-        type: emptyDir
-        globalMounts:
-        - path: /www/assets
-      templates:
         type: configMap
         name: homer-config
         globalMounts:
-        - path: "/configs"
+        - path: "/www/assets/config.yml"
+          subPath: config.yml
+          readOnly: true
