@@ -55,3 +55,21 @@ spec:
           - path: /etc/cloudflared/creds/credentials.json
             subPath: credentials.json
             readOnly: true
+    networkpolicies:
+      main:
+        enabled: true
+        controller: main
+        policyTypes:
+          - Egress
+        rules:
+          egress:
+            - to:
+                - namespaceSelector:
+                    matchLabels:
+                      kubernetes.io/metadata.name: networking
+                  podSelector:
+                    matchLabels:
+                      app.kubernetes.io/instance: ingress-nginx-external
+              ports:
+                - port: 443
+                  protocol: TCP
