@@ -42,8 +42,8 @@ spec:
     persistence:
       config:
         enabled: true
-        type: secret
-        name: cloudflared-secret
+        type: configMap
+        name: cloudflared-config
         globalMounts:
           - path: /etc/cloudflared/config/config.yaml
             subPath: config.yaml

@@ -1,0 +1,9 @@
+originRequest:
+  http2Origin: true
+ingress:
+- hostname: "*.${SECRET_DOMAIN}"
+  service: https://ingress-nginx-external-controller.networking.svc.cluster.local:443
+  originRequest:
+    originServerName: "${SECRET_GATEWAY}"
+    noTLSVerify: true
+- service: http_status:404
