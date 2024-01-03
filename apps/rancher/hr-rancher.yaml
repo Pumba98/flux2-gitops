@@ -14,10 +14,6 @@ spec:
         name: rancher-latest
         namespace: flux-system
   values:
-    global:
-      cattle:
-        psp:
-          enabled: false # Disable PSP for k8s 1.25+
     replicas: 1
     hostname: rancher.${SECRET_DOMAIN}
     tls: ingress
@@ -26,8 +22,8 @@ spec:
       extraAnnotations:
         external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
         kubernetes.io/tls-acme: "true"
-        # nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
-        # nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+        nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
+        nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
       tls:
         source: secret
         secretName: rancher-tls

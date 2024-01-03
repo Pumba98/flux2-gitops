@@ -35,11 +35,11 @@ spec:
       main:
         enabled: true
         className: "nginx"
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
-        #   kubernetes.io/tls-acme: "true"
-        #   nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
-        #   nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
+          kubernetes.io/tls-acme: "true"
+          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
         hosts:
         - host: metube.${SECRET_DOMAIN}
           paths:
