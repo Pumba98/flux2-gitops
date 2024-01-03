@@ -4,3 +4,9 @@ kind: Kustomization
 resources:
 - hr-cloudflared.yaml
 - secret-cloudflared.sops.yaml
+configMapGenerator:
+  - name: cloudflared-config
+    files:
+      - config.yaml=./resources/cloudflared-config.yaml
+generatorOptions:
+  disableNameSuffixHash: true
