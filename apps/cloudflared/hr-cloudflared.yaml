@@ -34,6 +34,31 @@ spec:
               - /etc/cloudflared/config/config.yaml
               - run
               - "${SECRET_CLOUDFLARE_TUNNEL_ID}"
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ready
+                    port: 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ready
+                    port: 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              startup:
+                enabled: false
     service:
       main:
         ports:
@@ -85,3 +110,10 @@ spec:
                   protocol: TCP
                 - port: 53
                   protocol: UDP
+            - to:
+              - ipBlock:
+                  cidr: 0.0.0.0/0
+                  except:
+                  - 10.0.0.0/8
+                  - 172.16.0.0/12
+                  - 192.168.0.0/16
