@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: grafana/promtail
-      tag: 2.9.3
+      tag: 2.9.4
     serviceMonitor:
       enabled: true
     tolerations:
