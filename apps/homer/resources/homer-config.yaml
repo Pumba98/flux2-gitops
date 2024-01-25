@@ -64,7 +64,7 @@ services:
       - name: "Paperless"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/paperless-ng.png"
         url: "https://paperless.${SECRET_DOMAIN}"
-      - name: "Tandoo Receipes"
+      - name: "Tandoor Receipes"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/tandoorrecipes.png"
         url: "https://receipes.${SECRET_DOMAIN}"
       - name: "Minio"
