@@ -14,6 +14,10 @@ spec:
         kind: HelmRepository
         name: longhorn-charts
         namespace: flux-system
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   values:
     persistence:
       defaultClass: true
