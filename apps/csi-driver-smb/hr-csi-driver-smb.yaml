@@ -14,7 +14,3 @@ spec:
         name: csi-driver-smb-charts
         namespace: flux-system
   values:
-    image:
-      smb:
-        repository: mcr.microsoft.com/k8s/csi/smb-csi
-        tag: v1.6.0
