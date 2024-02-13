@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: quay.io/minio/minio
-      tag: RELEASE.2024-02-09T21-25-16Z
+      tag: RELEASE.2024-02-13T15-35-11Z
     rootUser: "${SECRET_MINIO_ACCESSKEY}"
     rootPassword: "${SECRET_MINIO_SECRETKEY}"
     mode: standalone
