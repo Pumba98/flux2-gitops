@@ -7,7 +7,7 @@
 
 Kubernetes clusters using the [GitOps](https://www.weave.works/blog/what-is-gitops-really) tool [Flux](https://fluxcd.io/).  
 The Git repository is the driving the state of the Kubernetes clusters.  
-The awesome [Flux SOPS integration](https://toolkit.fluxcd.io/guides/mozilla-sops/) is used to encrypt secrets with gpg.
+The awesome [Flux SOPS integration](https://toolkit.fluxcd.io/guides/mozilla-sops/) is used to encrypt secrets with [age](https://age-encryption.org/).
 
 ## 📂 Repository structure
 
@@ -79,7 +79,7 @@ Big shout out to [k8s@home](https://github.com/k8s-at-home) and everyone from [a
 **tl;dr**
 ```
 kubectl create namespace flux-system --dry-run=client -o yaml | kubectl apply -f -
-sops -d ./base/flux-system/init/flux-sops-gpg-secret.sops.yaml | kubectl apply -f -
+sops -d ./base/flux-system/init/flux-sops-age-secret.sops.yaml | kubectl apply -f -
 sops -d ./base/flux-system/init/flux-secret.sops.yaml | kubectl apply -f -
 kubectl apply --kustomize=./base/flux-system
 kubectl apply --kustomize=./base/staging
@@ -91,10 +91,10 @@ kubectl apply --kustomize=./base/staging
 kubectl create namespace flux-system --dry-run=client -o yaml | kubectl apply -f -
 ```
 
-4. Add the Flux GPG key in-order for Flux to decrypt SOPS secrets
+4. Add the Flux age key in-order for Flux to decrypt SOPS secrets
 
 ```sh
-sops -d ./base/flux-system/init/flux-sops-gpg-secret.sops.yaml | kubectl apply -f -
+sops -d ./base/flux-system/init/flux-sops-age-secret.sops.yaml | kubectl apply -f -
 ```
 
 5. (Optional) Add the Flux SSH key in-order for Flux to pull private git repositories

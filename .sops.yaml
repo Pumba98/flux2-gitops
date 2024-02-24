@@ -1,6 +1,7 @@
 ---
 creation_rules:
 - encrypted_regex: '^(data|stringData)$'
-  pgp: >-
-    F218E6030557131BFE2B62AF9EB6C6C54B075E78,
-    8D200BE9B98597BE5D53AC63586602C2843240C2
+  age: age1zzqxk3z5anq53lz9g4rd7eatczfcd7vjszgggr47927mwe7hjfhq3tlad6
+stores:
+  yaml:
+    indent: 2
