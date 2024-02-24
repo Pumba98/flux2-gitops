@@ -1,5 +1,5 @@
 [//]: # "renovate: datasource=github-releases depName=k3s-io/k3s"
-[![k3s](https://img.shields.io/badge/k8s-v1.27.10+k3s2-orange?style=for-the-badge&logo=kubernetes)](https://k3s.io/)
+[![k3s](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FPumba98%2Fflux2-gitops%2Fmain%2Fapps%2Fsystem-upgrade-controller%2Fplans%2Fagent-plan.yaml&query=%24.spec.version&style=for-the-badge&logo=kubernetes&label=k8s&color=orange)](https://k3s.io/)
 [![flux](https://img.shields.io/badge/GitOps-Flux-blue?style=for-the-badge&logo=git)](https://fluxcd.io/)
 [![renovate](https://img.shields.io/badge/renovate-enabled-brightgreen?style=for-the-badge&logo=renovatebot)](https://github.com/renovatebot/renovate)
 
