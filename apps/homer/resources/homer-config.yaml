@@ -106,7 +106,7 @@ services:
     icon: "fas fa-desktop"
     items:
       - name: "Weave GitOps"
-        logo: "https://docs.gitops.weave.works/img/weave-logo.png"
+        logo: "https://avatars.githubusercontent.com/u/9976052?s=280&v=4"
         url: "https://gitops.${SECRET_DOMAIN}/"
       - name: "Grafana"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/grafana.png"
