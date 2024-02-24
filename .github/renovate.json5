@@ -22,10 +22,9 @@
   },
   "regexManagers": [
     {
-      "fileMatch": [ "^[^\\.]*\\.ya?ml$", "README.md" ],
+      "fileMatch": [ "^[^\\.]*\\.ya?ml$" ],
       "matchStrings": [
-        "datasource=(?<datasource>\\S+) depName=(?<depName>.*?)\n *version: (?<currentValue>.*)\n",
-        "datasource=(?<datasource>\\S+) depName=(?<depName>.*?)\"\n.*k8s\-(?<currentValue>.*)\-orange"
+        "datasource=(?<datasource>\\S+) depName=(?<depName>.*?)\n *version: (?<currentValue>.*)\n"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
     },
