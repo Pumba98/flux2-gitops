@@ -1,0 +1,49 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: flux-capacitor
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/gimlet-io/capacitor
+              tag: v0.2.0
+              pullPolicy: IfNotPresent
+    service:
+      main:
+        ports:
+          http:
+            port: 9000
+    ingress:
+      main:
+        enabled: true
+        className: "nginx-external"
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
+          kubernetes.io/tls-acme: "true"
+          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+        hosts:
+        - host: "capacitor.${SECRET_DOMAIN}"
+          paths:
+          - path: /
+            service:
+              name: main
+              port: http
+        tls:
+        - secretName: homer-tls
+          hosts:
+          - "capacitor.${SECRET_DOMAIN}"

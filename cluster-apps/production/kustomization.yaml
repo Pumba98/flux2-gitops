@@ -11,6 +11,7 @@ resources:
 - ../descheduler.yaml
 - ../external-dns-bind.yaml
 - ../external-dns-cloudflare.yaml
+- ../flux-capacitor.yaml
 - ../flux-system.yaml
 - ../goldilocks.yaml
 - ../homer.yaml
