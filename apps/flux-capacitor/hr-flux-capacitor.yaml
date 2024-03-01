@@ -22,6 +22,8 @@ spec:
               repository: ghcr.io/gimlet-io/capacitor
               tag: v0.2.0
               pullPolicy: IfNotPresent
+    serviceAccount:
+      create: true
     service:
       main:
         ports:
