@@ -86,6 +86,3 @@ spec:
         size: 1Gi
         globalMounts:
           - path: /var/cache/bind
-    serviceMonitor:
-      main:
-        enabled: true
