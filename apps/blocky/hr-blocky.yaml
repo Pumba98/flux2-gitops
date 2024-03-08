@@ -33,9 +33,7 @@ spec:
       dns:
         controller: main
         type: LoadBalancer
-        annotations:
-          metallb.universe.tf/allow-shared-ip: dns
-        loadBalancerIP: "${LB_IP_DNS_SVC}"
+        loadBalancerIP: "${LB_IP_BLOCKY_SVC}"
         externalTrafficPolicy: Local
         ports:
           dns-tcp:
