@@ -39,20 +39,16 @@ spec:
       dns:
         controller: main
         type: LoadBalancer
-        annotations:
-          metallb.universe.tf/allow-shared-ip: dns
-        loadBalancerIP: "${LB_IP_DNS_SVC}"
+        loadBalancerIP: "${LB_IP_BIND_SVC}"
         externalTrafficPolicy: Local
         ports:
           dns-tcp:
             enabled: true
-            port: 5053
-            targetPort: 53
+            port: 53
             protocol: TCP
           dns-udp:
             enabled: true
-            port: 5053
-            targetPort: 53
+            port: 53
             protocol: UDP
     ingress:
       main:
