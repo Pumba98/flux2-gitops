@@ -7,4 +7,5 @@ spec:
   addresses:
   - "${LB_IP_NGINX_INGRESS}/32"
   - "${LB_IP_NGINX_INGRESS_EXTERNAL}/32"
-  - "${LB_IP_DNS_SVC}/32"
+  - "${LB_IP_BIND_SVC}/32"
+  - "${LB_IP_BLOCKY_SVC}/32"
