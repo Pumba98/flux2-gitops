@@ -1,0 +1,13 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: local-path-provisioner-charts
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://github.com/rancher/local-path-provisioner.git
+  ref:
+    tag: v0.0.25
+  ignore: |
+    /*
+    !/deploy/

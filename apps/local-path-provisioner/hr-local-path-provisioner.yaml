@@ -1,0 +1,19 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: local-path-provisioner
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: deploy/chart
+      version: 0.0.25
+      sourceRef:
+        kind: GitRepository
+        name: local-path-provisioner-charts
+        namespace: flux-system
+  values:
+    storageClass:
+      defaultClass: true
