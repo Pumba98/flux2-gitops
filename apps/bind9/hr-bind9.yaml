@@ -25,7 +25,9 @@ spec:
               tag: 9.18-22.04_beta
         initContainers:
           create-zone:
-            image: alpine:3.19
+            image:
+              repository: alpine
+              tag: 3.19
             volumeMounts:
             - name: config
               mountPath: /config
