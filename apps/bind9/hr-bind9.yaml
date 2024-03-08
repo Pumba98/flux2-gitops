@@ -32,7 +32,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              cp -n /tmp/*.zone /var/lib/bind/ && chmod 101:101 /var/lib/bind/*.zone
+              cp -n /tmp/*.zone /var/lib/bind/ && chown 101:101 /var/lib/bind/*.zone
     service:
       main:
         enabled: false
