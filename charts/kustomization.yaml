@@ -15,6 +15,7 @@ resources:
 - ingress-nginx-charts.yaml
 - jetstack-charts.yaml
 - kubereboot-charts.yaml
+- local-path-provisioner.yaml
 - longhorn-charts.yaml
 - metallb-charts.yaml
 - metrics-server-charts.yaml
