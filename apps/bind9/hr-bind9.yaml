@@ -24,19 +24,18 @@ spec:
               repository: ubuntu/bind9
               tag: 9.18-22.04_beta
         initContainers:
-      initContainers:
-        create-zone:
-          image: alpine:3.19
-          volumeMounts:
-          - name: config
-            mountPath: /config
-          - name: data
-            mountPath: /data
-          command: 
-          - /bin/sh
-          - -c
-          - |
-            cp -n /config/*.zone /data/
+          create-zone:
+            image: alpine:3.19
+            volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: data
+              mountPath: /data
+            command: 
+            - /bin/sh
+            - -c
+            - |
+              cp -n /config/*.zone /data/
     service:
       main:
         enabled: false
