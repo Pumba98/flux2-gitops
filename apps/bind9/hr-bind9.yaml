@@ -32,7 +32,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              cp -n /tmp/*.zone /var/lib/bind/
+              cp -n /tmp/*.zone /var/lib/bind/ && chmod 101:101 /var/lib/bind/*.zone
     service:
       main:
         enabled: false
@@ -68,7 +68,7 @@ spec:
           - path: /tmp/domain.zone
             subPath: domain2.zone
             readOnly: true
-          - path: /tmp/domain2zone
+          - path: /tmp/domain2.zone
             subPath: domain2.zone
             readOnly: true
       data:
