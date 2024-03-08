@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
 - hr-bind9.yaml
 - pvc-bind9.yaml
-- secret-bind9.sos.yaml
+- secret-bind9.sops.yaml
