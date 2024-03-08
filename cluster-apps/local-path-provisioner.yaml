@@ -9,8 +9,6 @@ spec:
   targetNamespace: kube-system
   interval: 10m
   prune: true
-  dependsOn:
-    - name: kube-prometheus-stack-app
   sourceRef:
     kind: GitRepository
     name: flux-system
