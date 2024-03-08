@@ -28,16 +28,11 @@ spec:
             image:
               repository: alpine
               tag: 3.19
-            volumeMounts:
-            - name: config
-              mountPath: /config
-            - name: data
-              mountPath: /data
             command: 
             - /bin/sh
             - -c
             - |
-              cp -n /config/*.zone /data/
+              cp -n /tmp/*.zone /var/lib/bind/
     service:
       main:
         enabled: false
@@ -73,6 +68,12 @@ spec:
             readOnly: true
           - path: /etc/bind/tsig.keys
             subPath: tsig.keys
+            readOnly: true
+          - path: /tmp/domain.zone
+            subPath: domain2.zone
+            readOnly: true
+          - path: /tmp/domain2zone
+            subPath: domain2.zone
             readOnly: true
       data:
         enabled: true

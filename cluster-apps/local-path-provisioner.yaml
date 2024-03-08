@@ -3,7 +3,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: local-path-provisioner-app
-  namespace: flux-system
+  namespace: default
 spec:
   path: ./apps/local-path-provisioner
   targetNamespace: kube-system
@@ -16,4 +16,4 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: local-path-provisioner
-      namespace: kube-system
+      namespace: default
