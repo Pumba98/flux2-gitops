@@ -6,5 +6,6 @@ resources:
 - ../bind9.yaml
 - ../blocky.yaml
 # - ../flux-system.yaml
+- ../local-path-provisioner.yaml
 - ../metallb.yaml
 # - ../system-upgrade-controller.yaml
