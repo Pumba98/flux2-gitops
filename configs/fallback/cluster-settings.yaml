@@ -3,4 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: cluster-settings
-data: {}
+data:
+  LB_IP_NGINX_INGRESS: 192.168.100.211
+  LB_IP_NGINX_INGRESS_EXTERNAL: 192.168.100.210
+  LB_IP_DNS_SVC: 192.168.1.201
