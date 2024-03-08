@@ -1,0 +1,51 @@
+ports:
+  dns: 53
+  http: 4000
+upstreams:
+  strategy: strict
+  groups:
+    default:
+      - bind9
+      - 1.1.1.1
+      - 1.0.0.1
+      - 9.9.9.9
+caching:
+  cacheTimeNegative: -1
+blocking:
+  blackLists:
+    ads:
+      - https://big.oisd.nl/domainswild
+      - https://raw.githubusercontent.com/mmotti/pihole-regex/master/regex.list
+      - https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Hosts-File.txt
+      - https://v.firebog.net/hosts/AdguardDNS.txt
+      - https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt
+    trackers:
+      - https://v.firebog.net/hosts/Easyprivacy.txt
+      - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
+      - https://raw.githubusercontent.com/nextdns/native-tracking-domains/main/domains/alexa
+      - https://raw.githubusercontent.com/nextdns/native-tracking-domains/main/domains/apple
+      - https://raw.githubusercontent.com/nextdns/native-tracking-domains/main/domains/samsung
+      - https://raw.githubusercontent.com/nextdns/native-tracking-domains/main/domains/windows
+      - https://raw.githubusercontent.com/nextdns/native-tracking-domains/main/domains/huawei
+      - https://raw.githubusercontent.com/nextdns/native-tracking-domains/main/domains/xiaomi
+      - https://raw.githubusercontent.com/nextdns/native-tracking-domains/main/domains/sonos
+      - https://raw.githubusercontent.com/mullvad/dns-blocklists/main/files/tracker
+  whiteLists:
+    ads:
+      - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
+      - https://raw.githubusercontent.com/mmotti/pihole-regex/master/whitelist.list
+      - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/optional-list.txt
+      - |
+        # Sport1
+        www.asadcdn.com
+        tag.aticdn.net
+        # Bild.de
+        acdn.adnxs.com
+        cdn1.smartadserver.com
+        ec-ns.sascdn.com
+        # ChatGPT
+        *.chatgpt.com
+  clientGroupsBlock:
+    default:
+      - ads
+      - trackers

@@ -1,0 +1,81 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: blocky
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        replicas: 2
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/0xerr0r/blocky
+              tag: v0.23
+    service:
+      main:
+        ports:
+          http:
+            port: 4000
+      dns:
+        controller: main
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/allow-shared-ip: dns
+        externalIPs:
+          - "${LB_IP_DNS_SVC}"
+        externalTrafficPolicy: Local
+        ports:
+          dns-tcp:
+            enabled: true
+            port: 53
+            protocol: TCP
+          dns-udp:
+            enabled: true
+            port: 53
+            protocol: UDP
+    ingress:
+      main:
+        enabled: true
+        className: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
+          kubernetes.io/tls-acme: "true"
+          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+        hosts:
+        - host: "blocky.${SECRET_DOMAIN}"
+          paths:
+          - path: /
+            service:
+              name: main
+              port: http
+        tls:
+        - secretName: blocky-tls
+          hosts:
+          - "blocky.${SECRET_DOMAIN}"
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: blocky-config
+        globalMounts:
+          - path: /app/config.yml
+            subPath: config.yml
+            readOnly: true
+    serviceMonitor:
+      main:
+        enabled: true
