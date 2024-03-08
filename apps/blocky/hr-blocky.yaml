@@ -76,6 +76,6 @@ spec:
           - path: /app/config.yml
             subPath: config.yml
             readOnly: true
-    serviceMonitor:
-      main:
-        enabled: true
+    # serviceMonitor:
+    #   main:
+    #     enabled: true
