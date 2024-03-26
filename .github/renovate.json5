@@ -32,7 +32,7 @@
   "packageRules": [
     {
       "matchPackageNames": ["k3s-io/k3s"],
-      "seperateMultipleMinor": true
+      "separateMultipleMinor": true
     },
     {
       "description": "Use custom versioning for Minio",
