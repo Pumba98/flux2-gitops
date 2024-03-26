@@ -13,6 +13,9 @@ spec:
         kind: HelmRepository
         name: minio-charts
         namespace: flux-system
+  dependsOn:
+    - name: csi-driver-smb
+      namespace: kube-system
   values:
     image:
       repository: quay.io/minio/minio

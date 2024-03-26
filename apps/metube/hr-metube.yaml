@@ -13,6 +13,13 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
+  dependsOn:
+    - name: csi-driver-smb
+      namespace: kube-system
+    - name: ingress-nginx
+      namespace: networking
+    - name: pod-gateway-vpn
+      namespace: networking
   values:
     controllers:
       main:

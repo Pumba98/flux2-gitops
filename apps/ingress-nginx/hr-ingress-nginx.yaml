@@ -13,6 +13,9 @@ spec:
         kind: HelmRepository
         name: ingress-nginx-charts
         namespace: flux-system
+  dependsOn:
+    - name: metallb
+      namespace: metallb-system
   values:
     controller:
       image:
