@@ -9,13 +9,6 @@ spec:
   targetNamespace: kube-system
   interval: 10m
   prune: true
-  dependsOn:
-    - name: kube-prometheus-stack-app
   sourceRef:
     kind: GitRepository
     name: flux-system
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: metrics-server
-      namespace: kube-system

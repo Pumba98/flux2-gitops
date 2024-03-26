@@ -13,6 +13,9 @@ spec:
         kind: HelmRepository
         name: fairwinds-charts
         namespace: flux-system
+  dependsOn:
+    - name: ingress-nginx-external
+      namespace: networking
   values:
     vpa:
       enabled: true

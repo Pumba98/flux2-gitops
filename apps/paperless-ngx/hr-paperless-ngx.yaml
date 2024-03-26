@@ -14,6 +14,12 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
   dependsOn:
+    - name: ingress-nginx-external
+      namespace: networking
+    - name: longhorn
+      namespace: longhorn-system
+    - name: csi-driver-smb
+      namespace: kube-system
     - name: paperless-ngx-redis
     - name: paperless-ngx-postgresql
   values:

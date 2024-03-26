@@ -13,6 +13,9 @@ spec:
         kind: HelmRepository
         name: rancher-latest
         namespace: flux-system
+  dependsOn:
+    - name: ingress-nginx-external
+      namespace: networking
   values:
     replicas: 1
     hostname: rancher.${SECRET_DOMAIN}

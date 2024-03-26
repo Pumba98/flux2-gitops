@@ -13,6 +13,9 @@ spec:
         kind: HelmRepository
         name: weave-gitops-charts
         namespace: flux-system
+  dependsOn:
+    - name: ingress-nginx-external
+      namespace: networking
   values:
     adminUser:
       create: true
