@@ -63,7 +63,7 @@ jobs:
         hr_pr_version=$(yq e .spec.chart.spec.version ${{ matrix.file }})
 
         if [ "$hr_live_version" = "$hr_pr_version" ]; then
-          echo "::set-output name=message::$(echo "$message")"
+          echo "message=$(echo "$message")" >> $GITHUB_OUTPUT
           exit 0
         fi
 
@@ -97,7 +97,7 @@ jobs:
         else
             message="$message"'```diff'$'\n'"$values_diff"$'\n''```'
         fi
-        echo "::set-output name=message::$(echo "$message" | jq --raw-input --slurp)"
+        echo "message=$(echo "$message" | jq --raw-input --slurp)" >> $GITHUB_OUTPUT
 
     - name: Find Comment
       uses: peter-evans/find-comment@v3
