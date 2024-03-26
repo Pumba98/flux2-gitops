@@ -17,9 +17,6 @@ spec:
     - name: ingress-nginx-external
       namespace: networking
   values:
-    defaultPodOptions:
-      scurityContext:
-        fsGroup: 1000
     controllers:
       main:
         annotations:
