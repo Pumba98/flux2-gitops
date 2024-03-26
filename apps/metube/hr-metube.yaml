@@ -40,6 +40,9 @@ spec:
                 enabled: true
               startup:
                 enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
     service:
       main:
         controller: main
@@ -66,9 +69,12 @@ spec:
           - metube.${SECRET_DOMAIN}
     persistence:
       config:
-        mountPath: "/config"
+        type: persistentVolumeClaim
         size: 1Gi
         storageClass: longhorn-backup
+        accessMode: ReadWriteOnce
+        globalMounts:
+          - path: "/config"
       output:
         existingClaim: metube-output
         globalMounts:

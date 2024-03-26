@@ -37,9 +37,12 @@ spec:
                 enabled: true
               startup:
                 enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
     service:
       main:
-        contoller: main
+        controller: main
         ports:
           http:
             port: 8080
