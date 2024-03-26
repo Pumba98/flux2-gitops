@@ -9,16 +9,9 @@ spec:
   targetNamespace: monitoring
   interval: 10m
   prune: true
-  dependsOn:
-    - name: longhorn-app
   sourceRef:
     kind: GitRepository
     name: flux-system
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: kube-prometheus-stack
-      namespace: monitoring
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

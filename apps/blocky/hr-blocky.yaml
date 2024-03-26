@@ -13,6 +13,9 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
+  dependsOn:
+    - name: metallb
+      namespace: metallb-system
   values:
     controllers:
       main:
