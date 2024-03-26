@@ -54,9 +54,6 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
     service:
       main:
         controller: main
