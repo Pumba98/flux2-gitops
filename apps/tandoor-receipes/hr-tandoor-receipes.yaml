@@ -44,14 +44,21 @@ spec:
               ENABLE_SIGNUP: 0
               ENABLE_METRICS: 1
               ENABLE_PDF_EXPORT: 1
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8080
     ingress:
       main:
-        enabled: true
         className: nginx-external
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
@@ -63,7 +70,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - secretName: tandoor-receipes-tls

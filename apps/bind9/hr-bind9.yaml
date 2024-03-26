@@ -26,6 +26,13 @@ spec:
             image:
               repository: ubuntu/bind9
               tag: 9.18-22.04_beta
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
         initContainers:
           create-zone:
             image:
@@ -38,27 +45,19 @@ spec:
               cp -n /tmp/*.zone /var/lib/bind/ && chown 101:101 /var/lib/bind/*.zone
     service:
       main:
-        enabled: false
-      dns:
         controller: main
         type: LoadBalancer
         loadBalancerIP: "${LB_IP_BIND_SVC}"
         externalTrafficPolicy: Local
         ports:
           dns-tcp:
-            enabled: true
             port: 53
             protocol: TCP
           dns-udp:
-            enabled: true
             port: 53
             protocol: UDP
-    ingress:
-      main:
-        enabled: false
     persistence:
       config:
-        enabled: true
         type: secret
         name: bind9-secrets
         globalMounts:
@@ -75,12 +74,10 @@ spec:
             subPath: domain2.zone
             readOnly: true
       data:
-        enabled: true
         existingClaim: bind9-data
         globalMounts:
           - path: /var/lib/bind
       cache:
-        enabled: true
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 1Gi

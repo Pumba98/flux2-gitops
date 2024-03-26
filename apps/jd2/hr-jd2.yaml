@@ -33,14 +33,21 @@ spec:
               pullPolicy: IfNotPresent
             env:
               KEEP_APP_RUNNING: true
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
     service:
       main:
+        controller: main
         ports:
           http:
             port: 5800
     ingress:
       main:
-        enabled: true
         className: "nginx-external"
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
@@ -52,7 +59,7 @@ spec:
           paths:
           - path: /
             service:
-              name: main
+              identifier: main
               port: http
         tls:
         - secretName: jd2-tls
@@ -60,7 +67,6 @@ spec:
           - jd2.${SECRET_DOMAIN}
     persistence:
       config:
-        enabled: true
         mountPath: "/config"
         size: 1Gi
         storageClass: longhorn-backup

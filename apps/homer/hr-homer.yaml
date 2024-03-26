@@ -30,14 +30,21 @@ spec:
               repository: ghcr.io/bastienwirtz/homer
               tag: v23.10.1
               pullPolicy: IfNotPresent
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
     service:
       main:
+        contoller: main
         ports:
           http:
             port: 8080
     ingress:
       main:
-        enabled: true
         className: "nginx-external"
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
@@ -49,7 +56,7 @@ spec:
           paths:
           - path: /
             service:
-              name: main
+              identifier: main
               port: http
         tls:
         - secretName: homer-tls
@@ -57,7 +64,6 @@ spec:
           - "homer.${SECRET_DOMAIN}"
     persistence:
       config:
-        enabled: true
         type: configMap
         name: homer-config
         globalMounts:

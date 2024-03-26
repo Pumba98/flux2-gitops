@@ -39,7 +39,6 @@ spec:
               - "${SECRET_CLOUDFLARE_TUNNEL_ID}"
             probes:
               liveness:
-                enabled: true
                 custom: true
                 spec:
                   httpGet:
@@ -50,7 +49,6 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness:
-                enabled: true
                 custom: true
                 spec:
                   httpGet:
@@ -64,12 +62,12 @@ spec:
                 enabled: false
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8080
     persistence:
       config:
-        enabled: true
         type: configMap
         name: cloudflared-config
         globalMounts:
@@ -85,7 +83,6 @@ spec:
             readOnly: true
     networkpolicies:
       main:
-        enabled: true
         controller: main
         policyTypes:
           - Egress

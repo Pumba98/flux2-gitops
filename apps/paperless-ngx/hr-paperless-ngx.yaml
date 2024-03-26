@@ -52,14 +52,21 @@ spec:
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: true
               PAPERLESS_OCR_LANGUAGE: deu+eng
               PAPERLESS_SECRET_KEY: ${SECRET_PAPERLESS_NGX_SECRET_KEY}
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8000
     ingress:
       main:
-        enabled: true
         className: nginx-external
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
@@ -71,7 +78,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - secretName: paperless-tls

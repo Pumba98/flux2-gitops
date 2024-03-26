@@ -28,8 +28,16 @@ spec:
             image:
               repository: ghcr.io/0xerr0r/blocky
               tag: v0.23
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
     service:
       main:
+        controller: main
         ports:
           http:
             port: 4000
@@ -40,16 +48,13 @@ spec:
         externalTrafficPolicy: Local
         ports:
           dns-tcp:
-            enabled: true
             port: 53
             protocol: TCP
           dns-udp:
-            enabled: true
             port: 53
             protocol: UDP
     ingress:
       main:
-        enabled: true
         className: "nginx"
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
@@ -61,7 +66,7 @@ spec:
           paths:
           - path: /
             service:
-              name: main
+              identifier: main
               port: http
         tls:
         - secretName: blocky-tls
@@ -69,7 +74,6 @@ spec:
           - "blocky.${SECRET_DOMAIN}"
     persistence:
       config:
-        enabled: true
         type: configMap
         name: blocky-config
         globalMounts:
