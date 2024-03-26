@@ -31,6 +31,10 @@
   ],
   "packageRules": [
     {
+      "matchPackageNames": ["k3s-io/k3s"],
+      "seperateMultipleMinor": true
+    },
+    {
       "description": "Use custom versioning for Minio",
       "matchDatasources": ["docker"],
       "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$",
