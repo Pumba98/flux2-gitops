@@ -21,9 +21,9 @@ spec:
     updateStrategy: RollingUpdate
     configuration:
       prometheusUrl: "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
-      alertFilterRegexp: "^(HostRequiresReboot)$" #"^(HostRequiresReboot|Watchdog)$"
+      alertFilterRegexp: "^(HostRequiresReboot|Watchdog)$"
       alertFiringOnly: true
-      rebootCommand: "echo reboot" #"/usr/bin/systemctl reboot"
+      rebootCommand: "/usr/bin/systemctl reboot"
       lockReleaseDelay: 30m
     tolerations:
       - effect: NoSchedule
