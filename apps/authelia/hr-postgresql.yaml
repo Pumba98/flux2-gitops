@@ -23,6 +23,9 @@ spec:
       password: "${SECRET_AUTHELIA_DB_PASSWORD}"
       database: authelia
     primary:
+      resources:
+        limits:
+          cpu: null
       persistence:
         enabled: true
         existingClaim: authelia-postgresql-data
