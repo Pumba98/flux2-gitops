@@ -23,6 +23,9 @@ spec:
       password: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
       database: paperless-ngx
     primary:
+      resources:
+        limits:
+          cpu: null
       persistence:
         enabled: true
         existingClaim: paperless-ngx-postgresql
