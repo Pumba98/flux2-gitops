@@ -23,9 +23,7 @@ spec:
       password: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
       database: tandoor-receipes
     primary:
-      resources:
-        limits:
-          cpu: null
+      resourcesPreset: "small"
       persistence:
         enabled: true
         existingClaim: tandoor-receipes-postgresql
