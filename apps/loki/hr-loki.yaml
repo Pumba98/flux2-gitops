@@ -20,6 +20,7 @@ spec:
     - name: kube-prometheus-stack
       namespace: monitoring
   values:
+    deploymentMode: SingleBinary
     loki:
       image:
         repository: grafana/loki
