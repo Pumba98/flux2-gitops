@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: loki
-      version: 5.47.2
+      version: 6.1.0
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
@@ -20,6 +20,7 @@ spec:
     - name: kube-prometheus-stack
       namespace: monitoring
   values:
+    deploymentMode: SingleBinary
     loki:
       image:
         repository: grafana/loki
