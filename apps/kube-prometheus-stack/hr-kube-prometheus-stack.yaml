@@ -174,7 +174,7 @@ spec:
       image:
         registry: quay.io
         repository: prometheus/prometheus
-        tag: v2.51.2
+        tag: v2.52.0
       ingress:
         enabled: true
         pathType: Prefix
