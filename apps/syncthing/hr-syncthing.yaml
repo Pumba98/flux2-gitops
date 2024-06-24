@@ -30,10 +30,26 @@ spec:
             probes:
               liveness:
                 enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /rest/noauth/health
+                    port: 8384
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
               readiness:
                 enabled: true
-              startup:
-                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /rest/noauth/health
+                    port: 8384
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
     service:
       main:
         controller: main
