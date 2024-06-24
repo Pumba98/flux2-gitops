@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sftpgo-static-pv
+spec:
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: smb
+  mountOptions:
+    - dir_mode=0777
+    - file_mode=0777
+  csi:
+    driver: smb.csi.k8s.io
+    volumeHandle: sftpgo-smb-volume
+    volumeAttributes:
+      source: "${SECRET_CIFS_SHARE}/"
+    nodeStageSecretRef:
+      name: smb-secrets
+      namespace: kube-system
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sftpgo-data
+spec:
+  volumeName: sftpgo-static-pv
+  storageClassName: smb
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Ti
