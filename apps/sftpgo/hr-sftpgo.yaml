@@ -28,12 +28,12 @@ spec:
               repository: ghcr.io/drakkan/sftpgo
               tag: v2.6.2
             env:
-              SFTPGO_DATA_PROVIDER__DRIVER: postgresql
-              SFTPGO_DATA_PROVIDER__NAME: sftpgo
-              SFTPGO_DATA_PROVIDER__HOST: sftpgo-postgresql
-              SFTPGO_DATA_PROVIDER__PORT: "5432"
-              SFTPGO_DATA_PROVIDER__USERNAME: sftpgo
-              SFTPGO_DATA_PROVIDER__PASSWORD: ${SECRET_SFTPGO_DB_PASSWORD}
+              # SFTPGO_DATA_PROVIDER__DRIVER: postgresql
+              # SFTPGO_DATA_PROVIDER__NAME: sftpgo
+              # SFTPGO_DATA_PROVIDER__HOST: sftpgo-postgresql
+              # SFTPGO_DATA_PROVIDER__PORT: "5432"
+              # SFTPGO_DATA_PROVIDER__USERNAME: sftpgo
+              # SFTPGO_DATA_PROVIDER__PASSWORD: ${SECRET_SFTPGO_DB_PASSWORD}
               SFTPGO_SFTPD__BINDINGS__0__ADDRESS: 0.0.0.0
               SFTPGO_SFTPD__BINDINGS__0__PORT: 22
               SFTPGO_HTTPD__BINDINGS__0__ADDRESS: 0.0.0.0
@@ -47,12 +47,6 @@ spec:
                 enabled: true
               startup:
                 enabled: true
-            securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
-              fsGroup: 1000
-              fsGroupChangePolicy: OnRootMismatch
-              supplementalGroups: [100]
     service:
       main:
         controller: main
@@ -82,13 +76,13 @@ spec:
           hosts:
           - sftp.${SECRET_DOMAIN}
     persistence:
-      config:
-        type: persistentVolumeClaim
-        size: 1Gi
-        storageClass: longhorn-backup
-        accessMode: ReadWriteOnce
-        globalMounts:
-          - path: "/var/lib/sftpgo"
+      # config:
+      #   type: persistentVolumeClaim
+      #   size: 1Gi
+      #   storageClass: longhorn-backup
+      #   accessMode: ReadWriteOnce
+      #   globalMounts:
+      #     - path: "/var/lib/sftpgo"
       data:
         existingClaim: sftpgo-data
         globalMounts:
