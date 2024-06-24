@@ -9,3 +9,5 @@ spec:
   - "${LB_IP_NGINX_INGRESS_EXTERNAL}/32"
   - "${LB_IP_BIND_SVC}/32"
   - "${LB_IP_BLOCKY_SVC}/32"
+  - "${LB_IP_SYNCTHING_SVC}/32"
+  - "${LB_IP_SFTPGO_SVC}/32"
