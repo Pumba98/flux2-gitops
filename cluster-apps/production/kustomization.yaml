@@ -11,6 +11,7 @@ resources:
 - ../descheduler.yaml
 - ../external-dns-bind.yaml
 - ../external-dns-cloudflare.yaml
+- ../filebrowser.yaml
 - ../flux-system.yaml
 - ../goldilocks.yaml
 - ../homer.yaml
@@ -31,6 +32,8 @@ resources:
 - ../promtail.yaml
 - ../rancher.yaml
 - ../reloader.yaml
+- ../sftpgo.yaml
+- ../syncthing.yaml
 - ../system-upgrade-controller.yaml
 - ../tandoor-receipes.yaml
 - ../weave-gitops.yaml
