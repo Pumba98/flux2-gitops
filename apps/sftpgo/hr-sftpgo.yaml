@@ -83,14 +83,15 @@ spec:
           hosts:
           - sftp.${SECRET_DOMAIN}
     persistence:
-      # config:
-      #   type: persistentVolumeClaim
-      #   size: 1Gi
-      #   storageClass: longhorn-backup
-      #   accessMode: ReadWriteOnce
-      #   globalMounts:
-      #     - path: "/var/lib/sftpgo"
+      home:
+        type: persistentVolumeClaim
+        size: 1Gi
+        storageClass: longhorn-backup
+        accessMode: ReadWriteOnce
+        globalMounts:
+          - path: "/var/lib/sftpgo"
       data:
         existingClaim: sftpgo-data
         globalMounts:
-          - path: "/srv/sftpgo"
+          - path: /data
+        #  - path: "/srv/sftpgo"
