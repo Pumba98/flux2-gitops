@@ -47,6 +47,12 @@ spec:
                 enabled: true
               startup:
                 enabled: true
+            securityContext:
+              runAsUser: 1001
+              runAsGroup: 1001
+              fsGroup: 1001
+              fsGroupChangePolicy: OnRootMismatch
+              supplementalGroups: [100]
     service:
       main:
         controller: main
