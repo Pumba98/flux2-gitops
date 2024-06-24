@@ -1,0 +1,90 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: sftpgo
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 5m
+  dependsOn:
+    - name: ingress-nginx-external
+      namespace: networking
+    - name: csi-driver-smb
+      namespace: kube-system
+  values:
+    controllers:
+      main:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/drakkan/sftpgo
+              tag: v2.6.2
+            env:
+              # SFTPGO_DATA_PROVIDER__DRIVER: postgresql
+              # SFTPGO_DATA_PROVIDER__NAME: sftpgo
+              # SFTPGO_DATA_PROVIDER__HOST: sftpgo-postgresql
+              # SFTPGO_DATA_PROVIDER__PORT: "5432"
+              SFTPGO_SFTPD__BINDINGS__0__ADDRESS: 0.0.0.0
+              SFTPGO_SFTPD__BINDINGS__0__PORT: 22
+              SFTPGO_HTTPD__BINDINGS__0__ADDRESS: 0.0.0.0
+              SFTPGO_HTTPD__BINDINGS__0__PORT: 8080
+              SFTPGO_TELEMETRY__BIND_ADDRESS: 0.0.0.0
+              SFTPGO_TELEMETRY__BIND_PORT: 8081
+            envFrom:
+              - secretRef:
+                  name: sftpgo-secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+    service:
+      app:
+        controller: main
+        ports:
+          http:
+            port: 8080
+          sftp:
+            port: 22
+          metrics:
+            port: 8081
+    ingress:
+      main:
+        className: "nginx"
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          # nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
+          # nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+        hosts:
+        - host: sftp.${SECRET_DOMAIN}
+          paths:
+          - path: /
+            service:
+              identifier: main
+              port: http
+        tls:
+        - secretName: sftpgo-tls
+          hosts:
+          - sftp.${SECRET_DOMAIN}
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        size: 1Gi
+        storageClass: longhorn-backup
+        accessMode: ReadWriteOnce
+        globalMounts:
+          - path: "/var/lib/sftpgo"
+      data:
+        existingClaim: sftpgo-data
+        globalMounts:
+          - path: "/srv/sftpgo"
