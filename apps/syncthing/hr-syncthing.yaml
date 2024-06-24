@@ -74,7 +74,14 @@ spec:
           hosts:
           - syncthing.${SECRET_DOMAIN}
     persistence:
+      config:
+        type: persistentVolumeClaim
+        size: 1Gi
+        storageClass: longhorn-backup
+        accessMode: ReadWriteOnce
+        globalMounts:
+          - path: "/var/syncthing"
       data:
         existingClaim: syncthing-data
         globalMounts:
-          - path: "/var/syncthing"
+          - path: "/data"
