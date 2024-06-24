@@ -53,10 +53,17 @@ spec:
         ports:
           http:
             port: 8080
-          sftp:
-            port: 22
           metrics:
             port: 8081
+      transfer:
+        controller: main
+        type: LoadBalancer
+        loadBalancerIP: "${LB_IP_SFTPGO_SVC}"
+        externalTrafficPolicy: Local
+        ports:
+          sftp:
+            port: 22
+            protocol: TCP
     ingress:
       main:
         className: "nginx"
