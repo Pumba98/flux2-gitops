@@ -75,10 +75,16 @@ spec:
         # Applications without auth
         - policy: two_factor
           domain:
-          - paperless.${SECRET_DOMAIN}
           - longhorn.${SECRET_DOMAIN}
           - jd2.${SECRET_DOMAIN}
           - metube.${SECRET_DOMAIN}
+          - files.${SECRET_DOMAIN}
+          - syncthing.${SECRET_DOMAIN}
+        # Applications with sensitive Data
+        - policy: two_factor
+          domain:
+          - paperless.${SECRET_DOMAIN}
+          - sftp.${SECRET_DOMAIN}
         # Applications with built-in auth
         - policy: one_factor
           domain:
