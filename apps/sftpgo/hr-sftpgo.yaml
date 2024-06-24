@@ -20,6 +20,9 @@ spec:
     - name: csi-driver-smb
       namespace: kube-system
   values:
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
     controllers:
       main:
         containers:
@@ -47,8 +50,6 @@ spec:
                 enabled: true
               startup:
                 enabled: true
-            securityContext:
-              fsGroup: 1000
     service:
       main:
         controller: main
