@@ -35,7 +35,7 @@ spec:
               startup:
                 enabled: true
     service:
-      app:
+      main:
         controller: main
         ports:
           http:
