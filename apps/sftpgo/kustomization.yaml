@@ -5,3 +5,4 @@ resources:
 - hr-sftpgo.yaml
 - hr-postgresql.yaml
 - pvc-sftpgo.yaml
+- pvc-postgresql.yaml
