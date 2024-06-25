@@ -31,18 +31,11 @@ spec:
               repository: ghcr.io/drakkan/sftpgo
               tag: v2.6.2
             env:
-              # SFTPGO_DATA_PROVIDER__DRIVER: postgresql
-              # SFTPGO_DATA_PROVIDER__NAME: sftpgo
-              # SFTPGO_DATA_PROVIDER__HOST: sftpgo-postgresql
-              # SFTPGO_DATA_PROVIDER__PORT: "5432"
-              # SFTPGO_DATA_PROVIDER__USERNAME: sftpgo
-              # SFTPGO_DATA_PROVIDER__PASSWORD: ${SECRET_SFTPGO_DB_PASSWORD}
+              SFTPGO_DATA_PROVIDER__DRIVER: sqlite
               SFTPGO_SFTPD__BINDINGS__0__ADDRESS: 0.0.0.0
               SFTPGO_SFTPD__BINDINGS__0__PORT: 22
               SFTPGO_HTTPD__BINDINGS__0__ADDRESS: 0.0.0.0
               SFTPGO_HTTPD__BINDINGS__0__PORT: 8080
-              SFTPGO_WEBDAVD__BINDINGS__0__ADDRESS: 0.0.0.0
-              SFTPGO_WEBDAVD__BINDINGS__0__PORT: 8082
               SFTPGO_TELEMETRY__BIND_ADDRESS: 0.0.0.0
               SFTPGO_TELEMETRY__BIND_PORT: 8081
             probes:
@@ -101,19 +94,10 @@ spec:
             service:
               identifier: main
               port: http
-        - host: webdav.${SECRET_DOMAIN}
-          paths:
-          - path: /
-            service:
-              identifier: main
-              port: dav
         tls:
         - secretName: sftpgo-tls
           hosts:
           - sftp.${SECRET_DOMAIN}
-        - secretName: webdav-tls
-          hosts:
-          - webdav.${SECRET_DOMAIN}
     persistence:
       home:
         type: persistentVolumeClaim
@@ -126,4 +110,3 @@ spec:
         existingClaim: sftpgo-data
         globalMounts:
           - path: /data
-        #  - path: "/srv/sftpgo"
