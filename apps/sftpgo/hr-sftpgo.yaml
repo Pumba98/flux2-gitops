@@ -41,6 +41,9 @@ spec:
               SFTPGO_SFTPD__BINDINGS__0__PORT: 22
               SFTPGO_HTTPD__BINDINGS__0__ADDRESS: 0.0.0.0
               SFTPGO_HTTPD__BINDINGS__0__PORT: 8080
+              SFTPGO_WEBDAVD__BINDINGS__0__ADDRESS: 0.0.0.0
+              SFTPGO_WEBDAVD__BINDINGS__0__PORT: 8082
+              SFTPGO_WEBDAVD__BINDINGS__0__PATH: /dav
               SFTPGO_TELEMETRY__BIND_ADDRESS: 0.0.0.0
               SFTPGO_TELEMETRY__BIND_PORT: 8081
             probes:
@@ -72,6 +75,8 @@ spec:
         ports:
           http:
             port: 8080
+          dav:
+            port: 8082
           metrics:
             port: 8081
       transfer:
@@ -97,6 +102,10 @@ spec:
             service:
               identifier: main
               port: http
+          - path: /dav
+            service:
+              identifier: main
+              port: dav
         tls:
         - secretName: sftpgo-tls
           hosts:
