@@ -43,7 +43,6 @@ spec:
               SFTPGO_HTTPD__BINDINGS__0__PORT: 8080
               SFTPGO_WEBDAVD__BINDINGS__0__ADDRESS: 0.0.0.0
               SFTPGO_WEBDAVD__BINDINGS__0__PORT: 8082
-              SFTPGO_WEBDAVD__BINDINGS__0__PATH: /dav
               SFTPGO_TELEMETRY__BIND_ADDRESS: 0.0.0.0
               SFTPGO_TELEMETRY__BIND_PORT: 8081
             probes:
@@ -102,7 +101,9 @@ spec:
             service:
               identifier: main
               port: http
-          - path: /dav
+        - host: webdav.${SECRET_DOMAIN}
+          paths:
+          - path: /
             service:
               identifier: main
               port: dav
@@ -110,6 +111,9 @@ spec:
         - secretName: sftpgo-tls
           hosts:
           - sftp.${SECRET_DOMAIN}
+        - secretName: webdav-tls
+          hosts:
+          - webdav.${SECRET_DOMAIN}
     persistence:
       home:
         type: persistentVolumeClaim
