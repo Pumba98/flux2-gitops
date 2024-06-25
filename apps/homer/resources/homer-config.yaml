@@ -81,6 +81,16 @@ services:
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/plex.png"
         url: "https://plex.nas.${SECRET_DOMAIN}"
 
+      - name: "Filebrowser"
+        logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/filebrowser.png"
+        url: "https://files.${SECRET_DOMAIN}"
+      - name: "Syncthing"
+        logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/syncthing.png"
+        url: "https://syncthing.${SECRET_DOMAIN}"
+      - name: "SFTPGO"
+        logo: "https://raw.githubusercontent.com/drakkan/sftpgo/main/img/logo.png"
+        url: "https://sftp.${SECRET_DOMAIN}"
+
 #### Management ####
   - name: "Management"
     icon: "fas fa-door-open"
