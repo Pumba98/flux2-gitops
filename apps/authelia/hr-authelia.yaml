@@ -67,6 +67,11 @@ spec:
           networks:
           - ${PRIVATE_NETWORK}
         rules:
+        # Always require auth
+        - policy: two_factor
+          domain:
+          - files.${SECRET_DOMAIN}
+          - syncthing.${SECRET_DOMAIN}
         # Disable Authelia for local network
         - policy: bypass
           domain: "*.${SECRET_DOMAIN}"
@@ -74,31 +79,7 @@ spec:
           - private
         # Applications without auth
         - policy: two_factor
-          domain:
-          - longhorn.${SECRET_DOMAIN}
-          - jd2.${SECRET_DOMAIN}
-          - metube.${SECRET_DOMAIN}
-          - files.${SECRET_DOMAIN}
-          - syncthing.${SECRET_DOMAIN}
-        # Applications with sensitive Data
-        - policy: two_factor
-          domain:
-          - paperless.${SECRET_DOMAIN}
-          - sftp.${SECRET_DOMAIN}
-        # Applications with built-in auth
-        - policy: one_factor
-          domain:
-          - grafana.${SECRET_DOMAIN}
-          - gitops.${SECRET_DOMAIN}
-          - receipes.${SECRET_DOMAIN}
-          # - rancher.${SECRET_DOMAIN}
-        # Applications without auth but low security requirements
-        - policy: one_factor
-          domain:
-          - homer.${SECRET_DOMAIN}
-          - prometheus.${SECRET_DOMAIN}
-          - alert-manager.${SECRET_DOMAIN}
-          - goldilocks.${SECRET_DOMAIN}
+          domain: "*.${SECRET_DOMAIN}"
       session:
         name: authelia_session
         same_site: lax
