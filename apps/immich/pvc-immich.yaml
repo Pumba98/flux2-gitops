@@ -17,7 +17,7 @@ spec:
     driver: smb.csi.k8s.io
     volumeHandle: immich-smb-volume
     volumeAttributes:
-      source: "${SECRET_CIFS_SHARE}/downloads"
+      source: "${SECRET_CIFS_SHARE}/immich"
     nodeStageSecretRef:
       name: smb-secrets
       namespace: kube-system
