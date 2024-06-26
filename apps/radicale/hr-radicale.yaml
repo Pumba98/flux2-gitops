@@ -73,6 +73,6 @@ spec:
             subPath: users
             readOnly: true
       data:
-        existingClaim: radicale-data
+        existingClaim: radicale
         globalMounts:
           - path: /data
