@@ -15,7 +15,7 @@ spec:
         namespace: flux-system
       interval: 5m
   dependsOn:
-    - name: ingress-nginx-external
+    - name: ingress-nginx
       namespace: networking
     - name: csi-driver-smb
       namespace: kube-system

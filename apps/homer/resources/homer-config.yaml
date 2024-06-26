@@ -91,6 +91,10 @@ services:
         logo: "https://raw.githubusercontent.com/drakkan/sftpgo/main/img/logo.png"
         url: "https://sftp.${SECRET_DOMAIN}"
 
+      - name: "Radicale"
+        logo: "https://radicale.org/assets/logo.svg"
+        url: "https://radicale.${SECRET_DOMAIN}"
+
 #### Management ####
   - name: "Management"
     icon: "fas fa-door-open"

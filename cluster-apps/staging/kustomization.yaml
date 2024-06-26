@@ -29,6 +29,7 @@ resources:
 - ../paperless-ngx.yaml
 - ../pod-gateway-vpn.yaml
 - ../promtail.yaml
+- ../radicale.yaml
 - ../rancher.yaml
 - ../reloader.yaml
 - ../sftpgo.yaml
