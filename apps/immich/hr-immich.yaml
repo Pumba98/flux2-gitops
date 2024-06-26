@@ -35,6 +35,7 @@ spec:
               DB_USERNAME: immich
               DB_PASSWORD: "${SECRET_IMMICH_DB_PASSWORD}"
               REDIS_HOSTNAME: immich-redis-master
+              IMMICH_LOG_LEVEL: verbose
             probes:
               liveness:
                 enabled: true
