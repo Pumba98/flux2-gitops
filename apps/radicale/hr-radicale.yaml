@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: filebrowser
+  name: radicale
 spec:
   interval: 5m
   chart:
@@ -15,23 +15,18 @@ spec:
         namespace: flux-system
       interval: 5m
   dependsOn:
-    - name: ingress-nginx
+    - name: ingress-nginx-external
       namespace: networking
-    - name: csi-driver-smb
-      namespace: kube-system
+    - name: longhorn
+      namespace: longhorn-system
   values:
     controllers:
       main:
         containers:
           app:
             image:
-              repository: filebrowser/filebrowser
-              tag: v2.30.0
-            env:
-              FB_DATABASE: /config/filebrowser.db
-              FB_ROOT: /data
-              FB_LOG: stdout
-              FB_NOAUTH: true
+              repository: tomsquest/docker-radicale
+              tag: 3.2.2.0
             probes:
               liveness:
                 enabled: true
@@ -44,34 +39,40 @@ spec:
         controller: main
         ports:
           http:
-            port: 80
+            port: 5232
     ingress:
       main:
-        className: "nginx"
+        className: "nginx-external"
         annotations:
+          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
           kubernetes.io/tls-acme: "true"
-          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
         hosts:
-        - host: files.${SECRET_DOMAIN}
+        - host: radicale.${SECRET_DOMAIN}
           paths:
           - path: /
             service:
               identifier: main
               port: http
         tls:
-        - secretName: filebrowser-tls
+        - secretName: radicale-tls
           hosts:
-          - files.${SECRET_DOMAIN}
+          - radicale.${SECRET_DOMAIN}
     persistence:
       config:
-        type: persistentVolumeClaim
-        size: 1Gi
-        storageClass: longhorn-backup
-        accessMode: ReadWriteOnce
+        type: configMap
+        name: radicale-config
         globalMounts:
-          - path: "/config"
+          - path: /config/config
+            subPath: config.cfg
+            readOnly: true
+      auth:
+        type: secret
+        name: radicale-secrets
+        globalMounts:
+          - path: /config/users
+            subPath: users
+            readOnly: true
       data:
-        existingClaim: filebrowser-data
+        existingClaim: radicale-data
         globalMounts:
-          - path: "/data"
+          - path: /data

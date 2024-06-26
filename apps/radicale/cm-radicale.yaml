@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: radicale-config
+data:
+  config.cfg: |
+    [server]
+    hosts = 0.0.0.0:5232
+
+    [auth]
+    type = htpasswd
+    htpasswd_filename = /config/users
+    htpasswd_encryption = plain
+    delay = 1
+    realm = Password Required
+
+    [storage]
+    filesystem_folder = /data/collections
+
+    [logging]
+    level = info
+    mask_passwords = True
