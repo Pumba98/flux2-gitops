@@ -17,6 +17,8 @@ spec:
   dependsOn:
     - name: kube-prometheus-stack
       namespace: monitoring
+    - name: longhorn
+      namespace: longhorn-system
   values:
     auth:
       username: authelia

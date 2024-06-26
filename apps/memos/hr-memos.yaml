@@ -1,0 +1,70 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: memos
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  dependsOn:
+    - name: ingress-nginx-external
+      namespace: networking
+    - name: longhorn
+      namespace: longhorn-system
+    - name: memos-postgresql
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/usememos/memos
+              tag: 0.22.3
+            env:
+              MEMOS_PORT: "5230"
+              MEMOS_DRIVER: postgres
+              MEMOS_DSN: postgresql://memos:${SECRET_MEMOS_DB_PASSWORD}@memos-postgresql:5432/memos
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 5230
+    ingress:
+      main:
+        className: nginx-external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
+          kubernetes.io/tls-acme: "true"
+          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+        hosts:
+          - host: memos.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - secretName: memos-tls
+            hosts:
+              - memos.${SECRET_DOMAIN}
+    persistence:
+      data:
+        existingClaim: memos
+        globalMounts:
+        - path: /var/opt/memos
