@@ -64,8 +64,3 @@ spec:
           - secretName: memos-tls
             hosts:
               - memos.${SECRET_DOMAIN}
-    persistence:
-      data:
-        existingClaim: memos
-        globalMounts:
-        - path: /var/opt/memos
