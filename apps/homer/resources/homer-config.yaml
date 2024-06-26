@@ -95,6 +95,10 @@ services:
         logo: "https://radicale.org/assets/logo.svg"
         url: "https://radicale.${SECRET_DOMAIN}"
 
+      - name: "Memos"
+        logo: "https://raw.githubusercontent.com/usememos/memos/main/web/public/logo.webp"
+        url: "https://memos.${SECRET_DOMAIN}"
+
 #### Management ####
   - name: "Management"
     icon: "fas fa-door-open"
