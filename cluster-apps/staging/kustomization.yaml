@@ -15,6 +15,7 @@ resources:
 - ../flux-system.yaml
 - ../goldilocks.yaml
 - ../homer.yaml
+- ../immich.yaml
 - ../ingress-nginx.yaml
 # - ../ingress-nginx-external.yaml
 - ../jd2.yaml
