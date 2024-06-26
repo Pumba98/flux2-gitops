@@ -22,7 +22,7 @@ spec:
   values:
     image:
       repository: tensorchord/pgvecto-rs
-      tag: pg16-v0.3.0
+      tag: pg16-v0.2.1
     auth:
       username: immich
       password: "${SECRET_IMMICH_DB_PASSWORD}"
