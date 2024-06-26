@@ -99,6 +99,10 @@ services:
         logo: "https://raw.githubusercontent.com/usememos/memos/main/web/public/logo.webp"
         url: "https://memos.${SECRET_DOMAIN}"
 
+      - name: "Immich"
+        logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/immich.png"
+        url: "https://immich.${SECRET_DOMAIN}"
+
 #### Management ####
   - name: "Management"
     icon: "fas fa-door-open"
