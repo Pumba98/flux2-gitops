@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: paperless-ngx-postgresql
+  name: memos-postgresql
 spec:
   interval: 5m
   chart:
@@ -21,14 +21,14 @@ spec:
       namespace: longhorn-system
   values:
     auth:
-      username: paperless-ngx
-      password: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
-      database: paperless-ngx
+      username: memos
+      password: ${SECRET_MEMOS_DB_PASSWORD}
+      database: memos
     primary:
       resourcesPreset: "small"
       persistence:
         enabled: true
-        existingClaim: paperless-ngx-postgresql
+        existingClaim: memos-postgresql
       ## Init Container for Major PostgreSQL Upgrades, not needed permanently
       # initContainers:
       # - name: pg-upgrade

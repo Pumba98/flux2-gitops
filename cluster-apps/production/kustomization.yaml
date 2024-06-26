@@ -23,6 +23,7 @@ resources:
 - ../kured.yaml
 - ../loki.yaml
 - ../longhorn.yaml
+- ../memos.yaml
 - ../metallb.yaml
 - ../metrics-server.yaml
 - ../metube.yaml
