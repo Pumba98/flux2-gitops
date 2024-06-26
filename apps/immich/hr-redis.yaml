@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: paperless-ngx-redis
+  name: immich-redis
 spec:
   interval: 5m
   chart:
@@ -24,7 +24,7 @@ spec:
     master:
       persistence:
         enabled: true
-        existingClaim: paperless-ngx-redis
+        existingClaim: immich-redis-data
     metrics:
       enabled: true
       serviceMonitor:
