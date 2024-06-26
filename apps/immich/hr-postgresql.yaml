@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: postgresql
-      version: 15.5.10
+      version: 13.2.24
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
@@ -32,13 +32,11 @@ spec:
       persistence:
         enabled: true
         existingClaim: immich-postgresql-data
+      podSecurityContext:
+        fsGroup: 999
       initdb:
         scripts:
           create-extensions.sql: |
             CREATE EXTENSION cube;
             CREATE EXTENSION earthdistance;
             CREATE EXTENSION vectors;
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
