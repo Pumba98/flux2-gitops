@@ -83,6 +83,7 @@ spec:
           domain: "sftpgo.${SECRET_DOMAIN}"
           resources:
           - '^/web/client/pubshares.*'
+          - '^/static.*'
         # Applications without auth
         - policy: two_factor
           domain: "*.${SECRET_DOMAIN}"
