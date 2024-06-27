@@ -89,7 +89,7 @@ services:
         url: "https://syncthing.${SECRET_DOMAIN}"
       - name: "SFTPGO"
         logo: "https://raw.githubusercontent.com/drakkan/sftpgo/main/img/logo.png"
-        url: "https://sftp.${SECRET_DOMAIN}"
+        url: "https://sftpgo.${SECRET_DOMAIN}"
 
       - name: "Radicale"
         logo: "https://radicale.org/assets/logo.svg"

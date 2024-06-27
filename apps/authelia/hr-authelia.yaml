@@ -78,6 +78,11 @@ spec:
           domain: "*.${SECRET_DOMAIN}"
           networks:
           - private
+        # Disable Authelia for sftpgo shared files
+        - policy: bypass
+          domain: "*sftpgo.${SECRET_DOMAIN}"
+          resources:
+          - '^/web/client/pubshares.*'
         # Applications without auth
         - policy: two_factor
           domain: "*.${SECRET_DOMAIN}"
