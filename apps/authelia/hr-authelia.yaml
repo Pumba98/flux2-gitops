@@ -80,7 +80,7 @@ spec:
           - private
         # Disable Authelia for sftpgo shared files
         - policy: bypass
-          domain: "*sftpgo.${SECRET_DOMAIN}"
+          domain: "sftpgo.${SECRET_DOMAIN}"
           resources:
           - '^/web/client/pubshares.*'
         # Applications without auth
