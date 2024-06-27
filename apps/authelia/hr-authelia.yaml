@@ -66,6 +66,7 @@ spec:
         - name: private
           networks:
           - ${PRIVATE_NETWORK}
+          - 100.64.0.0/10
         rules:
         # Always require auth
         - policy: two_factor
