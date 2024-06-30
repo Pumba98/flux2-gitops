@@ -31,7 +31,7 @@ spec:
       schemaConfig:
         configs:
           - from: "2024-04-01"
-            object_store: s3
+            object_store: filesystem
             store: tsdb
             schema: v13
             index:
