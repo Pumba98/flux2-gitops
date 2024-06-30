@@ -78,7 +78,7 @@ spec:
         externalTrafficPolicy: Local
         annotations:
           external-dns.alpha.kubernetes.io/hostname: sftp.${SECRET_DOMAIN}
-          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}" 
+          # external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
         ports:
           sftp:
             port: 22
