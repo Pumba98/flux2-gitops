@@ -22,7 +22,7 @@ spec:
               for more than ten minutes.'
             summary: Flux reconciliation failure.
           expr: |
-            max(gotk_reconcile_condition{status="False",type="Ready"}) by (namespace, name, kind) == 1
+            max(gotk_resource_info{ready="False"}) by (namespace, name, kind) == 1
           for: 10m
           labels:
             severity: critical
