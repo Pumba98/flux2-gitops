@@ -4,3 +4,7 @@ kind: Kustomization
 resources:
 - secret-grafana.sops.yaml
 - hr-kube-prometheus-stack.yaml
+configMapGenerator:
+  - name: flux-kube-state-metrics-config
+    files:
+      - config.yml=kube-state-metrics-config.yaml
