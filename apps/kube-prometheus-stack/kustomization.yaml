@@ -7,4 +7,4 @@ resources:
 configMapGenerator:
   - name: flux-kube-state-metrics-config
     files:
-      - config.yml=kube-state-metrics-config.yaml
+      - kube-state-metrics-config.yaml=flux-kube-state-metrics-config.yaml
