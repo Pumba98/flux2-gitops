@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: postgresql
-      version: 13.4.6
+      version: 15.5.11
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
@@ -34,6 +34,8 @@ spec:
         existingClaim: immich-postgresql-data
       podSecurityContext:
         fsGroup: 999
+      containerSecurityContext:
+        readOnlyRootFilesystem: false
       initdb:
         scripts:
           create-extensions.sql: |
