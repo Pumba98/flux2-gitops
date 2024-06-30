@@ -30,7 +30,7 @@ spec:
         type: filesystem
       schemaConfig:
         configs:
-          - from: 2024-04-01
+          - from: "2024-04-01"
             object_store: s3
             store: tsdb
             schema: v13
