@@ -4,6 +4,8 @@ kind: Kustomization
 resources:
 - ../namespaces.yaml
 - ../authelia.yaml
+- ../bind9.yaml
+- ../blocky.yaml
 - ../certificate-exporter.yaml
 - ../cert-manager.yaml
 - ../cloudflared.yaml
