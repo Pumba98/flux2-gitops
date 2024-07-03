@@ -17,6 +17,9 @@ spec:
     - name: metallb
       namespace: metallb-system
   values:
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 100
     controllers:
       main:
         annotations:
