@@ -17,7 +17,7 @@ spec:
     driver: smb.csi.k8s.io
     volumeHandle: sftpgo-smb-volume
     volumeAttributes:
-      source: "${SECRET_CIFS_SHARE}/"
+      source: "${SECRET_CIFS_SHARE}/files"
     nodeStageSecretRef:
       name: smb-secrets
       namespace: kube-system
