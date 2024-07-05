@@ -51,3 +51,4 @@ spec:
       - --rfc2136-tsig-secret-alg=hmac-sha512
       - --rfc2136-tsig-keyname=external-dns-key
       - --rfc2136-tsig-axfr
+      - --txt-prefix=txt
