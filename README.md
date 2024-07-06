@@ -50,8 +50,16 @@ The following apps are installed on the clusters.
 | [Authelia](https://www.authelia.com)                                              | SSO & 2FA authentication server for Cluster Web Apps          |
 | [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx)                   | Document management system                                    |
 | [Tandoor-Receipes](https://github.com/TandoorRecipes/recipes)                     | Receipe Manager and Meal Planner                              |
+| [File Browser](https://filebrowser.org/)                                          | Web File Browser                                              |
+| [SFTPGo](https://sftpgo.com/)                                                     | Full-featured SFTP Server                                     |
+| [Immich](https://immich.app/)                                                     | Photo and video management solution                           |
+| [Memos](https://www.usememos.com/)                                                | A privacy-first, lightweight note-taking service              |
+| [Syncthing](https://syncthing.net/)                                               | Continuous file synchronization service                       |
+| [Radicale](https://radicale.org/)                                                 | CalDAV and CardDAV Server                                     |
 | [Rancher](https://rancher.com/products/rancher)                                   | Kubernetes Management Dashboard                               |
 | [Homer](https://github.com/bastienwirtz/homer)                                    | Static dashboard for the cluster applications                 |
+| [Bind](https://www.isc.org/bind/)                                                 | Full-featured DNS System                                      |
+| [Blocky](https://0xerr0r.github.io/blocky/latest/)                                | Fast and lightweight DNS proxy as ad-blocker                  |
 | [Pod-Gateway](https://github.com/k8s-at-home/pod-gateway)                         | Route traffic through a VPN gateway                           |
 | [Descheduler](https://github.com/kubernetes-sigs/descheduler)                     | Evicts pods to optimize scheduling                            |
 | [Goldilocks](https://github.com/FairwindsOps/goldilocks)                          | Utility to help identifying good resource requests and limits |
