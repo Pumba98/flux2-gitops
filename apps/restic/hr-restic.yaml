@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: ghcr.io/restic/restic
-              tag: v0.16.5
+              tag: 0.16.5
             args:
               - backup
               - /srv/staging
@@ -35,7 +35,7 @@ spec:
           create-zone:
             image:
               repository: ghcr.io/restic/restic
-              tag: v0.16.5
+              tag: 0.16.5
             command: 
             - /bin/sh
             - -c
