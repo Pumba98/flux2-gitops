@@ -25,12 +25,12 @@ spec:
             image:
               repository: ghcr.io/restic/restic
               tag: 0.16.5
-            args:
-              - backup
-              - /data
-              - --exclude="downloads/*"
-              - --exclude="staging/*"
-              - --dry-run
+            command:
+            - /bin/sh
+            - -c
+            - |
+              restic backup /data --exclude="downloads/*" --exclude="staging/*" --dry-run
+              restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --dry-run
             envFrom:
             - secretRef:
                 name: restic-secrets
