@@ -28,8 +28,8 @@ spec:
             args:
               - backup
               - /data
-              - --exclude downloads/*
-              - --exclude staging/*
+              - --exclude="downloads/*"
+              - --exclude="staging/*"
               - --keep-daily 7
               - --keep-weekly 4
               - --keep-monthly 3
