@@ -29,8 +29,8 @@ spec:
             - /bin/sh
             - -c
             - |
-              restic backup /data --exclude="downloads/*" --exclude="staging/*" --dry-run
-              restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune --dry-run
+              restic backup /data --exclude="downloads/*" --exclude="staging/*" --host k3s
+              restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 3 --prune
             envFrom:
             - secretRef:
                 name: restic-secrets
