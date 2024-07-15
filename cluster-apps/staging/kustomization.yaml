@@ -36,6 +36,7 @@ resources:
 - ../radicale.yaml
 - ../rancher.yaml
 - ../reloader.yaml
+- ../restic.yaml
 - ../sftpgo.yaml
 - ../syncthing.yaml
 # - ../system-upgrade-controller.yaml

@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: restic
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  dependsOn:
+    - name: metallb
+      namespace: metallb-system
+  values:
+    controllers:
+      main:
+        type: cronjob
+        containers:
+          main:
+            image:
+              repository: ghcr.io/restic/restic
+              tag: v0.16.5
+            args:
+              - backup
+              - /srv/staging
+            env:
+              RESTIC_REPOSITORY: /srv/restic-repo
+              RESTIC_PASSWORD: just-a-test
+        initContainers:
+          create-zone:
+            image:
+              repository: ghcr.io/restic/restic
+              tag: v0.16.5
+            command: 
+            - /bin/sh
+            - -c
+            - |
+              restic init || true
+            env:
+              RESTIC_REPOSITORY: /srv/restic-repo
+              RESTIC_PASSWORD: just-a-test
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "0 0 * * *"
+          startingDeadlineSeconds: 30
+          successfulJobsHistory: 1
+          failedJobsHistory: 1
+          backoffLimit: 3
+    persistence:
+      data:
+        existingClaim: restic-data
+        globalMounts:
+          - path: "/srv"

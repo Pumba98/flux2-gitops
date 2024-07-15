@@ -1,0 +1,14 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: restic-app
+  namespace: flux-system
+spec:
+  path: ./apps/restic
+  targetNamespace: selfhosted
+  interval: 10m
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
