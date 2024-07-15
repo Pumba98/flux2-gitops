@@ -5,7 +5,7 @@ metadata:
   name: restic-static-pv
 spec:
   capacity:
-    storage: 250Gi
+    storage: 1Ti
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
