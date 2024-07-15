@@ -30,9 +30,6 @@ spec:
               - /data
               - --exclude="downloads/*"
               - --exclude="staging/*"
-              - --keep-daily 7
-              - --keep-weekly 4
-              - --keep-monthly 3
               - --dry-run
             envFrom:
             - secretRef:
