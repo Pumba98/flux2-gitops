@@ -27,12 +27,18 @@ spec:
               tag: 0.16.5
             args:
               - backup
-              - /srv/staging
-            env:
-              RESTIC_REPOSITORY: /srv/restic-repo
-              RESTIC_PASSWORD: just-a-test
+              - /data
+              - --exclude downloads/*
+              - --exclude staging/*
+              - --keep-daily 7
+              - --keep-weekly 4
+              - --keep-monthly 3
+              - --dry-run
+            envFrom:
+            - secretRef:
+                name: restic-secrets
         initContainers:
-          create-zone:
+          init-repo:
             image:
               repository: ghcr.io/restic/restic
               tag: 0.16.5
@@ -41,9 +47,9 @@ spec:
             - -c
             - |
               restic init || true
-            env:
-              RESTIC_REPOSITORY: /srv/restic-repo
-              RESTIC_PASSWORD: just-a-test
+            envFrom:
+            - secretRef:
+                name: restic-secrets
         cronjob:
           concurrencyPolicy: Forbid
           schedule: "0 0 * * *"
@@ -55,4 +61,4 @@ spec:
       data:
         existingClaim: restic-data
         globalMounts:
-          - path: "/srv"
+          - path: "/data"

@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
 - hr-restic.yaml
 - pvc-restic.yaml
+- secret-restic.sops.yaml
