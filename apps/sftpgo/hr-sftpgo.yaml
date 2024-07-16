@@ -38,7 +38,6 @@ spec:
               SFTPGO_HTTPD__BINDINGS__0__PORT: 8080
               SFTPGO_TELEMETRY__BIND_ADDRESS: 0.0.0.0
               SFTPGO_TELEMETRY__BIND_PORT: 8081
-              SFTPGO_SFTPD__ENABLED_SSH_COMMANDS: rsync
             probes:
               liveness:
                 enabled: true
