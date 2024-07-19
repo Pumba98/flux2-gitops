@@ -84,7 +84,6 @@ spec:
         existingClaim: tandoor-receipes-static
         globalMounts:
         - path: /opt/recipes/staticfiles
-      media:
-        existingClaim: tandoor-receipes-media
-        globalMounts:
+          subPath: staticfiles
         - path: /opt/recipes/mediafiles
+          subPath: mediafiles

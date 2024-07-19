@@ -67,7 +67,6 @@ spec:
       config:
         type: persistentVolumeClaim
         size: 1Gi
-        storageClass: longhorn-backup
         accessMode: ReadWriteOnce
         globalMounts:
           - path: "/config"
