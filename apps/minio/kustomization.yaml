@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
 - pvc-minio.yaml
 - hr-minio.yaml
+- secret-minio.sops.yaml
