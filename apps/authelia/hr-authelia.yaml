@@ -73,6 +73,11 @@ spec:
           domain:
           - files.${SECRET_DOMAIN}
           - syncthing.${SECRET_DOMAIN}
+        - policy: two_factor
+          domain:
+          - radicale.${SECRET_DOMAIN}
+          resources:
+          - '^/.web/.*'
         # Disable Authelia for local network
         - policy: bypass
           domain: "*.${SECRET_DOMAIN}"
