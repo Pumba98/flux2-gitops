@@ -10,15 +10,3 @@ spec:
   resources:
     requests:
       storage: 4Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: tandoor-receipes-media
-spec:
-  storageClassName: longhorn-backup
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 4Gi
