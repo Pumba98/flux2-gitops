@@ -24,7 +24,6 @@ spec:
     master:
       persistence:
         enabled: true
-        existingClaim: paperless-ngx-redis
     metrics:
       enabled: true
       serviceMonitor:

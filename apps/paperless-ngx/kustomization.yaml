@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
 - pvc-paperless-ngx.yaml
 - pvc-postgresql.yaml
-- pvc-redis.yaml
 - hr-postgresql.yaml
 - hr-redis.yaml
 - hr-paperless-ngx.yaml
