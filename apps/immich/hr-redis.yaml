@@ -24,7 +24,6 @@ spec:
     master:
       persistence:
         enabled: true
-        existingClaim: immich-redis-data
     metrics:
       enabled: true
       serviceMonitor:

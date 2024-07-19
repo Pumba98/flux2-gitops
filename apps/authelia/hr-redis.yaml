@@ -24,7 +24,6 @@ spec:
     master:
       persistence:
         enabled: true
-        existingClaim: authelia-redis-data
     metrics:
       enabled: true
       serviceMonitor:
