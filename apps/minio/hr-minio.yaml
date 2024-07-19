@@ -30,6 +30,28 @@ spec:
     persistence:
       enabled: true
       existingClaim: minio-data
+    policies:
+    - name: longhorn-policy
+      statements:
+      - resources:
+        - 'arn:aws:s3:::longhorn'
+        - 'arn:aws:s3:::longhorn/*'
+        actions:
+        - 's3:PutObject'
+        - 's3:GetObject'
+        - 's3:ListBucket'
+        - 's3:DeleteObject'
+    users:
+    - accessKey: longhorn
+      existingSecret: minio-secrets
+      existingSecretKey: longhorn-accesskey
+      policy: longhorn-policy
+    buckets:
+    - name: longhorn
+      policy: none
+      purge: false
+      versioning: false
+      objectlocking: false
     consoleIngress:
       enabled: false
       ingressClassName: nginx-external
