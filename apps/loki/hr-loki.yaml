@@ -61,6 +61,10 @@ spec:
         enabled: false
       lokiCanary:
         enabled: false
+    resultsCache:
+      enabled: false
+    chunksCache:
+      enabled: false
 # extraObjects:
 # - apiVersion: v1
 #   kind: ConfigMap
