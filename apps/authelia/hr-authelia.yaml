@@ -114,6 +114,7 @@ spec:
         postgres:
           enabled: true
           host: authelia-postgresql
+          address: tcp://authelia-postgresql:5432
           database: authelia
           username: authelia
       notifier:
