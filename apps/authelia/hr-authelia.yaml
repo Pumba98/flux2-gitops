@@ -46,8 +46,6 @@ spec:
     configMap:
       theme: dark
       authentication_backend:
-        ldap:
-          enabled: false
         file:
           enabled: true
           path: /config/users_database.yml
@@ -97,7 +95,7 @@ spec:
         same_site: lax
         expiration: 1h
         inactivity: 5m
-        remember_me_duration: 1M
+        remember_me: 1 month
         redis:
           enabled: true
           enabledSecret: true
