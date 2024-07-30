@@ -93,6 +93,37 @@ spec:
         # Applications without auth
         - policy: two_factor
           domain: "*.${SECRET_DOMAIN}"
+
+      identity_providers:
+        oidc:
+          enabled: true
+          hmac_secret:
+            secret_name: authelia
+            path: identity_providers.oidc.hmac.key
+          enable_client_debug_messages: false
+          authorization_policies:
+            policy_name:
+              default_policy: 'deny'
+              rules:
+                - policy: 'two_factor'
+                  subject: 'user:pumba98'
+          jwks:
+            - key:
+                path: '/secrets/oidc.jwk.RS256.pem'
+              certificate_chain:
+                path: '/secrets.oidc.jwk.RS256.crt'
+          clients:
+            - client_name: 'Immich'
+              # openssl rand -hex 72
+              client_id: 'adf4daa10eeba3fc2ce6df64921d0ee70cd705215698df203d22057a4f71633f61ef0cab5c1c56f7985e62e4e46d3699acaa6626fe73a44dced1b090e5a0d8b3ad87032b2fec3bf2'
+              # docker run authelia/authelia:latest authelia crypto hash generate pbkdf2 --variant sha512 --rand
+              client_secret:
+                path: '/secrets/oidc.client.immich.value'
+              authorization_policy: 'two_factor'
+              redirect_uris:
+                - 'https://immich.${SECRET_DOMAIN}/auth/login'
+                - 'https://immich.${SECRET_DOMAIN}/user-settings'
+                - 'https://immich.${SECRET_DOMAIN}/api/oauth/mobile-redirect'
       session:
         name: authelia_session
         same_site: lax
