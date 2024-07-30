@@ -101,12 +101,12 @@ spec:
             secret_name: authelia
             path: identity_providers.oidc.hmac.key
           enable_client_debug_messages: false
-          authorization_policies:
-            policy_name:
-              default_policy: 'deny'
-              rules:
-                - policy: 'two_factor'
-                  subject: 'user:pumba98'
+          # authorization_policies:
+          #   policy_name:
+          #     default_policy: 'deny'
+          #     rules:
+          #       - policy: 'two_factor'
+          #         subject: 'user:pumba98'
           jwks:
             - key:
                 path: '/secrets/oidc.jwk.RS256.pem'
@@ -165,4 +165,3 @@ spec:
             - key: 'identity_providers.oidc.hmac.key'
             - key: 'oidc.jwk.RS256.pem:'
             - key: 'oidc.client.immich.value'
-            
