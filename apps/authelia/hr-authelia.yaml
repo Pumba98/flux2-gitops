@@ -99,6 +99,9 @@ spec:
         expiration: 1h
         inactivity: 5m
         remember_me: 1 month
+        cookies:
+        - domain: '${SECRET_DOMAIN}'
+          subdomain: 'auth'
         redis:
           enabled: true
           enabledSecret: true
