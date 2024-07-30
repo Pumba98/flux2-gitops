@@ -100,8 +100,8 @@ spec:
         inactivity: 5m
         remember_me: 1 month
         cookies:
-        - domain: '${SECRET_DOMAIN}'
-          subdomain: 'auth'
+          - domain: '${SECRET_DOMAIN}'
+            authelia_url: 'https://auth.${SECRET_DOMAIN}'
         redis:
           enabled: true
           enabledSecret: true
