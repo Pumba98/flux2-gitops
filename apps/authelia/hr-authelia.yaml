@@ -101,7 +101,7 @@ spec:
             secret_name: authelia
             path: identity_providers.oidc.hmac.key
           enable_client_debug_messages: false
-          # authorization_policies:
+          authorization_policies: {}
           #   policy_name:
           #     default_policy: 'deny'
           #     rules:
