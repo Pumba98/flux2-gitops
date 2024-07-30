@@ -159,3 +159,10 @@ spec:
           sender: authelia@${SECRET_DOMAIN}
     secret:
       existingSecret: authelia
+      additionalSecrets:
+        authelia:
+          items:
+            - key: 'identity_providers.oidc.hmac.key'
+            - key: 'oidc.jwk.RS256.pem:'
+            - key: 'oidc.client.immich.value'
+            
