@@ -78,6 +78,9 @@ spec:
           - radicale.${SECRET_DOMAIN}
           resources:
           - '^/.web/.*'
+        - policy: bypass
+          domain:
+          - radicale.${SECRET_DOMAIN}
         # Disable Authelia for local network
         - policy: bypass
           domain: "*.${SECRET_DOMAIN}"
