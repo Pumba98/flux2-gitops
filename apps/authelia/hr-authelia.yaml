@@ -112,8 +112,8 @@ spec:
                 path: '/secrets/authelia/oidc.jwk.RS256.pem'
           clients:
             - client_name: 'Immich'
-              # openssl rand -hex 72
-              client_id: 'adf4daa10eeba3fc2ce6df64921d0ee70cd705215698df203d22057a4f71633f61ef0cab5c1c56f7985e62e4e46d3699acaa6626fe73a44dced1b090e5a0d8b3ad87032b2fec3bf2'
+              # docker run authelia/authelia:latest authelia crypto rand --length 72 --charset rfc3986
+              client_id: 'Ph_ZrFAgRfB79_grNoVYFC3sPgQ9GLUKptNuTGNGpSe9bltBqDw45rNQ_oIWI2CAfnMqpGRL'
               # docker run authelia/authelia:latest authelia crypto hash generate pbkdf2 --variant sha512 --rand
               client_secret:
                 path: '/secrets/authelia/oidc.client.immich.value'
