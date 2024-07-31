@@ -151,9 +151,9 @@ spec:
         smtp:
           enabled: true
           enabledSecret: true
-          address: 'smtp://smtp.fastmail.com:465'
+          address: 'submission://smtp.fastmail.com:587'
           username: mail@${SECRET_DOMAIN}
-          sender: authelia@${SECRET_DOMAIN}
+          sender: 'Authelia <authelia@${SECRET_DOMAIN}>'
     secret:
       existingSecret: authelia
       additionalSecrets:
