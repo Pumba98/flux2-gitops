@@ -163,5 +163,5 @@ spec:
         authelia:
           items:
             - key: 'identity_providers.oidc.hmac.key'
-            - key: 'oidc.jwk.RS256.pem:'
+            - key: 'oidc.jwk.RS256.pem'
             - key: 'oidc.client.immich.value'
