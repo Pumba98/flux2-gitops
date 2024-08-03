@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: jlesage/jdownloader-2
-              tag: v24.07.1
+              tag: v24.08.1
               pullPolicy: IfNotPresent
             env:
               KEEP_APP_RUNNING: true
