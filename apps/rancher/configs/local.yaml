@@ -1,0 +1,11 @@
+---
+apiVersion: management.cattle.io/v3
+kind: AuthConfig
+metadata:
+  name: local
+  labels:
+    cattle.io/creator: norman
+  annotations:
+    management.cattle.io/auth-provider-cleanup: unlocked
+type: localConfig
+enabled: false
