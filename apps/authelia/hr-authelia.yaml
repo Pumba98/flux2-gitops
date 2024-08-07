@@ -114,7 +114,7 @@ spec:
             - client_name: 'Immich'
               # docker run authelia/authelia:latest authelia crypto rand --length 72 --charset rfc3986
               client_id: 'Ph_ZrFAgRfB79_grNoVYFC3sPgQ9GLUKptNuTGNGpSe9bltBqDw45rNQ_oIWI2CAfnMqpGRL'
-              # docker run authelia/authelia:latest authelia crypto hash generate pbkdf2 --variant sha512 --rand
+              # docker run authelia/authelia:latest authelia crypto hash generate pbkdf2 --variant sha512 --random
               client_secret:
                 path: '/secrets/authelia/oidc.client.immich.value'
               authorization_policy: 'two_factor'
@@ -122,6 +122,13 @@ spec:
                 - 'https://immich.${SECRET_DOMAIN}/auth/login'
                 - 'https://immich.${SECRET_DOMAIN}/user-settings'
                 - 'https://immich.${SECRET_DOMAIN}/api/oauth/mobile-redirect'
+            - client_name: 'Memos'
+              client_id: '0lKCSv_puuemgh08buYozXwRJ61u129TDEq42EBvnRcbGqJuZ25KywlUkviurEsJ~MbqvrM4'
+              client_secret:
+                path: '/secrets/authelia/oidc.client.memos.value'
+              authorization_policy: 'two_factor'
+              redirect_uris:
+                - 'https://memos.${SECRET_DOMAIN}/auth/callback'
       session:
         name: authelia_session
         same_site: lax
