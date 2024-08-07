@@ -1,0 +1,23 @@
+---
+apiVersion: management.cattle.io/v3
+kind: AuthConfig
+metadata:
+  name: genericoidc
+  labels:
+    cattle.io/creator: norman
+  annotations:
+    management.cattle.io/auth-provider-cleanup: unlocked
+type: genericOIDCConfig
+enabled: true
+groupSearchEnabled: false
+clientId: R4Fy_RAZUfHmPsCAWaD89Snt7wABRsD2IUTP3Xm0AxKbRWzBLIMqQNIpTvuLfKkC6_bvNagL
+clientSecret: cattle-global-data:genericoidcconfig-clientsecret
+scope: openid profile email
+issuer: https://auth.${SECRET_DOMAIN}
+authEndpoint: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
+tokenEndpoint: https://auth.${SECRET_DOMAIN}/api/oidc/token
+userInfoEndpoint: https://auth.${SECRET_DOMAIN}/api/oidc/userinfo
+rancherUrl: https://rancher.${SECRET_DOMAIN}/verify-auth
+accessMode: unrestricted
+allowedPrincipalIds:
+- genericoidc_user://e6ebe8b3-c196-4144-898a-c8b8f482819a
