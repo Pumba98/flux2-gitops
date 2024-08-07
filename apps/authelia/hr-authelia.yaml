@@ -118,6 +118,7 @@ spec:
               client_secret:
                 path: '/secrets/authelia/oidc.client.immich.value'
               authorization_policy: 'two_factor'
+              consent_mode: implicit
               redirect_uris:
                 - 'https://immich.${SECRET_DOMAIN}/auth/login'
                 - 'https://immich.${SECRET_DOMAIN}/user-settings'
@@ -127,9 +128,18 @@ spec:
               client_secret:
                 path: '/secrets/authelia/oidc.client.memos.value'
               authorization_policy: 'two_factor'
+              consent_mode: implicit
               redirect_uris:
                 - 'https://memos.${SECRET_DOMAIN}/auth/callback'
               token_endpoint_auth_method: 'client_secret_post'
+            - client_name: 'Paperless'
+              client_id: 'KNv~V~FBVK5R0bznkuHPV.fo-FmdqO0gUyifPqE6wH5SFTUgZma7uCJJTEinTNshwBVi4eWe'
+              client_secret:
+                path: '/secrets/authelia/oidc.client.paperless.value'
+              authorization_policy: 'two_factor'
+              consent_mode: implicit
+              redirect_uris:
+                - 'https://paperless.${SECRET_DOMAIN}/accounts/authelia/login/callback'
       session:
         name: authelia_session
         same_site: lax
@@ -171,3 +181,4 @@ spec:
             - key: 'oidc.jwk.RS256.pem'
             - key: 'oidc.client.immich.value'
             - key: 'oidc.client.memos.value'
+            - key: 'oidc.client.paperless.value'
