@@ -165,7 +165,6 @@ spec:
               redirect_uris:
                 - 'https://grafana.${SECRET_DOMAIN}/login/generic_oauth'
               scopes: [ openid, profile, email, groups ]
-              userinfo_signed_response_alg: 'none'
       session:
         name: authelia_session
         same_site: lax
