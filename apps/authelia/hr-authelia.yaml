@@ -148,6 +148,14 @@ spec:
               consent_mode: implicit
               redirect_uris:
                 - 'https://receipes.${SECRET_DOMAIN}/accounts/oidc/authelia/login/callback/'
+            - client_name: 'Rancher'
+              client_id: 'R4Fy_RAZUfHmPsCAWaD89Snt7wABRsD2IUTP3Xm0AxKbRWzBLIMqQNIpTvuLfKkC6_bvNagL'
+              client_secret:
+                path: '/secrets/authelia/oidc.client.rancher.value'
+              authorization_policy: 'two_factor'
+              consent_mode: implicit
+              redirect_uris:
+                - 'https://rancher.${SECRET_DOMAIN}/verify-auth'
       session:
         name: authelia_session
         same_site: lax
@@ -191,3 +199,4 @@ spec:
             - key: 'oidc.client.memos.value'
             - key: 'oidc.client.paperless.value'
             - key: 'oidc.client.tandoor.value'
+            - key: 'oidc.client.rancher.value'
