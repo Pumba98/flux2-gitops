@@ -218,3 +218,4 @@ spec:
             - key: 'oidc.client.tandoor.value'
             - key: 'oidc.client.rancher.value'
             - key: 'oidc.client.grafana.value'
+            - key: 'oidc.client.sftpgo.value'
