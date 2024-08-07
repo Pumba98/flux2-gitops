@@ -103,12 +103,13 @@ spec:
       grafana.ini:
         server:
           root_url: https://grafana.${SECRET_DOMAIN}
-        auth:
-          disable_login_form: true
-        auth.anonymous:
-          enabled: false
-        auth.basic:
-          enabled: false
+        # auth:
+        #   disable_login_form: true
+        #   # oauth_auto_login: true
+        # auth.anonymous:
+        #   enabled: false
+        # auth.basic:
+        #   enabled: false
         auth.generic_oauth:
           enabled: true
           name: Authelia
