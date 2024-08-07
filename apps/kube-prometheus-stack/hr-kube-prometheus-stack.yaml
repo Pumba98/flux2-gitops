@@ -99,6 +99,31 @@ spec:
         tag: 11.1.3
       admin:
         existingSecret: grafana-secrets
+      envFromSecret: grafana-secrets
+      grafana.ini:
+        server:
+          root_url: https://grafana.${SECRET_DOMAIN}
+        auth:
+          disable_login_form: true
+        auth.anonymous:
+          enabled: false
+        auth.basic:
+          enabled: false
+        auth.generic_oauth:
+          enabled: true
+          name: Authelia
+          icon: signin
+          client_id: wCDESryfxgaEQUrgISZWrcNgNQCCUL3u1PZulzpSTaRvkQTpN4CQvrWx6RTa69flzhonmC5p
+          #client_secret: 
+          scopes: openid profile email groups
+          empty_scopes: false
+          auth_url: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
+          token_url: https://auth.${SECRET_DOMAIN}/api/oidc/token
+          api_url: https://auth.${SECRET_DOMAIN}/api/oidc/userinfo
+          login_attribute_path: preferred_username
+          groups_attribute_path: groups
+          name_attribute_path: name
+          use_pkce: true
       dashboardProviders:
         dashboardproviders.yaml:
           apiVersion: 1
