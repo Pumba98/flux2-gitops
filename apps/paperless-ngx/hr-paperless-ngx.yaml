@@ -52,6 +52,8 @@ spec:
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: true
               PAPERLESS_OCR_LANGUAGE: deu+eng
               PAPERLESS_SECRET_KEY: ${SECRET_PAPERLESS_NGX_SECRET_KEY}
+              PAPERLESS_DISABLE_REGULAR_LOGIN: true
+              PAPERLESS_REDIRECT_LOGIN_TO_SSO: true
               PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
               PAPERLESS_SOCIALACCOUNT_PROVIDERS: |
                 {
