@@ -34,7 +34,7 @@ spec:
       kind: Deployment
       replicas: 1
       strategy:
-        type: Recreate
+        type: RollingUpdate
       extraVolumes:
       - name: users-volume
         secret:
