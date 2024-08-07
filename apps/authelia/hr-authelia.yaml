@@ -156,6 +156,14 @@ spec:
               consent_mode: implicit
               redirect_uris:
                 - 'https://rancher.${SECRET_DOMAIN}/verify-auth'
+            - client_name: 'Grafana'
+              client_id: 'wCDESryfxgaEQUrgISZWrcNgNQCCUL3u1PZulzpSTaRvkQTpN4CQvrWx6RTa69flzhonmC5p'
+              client_secret:
+                path: '/secrets/authelia/oidc.client.grafana.value'
+              authorization_policy: 'two_factor'
+              consent_mode: implicit
+              redirect_uris:
+                - 'https://grafana.${SECRET_DOMAIN}/login/generic_oauth'
       session:
         name: authelia_session
         same_site: lax
@@ -200,3 +208,4 @@ spec:
             - key: 'oidc.client.paperless.value'
             - key: 'oidc.client.tandoor.value'
             - key: 'oidc.client.rancher.value'
+            - key: 'oidc.client.grafana.value'
