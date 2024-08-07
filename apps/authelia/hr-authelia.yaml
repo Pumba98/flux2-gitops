@@ -139,7 +139,7 @@ spec:
               authorization_policy: 'two_factor'
               consent_mode: implicit
               redirect_uris:
-                - 'https://paperless.${SECRET_DOMAIN}/accounts/oidc/authelia/login/callback'
+                - 'https://paperless.${SECRET_DOMAIN}/accounts/oidc/authelia/login/callback/'
       session:
         name: authelia_session
         same_site: lax
