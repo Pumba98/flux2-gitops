@@ -140,6 +140,14 @@ spec:
               consent_mode: implicit
               redirect_uris:
                 - 'https://paperless.${SECRET_DOMAIN}/accounts/oidc/authelia/login/callback/'
+            - client_name: 'Tandoor'
+              client_id: '2HilffOuYvUuFZ6mBu0elHbv6KAQrwQsCCsAs5SaIIUq.ZyiwKb70upbQQmI7sXjBs~i60Tz'
+              client_secret:
+                path: '/secrets/authelia/oidc.client.tandoor.value'
+              authorization_policy: 'two_factor'
+              consent_mode: implicit
+              redirect_uris:
+                - 'https://receipes.${SECRET_DOMAIN}/accounts/oidc/authelia/login/callback/'
       session:
         name: authelia_session
         same_site: lax
@@ -182,3 +190,4 @@ spec:
             - key: 'oidc.client.immich.value'
             - key: 'oidc.client.memos.value'
             - key: 'oidc.client.paperless.value'
+            - key: 'oidc.client.tandoor.value'
