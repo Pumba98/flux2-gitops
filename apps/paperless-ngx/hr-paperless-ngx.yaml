@@ -65,7 +65,7 @@ spec:
                         "provider_id": "authelia",
                         "name": "Authelia",
                         "client_id": "KNv~V~FBVK5R0bznkuHPV.fo-FmdqO0gUyifPqE6wH5SFTUgZma7uCJJTEinTNshwBVi4eWe",
-                        "secret": "${SECRET_AUTHELIA_OAUTH_CLIENT_SECRET}",
+                        "secret": "${SECRET_PAPERLESS_NGX_OAUTH_CLIENT_SECRET}",
                         "settings": {
                           "server_url": "https://auth.${SECRET_DOMAIN}",
                           "token_auth_method": "client_secret_basic"

@@ -44,6 +44,27 @@ spec:
               ENABLE_SIGNUP: 0
               ENABLE_METRICS: 1
               ENABLE_PDF_EXPORT: 1
+              DEBUG: 0
+              SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
+              SOCIALACCOUNT_PROVIDERS: |
+                {
+                  "openid_connect": {
+                    "SCOPE": ["openid", "profile", "email"],
+                    "OAUTH_PKCE_ENABLED": true,
+                    "APPS": [
+                      {
+                        "provider_id": "authelia",
+                        "name": "Authelia",
+                        "client_id": "2HilffOuYvUuFZ6mBu0elHbv6KAQrwQsCCsAs5SaIIUq.ZyiwKb70upbQQmI7sXjBs~i60Tz",
+                        "secret": "${SECRET_TANDOOR_RECEIPES_OAUTH_CLIENT_SECRET}",
+                        "settings": {
+                          "server_url": "https://auth.${SECRET_DOMAIN}",
+                          "token_auth_method": "client_secret_basic"
+                        }
+                      }
+                    ]
+                  }
+                }
             probes:
               liveness:
                 enabled: true
