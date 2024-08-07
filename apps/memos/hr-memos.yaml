@@ -32,6 +32,7 @@ spec:
               MEMOS_DRIVER: postgres
               MEMOS_DSN: postgresql://memos:${SECRET_MEMOS_DB_PASSWORD}@memos-postgresql:5432/memos?sslmode=disable
               MEMOS_PUBLIC: false
+              MEMOS_PASSWORD_AUTH: false
             probes:
               liveness:
                 enabled: true
