@@ -103,9 +103,9 @@ spec:
       grafana.ini:
         server:
           root_url: https://grafana.${SECRET_DOMAIN}
-        # auth:
-        #   disable_login_form: true
-        #   # oauth_auto_login: true
+        auth:
+          disable_login_form: true
+          oauth_auto_login: true
         # auth.anonymous:
         #   enabled: false
         # auth.basic:
@@ -125,6 +125,8 @@ spec:
           groups_attribute_path: groups
           name_attribute_path: name
           use_pkce: true
+          role_attribute_path: contains(groups, 'admins') && 'GrafanaAdmin' || 'Viewer'
+          allow_assign_grafana_admin: true
       dashboardProviders:
         dashboardproviders.yaml:
           apiVersion: 1
