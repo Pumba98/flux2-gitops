@@ -165,6 +165,14 @@ spec:
               redirect_uris:
                 - 'https://grafana.${SECRET_DOMAIN}/login/generic_oauth'
               scopes: [ openid, profile, email, groups ]
+            - client_name: 'SFTPGo'
+              client_id: 'MJ04uHbUwWj00-RYG3X4QACoW-45EF0u0ahDEpv48yDT~caYFZMb240_nT8Z3kHrY6jmvY~Q'
+              client_secret:
+                path: '/secrets/authelia/oidc.client.sftpgo.value'
+              authorization_policy: 'two_factor'
+              consent_mode: implicit
+              redirect_uris:
+                - 'https://sftpgo.${SECRET_DOMAIN}/web/oidc/redirect'
       session:
         name: authelia_session
         same_site: lax
