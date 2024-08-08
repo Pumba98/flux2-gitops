@@ -48,7 +48,7 @@
       "matchDatasources": [
         "docker"
       ],
-      "matchDepNames": ["!app-template", "!kube-prometheus-stack", "!weave-gitops", "!postgresql"],
+      "matchDepNames": ["!app-template", "!kube-prometheus-stack", "!weave-gitops", "!postgresql", "!redis"],
       "pinDigests": true
     }
   ]
