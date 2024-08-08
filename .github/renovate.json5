@@ -43,6 +43,12 @@
     {
       "groupName": "Immich",
       "matchPackagePatterns": ["immich-.*"]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "pinDigests": true
     }
   ]
 }
