@@ -50,6 +50,42 @@
       ],
       "matchDepNames": ["!app-template", "!kube-prometheus-stack", "!weave-gitops", "!postgresql", "!redis"],
       "pinDigests": true
+    },
+    {
+      "packageRules": [
+        {
+          "matchUpdateTypes": ["patch", "pin", "digest"],
+          "matchPackageNames": ["!k3s-io/k3s"],
+          "automerge": true,
+          "automergeType": "pr",
+          "automergeStrategy": "squash",
+          "minimumReleaseAge": "24 hours"
+        }
+      ]
+    },
+    {
+      "packageRules": [
+        {
+          "matchUpdateTypes": ["minor"],
+          "matchPackageNames": ["!k3s-io/k3s", "!metallb", "!longhorn", "!rancher", "!*paperless-ngx*", "!*immich*"],
+          "automerge": true,
+          "automergeType": "pr",
+          "automergeStrategy": "squash",
+          "minimumReleaseAge": "24 hours"
+        }
+      ]
+    },
+    {
+      "packageRules": [
+        {
+          "matchUpdateTypes": ["major"],
+          "matchPackageNames": ["kube-prometheus-stack"],
+          "automerge": true,
+          "automergeType": "pr",
+          "automergeStrategy": "squash",
+          "minimumReleaseAge": "24 hours"
+        }
+      ]
     }
   ]
 }
