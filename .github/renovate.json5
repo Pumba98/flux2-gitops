@@ -48,6 +48,7 @@
       "matchDatasources": [
         "docker"
       ],
+      "matchPackageNames": ["!app-template", "!kube-prometheus-stack"],
       "pinDigests": true
     }
   ]
