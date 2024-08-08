@@ -27,7 +27,7 @@
         "datasource=(?<datasource>\\S+) depName=(?<depName>.*?)\n *version: (?<currentValue>.*)\n"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
-    },
+    }
   ],
   "packageRules": [
     {
@@ -40,5 +40,9 @@
       "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$",
       "matchPackagePatterns": ["minio"]
     },
+    {
+      "groupName": "Immich",
+      "matchPackagePatterns": ["immich-.*"]
+    }
   ]
 }
