@@ -24,7 +24,7 @@ spec:
     loki:
       image:
         repository: grafana/loki
-        tag: 3.1.0
+        tag: 3.1.1@sha256:e689cc634841c937de4d7ea6157f17e29cf257d6a320f1c293ab18d46cfea986
       auth_enabled: false
       storage:
         type: filesystem
