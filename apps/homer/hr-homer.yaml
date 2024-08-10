@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/bastienwirtz/homer
-              tag: v24.05.1
+              tag: v24.05.1@sha256:66c2a66e3df660e270eca9a388c4164409c8f54edac7cf3c2424075fef593a39
               pullPolicy: IfNotPresent
             probes:
               liveness:
