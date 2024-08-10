@@ -21,9 +21,9 @@ spec:
       namespace: longhorn-system
   values:
     auth:
-      username: tandoor-recipes
+      username: tandoor-receipes
       password: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
-      database: tandoor-recipes
+      database: tandoor-receipes
     primary:
       resourcesPreset: "small"
       persistence:
