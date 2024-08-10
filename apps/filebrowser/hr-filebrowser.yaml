@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: filebrowser/filebrowser
-              tag: v2.30.0
+              tag: v2.30.0@sha256:862a8f4f4829cb2747ced869aea8593204bbc718c92f0f11c97e7b669a54b53d
             env:
               FB_DATABASE: /config/filebrowser.db
               FB_ROOT: /data
