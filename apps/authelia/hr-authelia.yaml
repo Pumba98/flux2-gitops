@@ -147,7 +147,7 @@ spec:
               authorization_policy: 'two_factor'
               consent_mode: implicit
               redirect_uris:
-                - 'https://receipes.${SECRET_DOMAIN}/accounts/oidc/authelia/login/callback/'
+                - 'https://recipes.${SECRET_DOMAIN}/accounts/oidc/authelia/login/callback/'
             - client_name: 'Rancher'
               client_id: 'R4Fy_RAZUfHmPsCAWaD89Snt7wABRsD2IUTP3Xm0AxKbRWzBLIMqQNIpTvuLfKkC6_bvNagL'
               client_secret:

@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: tandoor-receipes
+  name: tandoor-recipes
 spec:
   interval: 5m
   chart:
@@ -18,7 +18,7 @@ spec:
       namespace: networking
     - name: longhorn
       namespace: longhorn-system
-    - name: tandoor-receipes-postgresql
+    - name: tandoor-recipes-postgresql
   values:
     controllers:
       main:
@@ -31,10 +31,10 @@ spec:
               SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
               TIMEZONE: Europe/Berlin
               DB_ENGINE: django.db.backends.postgresql
-              POSTGRES_HOST: tandoor-receipes-postgresql
+              POSTGRES_HOST: tandoor-recipes-postgresql
               POSTGRES_PORT: "5432"
-              POSTGRES_DB: tandoor-receipes
-              POSTGRES_USER: tandoor-receipes
+              POSTGRES_DB: tandoor-recipes
+              POSTGRES_USER: tandoor-recipes
               POSTGRES_PASSWORD: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
               # Serve mediafiles directly using gunicorn. Basically everyone recommends not doing this. Please use any of the examples
               # provided that include an additional nxginx container to handle media file serving.
@@ -90,19 +90,19 @@ spec:
           nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
           nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
         hosts:
-          - host: receipes.${SECRET_DOMAIN}
+          - host: recipes.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: main
                   port: http
         tls:
-          - secretName: tandoor-receipes-tls
+          - secretName: tandoor-recipes-tls
             hosts:
-              - receipes.${SECRET_DOMAIN}
+              - recipes.${SECRET_DOMAIN}
     persistence:
       static:
-        existingClaim: tandoor-receipes-static
+        existingClaim: tandoor-recipes-static
         globalMounts:
         - path: /opt/recipes/staticfiles
           subPath: staticfiles

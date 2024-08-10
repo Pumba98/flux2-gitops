@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: tandoor-receipes-postgresql
+  name: tandoor-recipes-postgresql
 spec:
   interval: 5m
   chart:
@@ -21,14 +21,14 @@ spec:
       namespace: longhorn-system
   values:
     auth:
-      username: tandoor-receipes
+      username: tandoor-recipes
       password: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
-      database: tandoor-receipes
+      database: tandoor-recipes
     primary:
       resourcesPreset: "small"
       persistence:
         enabled: true
-        existingClaim: tandoor-receipes-postgresql
+        existingClaim: tandoor-recipes-postgresql
       ## Init Container for Major PostgreSQL Upgrades, not needed permanently
       # initContainers:
       # - name: pg-upgrade
