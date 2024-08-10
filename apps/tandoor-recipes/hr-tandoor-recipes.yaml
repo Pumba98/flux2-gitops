@@ -29,12 +29,12 @@ spec:
               tag: 1.5.18@sha256:e5f1287a5961d455e2239f3e96f05987cb018749d565342d93dc8ccadd2bfd65
             env:
               SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
-              TIMEZONE: Europe/Berlin
+              TZ: Europe/Berlin
               DB_ENGINE: django.db.backends.postgresql
               POSTGRES_HOST: tandoor-recipes-postgresql
               POSTGRES_PORT: "5432"
-              POSTGRES_DB: tandoor-recipes
-              POSTGRES_USER: tandoor-recipes
+              POSTGRES_DB: tandoor-receipes
+              POSTGRES_USER: tandoor-receipes
               POSTGRES_PASSWORD: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
               GUNICORN_MEDIA: 0
               ENABLE_SIGNUP: 0
