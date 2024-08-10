@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: tandoor-receipes-static
+  name: tandoor-recipes-static
 spec:
   storageClassName: longhorn-backup
   accessModes:

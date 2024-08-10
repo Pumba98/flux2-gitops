@@ -40,7 +40,7 @@ resources:
 - ../sftpgo.yaml
 - ../syncthing.yaml
 # - ../system-upgrade-controller.yaml
-- ../tandoor-receipes.yaml
+- ../tandoor-recipes.yaml
 - ../weave-gitops.yaml
 
 patchesStrategicMerge:

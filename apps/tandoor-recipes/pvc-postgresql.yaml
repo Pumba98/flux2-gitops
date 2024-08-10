@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: tandoor-receipes-postgresql
+  name: tandoor-recipes-postgresql
 spec:
   storageClassName: longhorn-backup
   accessModes:
