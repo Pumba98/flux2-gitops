@@ -31,4 +31,4 @@ spec:
         enabled: true
     auth:
       existingSecret: authelia
-      existingSecretPasswordKey: REDIS_PASSWORD
+      existingSecretPasswordKey: session.redis.password.txt
