@@ -6,3 +6,4 @@ resources:
 - pvc-tandoor-recipes.yaml
 - hr-postgresql.yaml
 - hr-tandoor-recipes.yaml
+- cm-nginx.yaml

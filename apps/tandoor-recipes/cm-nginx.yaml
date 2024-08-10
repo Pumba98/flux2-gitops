@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tandoor-nginx
+data:
+  nginx-config: |
+    events {
+      worker_connections 1024;
+    }
+    http {
+      include mime.types;
+      server {
+        listen 8081;
+        server_name _;
+
+        client_max_body_size 16M;
+
+        # serve static files
+        location /static/ {
+          alias /opt/recipes/staticfiles/;
+        }
+
+        # serve media files
+        location /media/ {
+          alias /opt/recipes/mediafiles/;
+        }
+      }
+    }

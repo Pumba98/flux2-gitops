@@ -36,15 +36,9 @@ spec:
               POSTGRES_DB: tandoor-recipes
               POSTGRES_USER: tandoor-recipes
               POSTGRES_PASSWORD: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
-              # Serve mediafiles directly using gunicorn. Basically everyone recommends not doing this. Please use any of the examples
-              # provided that include an additional nxginx container to handle media file serving.
-              # If you know what you are doing turn this back on (1) to serve media files using djangos serve() method.
-              # when unset: 1 (true) - this is temporary until an appropriate amount of time has passed for everyone to migrate
-              GUNICORN_MEDIA: 1
+              GUNICORN_MEDIA: 0
               ENABLE_SIGNUP: 0
-              ENABLE_METRICS: 1
               ENABLE_PDF_EXPORT: 1
-              DEBUG: 0
               SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
               SOCIALACCOUNT_PROVIDERS: |
                 {
@@ -75,12 +69,18 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
+          nginx:
+            image:
+              repository: ghcr.io/nginxinc/nginx-unprivileged
+              tag: 1.27.0-alpine
     service:
       main:
         controller: main
         ports:
-          http:
+          main:
             port: 8080
+          nginx:
+            port: 8081
     ingress:
       main:
         className: nginx-external
@@ -95,7 +95,15 @@ spec:
               - path: /
                 service:
                   identifier: main
-                  port: http
+                  port: main
+              - path: /media
+                service:
+                  identifier: main
+                  port: nginx
+              - path: /static
+                service:
+                  identifier: main
+                  port: nginx
         tls:
           - secretName: tandoor-recipes-tls
             hosts:
@@ -108,3 +116,12 @@ spec:
           subPath: staticfiles
         - path: /opt/recipes/mediafiles
           subPath: mediafiles
+      nginx-config:
+        type: configMap
+        name: tandoor-nginx
+        advancedMounts:
+          tandoor:
+            nginx:
+              - path: /etc/nginx/nginx.conf
+                subPath: nginx-config
+                readOnly: true
