@@ -5,6 +5,7 @@ metadata:
   name: tandoor-nginx
 data:
   nginx-config: |
+    pid /tmp/nginx.pid;
     events {
       worker_connections 1024;
     }
