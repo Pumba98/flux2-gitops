@@ -120,7 +120,7 @@ spec:
         type: configMap
         name: tandoor-nginx
         advancedMounts:
-          tandoor:
+          main:
             nginx:
               - path: /etc/nginx/nginx.conf
                 subPath: nginx-config
