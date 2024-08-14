@@ -28,7 +28,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.111.0@sha256:14ad5881f5afbea1dbf751e14acaafe00e6b012ffb18a56e9f117b00eb067d1d
+              tag: v1.112.0@sha256:c033bf991a10b13887c929839c524db1c084afce4cd32ac3807511f7c1e02aa8
             env:
               DB_HOSTNAME: immich-postgresql
               DB_DATABASE_NAME: immich
