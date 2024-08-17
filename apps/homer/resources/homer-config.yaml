@@ -48,7 +48,7 @@ services:
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/bitwarden.png"
         url: "https://vault.bitwarden.com"
       - name: "Fastmail"
-        logo: "https://www.fastmail.com/wp-content/uploads/2022/11/FM-Icon-RGB.png"
+        logo: "https://avatars.githubusercontent.com/u/4554886"
         url: "https://app.fastmail.com/"
       - name: "Filebrowser"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/filebrowser.png"
