@@ -52,40 +52,28 @@
       "pinDigests": true
     },
     {
-      "packageRules": [
-        {
-          "matchUpdateTypes": ["patch", "pin", "digest"],
-          "matchPackageNames": ["!k3s-io/k3s"],
-          "automerge": true,
-          "automergeType": "pr",
-          "automergeStrategy": "squash",
-          "minimumReleaseAge": "24 hours"
-        }
-      ]
+      "matchUpdateTypes": ["patch", "pin"],
+      "matchPackageNames": ["!k3s-io/k3s"],
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash",
+      "minimumReleaseAge": "24 hours"
     },
     {
-      "packageRules": [
-        {
-          "matchUpdateTypes": ["minor"],
-          "matchPackageNames": ["!k3s-io/k3s", "!metallb", "!longhorn", "!rancher", "!*paperless-ngx*", "!*immich*"],
-          "automerge": true,
-          "automergeType": "pr",
-          "automergeStrategy": "squash",
-          "minimumReleaseAge": "24 hours"
-        }
-      ]
+      "matchUpdateTypes": ["minor"],
+      "matchPackageNames": ["!k3s-io/k3s", "!metallb", "!longhorn", "!rancher", "!*paperless-ngx*", "!*immich*"],
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash",
+      "minimumReleaseAge": "24 hours"
     },
     {
-      "packageRules": [
-        {
-          "matchUpdateTypes": ["major"],
-          "matchPackageNames": ["kube-prometheus-stack"],
-          "automerge": true,
-          "automergeType": "pr",
-          "automergeStrategy": "squash",
-          "minimumReleaseAge": "24 hours"
-        }
-      ]
+      "matchUpdateTypes": ["major"],
+      "matchPackageNames": ["ghcr.io/prometheus-community/charts/kube-prometheus-stack"],
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash",
+      "minimumReleaseAge": "24 hours"
     }
   ]
 }
