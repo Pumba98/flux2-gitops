@@ -40,12 +40,25 @@ spec:
       tls: true
       tlsSecret: longhorn-tls
     defaultSettings:
-      storageOverProvisioningPercentage: 100
-      storageMinimalAvailablePercentage: 10
-      nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       backupTarget: s3://longhorn@us-east-1/
       backupTargetCredentialSecret: longhorn-system-secrets
-      restoreVolumeRecurringJobs: true
+      storageOverProvisioningPercentage: 100
+      storageMinimalAvailablePercentage: 10
       defaultLonghornStaticStorageClass: longhorn-backup
+      restoreVolumeRecurringJobs: true
+      nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
+      autoCleanupSystemGeneratedSnapshot: true
+      autoCleanupRecurringJobBackupSnapshot: true
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       orphanAutoDeletion: true
+      snapshotDataIntegrity: enable
+      snapshotDataIntegrityImmediateCheckAfterSnapshotCreation: false
+      snapshotDataIntegrityCronjob: "0 4 * * *"
+      fastReplicaRebuildEnabled: true
+      removeSnapshotsDuringFilesystemTrim: true
+      v1DataEngine: true
+      v2DataEngine: false
+      allowCollectingLonghornUsageMetrics: false
+      freezeFilesystemForSnapshot: enabled
+      autoCleanupSnapshotWhenDeleteBackup: true
+      rwxVolumeFastFailover: true
