@@ -96,7 +96,7 @@ spec:
       enabled: true
       image:
         repository: grafana/grafana
-        tag: 11.1.5@sha256:f4796c6227f4acb0b0dfef12edc2c732f60f18f65a6cf005313700c0896aaa30
+        tag: 11.2.0@sha256:408afb9726de5122b00a2576763a8a57a3c86d5b0eff5305bc994ceb3eb96c3f
       admin:
         existingSecret: grafana-secrets
       envFromSecret: grafana-secrets
