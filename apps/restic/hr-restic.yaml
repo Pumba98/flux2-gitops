@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: ghcr.io/restic/restic
-              tag: 0.17.0@sha256:2e5172c5424c65c7111d2b0eb7a64f37bad017719b0367df4217014c72357cbf
+              tag: 0.17.1@sha256:5a026985e1dec5b2e8f097686f97636f71cb7d6072ddc43acbe1f305f3fa6797
             command:
             - /bin/sh
             - -c
@@ -38,7 +38,7 @@ spec:
           init-repo:
             image:
               repository: ghcr.io/restic/restic
-              tag: 0.17.0@sha256:2e5172c5424c65c7111d2b0eb7a64f37bad017719b0367df4217014c72357cbf
+              tag: 0.17.1@sha256:5a026985e1dec5b2e8f097686f97636f71cb7d6072ddc43acbe1f305f3fa6797
             command: 
             - /bin/sh
             - -c
