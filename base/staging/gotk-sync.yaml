@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1m
   ref:
-    branch: rework/folder-structure
+    branch: main
   url: ssh://git@github.com/Pumba98/flux2-gitops
   secretRef:
     name: flux-system
