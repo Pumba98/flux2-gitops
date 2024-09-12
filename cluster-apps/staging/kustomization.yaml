@@ -19,7 +19,7 @@ resources:
 - ../homer.yaml
 - ../immich.yaml
 - ../ingress-nginx.yaml
-# - ../ingress-nginx-external.yaml
+- ../ingress-nginx-external.yaml
 - ../jd2.yaml
 - ../kube-prometheus-stack.yaml
 - ../kube-vip.yaml
