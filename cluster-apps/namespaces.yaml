@@ -28,6 +28,7 @@ metadata:
   name: selfhosted
   labels:
     goldilocks.fairwinds.com/enabled: "true"
+    pod-security.kubernetes.io/enforce: privileged # for sftpgo
 ---
 apiVersion: v1
 kind: Namespace
