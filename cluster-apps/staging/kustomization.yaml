@@ -8,10 +8,10 @@ resources:
 # - ../blocky.yaml
 - ../certificate-exporter.yaml
 - ../cert-manager.yaml
-- ../cloudflared.yaml
+# - ../cloudflared.yaml
 - ../csi-driver-smb.yaml
 - ../descheduler.yaml
-- ../external-dns-bind.yaml
+# - ../external-dns-bind.yaml
 - ../external-dns-cloudflare.yaml
 - ../filebrowser.yaml
 - ../flux-system.yaml
