@@ -48,6 +48,10 @@ spec:
         envFrom:
         - secretRef:
             name: pod-gateway-vpn-secrets
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
         networkPolicy:
           enabled: true
           egress:
