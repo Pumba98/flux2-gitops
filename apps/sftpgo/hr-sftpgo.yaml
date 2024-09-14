@@ -35,7 +35,7 @@ spec:
               SFTPGO_TELEMETRY__BIND_ADDRESS: 0.0.0.0
               SFTPGO_TELEMETRY__BIND_PORT: 8081
               SFTPGO_SFTPD__BINDINGS__0__ADDRESS: 0.0.0.0
-              SFTPGO_SFTPD__BINDINGS__0__PORT: 22
+              SFTPGO_SFTPD__BINDINGS__0__PORT: 2022
               SFTPGO_HTTPD__BINDINGS__0__ADDRESS: 0.0.0.0
               SFTPGO_HTTPD__BINDINGS__0__PORT: 8080
               SFTPGO_HTTPD__BINDINGS__0__OIDC__CLIENT_ID: "MJ04uHbUwWj00-RYG3X4QACoW-45EF0u0ahDEpv48yDT~caYFZMb240_nT8Z3kHrY6jmvY~Q"
@@ -89,6 +89,7 @@ spec:
         ports:
           sftp:
             port: 22
+            targetPort: 2022
             protocol: TCP
     ingress:
       main:
