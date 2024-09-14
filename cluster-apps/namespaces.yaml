@@ -37,3 +37,4 @@ metadata:
   labels:
     goldilocks.fairwinds.com/enabled: "true"
     routed-gateway: "true"
+    pod-security.kubernetes.io/enforce: privileged # for jd2
