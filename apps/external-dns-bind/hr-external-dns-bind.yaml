@@ -44,8 +44,8 @@ spec:
     - ingress
     - service
     policy: sync
-    domainFilters:
-    - "${SECRET_DOMAIN}"
+    # domainFilters:
+    # - "${SECRET_DOMAIN}"
     provider: rfc2136
     extraArgs:
       - --rfc2136-tsig-secret-alg=hmac-sha512
