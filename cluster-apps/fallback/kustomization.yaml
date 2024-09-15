@@ -5,8 +5,8 @@ resources:
 - ../namespaces.yaml
 - ../bind9.yaml
 - ../blocky.yaml
-# - ../flux-system.yaml
+- ../flux-system.yaml
 - ../local-path-provisioner.yaml
 - ../metallb.yaml
 - ../reloader.yaml
-# - ../system-upgrade-controller.yaml
+- ../system-upgrade-controller.yaml
