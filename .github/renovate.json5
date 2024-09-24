@@ -57,6 +57,7 @@
       "automergeType": "pr",
       "automergeStrategy": "squash",
       "minimumReleaseAge": "24 hours"
+      "matchDepNames": ["!rancher/k3s-upgrade"],
     },
     {
       "matchUpdateTypes": ["minor"],
