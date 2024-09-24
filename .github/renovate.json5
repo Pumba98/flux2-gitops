@@ -48,7 +48,7 @@
       "matchDatasources": [
         "docker"
       ],
-      "matchDepNames": ["!app-template", "!kube-prometheus-stack", "!weave-gitops", "!postgresql", "!redis"],
+      "matchDepNames": ["!app-template", "!kube-prometheus-stack", "!weave-gitops", "!postgresql", "!redis", "!rancher/k3s-upgrade"],
       "pinDigests": true
     },
     {
@@ -56,8 +56,7 @@
       "automerge": true,
       "automergeType": "pr",
       "automergeStrategy": "squash",
-      "minimumReleaseAge": "24 hours",
-      "matchDepNames": ["!rancher/k3s-upgrade"]
+      "minimumReleaseAge": "24 hours"
     },
     {
       "matchUpdateTypes": ["minor"],
