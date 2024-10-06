@@ -70,16 +70,14 @@ spec:
       #     groupmod -g 1001 postgres
       #     chown -R postgres:postgres /var/lib/postgresql
       #     su postgres -c 'PGDATA="$PGDATANEW" eval "initdb $POSTGRES_INITDB_ARGS"'
-      #     cp -p $PG_NEW/data/postgresql.conf $PG_NEW/data/pg_hba.conf $PG_OLD/data/
       #     chmod 700 $PG_OLD/data
       #     gosu postgres pg_upgrade
       #     gosu postgres pg_ctl -D /var/lib/postgresql/$PG_NEW/data -l logfile start
       #     gosu postgres /usr/lib/postgresql/$PG_NEW/bin/vacuumdb --all --analyze-in-stages
       #     gosu postgres pg_ctl -D /var/lib/postgresql/$PG_NEW/data -l logfile stop
-      #     rm /var/lib/postgresql/$PG_NEW/data/pg_hba.conf /var/lib/postgresql/$PG_NEW/data/postgresql.conf
       #     rm -rf /bitnami/postgresql/data
       #     mv /var/lib/postgresql/$PG_NEW/data /bitnami/postgresql/
     metrics:
-      enabled: true
+      enabled: false
       serviceMonitor:
         enabled: true
