@@ -29,43 +29,43 @@ spec:
       persistence:
         enabled: true
         existingClaim: memos-postgresql
-      ## Init Container for Major PostgreSQL Upgrades, not needed permanently
-      # initContainers:
-      # - name: pg-upgrade
-      #   image: tianon/postgres-upgrade:15-to-16
-      #   securityContext:
-      #     runAsUser: 0
-      #     runAsGroup: 0
-      #   volumeMounts:
-      #   - name: data
-      #     mountPath: /bitnami/postgresql
-      #   env:
-      #   - name: "PG_OLD"
-      #     value: "15"
-      #   - name: "PG_NEW"
-      #     value: "16"
-      #   command:
-      #   - /bin/bash
-      #   - -c
-      #   - |
-      #     if [[ $(< /bitnami/postgresql/data/PG_VERSION) -eq $PG_NEW ]]; then echo "PostgreSQL is already up2date"; exit 0; fi
-      #     if [[ "$PGBINOLD" != "/usr/lib/postgresql/$PG_OLD/bin" ]]; then echo "Wrong postgres-upgrade image"; exit -1; fi
-      #     if [[ "$PGBINNEW" != "/usr/lib/postgresql/$PG_NEW/bin" ]]; then echo "Wrong postgres-upgrade image"; exit -1; fi
-      #     echo "Upgrading PostgreSQL from $PG_OLD to $PG_NEW"
-      #     cp -r /bitnami/postgresql/data /var/lib/postgresql/$PG_OLD
-      #     usermod -u 1001 postgres
-      #     groupmod -g 1001 postgres
-      #     chown -R postgres:postgres /var/lib/postgresql
-      #     su postgres -c 'PGDATA="$PGDATANEW" eval "initdb $POSTGRES_INITDB_ARGS"'
-      #     cp -p $PG_NEW/data/postgresql.conf $PG_NEW/data/pg_hba.conf $PG_OLD/data/
-      #     chmod 700 $PG_OLD/data
-      #     gosu postgres pg_upgrade
-      #     gosu postgres pg_ctl -D /var/lib/postgresql/$PG_NEW/data -l logfile start
-      #     gosu postgres /usr/lib/postgresql/$PG_NEW/bin/vacuumdb --all --analyze-in-stages
-      #     gosu postgres pg_ctl -D /var/lib/postgresql/$PG_NEW/data -l logfile stop
-      #     rm /var/lib/postgresql/$PG_NEW/data/pg_hba.conf /var/lib/postgresql/$PG_NEW/data/postgresql.conf
-      #     rm -rf /bitnami/postgresql/data
-      #     mv /var/lib/postgresql/$PG_NEW/data /bitnami/postgresql/
+      # Init Container for Major PostgreSQL Upgrades, not needed permanently
+      initContainers:
+      - name: pg-upgrade
+        image: tianon/postgres-upgrade:16-to-17
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+        volumeMounts:
+        - name: data
+          mountPath: /bitnami/postgresql
+        env:
+        - name: "PG_OLD"
+          value: "16"
+        - name: "PG_NEW"
+          value: "17"
+        command:
+        - /bin/bash
+        - -c
+        - |
+          if [[ $(< /bitnami/postgresql/data/PG_VERSION) -eq $PG_NEW ]]; then echo "PostgreSQL is already up2date"; exit 0; fi
+          if [[ "$PGBINOLD" != "/usr/lib/postgresql/$PG_OLD/bin" ]]; then echo "Wrong postgres-upgrade image"; exit -1; fi
+          if [[ "$PGBINNEW" != "/usr/lib/postgresql/$PG_NEW/bin" ]]; then echo "Wrong postgres-upgrade image"; exit -1; fi
+          echo "Upgrading PostgreSQL from $PG_OLD to $PG_NEW"
+          cp -r /bitnami/postgresql/data /var/lib/postgresql/$PG_OLD
+          usermod -u 1001 postgres
+          groupmod -g 1001 postgres
+          chown -R postgres:postgres /var/lib/postgresql
+          su postgres -c 'PGDATA="$PGDATANEW" eval "initdb $POSTGRES_INITDB_ARGS"'
+          cp -p $PG_NEW/data/postgresql.conf $PG_NEW/data/pg_hba.conf $PG_OLD/data/
+          chmod 700 $PG_OLD/data
+          gosu postgres pg_upgrade
+          gosu postgres pg_ctl -D /var/lib/postgresql/$PG_NEW/data -l logfile start
+          gosu postgres /usr/lib/postgresql/$PG_NEW/bin/vacuumdb --all --analyze-in-stages
+          gosu postgres pg_ctl -D /var/lib/postgresql/$PG_NEW/data -l logfile stop
+          rm /var/lib/postgresql/$PG_NEW/data/pg_hba.conf /var/lib/postgresql/$PG_NEW/data/postgresql.conf
+          rm -rf /bitnami/postgresql/data
+          mv /var/lib/postgresql/$PG_NEW/data /bitnami/postgresql/
     metrics:
       enabled: true
       serviceMonitor:
