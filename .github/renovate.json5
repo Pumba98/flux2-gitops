@@ -60,7 +60,7 @@
     },
     {
       "matchUpdateTypes": ["minor"],
-      "matchPackageNames": ["!k3s-io/k3s", "!metallb", "!longhorn", "!rancher", "!*paperless-ngx*", "!*immich*"],
+      "matchPackageNames": ["!k3s-io/k3s", "!metallb", "!longhorn", "!rancher", "!**paperless-ngx**", "!**immich**"],
       "automerge": true,
       "automergeType": "pr",
       "automergeStrategy": "squash",
