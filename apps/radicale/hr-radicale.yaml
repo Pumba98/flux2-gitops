@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: tomsquest/docker-radicale
-              tag: 3.3.1.0@sha256:bf078cefa9e50a578ae3630a738a62d14e0944ed6830b440e1696a1251c5c9ff
+              tag: 3.3.1.1@sha256:c284cf69ada1b51aa9ef824041c8f02f7667b79996f35c927345a78e9dee5610
             probes:
               liveness:
                 enabled: true
