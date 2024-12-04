@@ -28,7 +28,7 @@ spec:
               repository: ghcr.io/linkwarden/linkwarden
               tag: v2.8.4@sha256:8a8e6323508f97ddaa863281b9ff52949fc153eea1ec07cb84539436371caf28
             env:
-              NEXTAUTH_URL: https://${SECRET_DOMAIN}/api/v1/auth
+              NEXTAUTH_URL: https://linkwarden.${SECRET_DOMAIN}/api/v1/auth
               DATABASE_URL: "postgres://linkwarden:${SECRET_LINKWARDEN_DB_PASSWORD}@linkwarden-postgresql:5432/linkwarden"
               NEXT_PUBLIC_DISABLE_REGISTRATION: true
               NEXT_PUBLIC_CREDENTIALS_ENABLED: false
