@@ -59,10 +59,13 @@ services:
       - name: "Memos"
         logo: "https://raw.githubusercontent.com/usememos/memos/main/web/public/logo.webp"
         url: "https://memos.${SECRET_DOMAIN}"
+      - name: "Linkwarden"
+        logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/linkwarden.png"
+        url: "https://linkwarden.${SECRET_DOMAIN}"
 
-#### Selfhosted ####
-  - name: "Selfhosted"
-    icon: "fas fa-flask-vial"
+#### Cloud ####
+  - name: "Cloud"
+    icon: "fas fa-cloud"
     items:
       - name: "Paperless"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/paperless-ng.png"
@@ -70,16 +73,22 @@ services:
       - name: "Tandoor Recipes"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/tandoorrecipes.png"
         url: "https://recipes.${SECRET_DOMAIN}"
-        subtitle: "Synology NAS"
       - name: "JDownloader2"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/jdownloader.png"
         url: "https://jd2.${SECRET_DOMAIN}"
-      - name: "Plex"
-        logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/plex.png"
-        url: "https://plex.nas.${SECRET_DOMAIN}"
       - name: "Syncthing"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/syncthing.png"
         url: "https://syncthing.${SECRET_DOMAIN}"
+      - name: "Syncthing"
+        logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/syncthing.png"
+        url: "https://syncthing.nas.${SECRET_DOMAIN}"
+        subtitle: "Synology NAS"
+      - name: "Jellyfin"
+        logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/jellyfin.png"
+        url: "https://jellyfin.nas.${SECRET_DOMAIN}"
+      - name: "Plex"
+        logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/plex.png"
+        url: "https://plex.nas.${SECRET_DOMAIN}"
 
 #### Management ####
   - name: "Management"

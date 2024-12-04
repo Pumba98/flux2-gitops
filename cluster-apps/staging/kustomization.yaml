@@ -23,6 +23,7 @@ resources:
 - ../kube-prometheus-stack.yaml
 - ../kube-vip.yaml
 - ../kured.yaml
+- ../linkwarden.yaml
 - ../loki.yaml
 - ../longhorn.yaml
 - ../memos.yaml
