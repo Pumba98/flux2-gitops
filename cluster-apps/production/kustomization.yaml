@@ -13,7 +13,6 @@ resources:
 - ../descheduler.yaml
 - ../external-dns-bind.yaml
 - ../external-dns-cloudflare.yaml
-- ../filebrowser.yaml
 - ../flux-system.yaml
 - ../goldilocks.yaml
 - ../homer.yaml
@@ -29,7 +28,6 @@ resources:
 - ../memos.yaml
 - ../metallb.yaml
 - ../metrics-server.yaml
-- ../metube.yaml
 - ../minio.yaml
 - ../paperless-ngx.yaml
 - ../pod-gateway-vpn.yaml
