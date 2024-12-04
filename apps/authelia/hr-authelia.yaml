@@ -69,7 +69,6 @@ spec:
         # Always require auth
         - policy: two_factor
           domain:
-          - files.${SECRET_DOMAIN}
           - syncthing.${SECRET_DOMAIN}
         - policy: two_factor
           domain:
@@ -173,6 +172,14 @@ spec:
               consent_mode: implicit
               redirect_uris:
                 - 'https://sftpgo.${SECRET_DOMAIN}/web/oidc/redirect'
+            - client_name: 'Linkwarden'
+              client_id: 'hqIfa24KNqYGpyBr1Q400RH1zgUxQnmIvE.e5sYyog-9aQLqbuUarr0F6OoOxSewwEaiXbic'
+              client_secret:
+                path: '/secrets/authelia/oidc.client.linkwarden.value'
+              authorization_policy: 'two_factor'
+              consent_mode: implicit
+              redirect_uris:
+                - 'https://linkwarden.${SECRET_DOMAIN}/api/v1/auth/callback/authelia'
       session:
         name: authelia_session
         same_site: lax
@@ -219,3 +226,4 @@ spec:
             - key: 'oidc.client.rancher.value'
             - key: 'oidc.client.grafana.value'
             - key: 'oidc.client.sftpgo.value'
+            - key: 'oidc.client.linkwarden.value'
