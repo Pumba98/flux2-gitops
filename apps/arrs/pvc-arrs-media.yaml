@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: arrs-media-pv
+spec:
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: smb
+  mountOptions:
+    - dir_mode=0777
+    - file_mode=0777
+  csi:
+    driver: smb.csi.k8s.io
+    volumeHandle: arrs-smb-volume
+    volumeAttributes:
+      source: "${SECRET_CIFS_SHARE}/media"
+    nodeStageSecretRef:
+      name: smb-secrets
+      namespace: kube-system
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: arrs-media
+spec:
+  volumeName: arrs-media-pv
+  storageClassName: smb
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti

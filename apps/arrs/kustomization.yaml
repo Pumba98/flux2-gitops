@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
 - hr-arrs.yaml
 - pvc-arrs-config.yaml
-- pvc-arrs-data.yaml
+- pvc-arrs-downloads.yaml
+- pvc-arrs-media.yaml
