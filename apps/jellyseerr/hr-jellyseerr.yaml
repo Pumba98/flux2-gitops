@@ -27,7 +27,7 @@ spec:
           main:
             image:
               repository: fallenbagel/jellyseerr
-              tag: 2.0.1
+              tag: 2.0.1@sha256:8ff28894f9fd28bf36626fb98ddd0ee79d778de22a5dc75d69a845281e19115b
     service:
       main:
         controller: main
