@@ -35,6 +35,8 @@ spec:
               PUID: "1000"
               PGID: "1000"
               TZ: Etc/UTC
+              RADARR__AUTH__METHOD: External
+              RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
       sonarr:
         containers:
           app:
@@ -45,6 +47,8 @@ spec:
               PUID: "1000"
               PGID: "1000"
               TZ: Etc/UTC
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
       prowlarr:
         containers:
           app:
@@ -55,6 +59,8 @@ spec:
               PUID: "1000"
               PGID: "1000"
               TZ: Etc/UTC
+              PROWLARR__AUTH__METHOD: External
+              PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
     service:
       radarr:
         controller: radarr
