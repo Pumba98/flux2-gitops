@@ -57,4 +57,3 @@ spec:
         existingClaim: jellyseerr-config
         globalMounts:
           - path: "/app/config"
-,
