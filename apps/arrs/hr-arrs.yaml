@@ -1,0 +1,146 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: arrs
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 5m
+  dependsOn:
+    - name: ingress-nginx
+      namespace: networking
+    - name: csi-driver-smb
+      namespace: kube-system
+    - name: longhorn
+      namespace: longhorn-system
+    - name: pod-gateway-vpn
+      namespace: networking
+  values:
+    controllers:
+      radarr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/linuxserver/radarr
+              tag: 5.15.1
+            env:
+              PUID: "1000"
+              PGID: "1000"
+              TZ: Etc/UTC
+      sonarr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/linuxserver/sonarr
+              tag: 4.0.11
+            env:
+              PUID: "1000"
+              PGID: "1000"
+              TZ: Etc/UTC
+      prowlarr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/linuxserver/prowlarr
+              tag: 1.27.0
+            env:
+              PUID: "1000"
+              PGID: "1000"
+              TZ: Etc/UTC
+    service:
+      radarr:
+        controller: radarr
+        ports:
+          http:
+            port: 7878
+      sonarr:
+        controller: sonarr
+        ports:
+          http:
+            port: 8989
+      prowlarr:
+        controller: prowlarr
+        ports:
+          http:
+            port: 9696
+    ingress:
+      main:
+        className: "nginx"
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+        hosts:
+        - host: radarr.${SECRET_DOMAIN}
+          paths:
+          - path: /
+            service:
+              identifier: radarr
+              port: http
+        - host: sonarr.${SECRET_DOMAIN}
+          paths:
+          - path: /
+            service:
+              identifier: sonarr
+              port: http
+        - host: prowlarr.${SECRET_DOMAIN}
+          paths:
+          - path: /
+            service:
+              identifier: prowlarr
+              port: http
+        tls:
+        - secretName: radarr-tls
+          hosts:
+          - radarr.${SECRET_DOMAIN}
+        - secretName: sonarr-tls
+          hosts:
+          - sonarr.${SECRET_DOMAIN}
+        - secretName: prowlarr-tls
+          hosts:
+          - prowlarr.${SECRET_DOMAIN}
+    persistence:
+      media:
+        existingClaim: arrs-media
+        advancedMounts:
+          radarr:
+            app:
+              - path: "/media"
+          sonarr:
+            app:
+              - path: "/media"
+      downloads:
+        existingClaim: arrs-downloads
+        advancedMounts:
+          radarr:
+            app:
+              - path: "/downloads"
+          sonarr:
+            app:
+              - path: "/downloads"
+      radarr:
+        existingClaim: radarr-data
+        advancedMounts:
+          radarr:
+            app:
+              - path: "/config"
+      sonarr:
+        existingClaim: sonarr-data
+        advancedMounts:
+          sonarr:
+            app:
+              - path: "/config"
+      prowlarr:
+        existingClaim: prowlarr-data
+        advancedMounts:
+          prowlarr:
+            app:
+              - path: "/config"
