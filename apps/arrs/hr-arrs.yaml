@@ -86,6 +86,10 @@ spec:
               tag: 7.4.0
             args:
               - sync
+            env:
+              PUID: "1000"
+              PGID: "1000"
+              TZ: Etc/UTC
             envFrom:
               - secretRef:
                   name: arrs-secrets
