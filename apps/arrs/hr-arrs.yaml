@@ -119,10 +119,12 @@ spec:
         advancedMounts:
           radarr:
             app:
-              - path: "/media"
+              - path: "/movies"
+                subPath: movies
           sonarr:
             app:
-              - path: "/media"
+              - path: "/tv"
+                subPath: tv
       downloads:
         existingClaim: arrs-downloads
         advancedMounts:
