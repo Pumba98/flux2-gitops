@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/radarr
-              tag: 5.15.1
+              tag: 5.15.1@sha256:2e37ae0af799e01f413a97ee82c7e581a5b635816df0380889bc65d554dbeb17
             env:
               PUID: "1000"
               PGID: "1000"
@@ -42,7 +42,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/sonarr
-              tag: 4.0.11
+              tag: 4.0.11@sha256:f1b771bf5f911ddb11aa86170ae27fab5ccde7d4671edcde6a3b264af8662945
             env:
               PUID: "1000"
               PGID: "1000"
@@ -54,7 +54,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/prowlarr
-              tag: 1.27.0
+              tag: 1.27.0@sha256:6b4ce037964e4bf50d341bc9b3aa800238d46ff7de4d7ecc029280c4bb5b2e68
             env:
               PUID: "1000"
               PGID: "1000"
