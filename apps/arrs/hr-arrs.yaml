@@ -115,23 +115,27 @@ spec:
           - prowlarr.${SECRET_DOMAIN}
     persistence:
       media:
-        existingClaim: arrs-media
+        existingClaim: arrs-data
         advancedMounts:
           radarr:
             app:
               - path: "/media"
+                subPath: media
           sonarr:
             app:
               - path: "/media"
+                subPath: media
       downloads:
-        existingClaim: arrs-downloads
+        existingClaim: arrs-data
         advancedMounts:
           radarr:
             app:
               - path: "/downloads"
+                subPath: downloads
           sonarr:
             app:
               - path: "/downloads"
+                subPath: downloads
       radarr:
         existingClaim: radarr-data
         advancedMounts:
