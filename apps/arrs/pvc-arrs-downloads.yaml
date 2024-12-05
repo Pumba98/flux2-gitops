@@ -15,7 +15,7 @@ spec:
     - file_mode=0777
   csi:
     driver: smb.csi.k8s.io
-    volumeHandle: arrs-smb-volume
+    volumeHandle: arrs-downloads-smb-volume
     volumeAttributes:
       source: "${SECRET_CIFS_SHARE}/downloads"
     nodeStageSecretRef:
