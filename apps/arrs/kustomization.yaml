@@ -1,0 +1,7 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- hr-arrs.yaml
+- pvc-arrs-config.yaml
+- pvc-arrs-data.yaml
