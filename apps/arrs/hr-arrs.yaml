@@ -37,6 +37,11 @@ spec:
               TZ: Etc/UTC
               RADARR__AUTH__METHOD: External
               RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              RADARR__AUTH__APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: arrs-secrets
+                    key: RADARR_API_KEY
       sonarr:
         containers:
           app:
@@ -49,6 +54,11 @@ spec:
               TZ: Etc/UTC
               SONARR__AUTH__METHOD: External
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__AUTH__APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: arrs-secrets
+                    key: SONARR_API_KEY
       prowlarr:
         containers:
           app:
@@ -61,6 +71,24 @@ spec:
               TZ: Etc/UTC
               PROWLARR__AUTH__METHOD: External
               PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+      recyclarr:
+        type: cronjob
+        cronjob:
+          schedule: "@daily"
+          backoffLimit: 0
+          concurrencyPolicy: Forbid
+          failedJobsHistory: 1
+          successfulJobsHistory: 0
+        containers:
+          app:
+            image:
+              repository: ghcr.io/recyclarr/recyclarr
+              tag: 7.4.0
+            args:
+              - sync
+            envFrom:
+              - secretRef:
+                  name: arrs-secrets
     service:
       radarr:
         controller: radarr
@@ -152,3 +180,21 @@ spec:
           prowlarr:
             app:
               - path: "/config"
+      recyclarr:
+        type: persistentVolumeClaim
+        size: 1Gi
+        storageClass: longhorn-backup
+        accessMode: ReadWriteOnce
+        advancedMounts:
+          recyclarr:
+            app:
+              - path: /config
+      recyclarr-config-file:
+        type: configMap
+        name: recyclarr-config-file
+        advancedMounts:
+          recyclarr:
+            app:
+              - path: /config/recyclarr.yml
+                subPath: recyclarr.yml
+                readOnly: true
