@@ -2,10 +2,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: jellyseer-app
+  name: jellyseerr-app
   namespace: flux-system
 spec:
-  path: ./apps/jellyseer
+  path: ./apps/jellyseerr
   targetNamespace: selfhosted
   interval: 10m
   prune: true

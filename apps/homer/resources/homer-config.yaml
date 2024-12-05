@@ -71,9 +71,9 @@ services:
       - name: "Jellyfin"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/jellyfin.png"
         url: "https://jellyfin.${SECRET_DOMAIN}"
-      - name: "Jellyseer"
+      - name: "Jellyseerr"
         logo: "https://raw.githubusercontent.com/Fallenbagel/jellyseerr/refs/heads/develop/public/os_logo_square.png"
-        url: "https://jellyseer.${SECRET_DOMAIN}"
+        url: "https://jellyseerr.${SECRET_DOMAIN}"
 
 #### Cloud ####
   - name: "Cloud"
