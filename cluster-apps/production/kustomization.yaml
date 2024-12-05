@@ -21,6 +21,8 @@ resources:
 - ../ingress-nginx.yaml
 - ../ingress-nginx-external.yaml
 - ../jd2.yaml
+- ../jellyfin.yaml
+- ../jellyseer.yaml
 - ../kube-prometheus-stack.yaml
 - ../kube-vip.yaml
 - ../kured.yaml
