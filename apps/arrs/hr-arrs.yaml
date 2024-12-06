@@ -165,9 +165,11 @@ spec:
           radarr:
             app:
               - path: "/downloads"
+                subPath: ""
           sonarr:
             app:
               - path: "/downloads"
+                subPath: ""
       radarr:
         existingClaim: radarr-data
         advancedMounts:
