@@ -189,10 +189,7 @@ spec:
             app:
               - path: "/config"
       recyclarr:
-        type: persistentVolumeClaim
-        size: 1Gi
-        storageClass: longhorn-backup
-        accessMode: ReadWriteOnce
+        existingClaim: recyclarr-data
         advancedMounts:
           recyclarr:
             app:
