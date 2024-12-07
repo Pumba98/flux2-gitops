@@ -71,6 +71,12 @@ spec:
               TZ: Etc/UTC
               PROWLARR__AUTH__METHOD: External
               PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+      flaresolverr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/flaresolverr/flaresolverr
+              tag: v3.3.21@sha256:1a30e1ad6bb3df626bfe3b9735a6d60e208c475c89bf18be0db4d4b121a3cb0e
     service:
       radarr:
         controller: radarr
@@ -87,6 +93,11 @@ spec:
         ports:
           http:
             port: 9696
+      flaresolverr:
+        controller: flaresolverr
+        ports:
+          http:
+            port: 8191
     ingress:
       main:
         className: "nginx"
