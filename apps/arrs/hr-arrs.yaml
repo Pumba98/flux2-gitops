@@ -59,6 +59,23 @@ spec:
                   secretKeyRef:
                     name: arrs-secrets
                     key: SONARR_API_KEY
+      bazarr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/linuxserver/bazarr
+              tag: v1.4.5@sha256:f28db95f57173c101c807b253e2e22994f6995daa2ff2ac4c57cf1986197dd3e
+            env:
+              PUID: "1000"
+              PGID: "1000"
+              TZ: Etc/UTC
+              BAZARR__AUTH__METHOD: External
+              BAZARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              BAZARR__AUTH__APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: arrs-secrets
+                    key: SONARR_API_KEY
       prowlarr:
         containers:
           app:
@@ -88,6 +105,11 @@ spec:
         ports:
           http:
             port: 8989
+      bazarr:
+        controller: bazarr
+        ports:
+          http:
+            port: 6767
       prowlarr:
         controller: prowlarr
         ports:
@@ -118,6 +140,12 @@ spec:
             service:
               identifier: sonarr
               port: http
+        - host: bazarr.${SECRET_DOMAIN}
+          paths:
+          - path: /
+            service:
+              identifier: bazarr
+              port: http
         - host: prowlarr.${SECRET_DOMAIN}
           paths:
           - path: /
@@ -131,6 +159,9 @@ spec:
         - secretName: sonarr-tls
           hosts:
           - sonarr.${SECRET_DOMAIN}
+        - secretName: bazarr-tls
+          hosts:
+          - bazarr.${SECRET_DOMAIN}
         - secretName: prowlarr-tls
           hosts:
           - prowlarr.${SECRET_DOMAIN}
@@ -144,6 +175,12 @@ spec:
                 subPath: movies
           sonarr:
             app:
+              - path: "/tv"
+                subPath: tv
+          bazarr:
+            app:
+              - path: "/movies"
+                subPath: movies
               - path: "/tv"
                 subPath: tv
       downloads:
@@ -167,6 +204,12 @@ spec:
         existingClaim: sonarr-data
         advancedMounts:
           sonarr:
+            app:
+              - path: "/config"
+      bazarr:
+        existingClaim: bazarr-data
+        advancedMounts:
+          bazarr:
             app:
               - path: "/config"
       prowlarr:

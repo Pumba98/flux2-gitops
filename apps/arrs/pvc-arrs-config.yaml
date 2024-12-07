@@ -26,6 +26,18 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: bazarr-data
+spec:
+  storageClassName: longhorn-backup
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
   name: prowlarr-data
 spec:
   storageClassName: longhorn-backup
