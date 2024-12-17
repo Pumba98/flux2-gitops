@@ -81,7 +81,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/prowlarr
-              tag: 1.27.0@sha256:932d5ad4fd77b4b57db8e0e7c7dd3a64226ea1988e16a39f1ab2a1e470ea54d2
+              tag: 1.28.2@sha256:e64cb6fe480d68615cbec57b9c717fafb321676f360575b332990fc6251a386c
             env:
               PUID: "1000"
               PGID: "1000"
