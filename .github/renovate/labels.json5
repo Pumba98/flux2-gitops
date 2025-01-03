@@ -13,6 +13,10 @@
       "labels": ["dep/patch"]
     },
     {
+      "matchUpdateTypes": ["digest"],
+      "labels": ["dep/digest"]
+    },
+    {
       "matchDatasources": ["helm"],
       "addLabels": ["renovate/helm"]
     },
