@@ -79,8 +79,16 @@
     },
     {
       matchUpdateTypes: [
-        'patch',
         'pin',
+        'pinDigest',
+      ],
+      automerge: true,
+      automergeType: 'pr',
+      automergeStrategy: 'squash',
+    },
+    {
+      matchUpdateTypes: [
+        'patch',
       ],
       automerge: true,
       automergeType: 'pr',
@@ -115,6 +123,20 @@
       automergeType: 'pr',
       automergeStrategy: 'squash',
       minimumReleaseAge: '24 hours',
+    },
+    {
+      matchUpdateTypes: [
+        'digest',
+      ],
+      matchPackageNames: [
+        'ghcr.io/linuxserver/**',
+        'ghcr.io/nginxinc/nginx-unprivileged',
+        'alpine',
+        'ubuntu/bind9',
+      ],
+      automerge: true,
+      automergeType: 'pr',
+      automergeStrategy: 'squash',
     },
   ],
 }
