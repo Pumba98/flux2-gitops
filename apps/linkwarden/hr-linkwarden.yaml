@@ -26,7 +26,7 @@ spec:
           main:
             image:
               repository: ghcr.io/linkwarden/linkwarden
-              tag: v2.9.0@sha256:5701b119c8911bf8d26e686070a5edf96a14f17ca0a499525e99139037a272ce
+              tag: v2.9.1@sha256:d6c50fa06b8b4ffd0688f8fd99df388184fd78dbee74032e96e4c0ca58e6a386
             env:
               NEXTAUTH_URL: https://linkwarden.${SECRET_DOMAIN}/api/v1/auth
               DATABASE_URL: "postgres://linkwarden:${SECRET_LINKWARDEN_DB_PASSWORD}@linkwarden-postgresql:5432/linkwarden"
