@@ -20,6 +20,9 @@ spec:
     - name: longhorn
       namespace: longhorn-system
   values:
+    global: 
+      security: 
+        allowInsecureImages: true
     image:
       repository: tensorchord/pgvecto-rs
       tag: pg16-v0.2.1@sha256:ff2288833f32aa863ba46f4c6f5b5c143f526a2d27f4cca913c232f917a66602
