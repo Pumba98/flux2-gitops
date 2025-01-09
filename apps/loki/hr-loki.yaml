@@ -52,7 +52,7 @@ spec:
     singleBinary:
       replicas: 1
       persistence:
-        size: 4Gi
+        size: 8Gi
         storageClass: longhorn-xfs
     test:
       enabled: false
