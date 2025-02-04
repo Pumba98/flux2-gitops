@@ -10,3 +10,6 @@ resources:
 - ../metallb.yaml
 - ../reloader.yaml
 - ../system-upgrade-controller.yaml
+
+patchesStrategicMerge:
+- bind9.yaml
