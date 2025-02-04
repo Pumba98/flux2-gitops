@@ -62,3 +62,6 @@ spec:
       freezeFilesystemForSnapshot: enabled
       autoCleanupSnapshotWhenDeleteBackup: true
       rwxVolumeFastFailover: true
+    defaultBackupStore:
+      backupTarget: s3://longhorn@us-east-1/
+      backupTargetCredentialSecret: longhorn-system-secrets
