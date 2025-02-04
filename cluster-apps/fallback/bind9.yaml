@@ -1,0 +1,18 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: bind9-app
+  namespace: flux-system
+spec:
+  patches:
+    - target:
+        kind: PersistentVolumeClaim
+        name: bind9-data
+      patch: |-
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          name: bind9-data
+        spec:
+          storageClassName: local-path
