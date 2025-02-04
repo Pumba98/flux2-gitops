@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: ghcr.io/linuxserver/qbittorrent
-              tag: 5.0.3@sha256:da0d216c2b41dbfbee89fb91bf93dc8906499ceb6ad05f248136867ffdd7ebb9
+              tag: 5.0.3@sha256:c8bb0ac88ff92f4f14baea12b805c9be23f2f5c40e2615ac11b6c085da0be568
             env:
               WEBUI_PORT: 8080
               TORRENTING_PORT: 6881
