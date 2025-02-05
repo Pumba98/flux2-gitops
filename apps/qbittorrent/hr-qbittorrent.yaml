@@ -60,7 +60,7 @@ spec:
         tls:
         - secretName: qbittorrent-tls
           hosts:
-          - qbittorrent.${SECRET_DOMAIN}
+          - qb.${SECRET_DOMAIN}
     persistence:
       config:
         existingClaim: qbittorrent-config
