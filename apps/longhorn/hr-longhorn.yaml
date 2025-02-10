@@ -28,6 +28,8 @@ spec:
       reclaimPolicy: Delete
       recurringJobSelector:
         enable: false
+      removeSnapshotsDuringFilesystemTrim: enabled
+      dataEngine: v1
     ingress:
       enabled: true
       ingressClassName: nginx-external
@@ -49,7 +51,7 @@ spec:
       autoCleanupRecurringJobBackupSnapshot: true
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       orphanAutoDeletion: true
-      snapshotDataIntegrity: enable
+      snapshotDataIntegrity: enabled
       snapshotDataIntegrityImmediateCheckAfterSnapshotCreation: false
       snapshotDataIntegrityCronjob: "0 4 * * *"
       fastReplicaRebuildEnabled: true
