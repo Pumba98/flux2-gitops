@@ -59,7 +59,7 @@ spec:
       v1DataEngine: true
       v2DataEngine: false
       allowCollectingLonghornUsageMetrics: false
-      freezeFilesystemForSnapshot: enabled
+      freezeFilesystemForSnapshot: true
       autoCleanupSnapshotWhenDeleteBackup: true
       rwxVolumeFastFailover: true
     defaultBackupStore:
