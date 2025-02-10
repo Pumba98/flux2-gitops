@@ -40,8 +40,6 @@ spec:
       tls: true
       tlsSecret: longhorn-tls
     defaultSettings:
-      backupTarget: s3://longhorn@us-east-1/
-      backupTargetCredentialSecret: longhorn-system-secrets
       storageOverProvisioningPercentage: 100
       storageMinimalAvailablePercentage: 10
       defaultLonghornStaticStorageClass: longhorn-backup
