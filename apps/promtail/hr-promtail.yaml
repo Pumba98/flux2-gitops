@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: grafana/promtail
-      tag: 3.3.2@sha256:cb4990801ec58975c5e231057c2bcf204c85fac428eec65ad66e0016c64b9608
+      tag: 3.3.3@sha256:52d99061d2a36a1f3502260015d34b46bcb952d8ab064c9b95301e15e667f78d
     serviceMonitor:
       enabled: true
     tolerations:
