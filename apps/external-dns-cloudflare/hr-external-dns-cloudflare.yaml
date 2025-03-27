@@ -35,7 +35,8 @@ spec:
     policy: sync
     # domainFilters:
     # - "${SECRET_DOMAIN}"
-    provider: cloudflare
+    provider:
+      name: cloudflare
     extraArgs:
       - --cloudflare-proxied
       - --ingress-class=nginx-external
