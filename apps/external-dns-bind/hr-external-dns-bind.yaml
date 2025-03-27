@@ -46,7 +46,8 @@ spec:
     policy: sync
     # domainFilters:
     # - "${SECRET_DOMAIN}"
-    provider: rfc2136
+    provider:
+      name: rfc2136
     extraArgs:
       - --rfc2136-tsig-secret-alg=hmac-sha512
       - --rfc2136-tsig-keyname=external-dns-key
