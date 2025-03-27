@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: authelia
-      version: 0.9.17
+      version: 0.10.4
       sourceRef:
         kind: HelmRepository
         name: authelia-charts
@@ -58,13 +58,13 @@ spec:
               salt_length: 16
               memory: 1024
               parallelism: 8
-      access_control:
-        default_policy: deny
-        networks:
-        - name: private
-          networks:
+      definitions:
+        network:
+          private:
           - ${PRIVATE_NETWORK}
           - 100.64.0.0/10
+      access_control:
+        default_policy: deny
         rules:
         # Always require auth
         - policy: two_factor
