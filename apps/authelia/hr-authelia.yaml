@@ -167,6 +167,7 @@ spec:
               redirect_uris:
                 - 'https://grafana.${SECRET_DOMAIN}/login/generic_oauth'
               scopes: [ openid, profile, email, groups ]
+              claims_policy: 'default'
             - client_name: 'SFTPGo'
               client_id: 'MJ04uHbUwWj00-RYG3X4QACoW-45EF0u0ahDEpv48yDT~caYFZMb240_nT8Z3kHrY6jmvY~Q'
               client_secret:
