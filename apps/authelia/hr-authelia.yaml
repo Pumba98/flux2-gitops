@@ -58,6 +58,12 @@ spec:
               salt_length: 16
               memory: 1024
               parallelism: 8
+          password_reset:
+            disable: true
+          password_change:
+            disable: true
+      webauthn:
+        enable_passkey_login: true
       definitions:
         network:
           private:
