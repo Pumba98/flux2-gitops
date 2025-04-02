@@ -111,7 +111,7 @@ spec:
                 path: '/secrets/authelia/oidc.jwk.RS256.pem'
           claims_policies:
             default:
-              id_token: [ openid, profile, email, preferred_username, groups ]
+              id_token: [ email, preferred_username, groups ]
           clients:
             - client_name: 'Immich'
               # docker run authelia/authelia:latest authelia crypto rand --length 72 --charset rfc3986
