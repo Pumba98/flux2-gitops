@@ -172,6 +172,7 @@ spec:
               consent_mode: implicit
               redirect_uris:
                 - 'https://sftpgo.${SECRET_DOMAIN}/web/oidc/redirect'
+              token_endpoint_auth_method: client_secret_post
             - client_name: 'Linkwarden'
               client_id: 'hqIfa24KNqYGpyBr1Q400RH1zgUxQnmIvE.e5sYyog-9aQLqbuUarr0F6OoOxSewwEaiXbic'
               client_secret:
