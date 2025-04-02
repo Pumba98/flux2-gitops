@@ -42,6 +42,7 @@ spec:
               SFTPGO_HTTPD__BINDINGS__0__OIDC__CLIENT_SECRET: "${SECRET_SFTPGO_OAUTH_CLIENT_SECRET}"
               SFTPGO_HTTPD__BINDINGS__0__OIDC__CONFIG_URL: "https://auth.${SECRET_DOMAIN}"
               SFTPGO_HTTPD__BINDINGS__0__OIDC__REDIRECT_BASE_URL: "https://sftpgo.${SECRET_DOMAIN}"
+              SFTPGO_HTTPD__BINDINGS__0__OIDC__SCOPES: "openid,profile,email,preferred_username"
               SFTPGO_HTTPD__BINDINGS__0__OIDC__USERNAME_FIELD: "preferred_username"
               SFTPGO_HTTPD__BINDINGS__0__OIDC__IMPLICIT_ROLES: "true"
               SFTPGO_HTTPD__BINDINGS__0__ENABLED_LOGIN_METHODS: 3
