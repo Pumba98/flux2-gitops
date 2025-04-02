@@ -109,6 +109,9 @@ spec:
           jwks:
             - key:
                 path: '/secrets/authelia/oidc.jwk.RS256.pem'
+          claims_policies:
+            default:
+              id_token: [ openid, profile, email, preferred_username, groups ]
           clients:
             - client_name: 'Immich'
               # docker run authelia/authelia:latest authelia crypto rand --length 72 --charset rfc3986
@@ -173,6 +176,7 @@ spec:
               redirect_uris:
                 - 'https://sftpgo.${SECRET_DOMAIN}/web/oidc/redirect'
               scopes: [ openid, profile, email, preferred_username ]
+              claims_policy: 'default'
             - client_name: 'Linkwarden'
               client_id: 'hqIfa24KNqYGpyBr1Q400RH1zgUxQnmIvE.e5sYyog-9aQLqbuUarr0F6OoOxSewwEaiXbic'
               client_secret:
