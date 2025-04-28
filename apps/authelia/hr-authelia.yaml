@@ -131,6 +131,7 @@ spec:
                 - 'https://immich.${SECRET_DOMAIN}/auth/login'
                 - 'https://immich.${SECRET_DOMAIN}/user-settings'
                 - 'https://immich.${SECRET_DOMAIN}/api/oauth/mobile-redirect'
+              token_endpoint_auth_method: 'client_secret_post'
             - client_name: 'Memos'
               client_id: '0lKCSv_puuemgh08buYozXwRJ61u129TDEq42EBvnRcbGqJuZ25KywlUkviurEsJ~MbqvrM4'
               client_secret:
