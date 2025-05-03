@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/angelnu/pod-gateway
-      tag: v1.12.0@sha256:8b35b9ebe2be4dfdce44934e298ab196bc59dd2a47ec5f62423e6b573ae94a6b
+      tag: v1.13.0@sha256:a5b032e15f7570493977b330a5a86dcffebb807d35685ad803e47afb62d105f2
     DNS: ${POD_GATEWAY_VPN_VXLAN}.1
     routed_namespaces:
       - vpn
