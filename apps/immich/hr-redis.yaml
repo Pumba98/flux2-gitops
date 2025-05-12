@@ -22,6 +22,7 @@ spec:
   values:
     architecture: standalone
     master:
+      resourcesPreset: "small"
       persistence:
         enabled: true
         size: 1Gi
