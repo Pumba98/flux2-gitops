@@ -38,7 +38,7 @@ spec:
           value: kube-system
         - name: svc_enable
           value: "false"
-        - name: vip_address
+        - name: address
           value: ${KUBEVIP_ADDRESS}
         securityContext:
           capabilities:
