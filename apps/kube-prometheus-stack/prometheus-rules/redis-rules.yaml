@@ -26,7 +26,7 @@ spec:
             description: "Redis cluster has no node marked as master.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
         - alert: RedisTooManyMasters
-          expr: 'count(redis_instance_info{role="master"}) > 1'
+          expr: 'count by (service) (redis_instance_info{role="master"}) > 1'
           for: 0m
           labels:
             severity: critical
