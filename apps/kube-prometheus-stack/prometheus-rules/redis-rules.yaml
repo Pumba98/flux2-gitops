@@ -97,14 +97,14 @@ spec:
             summary: Redis too many connections (instance {{ $labels.instance }})
             description: "Redis is running out of connections (> 90% used)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-        - alert: RedisNotEnoughConnections
-          expr: 'redis_connected_clients < 5'
-          for: 2m
-          labels:
-            severity: warning
-          annotations:
-            summary: Redis not enough connections (instance {{ $labels.instance }})
-            description: "Redis instance should have more connections (> 5)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+        # - alert: RedisNotEnoughConnections
+        #   expr: 'redis_connected_clients < 5'
+        #   for: 2m
+        #   labels:
+        #     severity: warning
+        #   annotations:
+        #     summary: Redis not enough connections (instance {{ $labels.instance }})
+        #     description: "Redis instance should have more connections (> 5)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
         - alert: RedisRejectedConnections
           expr: 'increase(redis_rejected_connections_total[1m]) > 0'
