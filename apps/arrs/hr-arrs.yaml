@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/radarr
-              tag: 5.24.1@sha256:d51c77a4e8fb4af0776ec032d103a84f816e65d09010fc72025ddd309d4c2424
+              tag: 5.25.0@sha256:36e43720c130ec2d3ed80726d2134af3c6644729f4750abc830fdda7fa71d1e1
             env:
               PUID: "1000"
               PGID: "1000"
