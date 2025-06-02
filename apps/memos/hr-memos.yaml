@@ -26,7 +26,7 @@ spec:
           main:
             image:
               repository: ghcr.io/usememos/memos
-              tag: 0.24.3@sha256:e5022ebfbe176164928dc2ea8c196a077e8b35f28e7206e99a99ccd55f332f6f
+              tag: 0.24.4@sha256:654bf757a405a770c3f2c04dee9f2c651d523d05202f76cb998ad4e278e1297d
             env:
               MEMOS_PORT: "5230"
               MEMOS_DRIVER: postgres
