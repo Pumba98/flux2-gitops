@@ -50,7 +50,7 @@ spec:
       autoCleanupSystemGeneratedSnapshot: true
       autoCleanupRecurringJobBackupSnapshot: true
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
-      orphanAutoDeletion: true
+      orphanResourceAutoDeletion: replica-data
       snapshotDataIntegrity: enabled
       snapshotDataIntegrityImmediateCheckAfterSnapshotCreation: false
       snapshotDataIntegrityCronjob: "0 4 * * *"
@@ -61,6 +61,7 @@ spec:
       allowCollectingLonghornUsageMetrics: false
       freezeFilesystemForSnapshot: true
       autoCleanupSnapshotWhenDeleteBackup: true
+      autoCleanupSnapshotAfterOnDemandBackupCompleted: true
       rwxVolumeFastFailover: true
     defaultBackupStore:
       backupTarget: s3://longhorn@us-east-1/
