@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: headlamp
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: headlamp
+      version: 0.31.1
+      sourceRef:
+        kind: HelmRepository
+        name: headlamp-charts
+        namespace: flux-system
+  dependsOn:
+    - name: ingress-nginx-external
+      namespace: networking
+  values:
+    initContainers:
+      - image: ghcr.io/headlamp-k8s/headlamp-plugin-flux:v0.2.0@sha256:6727bb58c95feef9f62f8fe125c244601d31ca62eab546b0f88c045560ed33de
+        command:
+          - /bin/sh
+          - -c
+          - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
+        name: headlamp-plugins
+        volumeMounts:
+          - mountPath: /build/plugins
+            name: headlamp-plugins
+    config:
+      oidc:
+        secret:
+          create: false
+          name: headlamp-secrets
+      pluginsDir: /build/plugins
+    volumeMounts:
+      - mountPath: /build/plugins
+        name: headlamp-plugins
+    volumes:
+      - name: headlamp-plugins
+        emptyDir: {}
+    ingress:
+      enabled: true
+      ingressClassName: nginx-external
+      annotations:
+        external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
+        kubernetes.io/tls-acme: "true"
+        nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
+        nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+      hosts:
+      - host: "headlamp.${SECRET_DOMAIN}"
+        paths:
+        - path: /
+          type: ImplementationSpecific
+      tls:
+        - secretName: headlamp-tls
+          hosts:
+          - "headlamp.${SECRET_DOMAIN}"
