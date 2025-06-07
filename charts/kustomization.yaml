@@ -12,6 +12,7 @@ resources:
 - external-dns-charts.yaml
 - fairwinds-charts.yaml
 - grafana-charts.yaml
+- headlamp-charts.yaml
 - ingress-nginx-charts.yaml
 - jetstack-charts.yaml
 - kubereboot-charts.yaml
