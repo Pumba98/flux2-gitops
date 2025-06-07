@@ -202,6 +202,14 @@ spec:
               redirect_uris:
                 - 'https://jellyfin.${SECRET_DOMAIN}/sso/OID/redirect/authelia'
               token_endpoint_auth_method: client_secret_post
+            - client_name: 'Headlamp'
+              client_id: 'R7cSvaZK1eVE5ygxOoODDlNTIwryd74uUUfMYd1T_kzD6bMwBLtWuYrUBQhzxVsKk8GoAa5w'
+              client_secret:
+                path: '/secrets/authelia/oidc.client.headlamp.value'
+              authorization_policy: 'two_factor'
+              consent_mode: implicit
+              redirect_uris:
+                - 'https://headlamp.${SECRET_DOMAIN}/oidc-callback'
       session:
         name: authelia_session
         same_site: lax
@@ -250,3 +258,4 @@ spec:
             - key: 'oidc.client.sftpgo.value'
             - key: 'oidc.client.linkwarden.value'
             - key: 'oidc.client.jellyfin.value'
+            - key: 'oidc.client.headlamp.value'
