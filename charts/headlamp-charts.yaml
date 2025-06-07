@@ -2,10 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: bjw-s-charts
+  name: headlamp-charts
   namespace: flux-system
 spec:
-  type: oci
   interval: 30m
-  url: oci://ghcr.io/bjw-s/helm
+  url: https://kubernetes-sigs.github.io/headlamp
   timeout: 2m
