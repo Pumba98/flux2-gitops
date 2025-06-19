@@ -26,7 +26,7 @@ spec:
     image:
       registry: ghcr.io
       repository: immich-app/postgres
-      tag: 16-vectorchord0.3.0@sha256:f0e2db6fbe8198482202f777dfc91fc4aa40faba3bdb89fc4c84c990b95b8253
+      tag: 17-vectorchord0.4.2@sha256:1ab7d94013ef6bb3873065f254bb01fd849cc4f19246065412c416ecdd301e5d
     auth:
       username: immich
       password: "${SECRET_IMMICH_DB_PASSWORD}"
@@ -40,41 +40,25 @@ spec:
         fsGroup: 999
       containerSecurityContext:
         readOnlyRootFilesystem: false
-      ## Init Container for Major PostgreSQL Upgrades, not needed permanently
-      # initContainers:
-      # - name: pg-upgrade
-      #   image: tianon/postgres-upgrade:16-to-17
-      #   securityContext:
-      #     runAsUser: 0
-      #     runAsGroup: 0
-      #   volumeMounts:
-      #   - name: data
-      #     mountPath: /bitnami/postgresql
-      #   env:
-      #   - name: "PG_OLD"
-      #     value: "16"
-      #   - name: "PG_NEW"
-      #     value: "17"
-      #   command:
-      #   - /bin/bash
-      #   - -c
-      #   - |
-      #     if [[ $(< /bitnami/postgresql/data/PG_VERSION) -eq $PG_NEW ]]; then echo "PostgreSQL is already up2date"; exit 0; fi
-      #     if [[ "$PGBINOLD" != "/usr/lib/postgresql/$PG_OLD/bin" ]]; then echo "Wrong postgres-upgrade image"; exit -1; fi
-      #     if [[ "$PGBINNEW" != "/usr/lib/postgresql/$PG_NEW/bin" ]]; then echo "Wrong postgres-upgrade image"; exit -1; fi
-      #     echo "Upgrading PostgreSQL from $PG_OLD to $PG_NEW"
-      #     cp -r /bitnami/postgresql/data /var/lib/postgresql/$PG_OLD
-      #     usermod -u 1001 postgres
-      #     groupmod -g 1001 postgres
-      #     chown -R postgres:postgres /var/lib/postgresql
-      #     su postgres -c 'PGDATA="$PGDATANEW" eval "initdb $POSTGRES_INITDB_ARGS"'
-      #     chmod 700 $PG_OLD/data
-      #     gosu postgres pg_upgrade
-      #     gosu postgres pg_ctl -D /var/lib/postgresql/$PG_NEW/data -l logfile start
-      #     gosu postgres /usr/lib/postgresql/$PG_NEW/bin/vacuumdb --all --analyze-in-stages
-      #     gosu postgres pg_ctl -D /var/lib/postgresql/$PG_NEW/data -l logfile stop
-      #     rm -rf /bitnami/postgresql/data
-      #     mv /var/lib/postgresql/$PG_NEW/data /bitnami/postgresql/
+      # Init Container for Major PostgreSQL Upgrades, not needed permanently
+      initContainers:
+      - name: pgautoupgrade
+        image: pgautoupgrade/pgautoupgrade:17-debian
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+        volumeMounts:
+        - name: data
+          mountPath: /bitnami/postgresql
+        env:
+          - name: PGAUTO_ONESHOT
+            value: "yes"
+          - name: PGDATA
+            value: /bitnami/postgresql/data
+          - name: POSTGRES_HOST_AUTH_METHOD
+            value: trust
+          - name: POSTGRES_DB
+            value: immich
     metrics:
       enabled: false
       serviceMonitor:
