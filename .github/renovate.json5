@@ -14,25 +14,25 @@
     'prIgnoreNotification',
   ],
   flux: {
-    fileMatch: [
-      '^[^\\.]*\\.ya?ml$',
+    managerFilePatterns: [
+      '/^[^\\.]*\\.ya?ml$/',
     ],
   },
   'helm-values': {
-    fileMatch: [
-      '^apps/[^\\.]*\\.ya?ml$',
+    managerFilePatterns: [
+      '/^apps/[^\\.]*\\.ya?ml$/',
     ],
   },
   kubernetes: {
-    fileMatch: [
-      '^apps/[^\\.]*\\.ya?ml$',
+    managerFilePatterns: [
+      '/^apps/[^\\.]*\\.ya?ml$/',
     ],
   },
   customManagers: [
     {
       customType: 'regex',
-      fileMatch: [
-        '^[^\\.]*\\.ya?ml$',
+      managerFilePatterns: [
+        '/^[^\\.]*\\.ya?ml$/',
       ],
       matchStrings: [
         'datasource=(?<datasource>\\S+) depName=(?<depName>.*?)\n *version: (?<currentValue>.*)\n',
