@@ -24,7 +24,8 @@ spec:
       security: 
         allowInsecureImages: true
     image:
-      repository: ghcr.io/immich-app/postgres
+      registry: ghcr.io
+      repository: immich-app/postgres
       tag: 16-vectorchord0.3.0-pgvectors0.2.1@sha256:582ec7f6f507aabfa46eaf72f4da7bae07545d381b6eefa00808c10bbf42e019
     auth:
       username: immich
