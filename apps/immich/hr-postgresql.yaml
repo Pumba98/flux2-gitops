@@ -55,8 +55,10 @@ spec:
             value: "yes"
           - name: PGDATA
             value: /bitnami/postgresql/data
-          - name: POSTGRES_PASSWORD
-            value: password
+          - name: POSTGRES_HOST_AUTH_METHOD
+            value: trust
+          - name: POSTGRES_USER
+            value: immich
           - name: POSTGRES_DB
             value: immich
     metrics:
