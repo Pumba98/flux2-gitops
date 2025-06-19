@@ -43,7 +43,7 @@ spec:
       # Init Container for Major PostgreSQL Upgrades, not needed permanently
       initContainers:
       - name: pgautoupgrade
-        image: pgautoupgrade/pgautoupgrade:17-debian
+        image: pgautoupgrade/pgautoupgrade:17-debian@sha256:d62e2f1ac7b885164134d698b90f37e041d036352687e62c39adf05628454af3
         securityContext:
           runAsUser: 0
           runAsGroup: 0
