@@ -39,12 +39,6 @@ spec:
         fsGroup: 999
       containerSecurityContext:
         readOnlyRootFilesystem: false
-      initdb:
-        scripts:
-          create-extensions.sql: |
-            CREATE EXTENSION cube;
-            CREATE EXTENSION earthdistance;
-            CREATE EXTENSION vectors;
       ## Init Container for Major PostgreSQL Upgrades, not needed permanently
       # initContainers:
       # - name: pg-upgrade
