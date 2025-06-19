@@ -24,8 +24,8 @@ spec:
       security: 
         allowInsecureImages: true
     image:
-      repository: tensorchord/pgvecto-rs
-      tag: pg16-v0.2.1@sha256:36218719c673b38adc1d4034b3666bae780bfffb17a250973b6108a9f11cd5d4
+      repository: ghcr.io/immich-app/postgres
+      tag: 16-vectorchord0.3.0-pgvectors0.2.1@sha256:582ec7f6f507aabfa46eaf72f4da7bae07545d381b6eefa00808c10bbf42e019
     auth:
       username: immich
       password: "${SECRET_IMMICH_DB_PASSWORD}"
