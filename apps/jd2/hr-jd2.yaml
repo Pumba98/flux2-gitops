@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: jlesage/jdownloader-2
-              tag: v25.06.1@sha256:630988baa7f4ed9a0dcc796f6eb0c5cde495c6c681e20c3bdfcb830193b27178
+              tag: v25.06.2@sha256:8b1ed32eabeb134a5894eb9928a1d44ca3029ab96671ad8fe4e843cfe8ae8757
               pullPolicy: IfNotPresent
             env:
               KEEP_APP_RUNNING: true
