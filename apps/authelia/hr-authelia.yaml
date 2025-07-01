@@ -20,10 +20,8 @@ spec:
     - name: authelia-redis
     - name: authelia-postgresql
   values:
-    domain: ${SECRET_DOMAIN}
     ingress:
       enabled: true
-      subdomain: auth
       className: nginx-external
       annotations:
         external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
@@ -46,6 +44,10 @@ spec:
     configMap:
       theme: dark
       authentication_backend:
+        password_reset:
+          disable: true
+        password_change:
+          disable: true
         file:
           enabled: true
           path: /config/users_database.yml
@@ -58,10 +60,6 @@ spec:
               salt_length: 16
               memory: 1024
               parallelism: 8
-          password_reset:
-            disable: true
-          password_change:
-            disable: true
       webauthn:
         enable_passkey_login: true
       definitions:
@@ -222,7 +220,6 @@ spec:
             authelia_url: https://auth.${SECRET_DOMAIN}
         redis:
           enabled: true
-          enabledSecret: true
           host: authelia-redis-master
       regulation:
         max_retries: 3
@@ -238,7 +235,6 @@ spec:
         disable_startup_check: true
         smtp:
           enabled: true
-          enabledSecret: true
           address: 'submission://smtp.fastmail.com:587'
           username: mail@${SECRET_DOMAIN}
           sender: 'Authelia <authelia@${SECRET_DOMAIN}>'
