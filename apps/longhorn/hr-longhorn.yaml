@@ -28,7 +28,7 @@ spec:
       reclaimPolicy: Delete
       recurringJobSelector:
         enable: false
-      removeSnapshotsDuringFilesystemTrim: enabled
+      unmapMarkSnapChainRemoved: enabled
       dataEngine: v1
     ingress:
       enabled: true
@@ -55,7 +55,7 @@ spec:
       snapshotDataIntegrityImmediateCheckAfterSnapshotCreation: false
       snapshotDataIntegrityCronjob: "0 4 * * *"
       fastReplicaRebuildEnabled: true
-      removeSnapshotsDuringFilesystemTrim: true
+      unmapMarkSnapChainRemoved: enabled
       v1DataEngine: true
       v2DataEngine: false
       allowCollectingLonghornUsageMetrics: false
