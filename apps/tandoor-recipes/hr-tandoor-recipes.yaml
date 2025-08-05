@@ -36,7 +36,6 @@ spec:
               POSTGRES_DB: tandoor-receipes
               POSTGRES_USER: tandoor-receipes
               POSTGRES_PASSWORD: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
-              GUNICORN_MEDIA: 0
               ENABLE_SIGNUP: 0
               ENABLE_PDF_EXPORT: 1
               SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
@@ -69,18 +68,12 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
-          nginx:
-            image:
-              repository: ghcr.io/nginxinc/nginx-unprivileged
-              tag: 1.27.4-alpine@sha256:e234d4f7e346c098f7b22245690372382aded5be988611eb2c53ae62231eece7
     service:
       main:
         controller: main
         ports:
           main:
-            port: 8080
-          nginx:
-            port: 8081
+            port: 80
     ingress:
       main:
         className: nginx-external
@@ -96,14 +89,6 @@ spec:
                 service:
                   identifier: main
                   port: main
-              - path: /media
-                service:
-                  identifier: main
-                  port: nginx
-              - path: /static
-                service:
-                  identifier: main
-                  port: nginx
         tls:
           - secretName: tandoor-recipes-tls
             hosts:
@@ -116,12 +101,3 @@ spec:
           subPath: staticfiles
         - path: /opt/recipes/mediafiles
           subPath: mediafiles
-      nginx-config:
-        type: configMap
-        name: tandoor-nginx
-        advancedMounts:
-          main:
-            nginx:
-              - path: /etc/nginx/nginx.conf
-                subPath: nginx-config
-                readOnly: true
