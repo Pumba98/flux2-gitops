@@ -26,7 +26,7 @@ spec:
     image:
       registry: ghcr.io
       repository: immich-app/postgres
-      tag: 16-vectorchord0.3.0@sha256:c0f85ca0f31976890ef25ada7f9325710b3fb2e053dd40be16532b63c0b52e3a
+      tag: 17-vectorchord0.3.0@sha256:cd07758ddefd1f6fd75edf2483b9d84228ce46fc69d273a1afd390b76f1b66c3
     auth:
       username: immich
       password: "${SECRET_IMMICH_DB_PASSWORD}"
