@@ -35,7 +35,6 @@ spec:
               POSTGRES_DB: linkwarden
               POSTGRES_USER: linkwarden
               POSTGRES_PASSWORD: ${SECRET_LINKWARDEN_DB_PASSWORD}
-              PGDATA: /bitnami/postgresql/data
             resources:
               requests:
                 cpu: 500m
@@ -56,7 +55,6 @@ spec:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
               DATA_SOURCE_USER: linkwarden
               DATA_SOURCE_PASS: ${SECRET_LINKWARDEN_DB_PASSWORD}
-              PGDATA: /bitnami/postgresql/data
             resources:
               requests:
                 cpu: 100m
@@ -81,7 +79,7 @@ spec:
               [ -f "$PGDATA/postgresql.conf" ] || wget https://gist.githubusercontent.com/Pumba98/62fd44ab30d0f2725779bfd3443e155d/raw/277d4b15da500c14edb06fd49674b37375ca6604/postgresql.conf -P $PGDATA
               [ -f "$PGDATA/pg_hba.conf" ] || wget https://gist.githubusercontent.com/Pumba98/62fd44ab30d0f2725779bfd3443e155d/raw/277d4b15da500c14edb06fd49674b37375ca6604/pg_hba.conf -P $PGDATA
             env:
-              PGDATA: /bitnami/postgresql/data
+              PGDATA: /var/lib/postgresql/data
           # # Init Container for Major PostgreSQL Upgrades, not needed permanently
           # pgautoupgrade:
           #   image:
@@ -94,7 +92,6 @@ spec:
           #     PGAUTO_ONESHOT: yes
           #     POSTGRES_USER: linkwarden
           #     POSTGRES_DB: linkwarden
-          #     PGDATA: /bitnami/postgresql/data
     service:
       main:
         controller: main
@@ -110,4 +107,4 @@ spec:
       data:
         existingClaim: linkwarden-postgresql
         globalMounts:
-        - path: /bitnami/postgresql
+        - path: /var/lib/postgresql
