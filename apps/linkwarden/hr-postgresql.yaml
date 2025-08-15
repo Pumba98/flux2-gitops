@@ -30,7 +30,7 @@ spec:
           postgresql:
             image:
               repository: public.ecr.aws/docker/library/postgres
-              tag: 17.5
+              tag: 17.5@sha256:aadf2c0696f5ef357aa7a68da995137f0cf17bad0bf6e1f17de06ae5c769b302
             env:
               POSTGRES_DB: linkwarden
               POSTGRES_USER: linkwarden
@@ -51,7 +51,7 @@ spec:
           metrics:
             image:
               repository: quay.io/prometheuscommunity/postgres-exporter
-              tag: v0.17.1
+              tag: v0.17.1@sha256:38606faa38c54787525fb0ff2fd6b41b4cfb75d455c1df294927c5f611699b17
             env:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
               DATA_SOURCE_USER: linkwarden
