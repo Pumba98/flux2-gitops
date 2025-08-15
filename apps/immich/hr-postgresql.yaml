@@ -36,9 +36,11 @@ spec:
       persistence:
         enabled: true
         existingClaim: immich-postgresql-data
-      # podSecurityContext:
-      #   fsGroup: 999
+      podSecurityContext:
+        fsGroup: 999
       containerSecurityContext:
+        runAsUser: 999
+        runAsGroup: 999
         readOnlyRootFilesystem: false
       # # Init Container for Major PostgreSQL Upgrades, not needed permanently
       # initContainers:
