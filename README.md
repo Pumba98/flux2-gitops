@@ -128,7 +128,36 @@ kubectl apply --kustomize=./base/staging
     <summary>:construction: PostgreSQL Major Version Upgrade</summary>
 <br>
 
-I now use a [tianon/postgres-upgrade](https://github.com/tianon/docker-postgres-upgrade) init-container for PostgreSQL Major Upgrades.
+I use a [pgautoupgrade/docker-pgautoupgrade](https://github.com/pgautoupgrade/docker-pgautoupgrade) init-container for PostgreSQL Major Upgrades
+
+**Always take backups, dataloss is possible**
+
+```yaml
+# Init Container for Major PostgreSQL Upgrades, not needed permanently
+initContainers:
+- name: pgautoupgrade
+  image: pgautoupgrade/pgautoupgrade:17-bookworm
+  securityContext:
+    runAsUser: 0
+    runAsGroup: 0
+  volumeMounts:
+  - name: data
+    mountPath: /bitnami/postgresql
+  env:
+  - name: PGAUTO_ONESHOT
+    value: "yes"
+  - name: POSTGRES_USER
+    value: immich
+  - name: POSTGRES_DB
+    value: immich
+  - name: PGDATA
+    value: /bitnami/postgresql/data
+```
+
+<details>
+    <summary>:construction: Previous Script Approach with tianon/postgres-upgrade image</summary>
+<br>
+I used a [tianon/postgres-upgrade](https://github.com/tianon/docker-postgres-upgrade) init-container for PostgreSQL Major Upgrades.
 
 **Always take backups, dataloss is possible**. Old data gets removed and replaced by output of pg_upgrade.
 
@@ -171,6 +200,7 @@ initContainers:
     rm -rf /bitnami/postgresql/data
     mv /var/lib/postgresql/$PG_NEW/data /bitnami/postgresql/
 ```
+</details>
 
 <details>
     <summary>:construction: Previous Manual Upgrade Approach</summary>
