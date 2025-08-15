@@ -7,11 +7,11 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: postgresql
-      version: 16.7.24
+      chart: app-template
+      version: 3.7.3
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: bjw-s-charts
         namespace: flux-system
       interval: 5m
   dependsOn:
@@ -20,35 +20,81 @@ spec:
     - name: longhorn
       namespace: longhorn-system
   values:
-    auth:
-      username: linkwarden
-      password: ${SECRET_LINKWARDEN_DB_PASSWORD}
-      database: linkwarden
-    primary:
-      resourcesPreset: "small"
-      persistence:
-        enabled: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 999
+    controllers:
+      primary:
+        type: statefulset
+        containers:
+          postgresql:
+            image:
+              repository: public.ecr.aws/docker/library/postgres
+              tag: 17.5
+            env:
+              POSTGRES_DB: linkwarden
+              POSTGRES_USER: linkwarden
+              POSTGRES_PASSWORD: ${SECRET_LINKWARDEN_DB_PASSWORD}
+              PGDATA: /bitnami/postgresql/data
+            resources:
+              requests:
+                cpu: 500m
+                memory: 512Mi
+              limits:
+                cpu: 750m
+                memory: 768Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+          metrics:
+            image:
+              repository: quay.io/prometheuscommunity/postgres-exporter
+              tag: 0.17.1
+            env:
+              DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
+              DATA_SOURCE_USER: linkwarden
+              DATA_SOURCE_PASS: ${SECRET_LINKWARDEN_DB_PASSWORD}
+              PGDATA: /bitnami/postgresql/data
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 150m
+                memory: 192Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+        initContainers:
+          pgautoupgrade:
+            image:
+              repository: pgautoupgrade/pgautoupgrade
+              tag: 17-bookworm
+            # securityContext:
+            #   runAsUser: 0
+            #   runAsGroup: 0
+            env:
+              PGAUTO_ONESHOT: yes
+              POSTGRES_USER: linkwarden
+              POSTGRES_DB: linkwarden
+              PGDATA: /bitnami/postgresql/data
+    service:
+      primary:
+        controller: primary
+        ports:
+          postgresql:
+            port: 5432
+      metrics:
+        controller: primary
+        ports:
+          metrics:
+            port: 9187
+    persistence:
+      data:
         existingClaim: linkwarden-postgresql
-      # # Init Container for Major PostgreSQL Upgrades, not needed permanently
-      # initContainers:
-      #   - name: pgautoupgrade
-      #     image: pgautoupgrade/pgautoupgrade:17-bookworm
-      #     securityContext:
-      #       runAsUser: 0
-      #       runAsGroup: 0
-      #     volumeMounts:
-      #       - name: data
-      #         mountPath: /bitnami/postgresql
-      #     env:
-      #       - name: PGAUTO_ONESHOT
-      #         value: "yes"
-      #       - name: POSTGRES_USER
-      #         value: linkwarden
-      #       - name: POSTGRES_DB
-      #         value: linkwarden
-      #       - name: PGDATA
-      #         value: /bitnami/postgresql/data
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
+        globalMounts:
+        - path: /bitnami/postgresql
