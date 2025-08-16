@@ -113,3 +113,9 @@ spec:
         globalMounts:
         - path: /var/lib/postgresql/data
           subPath: data
+    serviceMonitor:
+      main:
+        enabled: true
+        serviceName: linkwarden-postgresql-metrics
+        endpoints:
+          - port: metrics
