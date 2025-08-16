@@ -7,11 +7,11 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: redis
-      version: 22.0.3
+      chart: app-template
+      version: 3.7.3
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: bjw-s-charts
         namespace: flux-system
       interval: 5m
   dependsOn:
@@ -20,14 +20,78 @@ spec:
     - name: longhorn
       namespace: longhorn-system
   values:
-    architecture: standalone
-    master:
-      persistence:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+    controllers:
+      master:
+        type: statefulset
+        containers:
+          redis:
+            image:
+              repository: public.ecr.aws/docker/library/redis
+              tag: 8.0.2
+            command:
+              - redis-server
+              - --save 60 1
+              # - --requirepass $REDIS_PASSWORD
+            env:
+              REDIS_REPLICATION_MODE: master
+              # REDIS_PASSWORD: ""
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 150m
+                memory: 192Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+          metrics:
+            image:
+              repository: oliver006/redis_exporter
+              tag: v1.75.0
+            env:
+              REDIS_ADDR: localhost:6379
+              # REDIS_PASSWORD: ""
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 150m
+                memory: 192Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+        statefulset:
+          volumeClaimTemplates:
+            - name: redis-data
+              size: 1Gi
+              accessMode: ReadWriteOnce
+              globalMounts:
+              - path: /data
+    service:
+      master:
+        controller: master
+        ports:
+          redis:
+            port: 6379
+      metrics:
+        controller: master
+        ports:
+          metrics:
+            port: 9121
+    serviceMonitor:
+      main:
         enabled: true
-        size: 1Gi
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-    auth:
-      enabled: false
+        serviceName: paperless-ngx-redis-metrics
+        endpoints:
+          - port: metrics
