@@ -32,7 +32,7 @@ spec:
           redis:
             image:
               repository: public.ecr.aws/docker/library/redis
-              tag: 8.0.2
+              tag: 8.0.2@sha256:b43d2dcbbdb1f9e1582e3a0f37e53bf79038522ccffb56a25858969d7a9b6c11
             command:
               - redis-server
               - --save 60 1
@@ -55,7 +55,7 @@ spec:
           metrics:
             image:
               repository: oliver006/redis_exporter
-              tag: v1.75.0
+              tag: v1.75.0@sha256:bbc0b673a89296eab36d6c6c2bde8571ee868dc4059306be482c03d7b05aa662
             env:
               REDIS_ADDR: localhost:6379
               # REDIS_PASSWORD: ""
