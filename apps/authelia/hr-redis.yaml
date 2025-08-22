@@ -7,11 +7,11 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: redis
-      version: 22.0.4
+      chart: app-template
+      version: 3.7.3
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: bjw-s-charts
         namespace: flux-system
       interval: 5m
   dependsOn:
@@ -20,15 +20,86 @@ spec:
     - name: longhorn
       namespace: longhorn-system
   values:
-    architecture: standalone
-    master:
-      persistence:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+    controllers:
+      master:
+        type: statefulset
+        containers:
+          redis:
+            image:
+              repository: public.ecr.aws/docker/library/redis
+              tag: 8.2.1@sha256:cc2dfb8f5151da2684b4a09bd04b567f92d07591d91980eb3eca21df07e12760
+            command:
+              - redis-server
+              - --save 60 1
+              - --requirepass $REDIS_PASSWORD
+            env:
+              REDIS_REPLICATION_MODE: master
+              REDIS_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: authelia
+                    key: session.redis.password.txt
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 150m
+                memory: 192Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+          metrics:
+            image:
+              repository: oliver006/redis_exporter
+              tag: v1.75.0@sha256:bbc0b673a89296eab36d6c6c2bde8571ee868dc4059306be482c03d7b05aa662
+            env:
+              REDIS_ADDR: localhost:6379
+              REDIS_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: authelia
+                    key: session.redis.password.txt
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 150m
+                memory: 192Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+        statefulset:
+          volumeClaimTemplates:
+            - name: redis-data
+              size: 1Gi
+              accessMode: ReadWriteOnce
+              globalMounts:
+              - path: /data
+    service:
+      master:
+        controller: master
+        ports:
+          redis:
+            port: 6379
+      metrics:
+        controller: master
+        ports:
+          metrics:
+            port: 9121
+    serviceMonitor:
+      main:
         enabled: true
-        size: 1Gi
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-    auth:
-      existingSecret: authelia
-      existingSecretPasswordKey: session.redis.password.txt
+        serviceName: authelia-redis-metrics
+        endpoints:
+          - port: metrics
