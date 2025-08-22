@@ -80,6 +80,7 @@ spec:
         #   #   - /bin/sh
         #   #   - -c
         #   #   - |
+        #   #     chown -R 999:999 $PGDATA
         #   #     [ -f "$PGDATA/postgresql.conf" ] || wget https://gist.githubusercontent.com/Pumba98/62fd44ab30d0f2725779bfd3443e155d/raw/277d4b15da500c14edb06fd49674b37375ca6604/postgresql.conf -P $PGDATA
         #   #     [ -f "$PGDATA/pg_hba.conf" ] || wget https://gist.githubusercontent.com/Pumba98/62fd44ab30d0f2725779bfd3443e155d/raw/277d4b15da500c14edb06fd49674b37375ca6604/pg_hba.conf -P $PGDATA
         #   #   env:
