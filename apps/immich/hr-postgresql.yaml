@@ -7,11 +7,11 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: postgresql
-      version: 16.7.26
+      chart: app-template
+      version: 3.7.3
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: bjw-s-charts
         namespace: flux-system
       interval: 5m
   dependsOn:
@@ -20,48 +20,90 @@ spec:
     - name: longhorn
       namespace: longhorn-system
   values:
-    global:
-      security:
-        allowInsecureImages: true
-    image:
-      registry: ghcr.io
-      repository: immich-app/postgres
-      tag: 17-vectorchord0.4.3@sha256:a2a230601e133f8bb40f48197df0e83980f82b665e4caf88b5ad408f5962c423
-    auth:
-      username: immich
-      password: "${SECRET_IMMICH_DB_PASSWORD}"
-      database: immich
-    primary:
-      resourcesPreset: "small"
-      persistence:
-        enabled: true
-        existingClaim: immich-postgresql-data
-      podSecurityContext:
-        fsGroup: 999
-      containerSecurityContext:
+    defaultPodOptions:
+      securityContext:
         runAsUser: 999
         runAsGroup: 999
-        readOnlyRootFilesystem: false
-      # # Init Container for Major PostgreSQL Upgrades, not needed permanently
-      # initContainers:
-      #   - name: pgautoupgrade
-      #     image: ghcr.io/pumba98/pgautoupgrade-vchord:17-debian-v0.3.0
-      #     securityContext:
-      #       runAsUser: 0
-      #       runAsGroup: 0
-      #     volumeMounts:
-      #       - name: data
-      #         mountPath: /bitnami/postgresql
-      #     env:
-      #       - name: PGAUTO_ONESHOT
-      #         value: "yes"
-      #       - name: POSTGRES_USER
-      #         value: immich
-      #       - name: POSTGRES_DB
-      #         value: immich
-      #       - name: PGDATA
-      #         value: /bitnami/postgresql/data
-    metrics:
-      enabled: false
-      serviceMonitor:
+        fsGroup: 999
+    controllers:
+      primary:
+        type: statefulset
+        containers:
+          postgresql:
+            image:
+              repository: ghcr.io/immich-app/postgres
+              tag: 17-vectorchord0.4.3@sha256:a2a230601e133f8bb40f48197df0e83980f82b665e4caf88b5ad408f5962c423
+            env:
+              POSTGRES_DB: immich
+              POSTGRES_USER: immich
+              POSTGRES_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
+              PGDATA: /var/lib/postgresql/data
+            resources:
+              requests:
+                cpu: 500m
+                memory: 512Mi
+              limits:
+                cpu: 750m
+                memory: 768Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+          metrics:
+            image:
+              repository: quay.io/prometheuscommunity/postgres-exporter
+              tag: v0.17.1@sha256:38606faa38c54787525fb0ff2fd6b41b4cfb75d455c1df294927c5f611699b17
+            env:
+              DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
+              DATA_SOURCE_USER: immich
+              DATA_SOURCE_PASS: ${SECRET_IMMICH_DB_PASSWORD}
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 150m
+                memory: 192Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+        # initContainers:
+        #   # Init Container for Major PostgreSQL Upgrades, not needed permanently
+        #   pgautoupgrade:
+        #     image:
+        #       repository: ghcr.io/pumba98/pgautoupgrade-vchord
+        #       tag: 17-debian-v0.3.0
+        #     # securityContext:
+        #     #   runAsUser: 0
+        #     #   runAsGroup: 0
+        #     env:
+        #       PGAUTO_ONESHOT: yes
+        #       POSTGRES_USER: immich
+        #       POSTGRES_DB: immich
+        #       PGDATA: /var/lib/postgresql/data
+    service:
+      primary:
+        controller: primary
+        ports:
+          postgresql:
+            port: 5432
+      metrics:
+        controller: primary
+        ports:
+          metrics:
+            port: 9187
+    persistence:
+      data:
+        existingClaim: immich-postgresql-data
+        globalMounts:
+        - path: /var/lib/postgresql/data
+          subPath: data
+    serviceMonitor:
+      main:
         enabled: true
+        serviceName: immich-postgresql-metrics
+        endpoints:
+          - port: metrics
