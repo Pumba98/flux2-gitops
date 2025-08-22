@@ -34,8 +34,8 @@ spec:
               repository: public.ecr.aws/docker/library/postgres
               tag: 17.6@sha256:a7fdfd815005ea658281c60b06020f49ab8a6bbe21434d3a59fe14654f6d4293
             env:
-              POSTGRES_DB: tandoor-receipes
-              POSTGRES_USER: tandoor-receipes
+              POSTGRES_DB: tandoor-recipes
+              POSTGRES_USER: tandoor-recipes
               POSTGRES_PASSWORD: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
               PGDATA: /var/lib/postgresql/data
             resources:
@@ -56,7 +56,7 @@ spec:
               tag: v0.17.1@sha256:38606faa38c54787525fb0ff2fd6b41b4cfb75d455c1df294927c5f611699b17
             env:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
-              DATA_SOURCE_USER: tandoor-receipes
+              DATA_SOURCE_USER: tandoor-recipes
               DATA_SOURCE_PASS: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
             resources:
               requests:
@@ -99,8 +99,8 @@ spec:
         #   #   #   runAsGroup: 0
         #   #   env:
         #   #     PGAUTO_ONESHOT: yes
-        #   #     POSTGRES_USER: tandoor-receipes
-        #   #     POSTGRES_DB: tandoor-receipes
+        #   #     POSTGRES_USER: tandoor-recipes
+        #   #     POSTGRES_DB: tandoor-recipes
         #   #     PGDATA: /var/lib/postgresql/data
     service:
       primary:
@@ -115,13 +115,13 @@ spec:
             port: 9187
     persistence:
       data:
-        existingClaim: tandoor-receipes-postgresql
+        existingClaim: tandoor-recipes-postgresql
         globalMounts:
         - path: /var/lib/postgresql/data
           subPath: data
     serviceMonitor:
       main:
         enabled: true
-        serviceName: tandoor-receipes-postgresql-metrics
+        serviceName: tandoor-recipes-postgresql-metrics
         endpoints:
           - port: metrics
