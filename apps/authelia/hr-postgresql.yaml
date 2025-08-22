@@ -115,7 +115,7 @@ spec:
             port: 9187
     persistence:
       data:
-        existingClaim: authelia-postgresql
+        existingClaim: authelia-postgresql-data
         globalMounts:
         - path: /var/lib/postgresql/data
           subPath: data
