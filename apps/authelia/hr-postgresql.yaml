@@ -7,11 +7,11 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: postgresql
-      version: 16.7.26
+      chart: app-template
+      version: 3.7.3
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: bjw-s-charts
         namespace: flux-system
       interval: 5m
   dependsOn:
@@ -20,35 +20,108 @@ spec:
     - name: longhorn
       namespace: longhorn-system
   values:
-    auth:
-      username: authelia
-      password: "${SECRET_AUTHELIA_DB_PASSWORD}"
-      database: authelia
-    primary:
-      resourcesPreset: "small"
-      persistence:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+    controllers:
+      primary:
+        type: statefulset
+        containers:
+          postgresql:
+            image:
+              repository: public.ecr.aws/docker/library/postgres
+              tag: 17.6@sha256:a7fdfd815005ea658281c60b06020f49ab8a6bbe21434d3a59fe14654f6d4293
+            env:
+              POSTGRES_DB: authelia
+              POSTGRES_USER: authelia
+              POSTGRES_PASSWORD: ${SECRET_AUTHELIA_DB_PASSWORD}
+              PGDATA: /var/lib/postgresql/data
+            resources:
+              requests:
+                cpu: 500m
+                memory: 512Mi
+              limits:
+                cpu: 750m
+                memory: 768Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+          metrics:
+            image:
+              repository: quay.io/prometheuscommunity/postgres-exporter
+              tag: v0.17.1@sha256:38606faa38c54787525fb0ff2fd6b41b4cfb75d455c1df294927c5f611699b17
+            env:
+              DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
+              DATA_SOURCE_USER: authelia
+              DATA_SOURCE_PASS: ${SECRET_AUTHELIA_DB_PASSWORD}
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 150m
+                memory: 192Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+        initContainers:
+          # Init Container to migrate from bitnami to official postgres container, adds missing config files, not needed permanently
+          bitnami-migrate:
+            image:
+              repository: alpine
+              tag: 3.22@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
+            command: 
+            - /bin/sh
+            - -c
+            - |
+              chown -R 999:999 $PGDATA
+              [ -f "$PGDATA/postgresql.conf" ] || wget https://gist.githubusercontent.com/Pumba98/62fd44ab30d0f2725779bfd3443e155d/raw/277d4b15da500c14edb06fd49674b37375ca6604/postgresql.conf -P $PGDATA
+              [ -f "$PGDATA/pg_hba.conf" ] || wget https://gist.githubusercontent.com/Pumba98/62fd44ab30d0f2725779bfd3443e155d/raw/277d4b15da500c14edb06fd49674b37375ca6604/pg_hba.conf -P $PGDATA
+            env:
+              PGDATA: /var/lib/postgresql/data
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+
+        #   # # Init Container for Major PostgreSQL Upgrades, not needed permanently
+        #   # pgautoupgrade:
+        #   #   image:
+        #   #     repository: pgautoupgrade/pgautoupgrade
+        #   #     tag: 17-bookworm
+        #   #   # securityContext:
+        #   #   #   runAsUser: 0
+        #   #   #   runAsGroup: 0
+        #   #   env:
+        #   #     PGAUTO_ONESHOT: yes
+        #   #     POSTGRES_USER: authelia
+        #   #     POSTGRES_DB: authelia
+        #   #     PGDATA: /var/lib/postgresql/data
+    service:
+      primary:
+        controller: primary
+        ports:
+          postgresql:
+            port: 5432
+      metrics:
+        controller: primary
+        ports:
+          metrics:
+            port: 9187
+    persistence:
+      data:
+        existingClaim: authelia-postgresql
+        globalMounts:
+        - path: /var/lib/postgresql/data
+          subPath: data
+    serviceMonitor:
+      main:
         enabled: true
-        existingClaim: authelia-postgresql-data
-      # # Init Container for Major PostgreSQL Upgrades, not needed permanently
-      # initContainers:
-      #   - name: pgautoupgrade
-      #     image: pgautoupgrade/pgautoupgrade:17-bookworm
-      #     securityContext:
-      #       runAsUser: 0
-      #       runAsGroup: 0
-      #     volumeMounts:
-      #       - name: data
-      #         mountPath: /bitnami/postgresql
-      #     env:
-      #       - name: PGAUTO_ONESHOT
-      #         value: "yes"
-      #       - name: POSTGRES_USER
-      #         value: authelia
-      #       - name: POSTGRES_DB
-      #         value: authelia
-      #       - name: PGDATA
-      #         value: /bitnami/postgresql/data
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
+        serviceName: authelia-postgresql-metrics
+        endpoints:
+          - port: metrics
