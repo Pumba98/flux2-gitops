@@ -30,7 +30,7 @@ spec:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.138.1@sha256:1d303559b4c7c6b4ea3cea2276279e4cafdf605c624625674924a6ac04f263cb
             env:
-              DB_HOSTNAME: immich-postgresql
+              DB_HOSTNAME: immich-postgresql-primary
               DB_DATABASE_NAME: immich
               DB_USERNAME: immich
               DB_PASSWORD: "${SECRET_IMMICH_DB_PASSWORD}"
