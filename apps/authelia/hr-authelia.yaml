@@ -228,7 +228,7 @@ spec:
       storage:
         postgres:
           enabled: true
-          address: tcp://authelia-postgresql:5432
+          address: tcp://authelia-postgresql-primary:5432
           database: authelia
           username: authelia
       notifier:

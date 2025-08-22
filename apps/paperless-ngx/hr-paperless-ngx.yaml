@@ -34,7 +34,7 @@ spec:
               COMPOSE_PROJECT_NAME: paperless-ngx
               PAPERLESS_TIME_ZONE: Europe/Berlin
               PAPERLESS_URL: http{{if ne ( len .Values.ingress.main.tls ) 0 }}s{{end}}://{{ (first .Values.ingress.main.hosts).host }}
-              PAPERLESS_DBHOST: paperless-ngx-postgresql
+              PAPERLESS_DBHOST: paperless-ngx-postgresql-primary
               PAPERLESS_DBNAME: paperless-ngx
               PAPERLESS_DBUSER: paperless-ngx
               PAPERLESS_DBPASS: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}

@@ -31,7 +31,7 @@ spec:
               SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
               TZ: Europe/Berlin
               DB_ENGINE: django.db.backends.postgresql
-              POSTGRES_HOST: tandoor-recipes-postgresql
+              POSTGRES_HOST: tandoor-recipes-postgresql-primary
               POSTGRES_PORT: "5432"
               POSTGRES_DB: tandoor-receipes
               POSTGRES_USER: tandoor-receipes
