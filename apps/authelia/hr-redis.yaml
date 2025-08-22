@@ -33,10 +33,9 @@ spec:
             image:
               repository: public.ecr.aws/docker/library/redis
               tag: 8.2.1@sha256:cc2dfb8f5151da2684b4a09bd04b567f92d07591d91980eb3eca21df07e12760
-            command:
-              - redis-server
-              - --save 60 1
-              - --requirepass $REDIS_PASSWORD
+            command: ["sh", "-c"]
+            args:
+              - redis-server --save 60 1 --requirepass "$REDIS_PASSWORD"
             env:
               REDIS_REPLICATION_MODE: master
               REDIS_PASSWORD:

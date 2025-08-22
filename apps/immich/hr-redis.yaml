@@ -36,10 +36,8 @@ spec:
             command:
               - redis-server
               - --save 60 1
-              # - --requirepass $REDIS_PASSWORD
             env:
               REDIS_REPLICATION_MODE: master
-              # REDIS_PASSWORD: ""
             resources:
               requests:
                 cpu: 100m
@@ -58,7 +56,6 @@ spec:
               tag: v1.75.0@sha256:bbc0b673a89296eab36d6c6c2bde8571ee868dc4059306be482c03d7b05aa662
             env:
               REDIS_ADDR: localhost:6379
-              # REDIS_PASSWORD: ""
             resources:
               requests:
                 cpu: 100m
