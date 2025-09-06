@@ -54,7 +54,7 @@ services:
         logo: "https://raw.githubusercontent.com/drakkan/sftpgo/main/img/logo.png"
         url: "https://sftpgo.${SECRET_DOMAIN}"
       - name: "Immich"
-        logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/immich.png"
+        logo: "https://raw.githubusercontent.com/immich-app/immich/main/design/immich-logo.png"
         url: "https://immich.${SECRET_DOMAIN}"
       - name: "Paperless"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/paperless-ng.png"
