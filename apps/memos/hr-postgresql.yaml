@@ -32,7 +32,7 @@ spec:
           postgresql:
             image:
               repository: public.ecr.aws/docker/library/postgres
-              tag: 17.6@sha256:6e1474849477e0e976e6318229cdef4f9e66dbb3ad26324d558c25614ced641c
+              tag: 17.6@sha256:0f4f20021a065d114083d1b95d9fb89ad847cbc4c3cc9238417815c7df42350f
             env:
               POSTGRES_DB: memos
               POSTGRES_USER: memos
