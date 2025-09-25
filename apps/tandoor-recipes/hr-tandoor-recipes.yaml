@@ -26,7 +26,7 @@ spec:
           main:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 2.2.4@sha256:7407993444839441071be5214f7876c75d33b04f7b9c17ab7d263d7c98c98fe0
+              tag: 2.2.5@sha256:c44fbe3b9ce5b2e600925ff72edf09e47b29cddff6c2160e96f501621f879438
             env:
               SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
               TZ: Europe/Berlin
