@@ -136,7 +136,7 @@ I use a [pgautoupgrade/docker-pgautoupgrade](https://github.com/pgautoupgrade/do
 # Init Container for Major PostgreSQL Upgrades, not needed permanently
 initContainers:
 - name: pgautoupgrade
-  image: pgautoupgrade/pgautoupgrade:17-bookworm
+  image: pgautoupgrade/pgautoupgrade:18-debian
   securityContext:
     runAsUser: 0
     runAsGroup: 0
