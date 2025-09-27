@@ -70,20 +70,20 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-        # initContainers:
-        #   # Init Container for Major PostgreSQL Upgrades, not needed permanently
-        #   pgautoupgrade:
-        #     image:
-        #       repository: ghcr.io/pumba98/pgautoupgrade-vchord
-        #       tag: 17-debian-v0.3.0
-        #     # securityContext:
-        #     #   runAsUser: 0
-        #     #   runAsGroup: 0
-        #     env:
-        #       PGAUTO_ONESHOT: yes
-        #       POSTGRES_USER: immich
-        #       POSTGRES_DB: immich
-        #       PGDATA: /var/lib/postgresql/data
+        initContainers:
+          # Init Container for Major PostgreSQL Upgrades, not needed permanently
+          pgautoupgrade:
+            image:
+              repository: ghcr.io/pumba98/pgautoupgrade-vchord
+              tag: 18-debian-v0.4.3
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+            env:
+              PGAUTO_ONESHOT: yes
+              POSTGRES_USER: immich
+              POSTGRES_DB: immich
+              PGDATA: /var/lib/postgresql/data
     service:
       primary:
         controller: primary
