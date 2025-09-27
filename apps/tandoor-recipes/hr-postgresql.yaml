@@ -80,7 +80,7 @@ spec:
               runAsUser: 0
               runAsGroup: 0
             env:
-              PGAUTO_ONESHOT: yes
+              PGAUTO_ONESHOT: "yes"
               POSTGRES_USER: tandoor-recipes
               POSTGRES_DB: tandoor-recipes
               PGDATA: /var/lib/postgresql/data

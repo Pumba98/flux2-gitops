@@ -80,7 +80,7 @@ spec:
               runAsUser: 0
               runAsGroup: 0
             env:
-              PGAUTO_ONESHOT: yes
+              PGAUTO_ONESHOT: "yes"
               POSTGRES_USER: paperless-ngx
               POSTGRES_DB: paperless-ngx
               PGDATA: /var/lib/postgresql/data

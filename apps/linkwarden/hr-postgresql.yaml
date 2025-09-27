@@ -80,7 +80,7 @@ spec:
               runAsUser: 0
               runAsGroup: 0
             env:
-              PGAUTO_ONESHOT: yes
+              PGAUTO_ONESHOT: "yes"
               POSTGRES_USER: linkwarden
               POSTGRES_DB: linkwarden
               PGDATA: /var/lib/postgresql/data
