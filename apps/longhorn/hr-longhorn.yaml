@@ -52,14 +52,14 @@ spec:
       concurrentAutomaticEngineUpgradePerNodeLimit: "1"
       orphanResourceAutoDeletion: replica-data
       snapshotDataIntegrity: enabled
-      snapshotDataIntegrityImmediateCheckAfterSnapshotCreation: false
+      snapshotDataIntegrityImmediateCheckAfterSnapshotCreation: "disabled"
       snapshotDataIntegrityCronjob: "0 4 * * *"
-      fastReplicaRebuildEnabled: true
+      fastReplicaRebuildEnabled: enabled
       unmapMarkSnapChainRemoved: enabled
       v1DataEngine: true
       v2DataEngine: false
       allowCollectingLonghornUsageMetrics: false
-      freezeFilesystemForSnapshot: true
+      freezeFilesystemForSnapshot: enabled
       autoCleanupSnapshotWhenDeleteBackup: true
       autoCleanupSnapshotAfterOnDemandBackupCompleted: true
       rwxVolumeFastFailover: true
