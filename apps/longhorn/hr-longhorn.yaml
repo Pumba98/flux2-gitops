@@ -42,14 +42,14 @@ spec:
       tls: true
       tlsSecret: longhorn-tls
     defaultSettings:
-      storageOverProvisioningPercentage: 100
-      storageMinimalAvailablePercentage: 10
+      storageOverProvisioningPercentage: "100"
+      storageMinimalAvailablePercentage: "10"
       defaultLonghornStaticStorageClass: longhorn-backup
       restoreVolumeRecurringJobs: true
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       autoCleanupSystemGeneratedSnapshot: true
       autoCleanupRecurringJobBackupSnapshot: true
-      concurrentAutomaticEngineUpgradePerNodeLimit: 1
+      concurrentAutomaticEngineUpgradePerNodeLimit: "1"
       orphanResourceAutoDeletion: replica-data
       snapshotDataIntegrity: enabled
       snapshotDataIntegrityImmediateCheckAfterSnapshotCreation: false
