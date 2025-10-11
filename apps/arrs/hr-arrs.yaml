@@ -47,7 +47,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/sonarr
-              tag: 4.0.15@sha256:328d322af2bb8d7211a9c43a26ff5e658ba3e6f47a695e8fb9ff806bfeab0f04
+              tag: 4.0.15@sha256:f3a7fda30a0133b24b04857a21e7a81b97ed2722e147503a47ad0b4fbc7c7694
             env:
               PUID: "1000"
               PGID: "1000"
