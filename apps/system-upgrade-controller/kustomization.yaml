@@ -2,7 +2,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- github.com/rancher/system-upgrade-controller?ref=v0.16.3
+- github.com/rancher/system-upgrade-controller?ref=v0.17.0
 images:
 - name: rancher/system-upgrade-controller
   newTag: v0.16.3@sha256:b9c6b90c10868ffa89d379812c1868edc1789b81e86a6e829e0e086529c0847b
