@@ -28,7 +28,7 @@ spec:
           main:
             image:
               repository: ubuntu/bind9
-              tag: 9.18-22.04_beta@sha256:29378a263f22311f6a4f11fa9119182655244af17fca16a3e1993a3d0abe7abf
+              tag: 9.18-22.04_beta@sha256:770db6e381fa54a991b31e32496334fa9e69c322473eb95abca8a05a3d4b7739
             probes:
               liveness:
                 enabled: true
