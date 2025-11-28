@@ -94,6 +94,7 @@
       automergeType: 'pr',
       automergeStrategy: 'squash',
       minimumReleaseAge: '24 hours',
+      minimumReleaseAgeBehaviour: 'timestamp-optional',
     },
     {
       matchUpdateTypes: [
@@ -111,6 +112,7 @@
       automergeType: 'pr',
       automergeStrategy: 'squash',
       minimumReleaseAge: '24 hours',
+      minimumReleaseAgeBehaviour: 'timestamp-optional',
     },
     {
       matchUpdateTypes: [
@@ -123,6 +125,7 @@
       automergeType: 'pr',
       automergeStrategy: 'squash',
       minimumReleaseAge: '24 hours',
+      minimumReleaseAgeBehaviour: 'timestamp-optional',
     },
     {
       matchUpdateTypes: [
