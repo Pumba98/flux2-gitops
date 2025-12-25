@@ -22,16 +22,14 @@ metadata:
 spec:
   sourcePVC: authelia-postgresql-data
   trigger:
-    schedule: "*/30 * * * *"
+    schedule: "0 */4 * * *"
   restic:
-    pruneIntervalDays: 14
+    pruneIntervalDays: 7
     repository: restic-config
     retain:
-      hourly: 6
-      daily: 5
-      weekly: 4
-      monthly: 2
-      yearly: 1
+      hourly: 4
+      daily: 7
+      weekly: 1
     copyMethod: Clone
     storageClassName: longhorn
     cacheStorageClassName: longhorn

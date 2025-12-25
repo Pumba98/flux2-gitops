@@ -45,6 +45,7 @@ spec:
       defaultDataPath: /var/mnt/longhorn
       storageOverProvisioningPercentage: "100"
       storageMinimalAvailablePercentage: "10"
+      storageReservedPercentageForDefaultDisk: "0"
       defaultLonghornStaticStorageClass: longhorn-backup
       restoreVolumeRecurringJobs: true
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
