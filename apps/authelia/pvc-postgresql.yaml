@@ -33,6 +33,8 @@ spec:
       monthly: 2
       yearly: 1
     copyMethod: Clone
+    storageClassName: longhorn
+    cacheStorageClassName: longhorn
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
@@ -50,3 +52,5 @@ spec:
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
+    storageClassName: longhorn
+    cacheStorageClassName: longhorn
