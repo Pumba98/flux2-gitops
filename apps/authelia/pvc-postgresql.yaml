@@ -13,7 +13,7 @@ spec:
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
-    name: rclone-replicationdestination
+    name: authelia-postgresql-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -44,3 +44,9 @@ spec:
   restic:
     repository: restic-config
     copyMethod: Snapshot
+    accessModes:
+    - ReadWriteOnce
+    capacity: 4Gi
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    enableFileDeletion: true

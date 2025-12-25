@@ -23,6 +23,7 @@ resources:
 - metallb-charts.yaml
 - metrics-server-charts.yaml
 - minio-charts.yaml
+- piraeus-charts.yaml
 - prometheus-charts.yaml
 - rancher-latest-charts.yaml
 - stakater-charts.yaml
