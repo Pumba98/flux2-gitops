@@ -42,6 +42,7 @@ spec:
       tls: true
       tlsSecret: longhorn-tls
     defaultSettings:
+      defaultDataPath: /var/mnt/longhorn
       storageOverProvisioningPercentage: "100"
       storageMinimalAvailablePercentage: "10"
       defaultLonghornStaticStorageClass: longhorn-backup
