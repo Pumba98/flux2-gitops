@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
 - angelnu-charts.yaml
 - authelia-charts.yaml
+- backube-charts.yaml
 - bjw-s-charts.yaml
 - csi-driver-smb-charts.yaml
 - descheduler-charts.yaml

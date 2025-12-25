@@ -47,6 +47,7 @@ resources:
 # - ../system-upgrade-controller.yaml
 - ../tandoor-recipes.yaml
 - ../tuppr.yaml
+- ../volsync.yaml
 - ../weave-gitops.yaml
 
 patchesStrategicMerge:

@@ -1,6 +1,7 @@
 ---
 creation_rules:
-- encrypted_regex: '^(data|stringData)$'
+- path_regex: .+.sops.yaml
+  encrypted_regex: '^(data|stringData)$'
   age: age1zzqxk3z5anq53lz9g4rd7eatczfcd7vjszgggr47927mwe7hjfhq3tlad6
 stores:
   yaml:
