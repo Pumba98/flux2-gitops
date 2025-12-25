@@ -46,6 +46,7 @@ resources:
 - ../syncthing.yaml
 # - ../system-upgrade-controller.yaml
 - ../tandoor-recipes.yaml
+- ../tuppr.yaml
 - ../weave-gitops.yaml
 
 patchesStrategicMerge:

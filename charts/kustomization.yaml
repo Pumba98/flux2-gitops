@@ -13,6 +13,7 @@ resources:
 - fluxcd-charts.yaml
 - grafana-charts.yaml
 - headlamp-charts.yaml
+- home-operations-charts.yaml
 - ingress-nginx-charts.yaml
 - jetstack-charts.yaml
 - kubereboot-charts.yaml
