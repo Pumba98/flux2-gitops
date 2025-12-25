@@ -17,6 +17,58 @@ spec:
     - name: kube-prometheus-stack
       namespace: monitoring
   values:
+    # # k3s
+    # secretsExporter:
+    #   resources:
+    #     limits:
+    #       cpu: null
+    # hostPathsExporter:
+    #   daemonSets:
+    #     cp:
+    #       nodeSelector:
+    #         node-role.kubernetes.io/control-plane: "true"
+    #       tolerations:
+    #         - effect: NoSchedule
+    #           operator: Exists
+    #         - effect: NoExecute
+    #           operator: Exists
+    #       watchFiles:
+    #         - /var/lib/rancher/k3s/agent/client-ca.crt
+    #         - /var/lib/rancher/k3s/agent/client-k3s-controller.crt
+    #         - /var/lib/rancher/k3s/agent/client-kubelet.crt
+    #         - /var/lib/rancher/k3s/agent/client-kube-proxy.crt
+    #         - /var/lib/rancher/k3s/agent/server-ca.crt
+    #         - /var/lib/rancher/k3s/agent/serving-kubelet.crt
+    #         - /var/lib/rancher/k3s/server/tls/client-admin.crt
+    #         - /var/lib/rancher/k3s/server/tls/client-auth-proxy.crt
+    #         - /var/lib/rancher/k3s/server/tls/client-ca.crt
+    #         - /var/lib/rancher/k3s/server/tls/client-controller.crt
+    #         - /var/lib/rancher/k3s/server/tls/client-k3s-cloud-controller.crt
+    #         - /var/lib/rancher/k3s/server/tls/client-k3s-controller.crt
+    #         - /var/lib/rancher/k3s/server/tls/client-kube-apiserver.crt
+    #         - /var/lib/rancher/k3s/server/tls/client-kube-proxy.crt
+    #         - /var/lib/rancher/k3s/server/tls/client-scheduler.crt
+    #         - /var/lib/rancher/k3s/server/tls/etcd/client.crt
+    #         - /var/lib/rancher/k3s/server/tls/etcd/peer-ca.crt
+    #         - /var/lib/rancher/k3s/server/tls/etcd/peer-server-client.crt
+    #         - /var/lib/rancher/k3s/server/tls/etcd/server-ca.crt
+    #         - /var/lib/rancher/k3s/server/tls/etcd/server-client.crt
+    #         - /var/lib/rancher/k3s/server/tls/request-header-ca.crt
+    #         - /var/lib/rancher/k3s/server/tls/server-ca.crt
+    #         - /var/lib/rancher/k3s/server/tls/serving-kube-apiserver.crt
+    #     workers:
+    #       watchFiles:
+    #         - /var/lib/rancher/k3s/agent/client-ca.crt
+    #         - /var/lib/rancher/k3s/agent/client-k3s-controller.crt
+    #         - /var/lib/rancher/k3s/agent/client-kubelet.crt
+    #         - /var/lib/rancher/k3s/agent/client-kube-proxy.crt
+    #         - /var/lib/rancher/k3s/agent/server-ca.crt
+    #         - /var/lib/rancher/k3s/agent/serving-kubelet.crt
+    #   resources:
+    #     limits:
+    #       cpu: null
+
+    # talos
     secretsExporter:
       resources:
         limits:
@@ -32,37 +84,23 @@ spec:
             - effect: NoExecute
               operator: Exists
           watchFiles:
-            - /var/lib/rancher/k3s/agent/client-ca.crt
-            - /var/lib/rancher/k3s/agent/client-k3s-controller.crt
-            - /var/lib/rancher/k3s/agent/client-kubelet.crt
-            - /var/lib/rancher/k3s/agent/client-kube-proxy.crt
-            - /var/lib/rancher/k3s/agent/server-ca.crt
-            - /var/lib/rancher/k3s/agent/serving-kubelet.crt
-            - /var/lib/rancher/k3s/server/tls/client-admin.crt
-            - /var/lib/rancher/k3s/server/tls/client-auth-proxy.crt
-            - /var/lib/rancher/k3s/server/tls/client-ca.crt
-            - /var/lib/rancher/k3s/server/tls/client-controller.crt
-            - /var/lib/rancher/k3s/server/tls/client-k3s-cloud-controller.crt
-            - /var/lib/rancher/k3s/server/tls/client-k3s-controller.crt
-            - /var/lib/rancher/k3s/server/tls/client-kube-apiserver.crt
-            - /var/lib/rancher/k3s/server/tls/client-kube-proxy.crt
-            - /var/lib/rancher/k3s/server/tls/client-scheduler.crt
-            - /var/lib/rancher/k3s/server/tls/etcd/client.crt
-            - /var/lib/rancher/k3s/server/tls/etcd/peer-ca.crt
-            - /var/lib/rancher/k3s/server/tls/etcd/peer-server-client.crt
-            - /var/lib/rancher/k3s/server/tls/etcd/server-ca.crt
-            - /var/lib/rancher/k3s/server/tls/etcd/server-client.crt
-            - /var/lib/rancher/k3s/server/tls/request-header-ca.crt
-            - /var/lib/rancher/k3s/server/tls/server-ca.crt
-            - /var/lib/rancher/k3s/server/tls/serving-kube-apiserver.crt
+            - /etc/kubernetes/pki/ca.crt
+            - /var/lib/kubelet/pki/kubelet-client-current.pem
+            - /system/secrets/etcd/server.crt
+            - /system/secrets/etcd/peer.crt
+            - /system/secrets/etcd/ca.crt
+            - /system/secrets/etcd/admin.crt
+            - /system/secrets/kubernetes/kube-apiserver/aggregator-ca.crt
+            - /system/secrets/kubernetes/kube-apiserver/apiserver-kubelet-client.crt
+            - /system/secrets/kubernetes/kube-apiserver/apiserver.crt
+            - /system/secrets/kubernetes/kube-apiserver/ca.crt
+            - /system/secrets/kubernetes/kube-apiserver/etcd-client-ca.crt
+            - /system/secrets/kubernetes/kube-apiserver/etcd-client.crt
+            - /system/secrets/kubernetes/kube-apiserver/front-proxy-client.crt
         workers:
           watchFiles:
-            - /var/lib/rancher/k3s/agent/client-ca.crt
-            - /var/lib/rancher/k3s/agent/client-k3s-controller.crt
-            - /var/lib/rancher/k3s/agent/client-kubelet.crt
-            - /var/lib/rancher/k3s/agent/client-kube-proxy.crt
-            - /var/lib/rancher/k3s/agent/server-ca.crt
-            - /var/lib/rancher/k3s/agent/serving-kubelet.crt
+            - /etc/kubernetes/pki/ca.crt
+            - /var/lib/kubelet/pki/kubelet-client-current.pem
       resources:
         limits:
           cpu: null
