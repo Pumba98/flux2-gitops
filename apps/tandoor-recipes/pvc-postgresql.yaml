@@ -10,3 +10,41 @@ spec:
   resources:
     requests:
       storage: 4Gi
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: tandoor-recipes-postgresql-backup
+spec:
+  sourcePVC: tandoor-recipes-postgresql
+  trigger:
+    schedule: "0 * * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: restic-config-tandoor-recipes-postgresql
+    retain:
+      hourly: 4
+      daily: 7
+      weekly: 1
+    copyMethod: Clone
+    storageClassName: longhorn
+    cacheStorageClassName: longhorn
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: tandoor-recipes-postgresql-backup
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: restic-config-tandoor-recipes-postgresql
+    copyMethod: Snapshot
+    accessModes:
+    - ReadWriteOnce
+    capacity: 4Gi
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    enableFileDeletion: true
+    storageClassName: longhorn
+    cacheStorageClassName: longhorn

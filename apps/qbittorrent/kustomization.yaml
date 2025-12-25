@@ -5,3 +5,4 @@ resources:
 - pvc-qbittorrent-config.yaml
 - pvc-qbittorrent-downloads.yaml
 - hr-qbittorrent.yaml
+- volsync-restic-config-secret.sops.yaml

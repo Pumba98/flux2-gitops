@@ -1,0 +1,54 @@
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: syncthing-config
+# spec:
+#   storageClassName: longhorn-backup
+#   accessModes:
+#   - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 4Gi
+#   dataSourceRef:
+#     kind: ReplicationDestination
+#     apiGroup: volsync.backube
+#     name: syncthing-config-backup
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: syncthing-config-backup
+spec:
+  sourcePVC: syncthing #-config
+  trigger:
+    schedule: "0 * * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: restic-config-syncthing-config
+    retain:
+      hourly: 4
+      daily: 7
+      weekly: 1
+    copyMethod: Clone
+    storageClassName: longhorn
+    cacheStorageClassName: longhorn
+# ---
+# apiVersion: volsync.backube/v1alpha1
+# kind: ReplicationDestination
+# metadata:
+#   name: syncthing-config-backup
+# spec:
+#   trigger:
+#     manual: restore-once
+#   restic:
+#     repository: restic-config-syncthing-config
+#     copyMethod: Snapshot
+#     accessModes:
+#     - ReadWriteOnce
+#     capacity: 4Gi
+#     cleanupCachePVC: true
+#     cleanupTempPVC: true
+#     enableFileDeletion: true
+#     storageClassName: longhorn
+#     cacheStorageClassName: longhorn

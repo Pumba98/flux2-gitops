@@ -10,3 +10,41 @@ spec:
   resources:
     requests:
       storage: 4Gi
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: paperless-ngx-postgresql-backup
+spec:
+  sourcePVC: paperless-ngx-postgresql
+  trigger:
+    schedule: "0 * * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: restic-config-paperless-ngx-postgresql
+    retain:
+      hourly: 4
+      daily: 7
+      weekly: 1
+    copyMethod: Clone
+    storageClassName: longhorn
+    cacheStorageClassName: longhorn
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: paperless-ngx-postgresql-backup
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: restic-config-paperless-ngx-postgresql
+    copyMethod: Snapshot
+    accessModes:
+    - ReadWriteOnce
+    capacity: 1Gi
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    enableFileDeletion: true
+    storageClassName: longhorn
+    cacheStorageClassName: longhorn

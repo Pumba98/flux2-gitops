@@ -22,10 +22,10 @@ metadata:
 spec:
   sourcePVC: authelia-postgresql-data
   trigger:
-    schedule: "0 */4 * * *"
+    schedule: "0 * * * *"
   restic:
     pruneIntervalDays: 7
-    repository: restic-config
+    repository: restic-config-authelia-postgresql-data
     retain:
       hourly: 4
       daily: 7
@@ -42,7 +42,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: restic-config
+    repository: restic-config-authelia-postgresql-data
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce

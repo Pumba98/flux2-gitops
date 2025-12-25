@@ -7,3 +7,4 @@ resources:
 - pvc-arrs-config.yaml
 - pvc-arrs-downloads.yaml
 - pvc-arrs-media.yaml
+- volsync-restic-config-secret.sops.yaml
