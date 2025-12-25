@@ -43,7 +43,9 @@ resources:
 - ../reloader.yaml
 - ../restic.yaml
 - ../sftpgo.yaml
+- ../snapshot-controller.yaml
 - ../syncthing.yaml
 - ../system-upgrade-controller.yaml
 - ../tandoor-recipes.yaml
+- ../volsync.yaml
 - ../weave-gitops.yaml
