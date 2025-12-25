@@ -10,3 +10,41 @@ spec:
   resources:
     requests:
       storage: 4Gi
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: tandoor-recipes-static-backup
+spec:
+  sourcePVC: tandoor-recipes-static
+  trigger:
+    schedule: "0 * * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: restic-config-tandoor-recipes-static
+    retain:
+      hourly: 4
+      daily: 7
+      weekly: 1
+    copyMethod: Clone
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: tandoor-recipes-static-backup
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: restic-config-tandoor-recipes-static
+    copyMethod: Snapshot
+    accessModes:
+    - ReadWriteOnce
+    capacity: 1Gi
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    enableFileDeletion: true
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local

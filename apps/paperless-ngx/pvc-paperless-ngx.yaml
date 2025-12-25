@@ -36,3 +36,22 @@ spec:
   resources:
     requests:
       storage: 50Gi
+# ---
+# apiVersion: volsync.backube/v1alpha1
+# kind: ReplicationSource
+# metadata:
+#   name: paperless-ngx-data-backup
+# spec:
+#   sourcePVC: paperless-ngx-data
+#   trigger:
+#     schedule: "*/30 * * * *"
+#   restic:
+#     pruneIntervalDays: 14
+#     repository: restic-config
+#     retain:
+#       hourly: 6
+#       daily: 5
+#       weekly: 4
+#       monthly: 2
+#       yearly: 1
+#     copyMethod: Direct

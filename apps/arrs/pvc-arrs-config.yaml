@@ -11,6 +11,49 @@ spec:
     requests:
       storage: 1Gi
 ---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: radarr-data-backup
+spec:
+  sourcePVC: radarr-data
+  trigger:
+    schedule: "0 * * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: restic-config-radarr-data
+    retain:
+      hourly: 4
+      daily: 7
+      weekly: 1
+    copyMethod: Clone
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
+    moverPodLabels:
+      setGateway: "false"
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: radarr-data-backup
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: restic-config-radarr-data
+    copyMethod: Snapshot
+    accessModes:
+    - ReadWriteOnce
+    capacity: 1Gi
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    enableFileDeletion: true
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
+    moverPodLabels:
+      setGateway: "false"
+
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -22,6 +65,49 @@ spec:
   resources:
     requests:
       storage: 1Gi
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: sonarr-data-backup
+spec:
+  sourcePVC: sonarr-data
+  trigger:
+    schedule: "0 * * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: restic-config-sonarr-data
+    retain:
+      hourly: 4
+      daily: 7
+      weekly: 1
+    copyMethod: Clone
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
+    moverPodLabels:
+      setGateway: "false"
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: sonarr-data-backup
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: restic-config-sonarr-data
+    copyMethod: Snapshot
+    accessModes:
+    - ReadWriteOnce
+    capacity: 1Gi
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    enableFileDeletion: true
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
+    moverPodLabels:
+      setGateway: "false"
+
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -35,6 +121,49 @@ spec:
     requests:
       storage: 1Gi
 ---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: bazarr-data-backup
+spec:
+  sourcePVC: bazarr-data
+  trigger:
+    schedule: "0 * * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: restic-config-bazarr-data
+    retain:
+      hourly: 4
+      daily: 7
+      weekly: 1
+    copyMethod: Clone
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
+    moverPodLabels:
+      setGateway: "false"
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: bazarr-data-backup
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: restic-config-bazarr-data
+    copyMethod: Snapshot
+    accessModes:
+    - ReadWriteOnce
+    capacity: 1Gi
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    enableFileDeletion: true
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
+    moverPodLabels:
+      setGateway: "false"
+
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -46,3 +175,45 @@ spec:
   resources:
     requests:
       storage: 1Gi
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: prowlarr-data-backup
+spec:
+  sourcePVC: prowlarr-data
+  trigger:
+    schedule: "0 * * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: restic-config-prowlarr-data
+    retain:
+      hourly: 4
+      daily: 7
+      weekly: 1
+    copyMethod: Clone
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
+    moverPodLabels:
+      setGateway: "false"
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: prowlarr-data-backup
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: restic-config-prowlarr-data
+    copyMethod: Snapshot
+    accessModes:
+    - ReadWriteOnce
+    capacity: 1Gi
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    enableFileDeletion: true
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
+    moverPodLabels:
+      setGateway: "false"

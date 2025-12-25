@@ -6,3 +6,4 @@ resources:
 - secret-longhorn-system.sops.yaml
 - hr-longhorn.yaml
 - sc-longhorn.yaml
+- vsc-longhorn.yaml

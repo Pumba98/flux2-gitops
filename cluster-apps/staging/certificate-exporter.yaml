@@ -1,0 +1,54 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: certificate-exporter-app
+  namespace: flux-system
+spec:
+  patches:
+    - target:
+        kind: HelmRelease
+        name: certificate-exporter
+      patch: |-
+        apiVersion: helm.toolkit.fluxcd.io/v2
+        kind: HelmRelease
+        metadata:
+          name: certificate-exporter
+        spec:
+          values:
+            # talos
+            secretsExporter:
+              resources:
+                limits:
+                  cpu: null
+            hostPathsExporter:
+              daemonSets:
+                cp:
+                  nodeSelector:
+                    node-role.kubernetes.io/control-plane: "true"
+                  tolerations:
+                    - effect: NoSchedule
+                      operator: Exists
+                    - effect: NoExecute
+                      operator: Exists
+                  watchFiles:
+                    - /etc/kubernetes/pki/ca.crt
+                    - /var/lib/kubelet/pki/kubelet-client-current.pem
+                    - /system/secrets/etcd/server.crt
+                    - /system/secrets/etcd/peer.crt
+                    - /system/secrets/etcd/ca.crt
+                    - /system/secrets/etcd/admin.crt
+                    - /system/secrets/kubernetes/kube-apiserver/aggregator-ca.crt
+                    - /system/secrets/kubernetes/kube-apiserver/apiserver-kubelet-client.crt
+                    - /system/secrets/kubernetes/kube-apiserver/apiserver.crt
+                    - /system/secrets/kubernetes/kube-apiserver/ca.crt
+                    - /system/secrets/kubernetes/kube-apiserver/etcd-client-ca.crt
+                    - /system/secrets/kubernetes/kube-apiserver/etcd-client.crt
+                    - /system/secrets/kubernetes/kube-apiserver/front-proxy-client.crt
+                workers:
+                  watchFiles:
+                    - /etc/kubernetes/pki/ca.crt
+                    - /var/lib/kubelet/pki/kubelet-client-current.pem
+              resources:
+                limits:
+                  cpu: null
