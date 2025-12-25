@@ -29,6 +29,8 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn
     cacheStorageClassName: longhorn
+    moverPodLabels:
+      setGateway: "false"
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
@@ -48,6 +50,8 @@ spec:
     enableFileDeletion: true
     storageClassName: longhorn
     cacheStorageClassName: longhorn
+    moverPodLabels:
+      setGateway: "false"
 
 ---
 apiVersion: v1
@@ -80,6 +84,8 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn
     cacheStorageClassName: longhorn
+    moverPodLabels:
+      setGateway: "false"
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
@@ -99,6 +105,8 @@ spec:
     enableFileDeletion: true
     storageClassName: longhorn
     cacheStorageClassName: longhorn
+    moverPodLabels:
+      setGateway: "false"
 
 ---
 apiVersion: v1
@@ -131,6 +139,8 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn
     cacheStorageClassName: longhorn
+    moverPodLabels:
+      setGateway: "false"
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
@@ -150,6 +160,8 @@ spec:
     enableFileDeletion: true
     storageClassName: longhorn
     cacheStorageClassName: longhorn
+    moverPodLabels:
+      setGateway: "false"
 
 ---
 apiVersion: v1
@@ -182,6 +194,8 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn
     cacheStorageClassName: longhorn
+    moverPodLabels:
+      setGateway: "false"
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
@@ -201,4 +215,5 @@ spec:
     enableFileDeletion: true
     storageClassName: longhorn
     cacheStorageClassName: longhorn
-
+    moverPodLabels:
+      setGateway: "false"
