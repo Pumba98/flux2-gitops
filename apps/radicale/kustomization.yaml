@@ -6,3 +6,4 @@ resources:
 - pvc-radicale.yaml
 - cm-radicale.yaml
 - secret-radicale.sops.yaml
+- volsync-restic-config-secret.sops.yaml

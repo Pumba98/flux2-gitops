@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
 - pvc-jellyseerr-config.yaml
 - hr-jellyseerr.yaml
+- volsync-restic-config-secret.sops.yaml
