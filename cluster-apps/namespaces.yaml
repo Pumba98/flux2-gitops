@@ -38,3 +38,11 @@ metadata:
     goldilocks.fairwinds.com/enabled: "true"
     routed-gateway: "true"
     pod-security.kubernetes.io/enforce: privileged # for jd2
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: system-upgrade
+  labels:
+    goldilocks.fairwinds.com/enabled: "true"
+

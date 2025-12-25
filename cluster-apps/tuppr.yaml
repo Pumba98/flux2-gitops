@@ -1,0 +1,30 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tuppr-app
+  namespace: flux-system
+spec:
+  path: ./apps/tuppr
+  targetNamespace: system-upgrade
+  interval: 10m
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tuppr-plans
+  namespace: flux-system
+spec:
+  path: ./apps/tuppr/plans
+  targetNamespace: system-upgrade
+  interval: 10m
+  prune: true
+  dependsOn:
+    - name: tuppr-app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
