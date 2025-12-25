@@ -8,3 +8,4 @@ resources:
 - hr-postgresql.yaml
 - hr-redis.yaml
 - hr-authelia.yaml
+- volsync-restic-config-secret.sops.yaml

@@ -8,3 +8,4 @@ resources:
 - hr-redis.yaml
 - hr-immich.yaml
 - hr-immich-machine-learning.yaml
+- volsync-restic-config-secret.sops.yaml

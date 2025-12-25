@@ -71,8 +71,7 @@ spec:
               readiness:
                 enabled: true
         initContainers:
-          # Init Container to migrate from bitnami to official postgres container, adds missing config files, not needed permanently
-          bitnami-migrate:
+          init-postgres-permissions:
             image:
               repository: alpine
               tag: 3.23@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
@@ -81,27 +80,42 @@ spec:
             - -c
             - |
               chown -R 999:999 $PGDATA
-              [ -f "$PGDATA/postgresql.conf" ] || wget https://gist.githubusercontent.com/Pumba98/62fd44ab30d0f2725779bfd3443e155d/raw/277d4b15da500c14edb06fd49674b37375ca6604/postgresql.conf -P $PGDATA
-              [ -f "$PGDATA/pg_hba.conf" ] || wget https://gist.githubusercontent.com/Pumba98/62fd44ab30d0f2725779bfd3443e155d/raw/277d4b15da500c14edb06fd49674b37375ca6604/pg_hba.conf -P $PGDATA
+              chmod 700 $PGDATA
             env:
               PGDATA: /var/lib/postgresql/data
             securityContext:
               runAsUser: 0
               runAsGroup: 0
+          # # Init Container to migrate from bitnami to official postgres container, adds missing config files, not needed permanently
+          # bitnami-migrate:
+          #   image:
+          #     repository: alpine
+          #     tag: 3.23@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
+          #   command: 
+          #   - /bin/sh
+          #   - -c
+          #   - |
+          #     [ -f "$PGDATA/postgresql.conf" ] || wget https://gist.githubusercontent.com/Pumba98/62fd44ab30d0f2725779bfd3443e155d/raw/277d4b15da500c14edb06fd49674b37375ca6604/postgresql.conf -P $PGDATA
+          #     [ -f "$PGDATA/pg_hba.conf" ] || wget https://gist.githubusercontent.com/Pumba98/62fd44ab30d0f2725779bfd3443e155d/raw/277d4b15da500c14edb06fd49674b37375ca6604/pg_hba.conf -P $PGDATA
+          #   env:
+          #     PGDATA: /var/lib/postgresql/data
+          #   securityContext:
+          #     runAsUser: 0
+          #     runAsGroup: 0
 
-        #   # # Init Container for Major PostgreSQL Upgrades, not needed permanently
-        #   # pgautoupgrade:
-        #   #   image:
-        #   #     repository: pgautoupgrade/pgautoupgrade
-        #   #     tag: 17-bookworm
-        #   #   # securityContext:
-        #   #   #   runAsUser: 0
-        #   #   #   runAsGroup: 0
-        #   #   env:
-        #   #     PGAUTO_ONESHOT: yes
-        #   #     POSTGRES_USER: memos
-        #   #     POSTGRES_DB: memos
-        #   #     PGDATA: /var/lib/postgresql/data
+          # # Init Container for Major PostgreSQL Upgrades, not needed permanently
+          # pgautoupgrade:
+          #   image:
+          #     repository: pgautoupgrade/pgautoupgrade
+          #     tag: 17-bookworm
+          #   # securityContext:
+          #   #   runAsUser: 0
+          #   #   runAsGroup: 0
+          #   env:
+          #     PGAUTO_ONESHOT: yes
+          #     POSTGRES_USER: memos
+          #     POSTGRES_DB: memos
+          #     PGDATA: /var/lib/postgresql/data
     service:
       primary:
         controller: primary

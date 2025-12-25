@@ -1,0 +1,19 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: volsync-app
+  namespace: flux-system
+spec:
+  path: ./apps/volsync
+  targetNamespace: volsync-system
+  interval: 10m
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: volsync
+      namespace: volsync-system

@@ -4,14 +4,17 @@ kind: Kustomization
 resources:
 - angelnu-charts.yaml
 - authelia-charts.yaml
+- backube-charts.yaml
 - bjw-s-charts.yaml
 - csi-driver-smb-charts.yaml
 - descheduler-charts.yaml
 - enix-charts.yaml
 - external-dns-charts.yaml
 - fairwinds-charts.yaml
+- fluxcd-charts.yaml
 - grafana-charts.yaml
 - headlamp-charts.yaml
+- home-operations-charts.yaml
 - ingress-nginx-charts.yaml
 - jetstack-charts.yaml
 - kubereboot-charts.yaml
@@ -20,6 +23,7 @@ resources:
 - metallb-charts.yaml
 - metrics-server-charts.yaml
 - minio-charts.yaml
+- piraeus-charts.yaml
 - prometheus-charts.yaml
 - rancher-latest-charts.yaml
 - stakater-charts.yaml

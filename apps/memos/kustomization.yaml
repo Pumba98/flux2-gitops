@@ -5,3 +5,4 @@ resources:
 - hr-memos.yaml
 - hr-postgresql.yaml
 - pvc-postgresql.yaml
+- volsync-restic-config-secret.sops.yaml

@@ -43,11 +43,15 @@ resources:
 - ../reloader.yaml
 # - ../restic.yaml
 - ../sftpgo.yaml
+- ../snapshot-controller.yaml
 - ../syncthing.yaml
 # - ../system-upgrade-controller.yaml
 - ../tandoor-recipes.yaml
+- ../tuppr.yaml
+- ../volsync.yaml
 - ../weave-gitops.yaml
 
 patchesStrategicMerge:
-- longhorn.yaml
+- certificate-exporter.yaml
 - ingress-nginx.yaml
+- longhorn.yaml

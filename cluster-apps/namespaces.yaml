@@ -18,6 +18,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: networking
+  annotations:
+    volsync.backube/privileged-movers: "true"
   labels:
     goldilocks.fairwinds.com/enabled: "true"
     pod-security.kubernetes.io/enforce: privileged # for PodGateway
@@ -26,6 +28,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: selfhosted
+  annotations:
+    volsync.backube/privileged-movers: "true"
   labels:
     goldilocks.fairwinds.com/enabled: "true"
     pod-security.kubernetes.io/enforce: privileged # for sftpgo
@@ -34,7 +38,23 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: vpn
+  annotations:
+    volsync.backube/privileged-movers: "true"
   labels:
     goldilocks.fairwinds.com/enabled: "true"
     routed-gateway: "true"
     pod-security.kubernetes.io/enforce: privileged # for jd2
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: system-upgrade
+  labels:
+    goldilocks.fairwinds.com/enabled: "true"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: volsync-system
+  labels:
+    goldilocks.fairwinds.com/enabled: "true"
