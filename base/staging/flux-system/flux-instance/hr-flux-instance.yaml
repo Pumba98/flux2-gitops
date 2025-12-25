@@ -25,4 +25,4 @@ spec:
         path: base/staging
         ref: refs/heads/staging
         provider: generic
-        # pullSecret: flux-system
+        pullSecret: flux-system
