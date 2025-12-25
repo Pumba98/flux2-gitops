@@ -27,8 +27,8 @@ spec:
       daily: 7
       weekly: 1
     copyMethod: Clone
-    storageClassName: longhorn
-    cacheStorageClassName: longhorn
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
     moverPodLabels:
       setGateway: "false"
 ---
@@ -48,8 +48,8 @@ spec:
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
-    storageClassName: longhorn
-    cacheStorageClassName: longhorn
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
     moverPodLabels:
       setGateway: "false"
 
@@ -82,8 +82,8 @@ spec:
       daily: 7
       weekly: 1
     copyMethod: Clone
-    storageClassName: longhorn
-    cacheStorageClassName: longhorn
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
     moverPodLabels:
       setGateway: "false"
 ---
@@ -103,8 +103,8 @@ spec:
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
-    storageClassName: longhorn
-    cacheStorageClassName: longhorn
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
     moverPodLabels:
       setGateway: "false"
 
@@ -137,8 +137,8 @@ spec:
       daily: 7
       weekly: 1
     copyMethod: Clone
-    storageClassName: longhorn
-    cacheStorageClassName: longhorn
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
     moverPodLabels:
       setGateway: "false"
 ---
@@ -158,8 +158,8 @@ spec:
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
-    storageClassName: longhorn
-    cacheStorageClassName: longhorn
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
     moverPodLabels:
       setGateway: "false"
 
@@ -192,8 +192,8 @@ spec:
       daily: 7
       weekly: 1
     copyMethod: Clone
-    storageClassName: longhorn
-    cacheStorageClassName: longhorn
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
     moverPodLabels:
       setGateway: "false"
 ---
@@ -213,7 +213,7 @@ spec:
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
-    storageClassName: longhorn
-    cacheStorageClassName: longhorn
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
     moverPodLabels:
       setGateway: "false"
