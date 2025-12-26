@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-ngx-data
+spec:
+  storageClassName: longhorn-backup
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  # dataSourceRef:
+  #   kind: ReplicationDestination
+  #   apiGroup: volsync.backube
+  #   name: paperless-ngx-data-backup
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: paperless-ngx-data-backup
+spec:
+  sourcePVC: paperless-ngx-data
+  trigger:
+    schedule: "0 * * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: restic-config-paperless-ngx-data
+    retain:
+      hourly: 4
+      daily: 7
+      weekly: 1
+    copyMethod: Clone
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: paperless-ngx-data-backup
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: restic-config-paperless-ngx-data
+    copyMethod: Snapshot
+    accessModes:
+    - ReadWriteOnce
+    capacity: 1Gi
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    enableFileDeletion: true
+    storageClassName: longhorn-local
+    cacheStorageClassName: longhorn-local
