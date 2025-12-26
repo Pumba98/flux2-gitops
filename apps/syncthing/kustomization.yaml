@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
 - hr-syncthing.yaml
 - pvc-syncthing.yaml
+- pvc-syncthing-files.yaml
 - pvc-syncthing-config.yaml
 - volsync-restic-config-secret.sops.yaml
