@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: authelia
       namespace: networking
+  dependsOn:
+    - name: volsync-app

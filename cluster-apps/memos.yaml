@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: memos
       namespace: selfhosted
+  dependsOn:
+    - name: volsync-app

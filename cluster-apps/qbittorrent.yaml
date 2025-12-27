@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: qbittorrent
       namespace: vpn
+  dependsOn:
+    - name: volsync-app
