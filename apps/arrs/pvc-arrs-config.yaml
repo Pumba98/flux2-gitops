@@ -9,7 +9,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 128Mi
   # dataSourceRef:
   #   kind: ReplicationDestination
   #   apiGroup: volsync.backube
@@ -48,7 +48,7 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 1Gi
+    capacity: 128Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
@@ -68,7 +68,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 256Mi
   # dataSourceRef:
   #   kind: ReplicationDestination
   #   apiGroup: volsync.backube
@@ -107,7 +107,7 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 1Gi
+    capacity: 256Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
@@ -127,7 +127,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 8Mi
   # dataSourceRef:
   #   kind: ReplicationDestination
   #   apiGroup: volsync.backube
@@ -166,7 +166,7 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 1Gi
+    capacity: 8Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
@@ -186,7 +186,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 256Mi
   # dataSourceRef:
   #   kind: ReplicationDestination
   #   apiGroup: volsync.backube
@@ -225,7 +225,7 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 1Gi
+    capacity: 256Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true

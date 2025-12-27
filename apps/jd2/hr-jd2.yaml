@@ -70,10 +70,7 @@ spec:
           - jd2.${SECRET_DOMAIN}
     persistence:
       config:
-        type: persistentVolumeClaim
-        size: 1Gi
-        storageClass: longhorn-backup
-        accessMode: ReadWriteOnce
+        existingClaim: jd2-config
         globalMounts:
           - path: "/config"
       output:

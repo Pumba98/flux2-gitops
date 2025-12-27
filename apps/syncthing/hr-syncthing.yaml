@@ -91,10 +91,7 @@ spec:
           - syncthing.${SECRET_DOMAIN}
     persistence:
       config:
-        type: persistentVolumeClaim
-        size: 8Gi
-        storageClass: longhorn-backup
-        accessMode: ReadWriteOnce
+        existingClaim: syncthing-config
         globalMounts:
           - path: "/var/syncthing"
       data:

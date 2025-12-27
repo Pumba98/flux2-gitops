@@ -71,7 +71,7 @@ spec:
         statefulset:
           volumeClaimTemplates:
             - name: redis-data
-              size: 1Gi
+              size: 10Mi
               accessMode: ReadWriteOnce
               globalMounts:
               - path: /data
