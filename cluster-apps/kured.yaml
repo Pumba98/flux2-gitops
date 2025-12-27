@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: kured
       namespace: kube-system
+  dependsOn:
+    - name: kube-prometheus-stack-app

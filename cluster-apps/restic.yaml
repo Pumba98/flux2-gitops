@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: restic
       namespace: selfhosted
+  dependsOn:
+    - name: csi-driver-smb-app

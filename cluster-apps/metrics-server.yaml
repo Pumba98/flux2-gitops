@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: metrics-server
       namespace: kube-system
+  dependsOn:
+    - name: kube-prometheus-stack-app

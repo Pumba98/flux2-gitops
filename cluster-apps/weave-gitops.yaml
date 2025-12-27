@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: weave-gitops
       namespace: flux-system
+  dependsOn:
+    - name: ingress-nginx-external-app

@@ -19,6 +19,8 @@ spec:
       namespace: networking
     - name: csi-driver-smb
       namespace: kube-system
+    - name: longhorn
+      namespace: longhorn-system
   values:
     controllers:
       main:

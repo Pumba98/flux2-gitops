@@ -18,7 +18,10 @@ spec:
     - name: longhorn
       namespace: longhorn-system
     - name: authelia-redis
-    - name: authelia-postgresql
+    - name: kube-prometheus-stack
+      namespace: monitoring
+    - name: longhorn
+      namespace: longhorn-system
   values:
     ingress:
       enabled: true
