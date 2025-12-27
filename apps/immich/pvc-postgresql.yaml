@@ -10,10 +10,10 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: immich-postgresql-data-backup
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: immich-postgresql-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource

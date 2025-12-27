@@ -10,10 +10,10 @@ spec:
   resources:
     requests:
       storage: 512Mi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: paperless-ngx-data-backup
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: paperless-ngx-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
