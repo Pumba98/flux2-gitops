@@ -44,7 +44,7 @@ spec:
   trigger:
     schedule: "0 * * * *"
   restic:
-    pruneIntervalDays: 14
+    pruneIntervalDays: 7
     repository: restic-config-immich-data
     retain:
       hourly: 4
