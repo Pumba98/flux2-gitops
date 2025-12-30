@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: linkwarden
       namespace: selfhosted
+  dependsOn:
+    - name: volsync-app

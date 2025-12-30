@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: jd2
       namespace: vpn
+  dependsOn:
+    - name: volsync-app
