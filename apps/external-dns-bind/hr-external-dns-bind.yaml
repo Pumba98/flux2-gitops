@@ -14,6 +14,9 @@ spec:
         name: external-dns-charts
         namespace: flux-system
       interval: 5m
+  dependsOn:
+    - name: bind9
+      namespace: selfhosted
   values:
     env:
       - name: EXTERNAL_DNS_RFC2136_ZONE
