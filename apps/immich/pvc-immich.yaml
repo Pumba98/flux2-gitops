@@ -40,7 +40,7 @@ kind: ReplicationSource
 metadata:
   name: immich-data-backup
 spec:
-  sourcePVC: immich-data
+  sourcePVC: immich
   trigger:
     schedule: "0 * * * *"
   restic:
