@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: paperless-ngx-static-pv
+  name: paperless-ngx-media-static-pv
 spec:
   capacity:
     storage: 50Gi
@@ -17,9 +17,9 @@ spec:
     - gid=33
   csi:
     driver: smb.csi.k8s.io
-    volumeHandle: paperless-ngx-smb-volume
+    volumeHandle: paperless-ngx-media-smb-volume
     volumeAttributes:
-      source: "${SECRET_CIFS_SHARE}/paperless-ngx"
+      source: "${SECRET_CIFS_SHARE}/paperless-ngx/media"
     nodeStageSecretRef:
       name: smb-secrets
       namespace: kube-system
@@ -27,9 +27,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: paperless-ngx-data
+  name: paperless-ngx-media
 spec:
-  volumeName: paperless-ngx-static-pv
+  volumeName: paperless-ngx-media-static-pv
   storageClassName: smb
   accessModes:
   - ReadWriteMany
@@ -40,14 +40,14 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: paperless-ngx-data-backup
+  name: paperless-ngx-media-backup
 spec:
-  sourcePVC: paperless-ngx-data
+  sourcePVC: paperless-ngx-media
   trigger:
     schedule: "0 * * * *"
   restic:
-    pruneIntervalDays: 14
-    repository: restic-config-paperless-ngx-data
+    pruneIntervalDays: 7
+    repository: restic-config-paperless-ngx-media
     retain:
       hourly: 4
       daily: 7
