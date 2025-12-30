@@ -52,6 +52,6 @@ resources:
 - ../weave-gitops.yaml
 
 patchesStrategicMerge:
-- certificate-exporter.yaml
+#- certificate-exporter.yaml
 - ingress-nginx.yaml
-- longhorn.yaml
+#- longhorn.yaml
