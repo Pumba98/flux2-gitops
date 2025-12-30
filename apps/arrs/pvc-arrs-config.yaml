@@ -10,10 +10,10 @@ spec:
   resources:
     requests:
       storage: 128Mi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: radarr-data-backup
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: radarr-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -69,10 +69,10 @@ spec:
   resources:
     requests:
       storage: 256Mi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: sonarr-data-backup
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: sonarr-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -128,10 +128,10 @@ spec:
   resources:
     requests:
       storage: 8Mi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: bazarr-data-backup
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: bazarr-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -187,10 +187,10 @@ spec:
   resources:
     requests:
       storage: 256Mi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: prowlarr-data-backup
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: prowlarr-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
