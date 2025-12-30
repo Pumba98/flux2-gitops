@@ -33,6 +33,7 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 128Mi
     moverPodLabels:
       setGateway: "false"
 ---
@@ -48,7 +49,7 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 256Mi
+    capacity: 128Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
