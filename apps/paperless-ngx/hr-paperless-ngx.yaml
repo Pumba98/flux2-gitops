@@ -114,3 +114,16 @@ spec:
         existingClaim: paperless-ngx-data
         globalMounts:
         - path: /paperless
+      # .resticignore file for volsync backups. Fails with permission denied otherwise
+      resticignore:
+        type: configMap
+        name: paperless-ngx-resticignore
+        globalMounts:
+        - path: /paperless/.resticignore
+          subPath: .resticignore
+    configMaps:
+      resticignore:
+        forceRename: paperless-ngx-resticignore
+        data:
+          .resticignore: |
+            data/celerybeat-schedule.db
