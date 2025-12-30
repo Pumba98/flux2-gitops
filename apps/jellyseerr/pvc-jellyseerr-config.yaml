@@ -10,10 +10,10 @@ spec:
   resources:
     requests:
       storage: 8Mi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: jellyseerr-config-backup
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: jellyseerr-config-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
