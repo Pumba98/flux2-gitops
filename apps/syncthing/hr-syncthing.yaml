@@ -101,3 +101,7 @@ spec:
         existingClaim: syncthing-data
         globalMounts:
           - path: "/data"
+      files:
+        existingClaim: syncthing-files-data
+        globalMounts:
+          - path: "/data/files"
