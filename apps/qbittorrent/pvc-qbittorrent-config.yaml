@@ -33,7 +33,7 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
-    cacheCapacity: 8Mi
+    cacheCapacity: 10Mi
     moverPodLabels:
       setGateway: "false"
 ---
@@ -55,6 +55,6 @@ spec:
     enableFileDeletion: true
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
-    cacheCapacity: 8Mi
+    cacheCapacity: 10Mi
     moverPodLabels:
       setGateway: "false"

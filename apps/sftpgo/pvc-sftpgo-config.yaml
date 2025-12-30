@@ -9,7 +9,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 8Mi
+      storage: 10Mi
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
@@ -33,7 +33,7 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
-    cacheCapacity: 8Mi
+    cacheCapacity: 10Mi
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
@@ -47,10 +47,10 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 8Mi
+    capacity: 10Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
     storageClassName: longhorn
     cacheStorageClassName: longhorn
-    cacheCapacity: 8Mi
+    cacheCapacity: 10Mi
