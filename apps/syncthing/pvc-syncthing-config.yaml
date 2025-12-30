@@ -33,6 +33,7 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 256Mi
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
@@ -52,3 +53,4 @@ spec:
     enableFileDeletion: true
     storageClassName: longhorn
     cacheStorageClassName: longhorn
+    cacheCapacity: 256Mi
