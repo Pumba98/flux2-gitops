@@ -16,38 +16,25 @@ spec:
           name: longhorn
         spec:
           values:
-            defaultSettings:
-              defaultDataPath: /var/mnt/longhorn
-              storageReservedPercentageForDefaultDisk: "0"
-    # - target:
-    #     kind: HelmRelease
-    #     name: longhorn
-    #   patch: |-
-    #     apiVersion: helm.toolkit.fluxcd.io/v2
-    #     kind: HelmRelease
-    #     metadata:
-    #       name: longhorn
-    #     spec:
-    #       values:
-    #         persistence:
-    #           defaultClassReplicaCount: 1
-    # - target:
-    #     kind: StorageClass
-    #     name: longhorn-backup
-    #   patch: |-
-    #     kind: StorageClass
-    #     apiVersion: storage.k8s.io/v1
-    #     metadata:
-    #       name: longhorn-backup
-    #     parameters:
-    #       numberOfReplicas: "1"
-    # - target:
-    #     kind: StorageClass
-    #     name: longhorn-xfs
-    #   patch: |-
-    #     kind: StorageClass
-    #     apiVersion: storage.k8s.io/v1
-    #     metadata:
-    #       name: longhorn-xfs
-    #     parameters:
-    #       numberOfReplicas: "1"
+            persistence:
+              defaultClassReplicaCount: 1
+    - target:
+        kind: StorageClass
+        name: longhorn-backup
+      patch: |-
+        kind: StorageClass
+        apiVersion: storage.k8s.io/v1
+        metadata:
+          name: longhorn-backup
+        parameters:
+          numberOfReplicas: "1"
+    - target:
+        kind: StorageClass
+        name: longhorn-xfs
+      patch: |-
+        kind: StorageClass
+        apiVersion: storage.k8s.io/v1
+        metadata:
+          name: longhorn-xfs
+        parameters:
+          numberOfReplicas: "1"
