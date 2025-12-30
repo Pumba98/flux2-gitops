@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: tandoor-recipes
       namespace: selfhosted
+  dependsOn:
+    - name: volsync-app

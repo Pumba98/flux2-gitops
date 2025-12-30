@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: arrs
       namespace: vpn
+  dependsOn:
+    - name: volsync-app
