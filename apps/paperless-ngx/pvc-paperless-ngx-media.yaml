@@ -44,7 +44,7 @@ metadata:
 spec:
   sourcePVC: paperless-ngx-media
   trigger:
-    schedule: "0 * * * *"
+    schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
     repository: restic-config-paperless-ngx-media

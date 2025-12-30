@@ -22,7 +22,7 @@ metadata:
 spec:
   sourcePVC: radarr-data
   trigger:
-    schedule: "0 * * * *"
+    schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
     repository: restic-config-radarr-data
@@ -83,7 +83,7 @@ metadata:
 spec:
   sourcePVC: sonarr-data
   trigger:
-    schedule: "0 * * * *"
+    schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
     repository: restic-config-sonarr-data
@@ -144,7 +144,7 @@ metadata:
 spec:
   sourcePVC: bazarr-data
   trigger:
-    schedule: "0 * * * *"
+    schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
     repository: restic-config-bazarr-data
@@ -205,7 +205,7 @@ metadata:
 spec:
   sourcePVC: prowlarr-data
   trigger:
-    schedule: "0 * * * *"
+    schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
     repository: restic-config-prowlarr-data
