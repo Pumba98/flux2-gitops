@@ -17,3 +17,6 @@ spec:
       kind: HelmRelease
       name: volsync
       namespace: volsync-system
+  dependsOn:
+    - name: longhorn-app
+    - name: snapshot-controller-app
