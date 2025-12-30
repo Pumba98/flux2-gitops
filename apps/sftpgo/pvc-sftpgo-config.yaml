@@ -1,26 +1,26 @@
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: sftpgo-config
-# spec:
-#   storageClassName: longhorn-backup
-#   accessModes:
-#   - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 1Gi
-#   dataSourceRef:
-#     kind: ReplicationDestination
-#     apiGroup: volsync.backube
-#     name: sftpgo-config-backup
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sftpgo-config
+spec:
+  storageClassName: longhorn-backup
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Mi
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: sftpgo-config-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: sftpgo-config-backup
 spec:
-  sourcePVC: sftpgo #-config
+  sourcePVC: sftpgo-config
   trigger:
     schedule: "0 * * * *"
   restic:
@@ -33,22 +33,22 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
-# ---
-# apiVersion: volsync.backube/v1alpha1
-# kind: ReplicationDestination
-# metadata:
-#   name: sftpgo-config-backup
-# spec:
-#   trigger:
-#     manual: restore-once
-#   restic:
-#     repository: restic-config-sftpgo-config
-#     copyMethod: Snapshot
-#     accessModes:
-#     - ReadWriteOnce
-#     capacity: 1Gi
-#     cleanupCachePVC: true
-#     cleanupTempPVC: true
-#     enableFileDeletion: true
-#     storageClassName: longhorn
-#     cacheStorageClassName: longhorn
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: sftpgo-config-backup
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: restic-config-sftpgo-config
+    copyMethod: Snapshot
+    accessModes:
+    - ReadWriteOnce
+    capacity: 8Mi
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    enableFileDeletion: true
+    storageClassName: longhorn
+    cacheStorageClassName: longhorn
