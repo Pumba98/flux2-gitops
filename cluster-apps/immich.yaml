@@ -19,3 +19,7 @@ spec:
       namespace: selfhosted
   dependsOn:
     - name: volsync-app
+    - name: ingress-nginx-external-app
+    - name: csi-driver-smb-app
+    - name: kube-prometheus-stack-app
+    - name: longhorn-app

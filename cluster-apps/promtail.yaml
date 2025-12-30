@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: promtail
       namespace: monitoring
+  dependsOn:
+    - name: loki-app

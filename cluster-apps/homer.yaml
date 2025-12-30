@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: homer
       namespace: selfhosted
+  dependsOn:
+    - name: ingress-nginx-external-app

@@ -19,6 +19,8 @@ spec:
       namespace: kube-system
     - name: ingress-nginx
       namespace: networking
+    - name: longhorn
+      namespace: longhorn-system
     - name: immich-redis
     - name: immich-postgresql
   values:

@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: goldilocks
       namespace: monitoring
+  dependsOn:
+    - name: kube-prometheus-stack-app

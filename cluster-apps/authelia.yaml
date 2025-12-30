@@ -19,3 +19,5 @@ spec:
       namespace: networking
   dependsOn:
     - name: volsync-app
+    - name: longhorn-app
+    - name: kube-prometheus-stack-app
