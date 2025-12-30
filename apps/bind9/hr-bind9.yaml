@@ -88,6 +88,6 @@ spec:
       cache:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
-        size: 8Mi
+        size: 10Mi
         globalMounts:
           - path: /var/cache/bind
