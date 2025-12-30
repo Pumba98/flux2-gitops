@@ -1,26 +1,26 @@
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: jd2-config
-# spec:
-#   storageClassName: longhorn-backup
-#   accessModes:
-#   - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 1Gi
-#   dataSourceRef:
-#     kind: ReplicationDestination
-#     apiGroup: volsync.backube
-#     name: jd2-config-backup
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jd2-config
+spec:
+  storageClassName: longhorn-backup
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256Mi
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: jd2-config-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: jd2-config-backup
 spec:
-  sourcePVC: jd2 #-config
+  sourcePVC: jd2-config
   trigger:
     schedule: "0 * * * *"
   restic:
@@ -35,24 +35,24 @@ spec:
     cacheStorageClassName: longhorn-local
     moverPodLabels:
       setGateway: "false"
-# ---
-# apiVersion: volsync.backube/v1alpha1
-# kind: ReplicationDestination
-# metadata:
-#   name: jd2-config-backup
-# spec:
-#   trigger:
-#     manual: restore-once
-#   restic:
-#     repository: restic-config-jd2-config
-#     copyMethod: Snapshot
-#     accessModes:
-#     - ReadWriteOnce
-#     capacity: 1Gi
-#     cleanupCachePVC: true
-#     cleanupTempPVC: true
-#     enableFileDeletion: true
-#     storageClassName: longhorn
-#     cacheStorageClassName: longhorn
-#     moverPodLabels:
-#       setGateway: "false"
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: jd2-config-backup
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: restic-config-jd2-config
+    copyMethod: Snapshot
+    accessModes:
+    - ReadWriteOnce
+    capacity: 256Mi
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    enableFileDeletion: true
+    storageClassName: longhorn
+    cacheStorageClassName: longhorn
+    moverPodLabels:
+      setGateway: "false"
