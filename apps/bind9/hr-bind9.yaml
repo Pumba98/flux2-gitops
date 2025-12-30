@@ -16,6 +16,8 @@ spec:
   dependsOn:
     - name: metallb
       namespace: metallb-system
+    - name: longhorn
+      namespace: longhorn-system
   values:
     defaultPodOptions:
       securityContext:
