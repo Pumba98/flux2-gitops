@@ -115,10 +115,10 @@ spec:
         globalMounts:
         - path: /paperless/data
       media:
-        existingClaim: paperless-ngx-data
+        existingClaim: paperless-ngx-media
         globalMounts:
         - path: /paperless/media
       consume:
-        existingClaim: paperless-ngx-data
+        existingClaim: paperless-ngx-consume
         globalMounts:
         - path: /paperless/consume
