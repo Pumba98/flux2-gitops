@@ -9,7 +9,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 3Gi
+      storage: 4Gi
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
@@ -47,7 +47,7 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 3Gi
+    capacity: 4Gi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
