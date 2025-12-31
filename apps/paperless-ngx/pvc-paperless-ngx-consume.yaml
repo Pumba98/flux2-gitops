@@ -5,7 +5,7 @@ metadata:
   name: paperless-ngx-consume-static-pv
 spec:
   capacity:
-    storage: 50Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
@@ -35,4 +35,25 @@ spec:
   - ReadWriteMany
   resources:
     requests:
-      storage: 50Gi
+      storage: 5Gi
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: paperless-ngx-consume-backup
+spec:
+  sourcePVC: paperless-ngx-consume
+  trigger:
+    schedule: "0 6 * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: restic-config-paperless-ngx-consume
+    retain:
+      hourly: 4
+      daily: 7
+      weekly: 1
+    copyMethod: Direct
+    # moverSecurityContext:
+    #   runAsUser: 33
+    #   runAsGroup: 33
+    #   fsGroup: 33
