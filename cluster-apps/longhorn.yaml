@@ -27,7 +27,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/longhorn/configs
-  targetNamespace: networking
+  targetNamespace: longhorn-system
   interval: 10m
   prune: true
   dependsOn:
@@ -43,7 +43,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/longhorn/monitoring
-  targetNamespace: networking
+  targetNamespace: longhorn-system
   interval: 10m
   prune: true
   dependsOn:
