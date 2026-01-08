@@ -23,6 +23,6 @@ spec:
         kind: GitRepository
         url: ssh://git@github.com/Pumba98/flux2-gitops
         path: base/production
-        ref: refs/heads/talos
+        ref: refs/heads/main
         provider: generic
         pullSecret: flux-system
