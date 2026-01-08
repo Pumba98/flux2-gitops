@@ -17,3 +17,9 @@ spec:
       kind: HelmRelease
       name: arrs
       namespace: vpn
+  dependsOn:
+    - name: volsync-app
+    - name: ingress-nginx-app
+    - name: csi-driver-smb-app
+    - name: longhorn-app
+    - name: pod-gateway-vpn-app

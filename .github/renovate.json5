@@ -44,6 +44,8 @@
     {
       matchPackageNames: [
         'k3s-io/k3s',
+        'ghcr.io/siderolabs/kubelet',
+        'ghcr.io/siderolabs/installer',
       ],
       separateMultipleMinor: true,
     },
@@ -102,6 +104,8 @@
       ],
       matchPackageNames: [
         '!k3s-io/k3s',
+        '!ghcr.io/siderolabs/kubelet',
+        '!ghcr.io/siderolabs/installer',
         '!metallb',
         '!longhorn',
         '!rancher',

@@ -2,30 +2,30 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: linkwarden-data
+  name: paperless-ngx-data
 spec:
   storageClassName: longhorn-backup
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 512Mi
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
-    name: linkwarden-data-backup
+    name: paperless-ngx-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: linkwarden-data-backup
+  name: paperless-ngx-data-backup
 spec:
-  sourcePVC: linkwarden-data
+  sourcePVC: paperless-ngx-data
   trigger:
     schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
-    repository: restic-config-linkwarden-data
+    repository: restic-config-paperless-ngx-data
     retain:
       hourly: 4
       daily: 7
@@ -38,16 +38,16 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: linkwarden-data-backup
+  name: paperless-ngx-data-backup
 spec:
   trigger:
     manual: restore-once
   restic:
-    repository: restic-config-linkwarden-data
+    repository: restic-config-paperless-ngx-data
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 2Gi
+    capacity: 512Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true

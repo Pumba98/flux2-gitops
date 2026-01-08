@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: cloudflared
       namespace: networking
+  dependsOn:
+    - name: ingress-nginx-external-app

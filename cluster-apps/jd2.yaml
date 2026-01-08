@@ -17,3 +17,9 @@ spec:
       kind: HelmRelease
       name: jd2
       namespace: vpn
+  dependsOn:
+    - name: volsync-app
+    - name: ingress-nginx-external-app
+    - name: csi-driver-smb-app
+    - name: longhorn-app
+    - name: pod-gateway-vpn-app

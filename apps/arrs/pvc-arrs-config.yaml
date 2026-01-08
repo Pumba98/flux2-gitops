@@ -9,11 +9,11 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: radarr-data-backup
+      storage: 128Mi
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: radarr-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -22,7 +22,7 @@ metadata:
 spec:
   sourcePVC: radarr-data
   trigger:
-    schedule: "0 * * * *"
+    schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
     repository: restic-config-radarr-data
@@ -33,6 +33,7 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 64Mi
     moverPodLabels:
       setGateway: "false"
 ---
@@ -48,12 +49,13 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 1Gi
+    capacity: 128Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 64Mi
     moverPodLabels:
       setGateway: "false"
 
@@ -68,11 +70,11 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: sonarr-data-backup
+      storage: 256Mi
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: sonarr-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -81,7 +83,7 @@ metadata:
 spec:
   sourcePVC: sonarr-data
   trigger:
-    schedule: "0 * * * *"
+    schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
     repository: restic-config-sonarr-data
@@ -92,6 +94,7 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 64Mi
     moverPodLabels:
       setGateway: "false"
 ---
@@ -107,12 +110,13 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 1Gi
+    capacity: 256Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 64Mi
     moverPodLabels:
       setGateway: "false"
 
@@ -127,11 +131,11 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: bazarr-data-backup
+      storage: 10Mi
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: bazarr-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -140,7 +144,7 @@ metadata:
 spec:
   sourcePVC: bazarr-data
   trigger:
-    schedule: "0 * * * *"
+    schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
     repository: restic-config-bazarr-data
@@ -151,6 +155,7 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 10Mi
     moverPodLabels:
       setGateway: "false"
 ---
@@ -166,12 +171,13 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 1Gi
+    capacity: 10Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 10Mi
     moverPodLabels:
       setGateway: "false"
 
@@ -186,11 +192,11 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: prowlarr-data-backup
+      storage: 256Mi
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: prowlarr-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -199,7 +205,7 @@ metadata:
 spec:
   sourcePVC: prowlarr-data
   trigger:
-    schedule: "0 * * * *"
+    schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
     repository: restic-config-prowlarr-data
@@ -210,6 +216,7 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 64Mi
     moverPodLabels:
       setGateway: "false"
 ---
@@ -225,11 +232,12 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 1Gi
+    capacity: 256Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 64Mi
     moverPodLabels:
       setGateway: "false"

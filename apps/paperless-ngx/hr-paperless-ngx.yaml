@@ -44,7 +44,7 @@ spec:
               PAPERLESS_CONSUMPTION_DIR: /paperless/consume
               PAPERLESS_DATA_DIR: /paperless/data
               PAPERLESS_MEDIA_ROOT: /paperless/media
-              PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
+              PAPERLESS_FILENAME_FORMAT: "{{ created_year }}/{{ correspondent }}/{{ title }}"
               PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: true
               PAPERLESS_CONSUMER_POLLING: 60
               PAPERLESS_CONSUMER_DELETE_DUPLICATES: true
@@ -113,4 +113,12 @@ spec:
       data:
         existingClaim: paperless-ngx-data
         globalMounts:
-        - path: /paperless
+        - path: /paperless/data
+      media:
+        existingClaim: paperless-ngx-media
+        globalMounts:
+        - path: /paperless/media
+      consume:
+        existingClaim: paperless-ngx-consume
+        globalMounts:
+        - path: /paperless/consume

@@ -25,7 +25,7 @@ resources:
 - ../jellyfin.yaml
 - ../jellyseerr.yaml
 - ../kube-prometheus-stack.yaml
-- ../kube-vip.yaml
+# - ../kube-vip.yaml
 - ../kured.yaml
 - ../linkwarden.yaml
 - ../loki.yaml
@@ -41,11 +41,12 @@ resources:
 - ../radicale.yaml
 - ../rancher.yaml
 - ../reloader.yaml
-- ../restic.yaml
+# - ../restic.yaml
 - ../sftpgo.yaml
 - ../snapshot-controller.yaml
 - ../syncthing.yaml
-- ../system-upgrade-controller.yaml
+# - ../system-upgrade-controller.yaml
 - ../tandoor-recipes.yaml
+- ../tuppr.yaml
 - ../volsync.yaml
 - ../weave-gitops.yaml

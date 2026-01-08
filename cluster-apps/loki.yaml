@@ -17,3 +17,6 @@ spec:
       kind: HelmRelease
       name: loki
       namespace: monitoring
+  dependsOn:
+    - name: longhorn-app
+    - name: kube-prometheus-stack-app

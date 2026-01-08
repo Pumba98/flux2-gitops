@@ -16,6 +16,8 @@ spec:
   dependsOn:
     - name: metallb
       namespace: metallb-system
+    - name: longhorn
+      namespace: longhorn-system
   values:
     defaultPodOptions:
       securityContext:
@@ -86,6 +88,6 @@ spec:
       cache:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
-        size: 1Gi
+        size: 10Mi
         globalMounts:
           - path: /var/cache/bind
