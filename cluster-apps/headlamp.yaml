@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: headlamp
       namespace: selfhosted
+  dependsOn:
+    - name: ingress-nginx-external-app

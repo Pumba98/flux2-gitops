@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: immich-static-pv
+  name: syncthing-files-static-pv
 spec:
   capacity:
-    storage: 250Gi
+    storage: 1Ti
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
@@ -15,9 +15,9 @@ spec:
     - file_mode=0777
   csi:
     driver: smb.csi.k8s.io
-    volumeHandle: immich-smb-volume
+    volumeHandle: syncthing-files-smb-volume
     volumeAttributes:
-      source: "${SECRET_CIFS_SHARE}/immich"
+      source: "${SECRET_CIFS_SHARE}/files"
     nodeStageSecretRef:
       name: smb-secrets
       namespace: kube-system
@@ -25,27 +25,27 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: immich
+  name: syncthing-files-data
 spec:
-  volumeName: immich-static-pv
+  volumeName: syncthing-files-static-pv
   storageClassName: smb
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 250Gi
+      storage: 1Ti
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: immich-data-backup
+  name: syncthing-files-data-backup
 spec:
-  sourcePVC: immich
+  sourcePVC: syncthing-files-data
   trigger:
     schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
-    repository: restic-config-immich-data
+    repository: restic-config-syncthing-files-data
     retain:
       hourly: 4
       daily: 7

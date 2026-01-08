@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: external-dns-bind
       namespace: networking
+  dependsOn:
+    - name: bind9-app

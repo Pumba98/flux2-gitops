@@ -19,6 +19,8 @@ spec:
       namespace: networking
     - name: csi-driver-smb
       namespace: kube-system
+    - name: longhorn
+      namespace: longhorn-system
   values:
     controllers:
       main:
@@ -91,13 +93,14 @@ spec:
           - syncthing.${SECRET_DOMAIN}
     persistence:
       config:
-        type: persistentVolumeClaim
-        size: 8Gi
-        storageClass: longhorn-backup
-        accessMode: ReadWriteOnce
+        existingClaim: syncthing-config
         globalMounts:
           - path: "/var/syncthing"
       data:
         existingClaim: syncthing-data
         globalMounts:
           - path: "/data"
+      files:
+        existingClaim: syncthing-files-data
+        globalMounts:
+          - path: "/data/files"

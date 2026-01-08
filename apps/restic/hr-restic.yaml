@@ -14,8 +14,8 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
   dependsOn:
-    - name: metallb
-      namespace: metallb-system
+    - name: csi-driver-smb
+      namespace: kube-system
   values:
     controllers:
       main:

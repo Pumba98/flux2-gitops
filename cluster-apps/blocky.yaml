@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: blocky
       namespace: selfhosted
+  dependsOn:
+    - name: metallb-app

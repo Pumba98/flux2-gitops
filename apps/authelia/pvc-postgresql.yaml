@@ -9,11 +9,11 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 4Gi
-  # dataSourceRef:
-  #   kind: ReplicationDestination
-  #   apiGroup: volsync.backube
-  #   name: authelia-postgresql-data-backup
+      storage: 128Mi
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: authelia-postgresql-data-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -22,7 +22,7 @@ metadata:
 spec:
   sourcePVC: authelia-postgresql-data
   trigger:
-    schedule: "0 * * * *"
+    schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
     repository: restic-config-authelia-postgresql-data
@@ -33,6 +33,7 @@ spec:
     copyMethod: Clone
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 64Mi
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
@@ -46,9 +47,10 @@ spec:
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce
-    capacity: 4Gi
+    capacity: 128Mi
     cleanupCachePVC: true
     cleanupTempPVC: true
     enableFileDeletion: true
     storageClassName: longhorn-local
     cacheStorageClassName: longhorn-local
+    cacheCapacity: 64Mi

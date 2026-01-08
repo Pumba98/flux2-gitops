@@ -17,3 +17,7 @@ spec:
       kind: HelmRelease
       name: bind9
       namespace: selfhosted
+  dependsOn:
+    - name: volsync-app
+    - name: metallb-app
+    - name: longhorn-app

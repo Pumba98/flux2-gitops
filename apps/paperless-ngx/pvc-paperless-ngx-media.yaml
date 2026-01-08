@@ -2,22 +2,24 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: immich-static-pv
+  name: paperless-ngx-media-static-pv
 spec:
   capacity:
-    storage: 250Gi
+    storage: 50Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: smb
   mountOptions:
-    - dir_mode=0777
-    - file_mode=0777
+    - dir_mode=0770
+    - file_mode=0660
+    - uid=33
+    - gid=33
   csi:
     driver: smb.csi.k8s.io
-    volumeHandle: immich-smb-volume
+    volumeHandle: paperless-ngx-media-smb-volume
     volumeAttributes:
-      source: "${SECRET_CIFS_SHARE}/immich"
+      source: "${SECRET_CIFS_SHARE}/paperless-ngx/media"
     nodeStageSecretRef:
       name: smb-secrets
       namespace: kube-system
@@ -25,29 +27,33 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: immich
+  name: paperless-ngx-media
 spec:
-  volumeName: immich-static-pv
+  volumeName: paperless-ngx-media-static-pv
   storageClassName: smb
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
-      storage: 250Gi
+      storage: 50Gi
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: immich-data-backup
+  name: paperless-ngx-media-backup
 spec:
-  sourcePVC: immich
+  sourcePVC: paperless-ngx-media
   trigger:
     schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
-    repository: restic-config-immich-data
+    repository: restic-config-paperless-ngx-media
     retain:
       hourly: 4
       daily: 7
       weekly: 1
     copyMethod: Direct
+    # moverSecurityContext:
+    #   runAsUser: 33
+    #   runAsGroup: 33
+    #   fsGroup: 33

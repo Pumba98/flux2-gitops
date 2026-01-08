@@ -25,7 +25,7 @@ resources:
 - ../jellyfin.yaml
 - ../jellyseerr.yaml
 - ../kube-prometheus-stack.yaml
-- ../kube-vip.yaml
+# - ../kube-vip.yaml
 - ../kured.yaml
 - ../linkwarden.yaml
 - ../loki.yaml
@@ -52,6 +52,6 @@ resources:
 - ../weave-gitops.yaml
 
 patchesStrategicMerge:
-- certificate-exporter.yaml
+#- certificate-exporter.yaml
 - ingress-nginx.yaml
-- longhorn.yaml
+#- longhorn.yaml
