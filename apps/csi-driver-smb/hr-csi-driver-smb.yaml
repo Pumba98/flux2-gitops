@@ -13,3 +13,6 @@ spec:
         kind: HelmRepository
         name: csi-driver-smb-charts
         namespace: flux-system
+  values:
+    feature:
+      enableInlineVolume: false
