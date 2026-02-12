@@ -32,7 +32,7 @@ spec:
           redis:
             image:
               repository: public.ecr.aws/docker/library/redis
-              tag: 8.4.1@sha256:90050675141bfc1d833cd291442d63f137c011522f60b682ffdafe48cb682258
+              tag: 8.6.0@sha256:7b6fb55d8b0adcd77269dc52b3cfffe5f59ca5d43dec3c90dbe18aacce7942e1
             command: ["sh", "-c"]
             args:
               - redis-server --save 60 1 --requirepass "$REDIS_PASSWORD"
