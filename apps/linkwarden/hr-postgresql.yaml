@@ -32,7 +32,7 @@ spec:
           postgresql:
             image:
               repository: public.ecr.aws/docker/library/postgres
-              tag: 17.7@sha256:2006493727bd5277eece187319af1ef82b4cf82cf4fc1ed00da0775b646ac2a4
+              tag: 17.8@sha256:5be49f2625d42a4ce42e1dc28288d5523343c2f5561589143fe03a14fffe0deb
             env:
               POSTGRES_DB: linkwarden
               POSTGRES_USER: linkwarden
