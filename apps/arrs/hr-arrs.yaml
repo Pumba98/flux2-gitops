@@ -64,7 +64,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/bazarr
-              tag: 1.5.5@sha256:18ff732dffcebd559d15a91845fc3360d49652ea01dccfbfd98b8248ceb86e38
+              tag: 1.5.5@sha256:1cf40186b1bc35bec87f4e4892d5d8c06086da331010be03e3459a86869c5e74
             env:
               PUID: "1000"
               PGID: "1000"
