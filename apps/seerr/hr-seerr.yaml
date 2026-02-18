@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: jellyseerr
+  name: seerr
 spec:
   interval: 5m
   chart:
@@ -26,8 +26,8 @@ spec:
         containers:
           main:
             image:
-              repository: fallenbagel/jellyseerr
-              tag: 2.7.3@sha256:4538137bc5af902dece165f2bf73776d9cf4eafb6dd714670724af8f3eb77764
+              repository: seerr/seerr
+              tag: v3.0.1
     service:
       main:
         controller: main
@@ -42,18 +42,18 @@ spec:
           nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
           nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
         hosts:
-        - host: jellyseerr.${SECRET_DOMAIN}
+        - host: seerr.${SECRET_DOMAIN}
           paths:
           - path: /
             service:
               identifier: main
               port: http
         tls:
-        - secretName: jellyseerr-tls
+        - secretName: seerr-tls
           hosts:
-          - jellyseerr.${SECRET_DOMAIN}
+          - seerr.${SECRET_DOMAIN}
     persistence:
       config:
-        existingClaim: jellyseerr-config
+        existingClaim: seerr-config
         globalMounts:
           - path: "/app/config"
