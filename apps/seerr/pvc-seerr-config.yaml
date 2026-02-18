@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jellyseerr-config
+  name: seerr-config
 spec:
   storageClassName: longhorn-backup
   accessModes:
@@ -13,19 +13,19 @@ spec:
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
-    name: jellyseerr-config-backup
+    name: seerr-config-backup
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: jellyseerr-config-backup
+  name: seerr-config-backup
 spec:
-  sourcePVC: jellyseerr-config
+  sourcePVC: seerr-config
   trigger:
     schedule: "0 6 * * *"
   restic:
     pruneIntervalDays: 7
-    repository: restic-config-jellyseerr-config
+    repository: restic-config-seerr-config
     retain:
       hourly: 4
       daily: 7
@@ -38,12 +38,12 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: jellyseerr-config-backup
+  name: seerr-config-backup
 spec:
   trigger:
     manual: restore-once
   restic:
-    repository: restic-config-jellyseerr-config
+    repository: restic-config-seerr-config
     copyMethod: Snapshot
     accessModes:
     - ReadWriteOnce

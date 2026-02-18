@@ -80,9 +80,9 @@ services:
   - name: "Cloud"
     icon: "fas fa-cloud"
     items:
-      - name: "Jellyseerr"
-        logo: "https://raw.githubusercontent.com/Fallenbagel/jellyseerr/refs/heads/develop/public/os_logo_square.png"
-        url: "https://jellyseerr.${SECRET_DOMAIN}"
+      - name: "Seerr"
+        logo: "https://raw.githubusercontent.com/seerr-team/seerr/refs/heads/develop/public/os_logo_filled.png"
+        url: "https://seerr.${SECRET_DOMAIN}"
       - name: "Radarr"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/radarr.png"
         url: "https://radarr.${SECRET_DOMAIN}"
