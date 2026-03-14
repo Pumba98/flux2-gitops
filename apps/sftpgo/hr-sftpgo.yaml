@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/drakkan/sftpgo
-              tag: v2.7.0@sha256:24f68c1e6617f3999debde0478f435d375d496c46644b82d3ca154842d4f6c40
+              tag: v2.7.1@sha256:26095be794616b5ce1cd08a24244dae7c1eda18073c482f58a8d1948237240b0
             env:
               SFTPGO_DATA_PROVIDER__DRIVER: sqlite
               SFTPGO_TELEMETRY__BIND_ADDRESS: 0.0.0.0
