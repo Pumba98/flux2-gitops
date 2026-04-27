@@ -202,7 +202,7 @@ spec:
       image:
         registry: quay.io
         repository: prometheus/prometheus
-        tag: v3.11.2@sha256:cd37346c974517be59bd528c43cfff51727fb75393df0ad8d10ce10013a047b6
+        tag: v3.11.3@sha256:c0b857aead0d5793aa566adb8f49a9983d6f6031652098759d521a330cfa050f
       ingress:
         enabled: true
         pathType: Prefix
