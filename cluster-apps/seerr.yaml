@@ -15,7 +15,7 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
-      name: seer
+      name: seerr
       namespace: selfhosted
   dependsOn:
     - name: volsync-app
