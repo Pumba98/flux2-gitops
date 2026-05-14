@@ -220,7 +220,6 @@ spec:
         cookies:
           - domain: '${SECRET_DOMAIN}'
             subdomain: auth
-            authelia_url: https://auth.${SECRET_DOMAIN}
         redis:
           enabled: true
           host: authelia-redis-master
