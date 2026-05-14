@@ -5,6 +5,7 @@ metadata:
   name: enix-charts
   namespace: flux-system
 spec:
+  type: oci
   interval: 30m
-  url: https://charts.enix.io
+  url: oci://quay.io/enix/charts
   timeout: 2m
