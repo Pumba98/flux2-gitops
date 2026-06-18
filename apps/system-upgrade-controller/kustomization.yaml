@@ -5,7 +5,7 @@ resources:
 - github.com/rancher/system-upgrade-controller?ref=v0.19.2
 images:
 - name: rancher/system-upgrade-controller
-  newTag: v0.19.2@sha256:34fa058fe453da2e1d6cf9052d2961976d5c7294921f8a6a6fb75098a27b0e89
+  newTag: v0.20.0@sha256:c47e2e839e3ea7c622e76e0f406071518885dbc6791062615cfa24798104a268
 patches:
   - target:
       kind: Namespace
