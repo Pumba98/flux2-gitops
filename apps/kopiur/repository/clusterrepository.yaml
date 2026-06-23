@@ -23,6 +23,7 @@ spec:
     enabled: true
   allowedNamespaces:
     list:
+      - kopiur-system
       - selfhosted
       - vpn
       - networking
