@@ -7,4 +7,3 @@ resources:
 - secret-linkwarden.sops.yaml
 - pvc-linkwarden.yaml
 - pvc-postgresql.yaml
-- volsync-restic-config-secret.sops.yaml

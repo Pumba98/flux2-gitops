@@ -5,4 +5,3 @@ resources:
 - hr-sftpgo.yaml
 - pvc-sftpgo.yaml
 - pvc-sftpgo-config.yaml
-- volsync-restic-config-secret.sops.yaml

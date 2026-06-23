@@ -35,19 +35,44 @@ spec:
     requests:
       storage: 1Ti
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
 metadata:
-  name: syncthing-files-data-backup
+  name: syncthing-files-data
 spec:
-  sourcePVC: syncthing-files-data
-  trigger:
-    schedule: "0 6 * * *"
-  restic:
-    pruneIntervalDays: 7
-    repository: restic-config-syncthing-files-data
-    retain:
-      hourly: 4
-      daily: 7
-      weekly: 1
-    copyMethod: Direct
+  repository:
+    kind: ClusterRepository
+    name: primary
+  # SMB-backed PVC: the CSI driver can't clone/snapshot, so read the live volume
+  # directly (matches volsync copyMethod: Direct).
+  copyMethod: Direct
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: syncthing-files-data
+  retention:
+    keepDaily: 7
+    keepWeekly: 1
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
+metadata:
+  name: syncthing-files-data
+spec:
+  policyRef:
+    name: syncthing-files-data
+  schedule:
+    cron: "0 6 * * *"
+    runOnCreate: false
+# Disaster recovery: this is a static SMB volume (no volume-populator). To
+# restore, apply a Restore that writes back into the existing PVC:
+#   apiVersion: kopiur.home-operations.com/v1alpha1
+#   kind: Restore
+#   metadata: { name: syncthing-files-data }
+#   spec:
+#     repository: { kind: ClusterRepository, name: primary }
+#     source: { fromPolicy: { name: syncthing-files-data } }
+#     target: { pvcRef: { name: syncthing-files-data } }
+#     credentialProjection: { enabled: true }
+#     mover: { privilegedMode: true }

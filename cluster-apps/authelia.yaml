@@ -18,6 +18,6 @@ spec:
       name: authelia
       namespace: networking
   dependsOn:
-    - name: volsync-app
+    - name: kopiur-app
     - name: longhorn-app
     - name: kube-prometheus-stack-app

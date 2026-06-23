@@ -18,6 +18,6 @@ spec:
       name: radicale
       namespace: selfhosted
   dependsOn:
-    - name: volsync-app
+    - name: kopiur-app
     - name: ingress-nginx-external-app
     - name: longhorn-app

@@ -6,6 +6,7 @@ resources:
 - ../bind9.yaml
 - ../blocky.yaml
 - ../flux-system.yaml
+- ../kopiur.yaml
 - ../local-path-provisioner.yaml
 - ../metallb.yaml
 - ../reloader.yaml

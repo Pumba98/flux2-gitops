@@ -5,4 +5,3 @@ resources:
 - hr-bind9.yaml
 - pvc-bind9.yaml
 - secret-bind9.sops.yaml
-- volsync-restic-config-secret.sops.yaml

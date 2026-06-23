@@ -37,23 +37,44 @@ spec:
     requests:
       storage: 50Gi
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
 metadata:
-  name: paperless-ngx-media-backup
+  name: paperless-ngx-media
 spec:
-  sourcePVC: paperless-ngx-media
-  trigger:
-    schedule: "0 6 * * *"
-  restic:
-    pruneIntervalDays: 7
-    repository: restic-config-paperless-ngx-media
-    retain:
-      hourly: 4
-      daily: 7
-      weekly: 1
-    copyMethod: Direct
-    # moverSecurityContext:
-    #   runAsUser: 33
-    #   runAsGroup: 33
-    #   fsGroup: 33
+  repository:
+    kind: ClusterRepository
+    name: primary
+  # SMB-backed PVC: the CSI driver can't clone/snapshot, so read the live volume
+  # directly (matches volsync copyMethod: Direct).
+  copyMethod: Direct
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: paperless-ngx-media
+  retention:
+    keepDaily: 7
+    keepWeekly: 1
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
+metadata:
+  name: paperless-ngx-media
+spec:
+  policyRef:
+    name: paperless-ngx-media
+  schedule:
+    cron: "0 6 * * *"
+    runOnCreate: false
+# Disaster recovery: this is a static SMB volume (no volume-populator). To
+# restore, apply a Restore that writes back into the existing PVC:
+#   apiVersion: kopiur.home-operations.com/v1alpha1
+#   kind: Restore
+#   metadata: { name: paperless-ngx-media }
+#   spec:
+#     repository: { kind: ClusterRepository, name: primary }
+#     source: { fromPolicy: { name: paperless-ngx-media } }
+#     target: { pvcRef: { name: paperless-ngx-media } }
+#     credentialProjection: { enabled: true }
+#     mover: { privilegedMode: true }

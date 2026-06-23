@@ -1,0 +1,40 @@
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: ClusterRepository
+metadata:
+  name: primary
+spec:
+  backend:
+    s3:
+      bucket: kopiur
+      prefix: "${CLUSTER_NAME}/"
+      endpoint: fsn1.your-objectstorage.com
+      region: fsn1
+      auth:
+        secretRef:
+          name: kopia-cluster-creds
+          namespace: kopiur-system
+  encryption:
+    passwordSecretRef:
+      name: kopia-cluster-creds
+      namespace: kopiur-system
+      key: KOPIA_PASSWORD
+  create:
+    enabled: true
+  allowedNamespaces:
+    list:
+      - selfhosted
+      - vpn
+      - networking
+  identityDefaults:
+    hostnameExpr: "namespace"
+    usernameExpr: "namespace + '-' + policyName"
+  credentialProjection:
+    allowed: true
+  maintenance:
+    namespace: kopiur-system
+  moverDefaults:
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      runAsNonRoot: false
