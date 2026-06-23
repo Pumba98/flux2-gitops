@@ -10,47 +10,63 @@ spec:
   resources:
     requests:
       storage: 256Mi
+  # dataSourceRef is immutable on the existing bound PVC, so it is left as-is.
+  # On a PVC recreate / disaster-recovery rebuild, delete the volsync block below
+  # and restore from kopiur instead:
+  #   dataSourceRef:
+  #     apiGroup: kopiur.home-operations.com
+  #     kind: Restore
+  #     name: paperless-ngx-postgresql
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
     name: paperless-ngx-postgresql-backup
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
 metadata:
-  name: paperless-ngx-postgresql-backup
+  name: paperless-ngx-postgresql
 spec:
-  sourcePVC: paperless-ngx-postgresql
-  trigger:
-    schedule: "0 6 * * *"
-  restic:
-    pruneIntervalDays: 7
-    repository: restic-config-paperless-ngx-postgresql
-    retain:
-      hourly: 4
-      daily: 7
-      weekly: 1
-    copyMethod: Clone
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 128Mi
+  repository:
+    kind: ClusterRepository
+    name: primary
+  copyMethod: Clone
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: paperless-ngx-postgresql
+  retention:
+    keepDaily: 7
+    keepWeekly: 1
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
 metadata:
-  name: paperless-ngx-postgresql-backup
+  name: paperless-ngx-postgresql
 spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: restic-config-paperless-ngx-postgresql
-    copyMethod: Snapshot
-    accessModes:
-    - ReadWriteOnce
-    capacity: 256Mi
-    cleanupCachePVC: true
-    cleanupTempPVC: true
-    enableFileDeletion: true
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 128Mi
+  policyRef:
+    name: paperless-ngx-postgresql
+  schedule:
+    cron: "0 6 * * *"
+    runOnCreate: false
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Restore
+metadata:
+  name: paperless-ngx-postgresql
+spec:
+  repository:
+    kind: ClusterRepository
+    name: primary
+  source:
+    fromPolicy:
+      name: paperless-ngx-postgresql
+  target:
+    populator: {}
+  credentialProjection:
+    enabled: true
+  mover:
+    privilegedMode: true
+  policy:
+    onMissingSnapshot: Continue

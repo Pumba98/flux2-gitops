@@ -2,11 +2,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: volsync-app
+  name: kopiur-app
   namespace: flux-system
 spec:
-  path: ./apps/volsync
-  targetNamespace: volsync-system
+  path: ./apps/kopiur
+  targetNamespace: kopiur-system
   interval: 10m
   prune: true
   sourceRef:
@@ -15,8 +15,5 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
-      name: volsync
-      namespace: volsync-system
-  dependsOn:
-    - name: longhorn-app
-    - name: snapshot-controller-app
+      name: kopiur
+      namespace: kopiur-system

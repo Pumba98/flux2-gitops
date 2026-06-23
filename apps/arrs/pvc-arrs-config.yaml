@@ -10,55 +10,66 @@ spec:
   resources:
     requests:
       storage: 128Mi
+  # dataSourceRef is immutable on the existing bound PVC, so it is left as-is.
+  # On a PVC recreate / disaster-recovery rebuild, delete the volsync block below
+  # and restore from kopiur instead:
+  #   dataSourceRef:
+  #     apiGroup: kopiur.home-operations.com
+  #     kind: Restore
+  #     name: radarr-data
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
     name: radarr-data-backup
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
 metadata:
-  name: radarr-data-backup
+  name: radarr-data
 spec:
-  sourcePVC: radarr-data
-  trigger:
-    schedule: "0 6 * * *"
-  restic:
-    pruneIntervalDays: 7
-    repository: restic-config-radarr-data
-    retain:
-      hourly: 4
-      daily: 7
-      weekly: 1
-    copyMethod: Clone
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 64Mi
-    moverPodLabels:
-      setGateway: "false"
+  repository:
+    kind: ClusterRepository
+    name: primary
+  copyMethod: Clone
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: radarr-data
+  retention:
+    keepDaily: 7
+    keepWeekly: 1
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
 metadata:
-  name: radarr-data-backup
+  name: radarr-data
 spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: restic-config-radarr-data
-    copyMethod: Snapshot
-    accessModes:
-    - ReadWriteOnce
-    capacity: 128Mi
-    cleanupCachePVC: true
-    cleanupTempPVC: true
-    enableFileDeletion: true
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 64Mi
-    moverPodLabels:
-      setGateway: "false"
-
+  policyRef:
+    name: radarr-data
+  schedule:
+    cron: "0 6 * * *"
+    runOnCreate: false
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Restore
+metadata:
+  name: radarr-data
+spec:
+  repository:
+    kind: ClusterRepository
+    name: primary
+  source:
+    fromPolicy:
+      name: radarr-data
+  target:
+    populator: {}
+  credentialProjection:
+    enabled: true
+  mover:
+    privilegedMode: true
+  policy:
+    onMissingSnapshot: Continue
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -71,55 +82,66 @@ spec:
   resources:
     requests:
       storage: 256Mi
+  # dataSourceRef is immutable on the existing bound PVC, so it is left as-is.
+  # On a PVC recreate / disaster-recovery rebuild, delete the volsync block below
+  # and restore from kopiur instead:
+  #   dataSourceRef:
+  #     apiGroup: kopiur.home-operations.com
+  #     kind: Restore
+  #     name: sonarr-data
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
     name: sonarr-data-backup
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
 metadata:
-  name: sonarr-data-backup
+  name: sonarr-data
 spec:
-  sourcePVC: sonarr-data
-  trigger:
-    schedule: "0 6 * * *"
-  restic:
-    pruneIntervalDays: 7
-    repository: restic-config-sonarr-data
-    retain:
-      hourly: 4
-      daily: 7
-      weekly: 1
-    copyMethod: Clone
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 64Mi
-    moverPodLabels:
-      setGateway: "false"
+  repository:
+    kind: ClusterRepository
+    name: primary
+  copyMethod: Clone
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: sonarr-data
+  retention:
+    keepDaily: 7
+    keepWeekly: 1
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
 metadata:
-  name: sonarr-data-backup
+  name: sonarr-data
 spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: restic-config-sonarr-data
-    copyMethod: Snapshot
-    accessModes:
-    - ReadWriteOnce
-    capacity: 256Mi
-    cleanupCachePVC: true
-    cleanupTempPVC: true
-    enableFileDeletion: true
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 64Mi
-    moverPodLabels:
-      setGateway: "false"
-
+  policyRef:
+    name: sonarr-data
+  schedule:
+    cron: "0 6 * * *"
+    runOnCreate: false
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Restore
+metadata:
+  name: sonarr-data
+spec:
+  repository:
+    kind: ClusterRepository
+    name: primary
+  source:
+    fromPolicy:
+      name: sonarr-data
+  target:
+    populator: {}
+  credentialProjection:
+    enabled: true
+  mover:
+    privilegedMode: true
+  policy:
+    onMissingSnapshot: Continue
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -132,55 +154,66 @@ spec:
   resources:
     requests:
       storage: 10Mi
+  # dataSourceRef is immutable on the existing bound PVC, so it is left as-is.
+  # On a PVC recreate / disaster-recovery rebuild, delete the volsync block below
+  # and restore from kopiur instead:
+  #   dataSourceRef:
+  #     apiGroup: kopiur.home-operations.com
+  #     kind: Restore
+  #     name: bazarr-data
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
     name: bazarr-data-backup
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
 metadata:
-  name: bazarr-data-backup
+  name: bazarr-data
 spec:
-  sourcePVC: bazarr-data
-  trigger:
-    schedule: "0 6 * * *"
-  restic:
-    pruneIntervalDays: 7
-    repository: restic-config-bazarr-data
-    retain:
-      hourly: 4
-      daily: 7
-      weekly: 1
-    copyMethod: Clone
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 10Mi
-    moverPodLabels:
-      setGateway: "false"
+  repository:
+    kind: ClusterRepository
+    name: primary
+  copyMethod: Clone
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: bazarr-data
+  retention:
+    keepDaily: 7
+    keepWeekly: 1
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
 metadata:
-  name: bazarr-data-backup
+  name: bazarr-data
 spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: restic-config-bazarr-data
-    copyMethod: Snapshot
-    accessModes:
-    - ReadWriteOnce
-    capacity: 10Mi
-    cleanupCachePVC: true
-    cleanupTempPVC: true
-    enableFileDeletion: true
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 10Mi
-    moverPodLabels:
-      setGateway: "false"
-
+  policyRef:
+    name: bazarr-data
+  schedule:
+    cron: "0 6 * * *"
+    runOnCreate: false
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Restore
+metadata:
+  name: bazarr-data
+spec:
+  repository:
+    kind: ClusterRepository
+    name: primary
+  source:
+    fromPolicy:
+      name: bazarr-data
+  target:
+    populator: {}
+  credentialProjection:
+    enabled: true
+  mover:
+    privilegedMode: true
+  policy:
+    onMissingSnapshot: Continue
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -193,51 +226,63 @@ spec:
   resources:
     requests:
       storage: 256Mi
+  # dataSourceRef is immutable on the existing bound PVC, so it is left as-is.
+  # On a PVC recreate / disaster-recovery rebuild, delete the volsync block below
+  # and restore from kopiur instead:
+  #   dataSourceRef:
+  #     apiGroup: kopiur.home-operations.com
+  #     kind: Restore
+  #     name: prowlarr-data
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
     name: prowlarr-data-backup
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
 metadata:
-  name: prowlarr-data-backup
+  name: prowlarr-data
 spec:
-  sourcePVC: prowlarr-data
-  trigger:
-    schedule: "0 6 * * *"
-  restic:
-    pruneIntervalDays: 7
-    repository: restic-config-prowlarr-data
-    retain:
-      hourly: 4
-      daily: 7
-      weekly: 1
-    copyMethod: Clone
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 64Mi
-    moverPodLabels:
-      setGateway: "false"
+  repository:
+    kind: ClusterRepository
+    name: primary
+  copyMethod: Clone
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: prowlarr-data
+  retention:
+    keepDaily: 7
+    keepWeekly: 1
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
 metadata:
-  name: prowlarr-data-backup
+  name: prowlarr-data
 spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: restic-config-prowlarr-data
-    copyMethod: Snapshot
-    accessModes:
-    - ReadWriteOnce
-    capacity: 256Mi
-    cleanupCachePVC: true
-    cleanupTempPVC: true
-    enableFileDeletion: true
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 64Mi
-    moverPodLabels:
-      setGateway: "false"
+  policyRef:
+    name: prowlarr-data
+  schedule:
+    cron: "0 6 * * *"
+    runOnCreate: false
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Restore
+metadata:
+  name: prowlarr-data
+spec:
+  repository:
+    kind: ClusterRepository
+    name: primary
+  source:
+    fromPolicy:
+      name: prowlarr-data
+  target:
+    populator: {}
+  credentialProjection:
+    enabled: true
+  mover:
+    privilegedMode: true
+  policy:
+    onMissingSnapshot: Continue

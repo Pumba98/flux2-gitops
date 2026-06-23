@@ -10,47 +10,63 @@ spec:
   resources:
     requests:
       storage: 2Gi
+  # dataSourceRef is immutable on the existing bound PVC, so it is left as-is.
+  # On a PVC recreate / disaster-recovery rebuild, delete the volsync block below
+  # and restore from kopiur instead:
+  #   dataSourceRef:
+  #     apiGroup: kopiur.home-operations.com
+  #     kind: Restore
+  #     name: linkwarden-data
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
     name: linkwarden-data-backup
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
 metadata:
-  name: linkwarden-data-backup
+  name: linkwarden-data
 spec:
-  sourcePVC: linkwarden-data
-  trigger:
-    schedule: "0 6 * * *"
-  restic:
-    pruneIntervalDays: 7
-    repository: restic-config-linkwarden-data
-    retain:
-      hourly: 4
-      daily: 7
-      weekly: 1
-    copyMethod: Clone
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 256Mi
+  repository:
+    kind: ClusterRepository
+    name: primary
+  copyMethod: Clone
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: linkwarden-data
+  retention:
+    keepDaily: 7
+    keepWeekly: 1
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
 metadata:
-  name: linkwarden-data-backup
+  name: linkwarden-data
 spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: restic-config-linkwarden-data
-    copyMethod: Snapshot
-    accessModes:
-    - ReadWriteOnce
-    capacity: 2Gi
-    cleanupCachePVC: true
-    cleanupTempPVC: true
-    enableFileDeletion: true
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 256Mi
+  policyRef:
+    name: linkwarden-data
+  schedule:
+    cron: "0 6 * * *"
+    runOnCreate: false
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Restore
+metadata:
+  name: linkwarden-data
+spec:
+  repository:
+    kind: ClusterRepository
+    name: primary
+  source:
+    fromPolicy:
+      name: linkwarden-data
+  target:
+    populator: {}
+  credentialProjection:
+    enabled: true
+  mover:
+    privilegedMode: true
+  policy:
+    onMissingSnapshot: Continue

@@ -10,47 +10,63 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  # dataSourceRef is immutable on the existing bound PVC, so it is left as-is.
+  # On a PVC recreate / disaster-recovery rebuild, delete the volsync block below
+  # and restore from kopiur instead:
+  #   dataSourceRef:
+  #     apiGroup: kopiur.home-operations.com
+  #     kind: Restore
+  #     name: immich-postgresql-data
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
     name: immich-postgresql-data-backup
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
 metadata:
-  name: immich-postgresql-data-backup
+  name: immich-postgresql-data
 spec:
-  sourcePVC: immich-postgresql-data
-  trigger:
-    schedule: "0 6 * * *"
-  restic:
-    pruneIntervalDays: 7
-    repository: restic-config-immich-postgresql-data
-    retain:
-      hourly: 4
-      daily: 7
-      weekly: 1
-    copyMethod: Clone
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 256Mi
+  repository:
+    kind: ClusterRepository
+    name: primary
+  copyMethod: Clone
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: immich-postgresql-data
+  retention:
+    keepDaily: 7
+    keepWeekly: 1
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
 metadata:
-  name: immich-postgresql-data-backup
+  name: immich-postgresql-data
 spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: restic-config-immich-postgresql-data
-    copyMethod: Snapshot
-    accessModes:
-    - ReadWriteOnce
-    capacity: 1Gi
-    cleanupCachePVC: true
-    cleanupTempPVC: true
-    enableFileDeletion: true
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 256Mi
+  policyRef:
+    name: immich-postgresql-data
+  schedule:
+    cron: "0 6 * * *"
+    runOnCreate: false
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Restore
+metadata:
+  name: immich-postgresql-data
+spec:
+  repository:
+    kind: ClusterRepository
+    name: primary
+  source:
+    fromPolicy:
+      name: immich-postgresql-data
+  target:
+    populator: {}
+  credentialProjection:
+    enabled: true
+  mover:
+    privilegedMode: true
+  policy:
+    onMissingSnapshot: Continue

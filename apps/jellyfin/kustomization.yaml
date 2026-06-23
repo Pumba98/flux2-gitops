@@ -5,4 +5,3 @@ resources:
 - pvc-jellyfin-config.yaml
 - pvc-jellyfin-media.yaml
 - hr-jellyfin.yaml
-- volsync-restic-config-secret.sops.yaml

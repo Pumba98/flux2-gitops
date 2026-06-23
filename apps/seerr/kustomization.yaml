@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
 - pvc-seerr-config.yaml
 - hr-seerr.yaml
-- volsync-restic-config-secret.sops.yaml

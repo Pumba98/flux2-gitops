@@ -18,7 +18,7 @@ spec:
       name: linkwarden
       namespace: selfhosted
   dependsOn:
-    - name: volsync-app
+    - name: kopiur-app
     - name: ingress-nginx-external-app
     - name: longhorn-app
     - name: kube-prometheus-stack-app

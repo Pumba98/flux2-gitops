@@ -10,47 +10,63 @@ spec:
   resources:
     requests:
       storage: 512Mi
+  # dataSourceRef is immutable on the existing bound PVC, so it is left as-is.
+  # On a PVC recreate / disaster-recovery rebuild, delete the volsync block below
+  # and restore from kopiur instead:
+  #   dataSourceRef:
+  #     apiGroup: kopiur.home-operations.com
+  #     kind: Restore
+  #     name: paperless-ngx-data
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
     name: paperless-ngx-data-backup
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
 metadata:
-  name: paperless-ngx-data-backup
+  name: paperless-ngx-data
 spec:
-  sourcePVC: paperless-ngx-data
-  trigger:
-    schedule: "0 6 * * *"
-  restic:
-    pruneIntervalDays: 7
-    repository: restic-config-paperless-ngx-data
-    retain:
-      hourly: 4
-      daily: 7
-      weekly: 1
-    copyMethod: Clone
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 256Mi
+  repository:
+    kind: ClusterRepository
+    name: primary
+  copyMethod: Clone
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: paperless-ngx-data
+  retention:
+    keepDaily: 7
+    keepWeekly: 1
 ---
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
 metadata:
-  name: paperless-ngx-data-backup
+  name: paperless-ngx-data
 spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: restic-config-paperless-ngx-data
-    copyMethod: Snapshot
-    accessModes:
-    - ReadWriteOnce
-    capacity: 512Mi
-    cleanupCachePVC: true
-    cleanupTempPVC: true
-    enableFileDeletion: true
-    storageClassName: longhorn-local
-    cacheStorageClassName: longhorn-local
-    cacheCapacity: 256Mi
+  policyRef:
+    name: paperless-ngx-data
+  schedule:
+    cron: "0 6 * * *"
+    runOnCreate: false
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Restore
+metadata:
+  name: paperless-ngx-data
+spec:
+  repository:
+    kind: ClusterRepository
+    name: primary
+  source:
+    fromPolicy:
+      name: paperless-ngx-data
+  target:
+    populator: {}
+  credentialProjection:
+    enabled: true
+  mover:
+    privilegedMode: true
+  policy:
+    onMissingSnapshot: Continue

@@ -23,6 +23,7 @@ resources:
 - ../ingress-nginx-external.yaml
 - ../jd2.yaml
 - ../jellyfin.yaml
+- ../kopiur.yaml
 - ../seerr.yaml
 - ../kube-prometheus-stack.yaml
 # - ../kube-vip.yaml
@@ -48,7 +49,6 @@ resources:
 # - ../system-upgrade-controller.yaml
 - ../tandoor-recipes.yaml
 - ../tuppr.yaml
-- ../volsync.yaml
 - ../weave-gitops.yaml
 
 patchesStrategicMerge:

@@ -18,7 +18,7 @@ spec:
       name: seerr
       namespace: selfhosted
   dependsOn:
-    - name: volsync-app
+    - name: kopiur-app
     - name: ingress-nginx-app
     - name: csi-driver-smb-app
     - name: longhorn-app
