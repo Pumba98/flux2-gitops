@@ -17,3 +17,19 @@ spec:
       kind: HelmRelease
       name: kopiur
       namespace: kopiur-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kopiur-repository
+  namespace: flux-system
+spec:
+  path: ./apps/kopiur/repository
+  targetNamespace: kopiur-system
+  interval: 10m
+  prune: true
+  dependsOn:
+    - name: kopiur-app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
