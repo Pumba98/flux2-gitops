@@ -34,13 +34,3 @@ spec:
     allowed: true
   maintenance:
     namespace: kopiur-system
-    mover:
-      securityContext:
-        runAsUser: 65534
-        runAsGroup: 65534
-        runAsNonRoot: true
-  moverDefaults:
-    securityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      runAsNonRoot: false
