@@ -71,3 +71,25 @@ spec:
       VPN_TRAFFIC_PORT: "1194"
       NOT_ROUTED_TO_GATEWAY_CIDRS: "${NETWORK_K8S_CLUSTER_CIDR} ${NETWORK_K8S_SERVICE_CIDR}"
       VPN_LOCAL_CIDRS: "${POD_GATEWAY_VPN_VXLAN}.0/24 ${NETWORK_K8S_CLUSTER_CIDR} ${NETWORK_K8S_SERVICE_CIDR}"
+  # Exclude kopiur mover Job pods from the gateway-injection webhook. kopiur 0.4.12
+  # cannot set the `setGateway: "false"` pod label, and the injected sidecar keeps
+  # the mover pod running forever, so the backup Job never completes. The chart only
+  # templates a namespaceSelector, so we add an objectSelector to the rendered
+  # MutatingWebhookConfiguration: the webhook now skips any pod carrying a kopiur
+  # label, so movers are never injected and egress straight to object storage
+  # (the same VPN-bypass volsync had with setGateway: "false").
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: MutatingWebhookConfiguration
+            patch: |
+              - op: add
+                path: /webhooks/0/objectSelector
+                value:
+                  matchExpressions:
+                    - key: kopiur.home-operations.com/config
+                      operator: DoesNotExist
+                    - key: app.kubernetes.io/managed-by
+                      operator: NotIn
+                      values: ["kopiur"]
