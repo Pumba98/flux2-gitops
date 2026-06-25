@@ -21,6 +21,8 @@ metadata:
   labels:
     goldilocks.fairwinds.com/enabled: "true"
     pod-security.kubernetes.io/enforce: privileged # for PodGateway
+  annotations:
+    kopiur.home-operations.com/privileged-movers: "true" # for privileged/root kopiur movers (authelia postgresql)
 ---
 apiVersion: v1
 kind: Namespace
@@ -29,6 +31,8 @@ metadata:
   labels:
     goldilocks.fairwinds.com/enabled: "true"
     pod-security.kubernetes.io/enforce: privileged # for sftpgo
+  annotations:
+    kopiur.home-operations.com/privileged-movers: "true" # for privileged/root kopiur movers
 ---
 apiVersion: v1
 kind: Namespace
@@ -38,6 +42,8 @@ metadata:
     goldilocks.fairwinds.com/enabled: "true"
     routed-gateway: "true"
     pod-security.kubernetes.io/enforce: privileged # for jd2
+  annotations:
+    kopiur.home-operations.com/privileged-movers: "true" # for privileged/root kopiur movers
 ---
 apiVersion: v1
 kind: Namespace

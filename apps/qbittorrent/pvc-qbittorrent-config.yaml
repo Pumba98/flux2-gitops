@@ -44,6 +44,7 @@ spec:
       runAsUser: 0
       runAsGroup: 0
       runAsNonRoot: false
+    privilegedMode: true # captures UID/GID ownership so Restore can preserve it
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: SnapshotSchedule
