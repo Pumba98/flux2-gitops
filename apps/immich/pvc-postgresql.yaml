@@ -17,10 +17,6 @@ spec:
   #     apiGroup: kopiur.home-operations.com
   #     kind: Restore
   #     name: immich-postgresql-data
-  dataSourceRef:
-    kind: ReplicationDestination
-    apiGroup: volsync.backube
-    name: immich-postgresql-data-backup
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: SnapshotPolicy
@@ -44,6 +40,9 @@ spec:
       runAsUser: 0
       runAsGroup: 0
       runAsNonRoot: false
+      capabilities:
+        drop: ["ALL"]
+        add: ["DAC_READ_SEARCH"]
     privilegedMode: true # captures UID/GID ownership so Restore can preserve it
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1
