@@ -53,7 +53,7 @@ spec:
           metrics:
             image:
               repository: quay.io/prometheuscommunity/postgres-exporter
-              tag: v0.19.1@sha256:e96064f876226d94bb6ce48a4c4b3dd76edba91168ec1ab024e5c4b959310b0f
+              tag: v0.20.0@sha256:215b8299a47328078dabb751d2ffc1fd9a0aad3aa8c7daed36c567d2bd83a8a1
             env:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
               DATA_SOURCE_USER: memos
