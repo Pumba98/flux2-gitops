@@ -53,7 +53,7 @@ spec:
           metrics:
             image:
               repository: quay.io/prometheuscommunity/postgres-exporter
-              tag: v0.20.0@sha256:215b8299a47328078dabb751d2ffc1fd9a0aad3aa8c7daed36c567d2bd83a8a1
+              tag: v0.20.1@sha256:ac5ec343104fae0e2d84a27bb8d69b38430a11910c5382cad85d478d2bab713e
             env:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
               DATA_SOURCE_USER: linkwarden
