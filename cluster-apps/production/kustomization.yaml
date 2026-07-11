@@ -42,7 +42,6 @@ resources:
 - ../radicale.yaml
 - ../rancher.yaml
 - ../reloader.yaml
-# - ../restic.yaml
 - ../sftpgo.yaml
 - ../snapshot-controller.yaml
 - ../syncthing.yaml
