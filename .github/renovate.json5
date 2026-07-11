@@ -145,5 +145,12 @@
       automergeType: 'pr',
       automergeStrategy: 'squash',
     },
+    {
+      matchUpdateTypes: [
+        'minor',
+      ],
+      matchCurrentVersion: '< 1.0.0',
+      automerge: false,
+    },
   ],
 }
