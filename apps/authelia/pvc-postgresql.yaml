@@ -9,7 +9,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 128Mi
+      storage: 256Mi
   # dataSourceRef is immutable on the existing bound PVC, so it is left as-is.
   # On a PVC recreate / disaster-recovery rebuild, delete the volsync block below
   # and restore from kopiur instead:
