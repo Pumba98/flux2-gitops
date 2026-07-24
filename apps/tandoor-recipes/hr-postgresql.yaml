@@ -32,7 +32,7 @@ spec:
           postgresql:
             image:
               repository: public.ecr.aws/docker/library/postgres
-              tag: 17.10@sha256:a426e44bac0b759c95894d68e1a0ac03ecc20b619f498a91aae373bf06d8508d
+              tag: 18.4@sha256:3a82e1f56c8f0f5616a11103ac3d47e632c3938698946a7ad26da0df1334744a
             env:
               POSTGRES_DB: tandoor-recipes
               POSTGRES_USER: tandoor-recipes
