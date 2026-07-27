@@ -146,10 +146,11 @@
       automergeStrategy: 'squash',
     },
     {
+      description: 'Do not automerge minor updates for pre-1.0.0 (0.x) packages',
       matchUpdateTypes: [
         'minor',
       ],
-      matchCurrentVersion: '< 1.0.0',
+      matchCurrentVersion: '/^v?0\\./',
       automerge: false,
     },
   ],
