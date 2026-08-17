@@ -4,6 +4,8 @@ kind: TalosUpgrade
 metadata:
   name: talos
 spec:
+  policy:
+    waitForVolumeDetach: true
   talos:
     # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
     version: v1.13.8
