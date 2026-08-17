@@ -43,21 +43,9 @@ spec:
         registry: quay.io
         repository: prometheus/alertmanager
         tag: v0.34.0@sha256:690c7b525f4367aa91f73e2f91c632206d32e97c6384bdbf2fb7a861b420340d
+      # Exposed via httproutes.yaml
       ingress:
-        enabled: true
-        pathType: Prefix
-        ingressClassName: "nginx-external"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
-          kubernetes.io/tls-acme: "true"
-          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-        hosts:
-        - "alert-manager.${SECRET_DOMAIN}"
-        tls:
-        - secretName: alertmanager-tls
-          hosts:
-          - "alert-manager.${SECRET_DOMAIN}"
+        enabled: false
       config:
         global:
           slack_api_url: "${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}"
@@ -154,10 +142,6 @@ spec:
           flux-control-plane:
             url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
             datasource: Prometheus
-          ingress-nginx:
-            gnetId: 9614
-            revision: 1
-            datasource: Prometheus
           certificate-exporter:
             gnetId: 13922
             revision: 1
@@ -183,41 +167,17 @@ spec:
           searchNamespace: ALL
       serviceMonitor:
         enabled: true
+      # Exposed via httproute
       ingress:
-        enabled: true
-        pathType: Prefix
-        ingressClassName: "nginx-external"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
-          kubernetes.io/tls-acme: "true"
-          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-        hosts:
-        - "grafana.${SECRET_DOMAIN}"
-        tls:
-        - secretName: grafana-tls
-          hosts:
-          - "grafana.${SECRET_DOMAIN}"
+        enabled: false
     prometheus:
       image:
         registry: quay.io
         repository: prometheus/prometheus
         tag: v3.14.0@sha256:5ce7540c3c00ef4ab0c9d2c995c6a5b9c421f44b4a115d97a2c7af3b1c21cbb0
+      # Exposed via httproute
       ingress:
-        enabled: true
-        pathType: Prefix
-        ingressClassName: "nginx-external"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
-          kubernetes.io/tls-acme: "true"
-          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-        hosts:
-        - "prometheus.${SECRET_DOMAIN}"
-        tls:
-        - secretName: prometheus-tls
-          hosts:
-          - "prometheus.${SECRET_DOMAIN}"
+        enabled: false
       prometheusSpec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false

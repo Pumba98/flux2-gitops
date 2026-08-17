@@ -18,7 +18,7 @@ spec:
       name: rancher
       namespace: cattle-system
   dependsOn:
-    - name: ingress-nginx-external-app
+    - name: envoy-gateway-app
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

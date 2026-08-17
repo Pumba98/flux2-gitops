@@ -17,7 +17,7 @@ spec:
   dependsOn:
     - name: csi-driver-smb
       namespace: kube-system
-    - name: ingress-nginx
+    - name: envoy-gateway
       namespace: networking
     - name: longhorn
       namespace: longhorn-system
@@ -55,26 +55,19 @@ spec:
         ports:
           http:
             port: 2283
-    ingress:
+    route:
       main:
-        className: "nginx-external"
         annotations:
           external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
-          kubernetes.io/tls-acme: "true"
-          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-          nginx.ingress.kubernetes.io/proxy-body-size: "0"
-        hosts:
-        - host: immich.${SECRET_DOMAIN}
-          paths:
-          - path: /
-            service:
-              identifier: main
-              port: http
-        tls:
-        - secretName: immich-tls
-          hosts:
-          - immich.${SECRET_DOMAIN}
+        hostnames:
+        - "immich.${SECRET_DOMAIN}"
+        parentRefs:
+        - name: external
+          namespace: networking
+        rules:
+        - backendRefs:
+          - identifier: main
+            port: http
     persistence:
       data:
         existingClaim: immich

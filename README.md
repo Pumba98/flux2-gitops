@@ -35,7 +35,7 @@ The following apps are installed on the clusters.
 | --------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | [Flux2](https://fluxcd.io)                                                        | GitOps Tool managing the cluster                              |
 | [Longhorn](https://longhorn.io)                                                   | Persistent Block Storage Provisioner                          |
-| [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx)            | Cluster Ingress controller                                    |
+| [Envoy Gateway](https://gateway.envoyproxy.io)                                    | Gateway API ingress and forward auth                          |
 | [MetalLB](https://metallb.universe.tf)                                            | Bare metal LoadBalancer                                       |
 | [Cert-Manager](https://cert-manager.io)                                           | Letsencrypt certificates with Cloudflare DNS                  |
 | [ExternalDNS](https://github.com/kubernetes-sigs/external-dns)                    | Configure Cloudflare DNS Servers                              |

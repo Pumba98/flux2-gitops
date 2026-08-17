@@ -56,24 +56,17 @@ spec:
           dns-udp:
             port: 53
             protocol: UDP
-    ingress:
+    route:
       main:
-        className: "nginx"
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-        hosts:
-        - host: "blocky.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            service:
-              identifier: main
-              port: http
-        tls:
-        - secretName: blocky-tls
-          hosts:
-          - "blocky.${SECRET_DOMAIN}"
+        hostnames:
+        - "blocky.${SECRET_DOMAIN}"
+        parentRefs:
+        - name: internal
+          namespace: networking
+        rules:
+        - backendRefs:
+          - identifier: main
+            port: http
     persistence:
       config:
         type: configMap

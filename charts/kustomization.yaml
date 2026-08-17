@@ -8,13 +8,13 @@ resources:
 - csi-driver-smb-charts.yaml
 - descheduler-charts.yaml
 - enix-charts.yaml
+- envoy-gateway-charts.yaml
 - external-dns-charts.yaml
 - fairwinds-charts.yaml
 - fluxcd-charts.yaml
 - grafana-charts.yaml
 - headlamp-charts.yaml
 - home-operations-charts.yaml
-- ingress-nginx-charts.yaml
 - jetstack-charts.yaml
 - kubereboot-charts.yaml
 - local-path-provisioner-charts.yaml

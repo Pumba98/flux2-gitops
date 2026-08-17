@@ -14,7 +14,7 @@ spec:
         name: fairwinds-charts
         namespace: flux-system
   dependsOn:
-    - name: ingress-nginx-external
+    - name: envoy-gateway
       namespace: networking
   values:
     vpa:
@@ -22,20 +22,6 @@ spec:
     dashboard:
       enabled: true
       replicaCount: 1
+      # Exposed via httproute
       ingress:
-        enabled: true
-        ingressClassName: nginx-external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
-          kubernetes.io/tls-acme: "true"
-          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-        hosts:
-          - host: "goldilocks.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                type: ImplementationSpecific
-        tls:
-          - secretName: goldilocks-tls
-            hosts:
-              - "goldilocks.${SECRET_DOMAIN}"
+        enabled: false

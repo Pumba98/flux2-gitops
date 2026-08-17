@@ -31,7 +31,7 @@ spec:
         memory: 250Mi
     logLevel: debug
     sources:
-    - ingress
+    - gateway-httproute
     policy: sync
     # domainFilters:
     # - "${SECRET_DOMAIN}"
@@ -39,4 +39,4 @@ spec:
       name: cloudflare
     extraArgs:
       - --cloudflare-proxied
-      - --ingress-class=nginx-external
+      - --gateway-label-filter=dns-instance=cloudflare

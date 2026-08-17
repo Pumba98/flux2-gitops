@@ -21,8 +21,7 @@ resources:
 - ../headlamp.yaml
 - ../homer.yaml
 - ../immich.yaml
-- ../ingress-nginx.yaml
-- ../ingress-nginx-external.yaml
+- ../envoy-gateway.yaml
 - ../jd2.yaml
 - ../jellyfin.yaml
 - ../kopiur.yaml

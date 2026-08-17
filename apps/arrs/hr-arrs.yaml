@@ -15,7 +15,7 @@ spec:
         namespace: flux-system
       interval: 5m
   dependsOn:
-    - name: ingress-nginx
+    - name: envoy-gateway
       namespace: networking
     - name: csi-driver-smb
       namespace: kube-system
@@ -120,51 +120,47 @@ spec:
         ports:
           http:
             port: 8191
-    ingress:
-      main:
-        className: "nginx"
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-        hosts:
-        - host: radarr.${SECRET_DOMAIN}
-          paths:
-          - path: /
-            service:
-              identifier: radarr
-              port: http
-        - host: sonarr.${SECRET_DOMAIN}
-          paths:
-          - path: /
-            service:
-              identifier: sonarr
-              port: http
-        - host: bazarr.${SECRET_DOMAIN}
-          paths:
-          - path: /
-            service:
-              identifier: bazarr
-              port: http
-        - host: prowlarr.${SECRET_DOMAIN}
-          paths:
-          - path: /
-            service:
-              identifier: prowlarr
-              port: http
-        tls:
-        - secretName: radarr-tls
-          hosts:
-          - radarr.${SECRET_DOMAIN}
-        - secretName: sonarr-tls
-          hosts:
-          - sonarr.${SECRET_DOMAIN}
-        - secretName: bazarr-tls
-          hosts:
-          - bazarr.${SECRET_DOMAIN}
-        - secretName: prowlarr-tls
-          hosts:
-          - prowlarr.${SECRET_DOMAIN}
+    route:
+      radarr:
+        hostnames:
+        - "radarr.${SECRET_DOMAIN}"
+        parentRefs:
+        - name: internal
+          namespace: networking
+        rules:
+        - backendRefs:
+          - identifier: radarr
+            port: http
+      sonarr:
+        hostnames:
+        - "sonarr.${SECRET_DOMAIN}"
+        parentRefs:
+        - name: internal
+          namespace: networking
+        rules:
+        - backendRefs:
+          - identifier: sonarr
+            port: http
+      bazarr:
+        hostnames:
+        - "bazarr.${SECRET_DOMAIN}"
+        parentRefs:
+        - name: internal
+          namespace: networking
+        rules:
+        - backendRefs:
+          - identifier: bazarr
+            port: http
+      prowlarr:
+        hostnames:
+        - "prowlarr.${SECRET_DOMAIN}"
+        parentRefs:
+        - name: internal
+          namespace: networking
+        rules:
+        - backendRefs:
+          - identifier: prowlarr
+            port: http
     persistence:
       media:
         existingClaim: arrs-media

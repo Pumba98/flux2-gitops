@@ -19,7 +19,7 @@ spec:
       namespace: selfhosted
   dependsOn:
     - name: kopiur-repository
-    - name: ingress-nginx-external-app
+    - name: envoy-gateway-app
     - name: longhorn-app
     - name: csi-driver-smb-app
     - name: kube-prometheus-stack-app

@@ -21,8 +21,7 @@ resources:
 - ../headlamp.yaml
 - ../homer.yaml
 - ../immich.yaml
-- ../ingress-nginx.yaml
-- ../ingress-nginx-external.yaml
+- ../envoy-gateway.yaml
 - ../jd2.yaml
 - ../jellyfin.yaml
 - ../kopiur.yaml
@@ -52,5 +51,5 @@ resources:
 
 patches:
 #- path: certificate-exporter.yaml
-- path: ingress-nginx.yaml
+- path: envoy-gateway.yaml
 #- path: longhorn.yaml

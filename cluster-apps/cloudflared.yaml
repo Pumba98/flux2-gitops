@@ -18,4 +18,4 @@ spec:
       name: cloudflared
       namespace: networking
   dependsOn:
-    - name: ingress-nginx-external-app
+    - name: envoy-gateway-app

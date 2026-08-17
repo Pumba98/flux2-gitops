@@ -2,9 +2,10 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: ingress-nginx-charts
+  name: envoy-gateway-charts
   namespace: flux-system
 spec:
+  type: oci
   interval: 30m
-  url: https://kubernetes.github.io/ingress-nginx
+  url: oci://docker.io/envoyproxy
   timeout: 2m

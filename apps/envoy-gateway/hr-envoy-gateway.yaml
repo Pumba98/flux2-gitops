@@ -1,0 +1,36 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: envoy-gateway
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: gateway-helm
+      version: v1.9.0
+      sourceRef:
+        kind: HelmRepository
+        name: envoy-gateway-charts
+        namespace: flux-system
+  dependsOn:
+    - name: metallb
+      namespace: metallb-system
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    crds:
+      gatewayAPI:
+        enabled: true
+      envoyGateway:
+        enabled: true
+    deployment:
+      envoyGateway:
+        resources:
+          requests:
+            memory: 100Mi
+            cpu: 50m
+          limits:
+            memory: 500Mi

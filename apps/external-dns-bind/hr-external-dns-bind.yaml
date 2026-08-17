@@ -44,7 +44,7 @@ spec:
         memory: 250Mi
     logLevel: debug
     sources:
-    - ingress
+    - gateway-httproute
     - service
     policy: sync
     # domainFilters:

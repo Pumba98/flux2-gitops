@@ -17,7 +17,7 @@ spec:
   dependsOn:
     - name: csi-driver-smb
       namespace: kube-system
-    - name: ingress-nginx
+    - name: envoy-gateway
       namespace: networking
     - name: immich-redis
     - name: immich-postgresql

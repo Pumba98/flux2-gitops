@@ -23,14 +23,9 @@ spec:
     - name: longhorn
       namespace: longhorn-system
   values:
+    # Exposed via httproute-authelia.yaml
     ingress:
-      enabled: true
-      className: nginx-external
-      annotations:
-        external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
-        kubernetes.io/tls-acme: "true"
-      tls:
-        enabled: true
+      enabled: false
     pod:
       kind: Deployment
       replicas: 1
@@ -46,6 +41,11 @@ spec:
         subPath: users_database.yml
     configMap:
       theme: dark
+      server:
+        endpoints:
+          authz:
+            ext-authz:
+              implementation: ExtAuthz
       authentication_backend:
         password_reset:
           disable: true

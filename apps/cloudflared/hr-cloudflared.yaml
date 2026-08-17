@@ -14,7 +14,7 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
   dependsOn:
-    - name: ingress-nginx-external
+    - name: envoy-gateway
       namespace: networking
   values:
     controllers:
@@ -94,7 +94,7 @@ spec:
                       kubernetes.io/metadata.name: networking
                   podSelector:
                     matchLabels:
-                      app.kubernetes.io/instance: ingress-nginx-external
+                      gateway.envoyproxy.io/owning-gateway-name: external
               ports:
                 - port: 443
                   protocol: TCP

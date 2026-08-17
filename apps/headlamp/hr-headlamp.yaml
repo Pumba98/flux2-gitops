@@ -14,7 +14,7 @@ spec:
         name: headlamp-charts
         namespace: flux-system
   dependsOn:
-    - name: ingress-nginx-external
+    - name: envoy-gateway
       namespace: networking
   values:
     initContainers:
@@ -41,20 +41,6 @@ spec:
     volumes:
       - name: headlamp-plugins
         emptyDir: {}
+    # Exposed via httproute
     ingress:
-      enabled: true
-      ingressClassName: nginx-external
-      annotations:
-        external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
-        kubernetes.io/tls-acme: "true"
-        nginx.ingress.kubernetes.io/auth-url: http://authelia.networking.svc.cluster.local/api/authz/auth-request
-        nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-      hosts:
-      - host: "headlamp.${SECRET_DOMAIN}"
-        paths:
-        - path: /
-          type: ImplementationSpecific
-      tls:
-        - secretName: headlamp-tls
-          hosts:
-          - "headlamp.${SECRET_DOMAIN}"
+      enabled: false
