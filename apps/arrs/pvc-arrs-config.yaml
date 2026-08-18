@@ -30,7 +30,6 @@ spec:
   repository:
     kind: ClusterRepository
     name: primary
-  copyMethod: Clone
   credentialProjection:
     enabled: true
   sources:
@@ -111,7 +110,6 @@ spec:
   repository:
     kind: ClusterRepository
     name: primary
-  copyMethod: Clone
   credentialProjection:
     enabled: true
   sources:
@@ -192,7 +190,6 @@ spec:
   repository:
     kind: ClusterRepository
     name: primary
-  copyMethod: Clone
   credentialProjection:
     enabled: true
   sources:
@@ -273,7 +270,6 @@ spec:
   repository:
     kind: ClusterRepository
     name: primary
-  copyMethod: Clone
   credentialProjection:
     enabled: true
   sources:
