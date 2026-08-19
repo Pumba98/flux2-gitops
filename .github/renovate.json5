@@ -89,6 +89,15 @@
       pinDigests: true,
     },
     {
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        'grafana/alloy',
+      ],
+      pinDigests: false,
+    },
+    {
       matchUpdateTypes: [
         'pin',
         'pinDigest',

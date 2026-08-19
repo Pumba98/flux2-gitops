@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: grafana/alloy
-      tag: v1.18.1@sha256:0f4434c92b3e6cdac38bb129b344e1790c246f7b6e2eaffcc16a5fa363240e33
+      tag: v1.18.1
     alloy:
       # Anonymous usage reporting to Grafana Labs.
       enableReporting: false
