@@ -32,12 +32,11 @@ spec:
           postgresql:
             image:
               repository: ghcr.io/immich-app/postgres
-              tag: 17-vectorchord0.5.3@sha256:de30761f0081f2adcdcdb3fdcfa2d53aa73badb3712f943bf84eaffc8fc706af
+              tag: 18-vectorchord0.5.3
             env:
               POSTGRES_DB: immich
               POSTGRES_USER: immich
               POSTGRES_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
-              PGDATA: /var/lib/postgresql/data
             resources:
               requests:
                 cpu: 500m
@@ -82,23 +81,20 @@ spec:
               chown -R 999:999 $PGDATA
               chmod 700 $PGDATA
             env:
-              PGDATA: /var/lib/postgresql/data
+              PGDATA: /var/lib/postgresql
             securityContext:
               runAsUser: 0
               runAsGroup: 0
-          # # Init Container for Major PostgreSQL Upgrades, not needed permanently
-          # pgautoupgrade:
-          #   image:
-          #     repository: ghcr.io/pumba98/pgautoupgrade-vchord
-          #     tag: 17-debian-v0.3.0
-          #   # securityContext:
-          #   #   runAsUser: 0
-          #   #   runAsGroup: 0
-          #   env:
-          #     PGAUTO_ONESHOT: yes
-          #     POSTGRES_USER: immich
-          #     POSTGRES_DB: immich
-          #     PGDATA: /var/lib/postgresql/data
+          # Init Container for Major PostgreSQL Upgrades, not needed permanently
+          pgautoupgrade:
+            image:
+              repository: ghcr.io/pumba98/pgautoupgrade-vchord
+              tag: 18-debian-v0.5.3
+            env:
+              PGAUTO_ONESHOT: "yes"
+              POSTGRES_USER: immich
+              POSTGRES_DB: immich
+              POSTGRES_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
     service:
       primary:
         controller: primary
@@ -114,7 +110,7 @@ spec:
       data:
         existingClaim: immich-postgresql-data
         globalMounts:
-        - path: /var/lib/postgresql/data
+        - path: /var/lib/postgresql
           subPath: data
     serviceMonitor:
       main:
