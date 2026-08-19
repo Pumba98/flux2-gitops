@@ -46,6 +46,8 @@ spec:
           authz:
             ext-authz:
               implementation: ExtAuthz
+              authn_strategies:
+                - name: CookieSession
       authentication_backend:
         password_reset:
           disable: true
