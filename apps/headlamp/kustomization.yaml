@@ -5,3 +5,4 @@ resources:
 - hr-headlamp.yaml
 - secret-headlamp.sops.yaml
 - httproute-headlamp.yaml
+- rbac-oidc.yaml

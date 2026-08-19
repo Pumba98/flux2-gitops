@@ -45,7 +45,7 @@ The following apps are installed on the clusters.
 | [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager)           | Monitoring Alerts                                             |
 | [Grafana Loki](https://grafana.com/oss/loki)                                      | Log aggregation system                                        |
 | [tuppr](https://github.com/home-operations/tuppr)                                 | Automated Talos & Kubernetes upgrades                         |
-| [Weave GitOps](https://www.weave.works/product/gitops/)                           | Powerful WebUI extension to Flux for deployment insights      |
+| [Headlamp](https://headlamp.dev)                                                  | Kubernetes web UI with OIDC login and a Flux plugin           |
 | [Garage](https://garagehq.deuxfleurs.fr/)                                         | Amazon S3 compatible lightweight Object Storage               |
 | [Authelia](https://www.authelia.com)                                              | SSO & 2FA authentication server for Cluster Web Apps          |
 | [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx)                   | Document management system                                    |

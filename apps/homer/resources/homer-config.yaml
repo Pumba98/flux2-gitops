@@ -141,9 +141,9 @@ services:
   - name: "Monitoring"
     icon: "fas fa-desktop"
     items:
-      - name: "Weave GitOps"
-        logo: "https://avatars.githubusercontent.com/u/9976052?s=280&v=4"
-        url: "https://gitops.${SECRET_DOMAIN}/"
+      - name: "Headlamp"
+        logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/kubernetes.png"
+        url: "https://headlamp.${SECRET_DOMAIN}/"
       - name: "Grafana"
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/grafana.png"
         url: "https://grafana.${SECRET_DOMAIN}/"

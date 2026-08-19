@@ -211,6 +211,10 @@ spec:
               consent_mode: implicit
               redirect_uris:
                 - 'https://headlamp.${SECRET_DOMAIN}/oidc-callback'
+                - 'http://localhost:8000'
+                - 'http://localhost:18000'
+              scopes: [ openid, profile, email, groups ]
+              claims_policy: 'default'
       session:
         name: authelia_session
         same_site: lax

@@ -34,6 +34,7 @@ spec:
         externalSecret:
           enabled: true
           name: headlamp-secrets
+          hasScopes: true
       pluginsDir: /build/plugins
     volumeMounts:
       - mountPath: /build/plugins
@@ -41,6 +42,8 @@ spec:
     volumes:
       - name: headlamp-plugins
         emptyDir: {}
+    clusterRoleBinding:
+      create: false
     # Exposed via httproute
     ingress:
       enabled: false
