@@ -60,6 +60,15 @@
       ],
     },
     {
+      matchDatasources: [
+        'docker',
+      ],
+      versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)-(?<patch>\\d+)\\.(?<build>\\d+)(?:_stable)?$',
+      matchPackageNames: [
+        'ubuntu/bind9',
+      ],
+    },
+    {
       groupName: 'Immich',
       matchPackageNames: [
         '/immich-.*/',
@@ -132,12 +141,17 @@
       minimumReleaseAgeBehaviour: 'timestamp-optional',
     },
     {
+      matchPackageNames: [
+        'ubuntu/bind9',
+      ],
+      automerge: false,
+    },
+    {
       matchUpdateTypes: [
         'digest',
       ],
       matchPackageNames: [
         'ghcr.io/linuxserver/**',
-        'ghcr.io/nginxinc/nginx-unprivileged',
         'alpine',
         'ubuntu/bind9',
       ],
@@ -152,6 +166,6 @@
       ],
       matchCurrentVersion: '/^v?0\\./',
       automerge: false,
-    },
+    }
   ],
 }
