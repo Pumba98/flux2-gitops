@@ -72,7 +72,8 @@
       matchDatasources: [
         'docker',
       ],
-      versioning: 'regex:^(?<compatibility>\\d+-vectorchord)(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$',
+      versioning: 'regex:^(?<major>\\d+)-vectorchord(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)$',
+      commitMessageExtra: 'to {{{newValue}}}',
       matchPackageNames: [
         'ghcr.io/immich-app/postgres',
       ],
