@@ -19,3 +19,4 @@ spec:
       namespace: selfhosted
   dependsOn:
     - name: metallb-app
+    - name: envoy-gateway-app

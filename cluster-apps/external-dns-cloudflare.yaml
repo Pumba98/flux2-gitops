@@ -17,3 +17,5 @@ spec:
       kind: HelmRelease
       name: external-dns-cloudflare
       namespace: networking
+  dependsOn:
+    - name: envoy-gateway-app

@@ -3,7 +3,3 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - hr-envoy-gateway.yaml
-- gatewayclasses.yaml
-- gateways.yaml
-- policies.yaml
-- svc-envoy-external.yaml

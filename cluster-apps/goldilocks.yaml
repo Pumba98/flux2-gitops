@@ -19,3 +19,4 @@ spec:
       namespace: monitoring
   dependsOn:
     - name: kube-prometheus-stack-app
+    - name: envoy-gateway-app

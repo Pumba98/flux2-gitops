@@ -19,3 +19,4 @@ spec:
       namespace: networking
   dependsOn:
     - name: bind9-app
+    - name: envoy-gateway-app

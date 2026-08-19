@@ -16,6 +16,8 @@ spec:
   dependsOn:
     - name: metallb
       namespace: metallb-system
+    - name: envoy-gateway
+      namespace: networking
   values:
     controllers:
       main:

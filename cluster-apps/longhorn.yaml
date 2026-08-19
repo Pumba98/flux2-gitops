@@ -30,6 +30,7 @@ spec:
   prune: true
   dependsOn:
     - name: longhorn-app
+    - name: envoy-gateway-app
   sourceRef:
     kind: GitRepository
     name: flux-system

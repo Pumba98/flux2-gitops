@@ -21,3 +21,4 @@ spec:
     - name: kopiur-repository
     - name: longhorn-app
     - name: kube-prometheus-stack-app
+    - name: envoy-gateway-app

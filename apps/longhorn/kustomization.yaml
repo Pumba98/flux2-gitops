@@ -7,4 +7,3 @@ resources:
 - hr-longhorn.yaml
 - sc-longhorn.yaml
 - vsc-longhorn.yaml
-- httproute-longhorn.yaml

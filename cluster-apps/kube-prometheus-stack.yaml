@@ -19,6 +19,7 @@ spec:
       namespace: monitoring
   dependsOn:
     - name: longhorn-app
+    - name: envoy-gateway-app
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

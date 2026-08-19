@@ -14,4 +14,5 @@ resources:
 
 patches:
 - path: bind9.yaml
+- path: blocky.yaml
 - path: flux-system-monitoring.yaml
