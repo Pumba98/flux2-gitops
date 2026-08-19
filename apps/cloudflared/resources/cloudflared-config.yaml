@@ -1,6 +1,11 @@
 originRequest:
   http2Origin: true
 ingress:
+- hostname: "auth.${SECRET_DOMAIN}"
+  service: https://envoy-external.networking.svc.cluster.local:443
+  originRequest:
+    originServerName: "auth.${SECRET_DOMAIN}"
+    noTLSVerify: true
 - hostname: "*.${SECRET_DOMAIN}"
   service: https://envoy-external.networking.svc.cluster.local:443
   originRequest:
