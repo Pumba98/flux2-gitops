@@ -49,10 +49,4 @@ spec:
     type: Kubernetes
     kubernetes:
       envoyService:
-        patch:
-          type: StrategicMerge
-          value:
-            spec:
-              type: LoadBalancer
-              loadBalancerIP: "${LB_IP_INGRESS_EXTERNAL}"
-              externalTrafficPolicy: Local
+        type: ClusterIP

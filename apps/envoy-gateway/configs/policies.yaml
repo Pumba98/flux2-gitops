@@ -8,6 +8,7 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: internal
+      sectionName: wildcard
   extAuth:
     headersToExtAuth:
       - accept
@@ -65,9 +66,8 @@ spec:
       name: internal
   headers:
     earlyRequestHeaders:
-      set:
-        - name: x-forwarded-for
-          value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
+      remove:
+        - x-forwarded-for
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: ClientTrafficPolicy
@@ -81,6 +81,7 @@ spec:
   clientIPDetection:
     customHeader:
       name: cf-connecting-ip
+      failClosed: true
   headers:
     earlyRequestHeaders:
       set:

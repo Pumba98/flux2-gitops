@@ -20,6 +20,18 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+    - name: auth
+      hostname: "auth.${SECRET_DOMAIN}"
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: "${SECRET_DOMAIN/./-}-tls"
+      allowedRoutes:
+        namespaces:
+          from: Same
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -55,4 +67,4 @@ spec:
             name: "${SECRET_DOMAIN/./-}-tls"
       allowedRoutes:
         namespaces:
-          from: All
+          from: Same

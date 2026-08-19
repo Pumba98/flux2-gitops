@@ -59,6 +59,8 @@ spec:
         hostnames:
           - "linkwarden.${SECRET_DOMAIN}"
         parentRefs:
+          - name: internal
+            namespace: networking
           - name: external
             namespace: networking
         rules:

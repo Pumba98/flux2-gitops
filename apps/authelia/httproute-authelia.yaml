@@ -7,6 +7,9 @@ metadata:
     external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
 spec:
   parentRefs:
+  - name: internal
+    namespace: networking
+    sectionName: auth
   - name: external
     namespace: networking
     sectionName: auth

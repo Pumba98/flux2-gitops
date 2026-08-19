@@ -6,7 +6,6 @@ metadata:
 spec:
   addresses:
   - "${LB_IP_INGRESS_INTERNAL}/32"
-  - "${LB_IP_INGRESS_EXTERNAL}/32"
   - "${LB_IP_BIND_SVC}/32"
   - "${LB_IP_BLOCKY_SVC}/32"
   - "${LB_IP_SYNCTHING_SVC}/32"

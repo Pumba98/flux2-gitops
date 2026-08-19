@@ -49,6 +49,8 @@ spec:
         hostnames:
         - "radicale.${SECRET_DOMAIN}"
         parentRefs:
+        - name: internal
+          namespace: networking
         - name: external
           namespace: networking
         rules:

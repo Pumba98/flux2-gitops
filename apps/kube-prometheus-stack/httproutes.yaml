@@ -7,6 +7,8 @@ metadata:
     external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
 spec:
   parentRefs:
+  - name: internal
+    namespace: networking
   - name: external
     namespace: networking
   hostnames:
@@ -24,6 +26,8 @@ metadata:
     external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
 spec:
   parentRefs:
+  - name: internal
+    namespace: networking
   - name: external
     namespace: networking
   hostnames:
@@ -41,6 +45,8 @@ metadata:
     external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
 spec:
   parentRefs:
+  - name: internal
+    namespace: networking
   - name: external
     namespace: networking
   hostnames:

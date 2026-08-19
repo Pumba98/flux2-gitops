@@ -50,6 +50,8 @@ spec:
         hostnames:
         - "homer.${SECRET_DOMAIN}"
         parentRefs:
+        - name: internal
+          namespace: networking
         - name: external
           namespace: networking
         rules:
