@@ -1,4 +1,3 @@
-<!-- [![k3s](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FPumba98%2Fflux2-gitops%2Fmain%2Fapps%2Fsystem-upgrade-controller%2Fplans%2Fagent-plan.yaml&query=%24.spec.version&style=for-the-badge&logo=kubernetes&label=k8s&color=orange)](https://k3s.io/) -->
 [![talos](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FPumba98%2Fflux2-gitops%2Fmain%2Fapps%2Ftuppr%2Fplans%2Ftalos.yaml&query=%24.spec.talos.version&style=for-the-badge&logo=talos&label=talos&color=orange)](https://www.talos.dev/)
 [![k8s](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FPumba98%2Fflux2-gitops%2Fmain%2Fapps%2Ftuppr%2Fplans%2Fkubernetes.yaml&query=%24.spec.kubernetes.version&style=for-the-badge&logo=kubernetes&label=k8s&color=orange)](https://kubernetes.io/)
 [![flux](https://img.shields.io/badge/GitOps-Flux-blue?style=for-the-badge&logo=git)](https://fluxcd.io/)
@@ -45,7 +44,7 @@ The following apps are installed on the clusters.
 | [Grafana](https://grafana.com)                                                    | Monitoring & Logging Dashboard                                |
 | [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager)           | Monitoring Alerts                                             |
 | [Grafana Loki](https://grafana.com/oss/loki)                                      | Log aggregation system                                        |
-| [System Upgrade Controller](https://github.com/rancher/system-upgrade-controller) | Automated k3s upgrades                                        |
+| [tuppr](https://github.com/home-operations/tuppr)                                 | Automated Talos & Kubernetes upgrades                         |
 | [Weave GitOps](https://www.weave.works/product/gitops/)                           | Powerful WebUI extension to Flux for deployment insights      |
 | [MinIO](https://min.io/)                                                          | Amazon S3 compatible high Performance Object Storage          |
 | [Authelia](https://www.authelia.com)                                              | SSO & 2FA authentication server for Cluster Web Apps          |
@@ -72,7 +71,7 @@ The following apps are installed on the clusters.
 
 [Renovate](https://www.whitesourcesoftware.com/free-developer-tools/renovate) Bot makes sure the components are never outdated.
 
-It creates PullRequests when Helm charts or Docker images have newer versions available and even keeps Flux and k3s up-to-date.
+It creates PullRequests when Helm charts or Docker images have newer versions available and even keeps Flux, Talos and Kubernetes up-to-date.
 
 ## :handshake:&nbsp; Thanks
 

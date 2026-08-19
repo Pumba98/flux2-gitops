@@ -12,5 +12,5 @@ resources:
 - ../reloader.yaml
 - ../system-upgrade-controller.yaml
 
-patchesStrategicMerge:
-- bind9.yaml
+patches:
+- path: bind9.yaml

@@ -50,7 +50,7 @@ resources:
 - ../tuppr.yaml
 - ../weave-gitops.yaml
 
-patchesStrategicMerge:
-#- certificate-exporter.yaml
-- ingress-nginx.yaml
-#- longhorn.yaml
+patches:
+#- path: certificate-exporter.yaml
+- path: ingress-nginx.yaml
+#- path: longhorn.yaml
