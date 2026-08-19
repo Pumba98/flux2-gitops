@@ -19,7 +19,7 @@ spec:
   upgrade:
     crds: CreateReplace
   dependsOn:
-    - name: minio
+    - name: garage
       namespace: selfhosted
   values:
     persistence:

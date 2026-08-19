@@ -46,7 +46,7 @@ The following apps are installed on the clusters.
 | [Grafana Loki](https://grafana.com/oss/loki)                                      | Log aggregation system                                        |
 | [tuppr](https://github.com/home-operations/tuppr)                                 | Automated Talos & Kubernetes upgrades                         |
 | [Weave GitOps](https://www.weave.works/product/gitops/)                           | Powerful WebUI extension to Flux for deployment insights      |
-| [MinIO](https://min.io/)                                                          | Amazon S3 compatible high Performance Object Storage          |
+| [Garage](https://garagehq.deuxfleurs.fr/)                                         | Amazon S3 compatible lightweight Object Storage               |
 | [Authelia](https://www.authelia.com)                                              | SSO & 2FA authentication server for Cluster Web Apps          |
 | [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx)                   | Document management system                                    |
 | [Tandoor-Recipes](https://github.com/TandoorRecipes/recipes)                      | Recipe Manager and Meal Planner                               |

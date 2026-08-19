@@ -36,7 +36,6 @@ resources:
 - ../memos.yaml
 - ../metallb.yaml
 - ../metrics-server.yaml
-- ../minio.yaml
 - ../paperless-ngx.yaml
 - ../pod-gateway-vpn.yaml
 - ../qbittorrent.yaml
