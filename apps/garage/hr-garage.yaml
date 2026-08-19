@@ -1,0 +1,102 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: garage
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 5.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  dependsOn:
+    - name: csi-driver-smb
+      namespace: kube-system
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+    controllers:
+      main:
+        type: statefulset
+        containers:
+          main:
+            image:
+              repository: dxflrs/garage
+              tag: v2.3.0@sha256:866bd13ed2038ba7e7190e840482bc27234c4afaf77be8cfa439ae088c1e4690
+            args:
+              - server
+              - --single-node
+              - --default-bucket
+            env:
+              GARAGE_DEFAULT_BUCKET: longhorn
+            envFrom:
+              - secretRef:
+                  name: garage-secrets
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 3903
+                  initialDelaySeconds: 15
+                  periodSeconds: 30
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 3903
+                  initialDelaySeconds: 15
+                  periodSeconds: 30
+        initContainers:
+          init-garage-dirs:
+            image:
+              repository: alpine
+              tag: 3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
+            command:
+              - /bin/sh
+              - -c
+              - mkdir -p /var/lib/garage/store/data
+    service:
+      main:
+        controller: main
+        ports:
+          s3:
+            port: 3900
+          rpc:
+            port: 3901
+          admin:
+            port: 3903
+    persistence:
+      config:
+        type: configMap
+        name: garage-config
+        globalMounts:
+          - path: /etc/garage.toml
+            subPath: garage.toml
+            readOnly: true
+      meta:
+        existingClaim: garage-meta
+        globalMounts:
+          - path: /var/lib/garage/meta
+      store:
+        existingClaim: garage-store
+        globalMounts:
+          - path: /var/lib/garage/store

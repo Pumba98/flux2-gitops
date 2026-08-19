@@ -1,0 +1,76 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: garage-static-pv
+spec:
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: smb
+  mountOptions:
+    - dir_mode=0777
+    - file_mode=0777
+    - uid=1000
+    - gid=1000
+  csi:
+    driver: smb.csi.k8s.io
+    volumeHandle: garage-smb-volume
+    volumeAttributes:
+      source: "${SECRET_CIFS_SHARE}/garage"
+    nodeStageSecretRef:
+      name: smb-secrets
+      namespace: kube-system
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: garage-store
+spec:
+  volumeName: garage-static-pv
+  storageClassName: smb
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Ti
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: garage-meta-static-pv
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: smb
+  mountOptions:
+    - dir_mode=0777
+    - file_mode=0777
+    - uid=1000
+    - gid=1000
+  csi:
+    driver: smb.csi.k8s.io
+    volumeHandle: garage-meta-smb-volume
+    volumeAttributes:
+      source: "${SECRET_CIFS_SHARE}/garage-meta"
+    nodeStageSecretRef:
+      name: smb-secrets
+      namespace: kube-system
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: garage-meta
+spec:
+  volumeName: garage-meta-static-pv
+  storageClassName: smb
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi

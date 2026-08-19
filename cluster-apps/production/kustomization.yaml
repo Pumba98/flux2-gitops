@@ -16,6 +16,7 @@ resources:
 - ../external-dns-bind.yaml
 - ../external-dns-cloudflare.yaml
 - ../flux-system.yaml
+- ../garage.yaml
 - ../goldilocks.yaml
 - ../headlamp.yaml
 - ../homer.yaml
