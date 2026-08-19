@@ -26,6 +26,8 @@ spec:
   values:
     controllers:
       radarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
@@ -43,6 +45,8 @@ spec:
                     name: arrs-secrets
                     key: RADARR_API_KEY
       sonarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
@@ -60,6 +64,8 @@ spec:
                     name: arrs-secrets
                     key: SONARR_API_KEY
       bazarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
