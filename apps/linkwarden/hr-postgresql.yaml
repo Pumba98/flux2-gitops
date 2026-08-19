@@ -109,7 +109,6 @@ spec:
             #   runAsGroup: 0
             env:
               PGAUTO_ONESHOT: "yes"
-              POSTGRES_USER: linkwarden
               POSTGRES_DB: linkwarden
               POSTGRES_PASSWORD: ${SECRET_LINKWARDEN_DB_PASSWORD}
     service:
