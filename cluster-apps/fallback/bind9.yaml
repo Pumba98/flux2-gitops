@@ -7,9 +7,21 @@ metadata:
 spec:
   # No longhorn on the fallback cluster.
   dependsOn:
-    - name: kopiur-app
+    - name: kopiur-repository
     - name: metallb-app
   patches:
+    - target:
+        kind: HelmRelease
+        name: bind9
+      patch: |-
+        apiVersion: helm.toolkit.fluxcd.io/v2
+        kind: HelmRelease
+        metadata:
+          name: bind9
+        spec:
+          dependsOn:
+            - name: metallb
+              namespace: metallb-system
     - target:
         kind: PersistentVolumeClaim
         name: bind9-data

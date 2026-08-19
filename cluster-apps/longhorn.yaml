@@ -17,8 +17,6 @@ spec:
       kind: HelmRelease
       name: longhorn
       namespace: longhorn-system
-  dependsOn:
-    - name: garage-app
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

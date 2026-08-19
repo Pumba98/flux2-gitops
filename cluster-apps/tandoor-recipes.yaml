@@ -18,7 +18,7 @@ spec:
       name: tandoor-recipes
       namespace: selfhosted
   dependsOn:
-    - name: kopiur-app
+    - name: kopiur-repository
     - name: ingress-nginx-external-app
     - name: longhorn-app
     - name: kube-prometheus-stack-app

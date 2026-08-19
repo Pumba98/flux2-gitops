@@ -18,9 +18,6 @@ spec:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
-  dependsOn:
-    - name: garage
-      namespace: selfhosted
   values:
     persistence:
       defaultClass: true

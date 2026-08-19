@@ -18,7 +18,7 @@ spec:
       name: sftpgo
       namespace: selfhosted
   dependsOn:
-    - name: kopiur-app
+    - name: kopiur-repository
     - name: ingress-nginx-app
     - name: csi-driver-smb-app
     - name: longhorn-app
