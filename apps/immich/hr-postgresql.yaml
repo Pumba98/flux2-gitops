@@ -85,16 +85,16 @@ spec:
             securityContext:
               runAsUser: 0
               runAsGroup: 0
-          # Init Container for Major PostgreSQL Upgrades, not needed permanently
-          pgautoupgrade:
-            image:
-              repository: ghcr.io/pumba98/pgautoupgrade-vchord
-              tag: 18-debian-v0.5.3
-            env:
-              PGAUTO_ONESHOT: "yes"
-              POSTGRES_USER: immich
-              POSTGRES_DB: immich
-              POSTGRES_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
+          # # Init Container for Major PostgreSQL Upgrades, not needed permanently
+          # pgautoupgrade:
+          #   image:
+          #     repository: ghcr.io/pumba98/pgautoupgrade-vchord
+          #     tag: 18-debian-v0.5.3
+          #   env:
+          #     PGAUTO_ONESHOT: "yes"
+          #     POSTGRES_USER: immich
+          #     POSTGRES_DB: immich
+          #     POSTGRES_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
     service:
       primary:
         controller: primary
