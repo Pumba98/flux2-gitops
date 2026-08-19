@@ -136,6 +136,28 @@ I use a [pgautoupgrade/docker-pgautoupgrade](https://github.com/pgautoupgrade/do
 # Init Container for Major PostgreSQL Upgrades, not needed permanently
 initContainers:
 - name: pgautoupgrade
+  image: pgautoupgrade/pgautoupgrade:18-trixie
+  volumeMounts:
+  - name: data
+    mountPath: /var/lib/postgresql
+    subPath: data
+  env:
+  - name: PGAUTO_ONESHOT
+    value: "yes"
+  - name: POSTGRES_DB
+    value: authelia
+  - name: POSTGRES_PASSWORD
+    value: unused-in-oneshot-but-required
+```
+
+<details>
+    <summary>:construction: Previous approach for upgrades up to Postgres 17</summary>
+<br>
+
+```yaml
+# Init Container for Major PostgreSQL Upgrades, not needed permanently
+initContainers:
+- name: pgautoupgrade
   image: pgautoupgrade/pgautoupgrade:17-bookworm
   securityContext:
     runAsUser: 0
@@ -153,6 +175,7 @@ initContainers:
   - name: PGDATA
     value: /bitnami/postgresql/data
 ```
+</details>
 
 <details>
     <summary>:construction: Previous Script Approach with tianon/postgres-upgrade image</summary>
