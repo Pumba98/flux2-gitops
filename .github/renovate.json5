@@ -69,6 +69,15 @@
       ],
     },
     {
+      matchDatasources: [
+        'docker',
+      ],
+      versioning: 'regex:^(?<compatibility>\\d+-vectorchord)(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$',
+      matchPackageNames: [
+        'ghcr.io/immich-app/postgres',
+      ],
+    },
+    {
       groupName: 'Immich',
       matchPackageNames: [
         '/immich-.*/',
