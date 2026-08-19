@@ -42,7 +42,7 @@ spec:
       image:
         registry: quay.io
         repository: prometheus/alertmanager
-        tag: v0.33.1@sha256:9e082985f56f4c8c9f724e18f2288c6708f472e56a5286b8863d080434ea065d
+        tag: v0.34.0@sha256:690c7b525f4367aa91f73e2f91c632206d32e97c6384bdbf2fb7a861b420340d
       ingress:
         enabled: true
         pathType: Prefix
