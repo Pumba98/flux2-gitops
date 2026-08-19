@@ -38,39 +38,74 @@ spec:
       storage: 1Ti
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: garage-meta-static-pv
-spec:
-  capacity:
-    storage: 50Gi
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: smb
-  mountOptions:
-    - dir_mode=0777
-    - file_mode=0777
-    - uid=1000
-    - gid=1000
-  csi:
-    driver: smb.csi.k8s.io
-    volumeHandle: garage-meta-smb-volume
-    volumeAttributes:
-      source: "${SECRET_CIFS_SHARE}/garage-meta"
-    nodeStageSecretRef:
-      name: smb-secrets
-      namespace: kube-system
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: garage-meta
 spec:
-  volumeName: garage-meta-static-pv
-  storageClassName: smb
+  storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
+      storage: 10Gi
+  dataSourceRef:
+    apiGroup: kopiur.home-operations.com
+    kind: Restore
+    name: garage-meta
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  name: garage-meta
+spec:
+  repository:
+    kind: ClusterRepository
+    name: primary
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: garage-meta
+  retention:
+    keepDaily: 7
+    keepWeekly: 1
+  mover:
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      runAsNonRoot: false
+      capabilities:
+        drop: ["ALL"]
+        add: ["DAC_READ_SEARCH"]
+    privilegedMode: true # captures UID/GID ownership so Restore can preserve it
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
+metadata:
+  name: garage-meta
+spec:
+  policyRef:
+    name: garage-meta
+  schedule:
+    cron: "0 6 * * *"
+    runOnCreate: false
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Restore
+metadata:
+  name: garage-meta
+spec:
+  repository:
+    kind: ClusterRepository
+    name: primary
+  source:
+    fromPolicy:
+      name: garage-meta
+  target:
+    populator: {}
+  credentialProjection:
+    enabled: true
+  mover:
+    privilegedMode: true
+  policy:
+    onMissingSnapshot: Continue

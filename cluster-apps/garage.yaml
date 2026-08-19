@@ -18,4 +18,6 @@ spec:
       name: garage
       namespace: selfhosted
   dependsOn:
+    - name: kopiur-app
     - name: csi-driver-smb-app
+    - name: longhorn-app
