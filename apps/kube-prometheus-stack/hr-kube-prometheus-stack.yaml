@@ -22,6 +22,9 @@ spec:
     - name: longhorn
       namespace: longhorn-system
   values:
+    defaultRules:
+      disabled:
+        CPUThrottlingHigh: true
     prometheus-node-exporter:
       tolerations:
         - effect: NoSchedule

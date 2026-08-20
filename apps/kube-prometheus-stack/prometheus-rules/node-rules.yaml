@@ -18,7 +18,7 @@ spec:
 
         - alert: HostMemoryUnderMemoryPressure
           expr: '(rate(node_vmstat_pgmajfault[5m]) > 1000)'
-          for: 0m
+          for: 5m
           labels:
             severity: warning
           annotations:
@@ -71,8 +71,8 @@ spec:
             description: "Disk is almost full (< 10% left)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
         - alert: HostDiskMayFillIn24Hours
-          expr: 'predict_linear(node_filesystem_avail_bytes{fstype!~"^(fuse.*|tmpfs|cifs|nfs)"}[1h], 86400) <= 0 and node_filesystem_avail_bytes > 0'
-          for: 2m
+          expr: 'predict_linear(node_filesystem_avail_bytes{fstype!~"^(fuse.*|tmpfs|cifs|nfs)"}[6h], 86400) <= 0 and node_filesystem_avail_bytes > 0'
+          for: 15m
           labels:
             severity: warning
           annotations:
@@ -98,8 +98,8 @@ spec:
             description: "Error stat-ing the {{ $labels.mountpoint }} filesystem\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
         - alert: HostInodesMayFillIn24Hours
-          expr: 'predict_linear(node_filesystem_files_free{fstype!~"^(fuse.*|tmpfs|cifs|nfs)"}[1h], 86400) <= 0 and node_filesystem_files_free > 0'
-          for: 2m
+          expr: 'predict_linear(node_filesystem_files_free{fstype!~"^(fuse.*|tmpfs|cifs|nfs)"}[6h], 86400) <= 0 and node_filesystem_files_free > 0'
+          for: 15m
           labels:
             severity: warning
           annotations:
@@ -143,17 +143,17 @@ spec:
             description: "CPU load has been < 20% for 1 week. Consider reducing the number of CPUs.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
         - alert: HostCpuStealNoisyNeighbor
-          expr: 'avg by(instance) (rate(node_cpu_seconds_total{mode="steal"}[5m])) * 100 > 10'
-          for: 0m
+          expr: 'avg by(instance) (rate(node_cpu_seconds_total{mode="steal"}[5m])) * 100 > 15'
+          for: 15m
           labels:
             severity: warning
           annotations:
             summary: Host CPU steal noisy neighbor (instance {{ $labels.instance }})
-            description: "CPU steal is > 10%. A noisy neighbor is killing VM performances or a spot instance may be out of credit.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+            description: "CPU steal is > 15%. A noisy neighbor is killing VM performances or a spot instance may be out of credit.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
         - alert: HostCpuHighIowait
           expr: 'avg by (instance) (rate(node_cpu_seconds_total{mode="iowait"}[5m])) > .10'
-          for: 0m
+          for: 10m
           labels:
             severity: warning
           annotations:

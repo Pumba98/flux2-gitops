@@ -28,7 +28,7 @@ spec:
         mode: Terminate
         certificateRefs:
           - kind: Secret
-            name: "${SECRET_DOMAIN/./-}-tls"
+            name: "auth-${SECRET_DOMAIN/./-}-tls"
       allowedRoutes:
         namespaces:
           from: Same
@@ -64,7 +64,7 @@ spec:
         mode: Terminate
         certificateRefs:
           - kind: Secret
-            name: "${SECRET_DOMAIN/./-}-tls"
+            name: "auth-${SECRET_DOMAIN/./-}-tls"
       allowedRoutes:
         namespaces:
           from: Same
