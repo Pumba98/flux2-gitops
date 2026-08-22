@@ -60,6 +60,8 @@ spec:
                     port: 3903
                   initialDelaySeconds: 15
                   periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 6
               readiness:
                 enabled: true
                 custom: true

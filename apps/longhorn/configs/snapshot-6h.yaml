@@ -5,7 +5,7 @@ metadata:
   name: snapshot-6h
 spec:
   name: snapshot-6h
-  cron: "0 */6 * * *"
+  cron: "0 4,10,16,22 * * *"
   task: "snapshot"
   retain: 8
   concurrency: 2
