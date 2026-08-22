@@ -23,5 +23,4 @@ resources:
 - metrics-server-charts.yaml
 - piraeus-charts.yaml
 - prometheus-charts.yaml
-- rancher-latest-charts.yaml
 - stakater-charts.yaml

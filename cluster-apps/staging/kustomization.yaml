@@ -39,7 +39,6 @@ resources:
 - ../pod-gateway-vpn.yaml
 - ../qbittorrent.yaml
 - ../radicale.yaml
-- ../rancher.yaml
 - ../reloader.yaml
 - ../sftpgo.yaml
 - ../snapshot-controller.yaml

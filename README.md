@@ -55,7 +55,6 @@ The following apps are installed on the clusters.
 | [Memos](https://www.usememos.com/)                                                | A privacy-first, lightweight note-taking service              |
 | [Syncthing](https://syncthing.net/)                                               | Continuous file synchronization service                       |
 | [Radicale](https://radicale.org/)                                                 | CalDAV and CardDAV Server                                     |
-| [Rancher](https://rancher.com/products/rancher)                                   | Kubernetes Management Dashboard                               |
 | [Homer](https://github.com/bastienwirtz/homer)                                    | Static dashboard for the cluster applications                 |
 | [Bind](https://www.isc.org/bind/)                                                 | Full-featured DNS System                                      |
 | [Blocky](https://0xerr0r.github.io/blocky/latest/)                                | Fast and lightweight DNS proxy as ad-blocker                  |

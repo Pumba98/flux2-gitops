@@ -160,14 +160,6 @@ spec:
               consent_mode: implicit
               redirect_uris:
                 - 'https://recipes.${SECRET_DOMAIN}/accounts/oidc/authelia/login/callback/'
-            - client_name: 'Rancher'
-              client_id: 'R4Fy_RAZUfHmPsCAWaD89Snt7wABRsD2IUTP3Xm0AxKbRWzBLIMqQNIpTvuLfKkC6_bvNagL'
-              client_secret:
-                path: '/secrets/authelia/oidc.client.rancher.value'
-              authorization_policy: 'two_factor'
-              consent_mode: implicit
-              redirect_uris:
-                - 'https://rancher.${SECRET_DOMAIN}/verify-auth'
             - client_name: 'Grafana'
               client_id: 'wCDESryfxgaEQUrgISZWrcNgNQCCUL3u1PZulzpSTaRvkQTpN4CQvrWx6RTa69flzhonmC5p'
               client_secret:
@@ -257,7 +249,6 @@ spec:
             - key: 'oidc.client.memos.value'
             - key: 'oidc.client.paperless.value'
             - key: 'oidc.client.tandoor.value'
-            - key: 'oidc.client.rancher.value'
             - key: 'oidc.client.grafana.value'
             - key: 'oidc.client.sftpgo.value'
             - key: 'oidc.client.linkwarden.value'
