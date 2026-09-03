@@ -85,6 +85,13 @@
       ],
     },
     {
+      groupName: 'flux-operator',
+      matchPackageNames: [
+        '/flux-operator/',
+        '/flux-instance/'
+      ],
+    },
+    {
       matchDatasources: [
         'docker',
       ],
