@@ -6,6 +6,12 @@ metadata:
 spec:
   policy:
     waitForVolumeDetach: true
+  healthChecks:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      namespace: longhorn-system
+      expr: status.robustness in ["healthy", "unknown"]
+      timeout: 30m
   talos:
     # renovate: datasource=docker depName=ghcr.io/siderolabs/talos
     version: v1.14.0

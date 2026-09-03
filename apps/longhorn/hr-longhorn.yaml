@@ -38,7 +38,8 @@ spec:
       defaultLonghornStaticStorageClass: longhorn-backup
       restoreVolumeRecurringJobs: true
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
-      nodeDrainPolicy: block-for-eviction-if-contains-last-replica
+      nodeDrainPolicy: block-if-contains-last-replica
+      detachManuallyAttachedVolumesWhenCordoned: true
       autoCleanupSystemGeneratedSnapshot: true
       autoCleanupRecurringJobBackupSnapshot: true
       concurrentAutomaticEngineUpgradePerNodeLimit: "1"

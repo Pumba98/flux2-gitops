@@ -4,6 +4,12 @@ kind: KubernetesUpgrade
 metadata:
   name: kubernetes
 spec:
+  healthChecks:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      namespace: longhorn-system
+      expr: status.robustness in ["healthy", "unknown"]
+      timeout: 30m
   kubernetes:
     # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
     version: v1.37.0
