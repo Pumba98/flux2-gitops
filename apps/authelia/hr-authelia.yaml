@@ -15,13 +15,12 @@ spec:
         namespace: flux-system
       interval: 5m
   dependsOn:
-    - name: longhorn
-      namespace: longhorn-system
-    - name: authelia-redis
     - name: kube-prometheus-stack
       namespace: monitoring
     - name: longhorn
       namespace: longhorn-system
+    - name: authelia-redis
+    - name: authelia-postgresql
   values:
     # Exposed via httproute-authelia.yaml
     ingress:
