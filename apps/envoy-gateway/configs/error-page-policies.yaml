@@ -1,0 +1,100 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: error-pages-internal
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: internal
+  responseOverride:
+    - match:
+        statusCodes:
+          - type: Value
+            value: 404
+      source: Local
+      response:
+        contentType: text/html; charset=utf-8
+        body:
+          type: ValueRef
+          valueRef:
+            group: ""
+            kind: ConfigMap
+            name: error-page-404
+    - match:
+        statusCodes:
+          - type: Value
+            value: 503
+      source: Local
+      response:
+        contentType: text/html; charset=utf-8
+        body:
+          type: ValueRef
+          valueRef:
+            group: ""
+            kind: ConfigMap
+            name: error-page-503
+    - match:
+        statusCodes:
+          - type: Value
+            value: 504
+      source: Local
+      response:
+        contentType: text/html; charset=utf-8
+        body:
+          type: ValueRef
+          valueRef:
+            group: ""
+            kind: ConfigMap
+            name: error-page-504
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: error-pages-external
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: external
+  responseOverride:
+    - match:
+        statusCodes:
+          - type: Value
+            value: 404
+      source: Local
+      response:
+        contentType: text/html; charset=utf-8
+        body:
+          type: ValueRef
+          valueRef:
+            group: ""
+            kind: ConfigMap
+            name: error-page-404
+    - match:
+        statusCodes:
+          - type: Value
+            value: 503
+      source: Local
+      response:
+        contentType: text/html; charset=utf-8
+        body:
+          type: ValueRef
+          valueRef:
+            group: ""
+            kind: ConfigMap
+            name: error-page-503
+    - match:
+        statusCodes:
+          - type: Value
+            value: 504
+      source: Local
+      response:
+        contentType: text/html; charset=utf-8
+        body:
+          type: ValueRef
+          valueRef:
+            group: ""
+            kind: ConfigMap
+            name: error-page-504

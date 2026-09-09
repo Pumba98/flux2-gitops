@@ -2,7 +2,20 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- error-page-policies.yaml
 - gatewayclasses.yaml
 - gateways.yaml
 - policies.yaml
 - svc-envoy-external.yaml
+configMapGenerator:
+  - name: error-page-404
+    files:
+      - response.body=./resources/error-page-404.html
+  - name: error-page-503
+    files:
+      - response.body=./resources/error-page-503.html
+  - name: error-page-504
+    files:
+      - response.body=./resources/error-page-504.html
+generatorOptions:
+  disableNameSuffixHash: true
