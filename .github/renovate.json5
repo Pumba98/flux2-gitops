@@ -81,7 +81,7 @@
     {
       groupName: 'Immich',
       matchPackageNames: [
-        '/immich-.*/',
+        '/immich-app/immich-.*/',
       ],
     },
     {
