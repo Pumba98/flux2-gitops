@@ -30,7 +30,7 @@ spec:
           main:
             image:
               repository: ubuntu/bind9
-              tag: 9.20-26.04_stable@sha256:d8155e533d083351e560d7ed672d7bde9ced6ca8d1f48ad12743d329722ecebb
+              tag: 9.20-26.04_stable@sha256:47e5c4b0475d7470db28271fb6d8a9c79ef77365f6d5bf2fbd2a34c9be5d8a31
             probes:
               liveness:
                 enabled: true
