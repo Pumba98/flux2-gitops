@@ -18,13 +18,15 @@ The Git repository contains the following directories:
 ├─📁 apps            # apps available for intallation
 ├─📁 cluster-apps    # kustomization and overlays for app installations per cluster
 │  ├─📁 staging
-│  └─📁 production
+│  ├─📁 production
+│  └─📁 fallback
 ├─📁 charts          # helm chart repos
 ├─📁 configs         # configs per cluster
 └─📁 base
-   ├─📁 flux-system  # flux & gitops operator
-   ├─📁 staging      # flux configuration per cluster
-   └─📁 production   # flux configuration per cluster
+   ├─📁 flux-system  # flux bootstrap secrets
+   ├─📁 staging      # flux operator, instance & configuration per cluster
+   ├─📁 production   # flux operator, instance & configuration per cluster
+   └─📁 fallback     # flux operator, instance & configuration per cluster
 ```
 
 ## :computer:&nbsp; Software
@@ -84,11 +86,12 @@ Big shout out to [k8s@home](https://github.com/k8s-at-home) and everyone from [a
 
 **tl;dr**
 ```
+export CLUSTER=staging
 kubectl create namespace flux-system --dry-run=client -o yaml | kubectl apply -f -
 sops -d ./base/flux-system/init/flux-sops-age-secret.sops.yaml | kubectl apply -f -
 sops -d ./base/flux-system/init/flux-secret.sops.yaml | kubectl apply -f -
-kubectl apply --kustomize=./base/flux-system
-kubectl apply --kustomize=./base/staging
+helm install flux-operator oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator -n flux-system
+helm install flux oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance -n flux-system -f <(yq .spec.values ./base/${CLUSTER}/flux-system/flux-instance/hr-flux-instance.yaml)
 ```
 
 1. Pre-create the `flux-system` namespace
@@ -97,29 +100,31 @@ kubectl apply --kustomize=./base/staging
 kubectl create namespace flux-system --dry-run=client -o yaml | kubectl apply -f -
 ```
 
-4. Add the Flux age key in-order for Flux to decrypt SOPS secrets
+2. Add the Flux age key in-order for Flux to decrypt SOPS secrets
 
 ```sh
 sops -d ./base/flux-system/init/flux-sops-age-secret.sops.yaml | kubectl apply -f -
 ```
 
-5. (Optional) Add the Flux SSH key in-order for Flux to pull private git repositories
+3. Add the Flux SSH key in-order for Flux to pull the private git repository
 
 ```sh
 sops -d ./base/flux-system/init/flux-secret.sops.yaml | kubectl apply -f -
 ```
 
-5. Install Flux
+4. Install the Flux Operator
 
 ```sh
-kubectl apply --kustomize=./base/flux-system
+helm install flux-operator oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator -n flux-system
 ```
 
-6. Configure Flux
+5. Create the Flux instance for the cluster (`staging`, `production` or `fallback`)
 
 ```sh
-kubectl apply --kustomize=./base/staging
+helm install flux oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance -n flux-system -f <(yq .spec.values ./base/${CLUSTER}/flux-system/flux-instance/hr-flux-instance.yaml)
 ```
+
+Once the instance syncs, both helm releases are taken over by the HelmReleases in `./base/${CLUSTER}/flux-system`.
 
 </details>
 

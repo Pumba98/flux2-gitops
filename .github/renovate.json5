@@ -43,7 +43,6 @@
   packageRules: [
     {
       matchPackageNames: [
-        'k3s-io/k3s',
         'ghcr.io/siderolabs/kubelet',
         'ghcr.io/siderolabs/installer',
       ],
@@ -101,7 +100,6 @@
         '!weave-gitops',
         '!postgresql',
         '!redis',
-        '!rancher/k3s-upgrade',
       ],
       pinDigests: true,
     },
@@ -138,7 +136,6 @@
         'minor',
       ],
       matchPackageNames: [
-        '!k3s-io/k3s',
         '!ghcr.io/siderolabs/kubelet',
         '!ghcr.io/siderolabs/installer',
         '!metallb',

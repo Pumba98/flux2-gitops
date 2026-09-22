@@ -5,33 +5,7 @@ metadata:
   name: bind9-app
   namespace: flux-system
 spec:
-  # No longhorn on the fallback cluster.
-  dependsOn:
-    - name: kopiur-repository
-    - name: metallb-app
   patches:
-    - target:
-        kind: HelmRelease
-        name: bind9
-      patch: |-
-        apiVersion: helm.toolkit.fluxcd.io/v2
-        kind: HelmRelease
-        metadata:
-          name: bind9
-        spec:
-          dependsOn:
-            - name: metallb
-              namespace: metallb-system
-    - target:
-        kind: PersistentVolumeClaim
-        name: bind9-data
-      patch: |-
-        apiVersion: v1
-        kind: PersistentVolumeClaim
-        metadata:
-          name: bind9-data
-        spec:
-          storageClassName: local-path
     # The base PVC keeps a (production) volsync dataSourceRef that is immutable
     # there; on the fallback cluster volsync never existed, so drop it and let the
     # PVC provision empty (this is a DNS slave — zones transfer from the master).
@@ -41,15 +15,3 @@ spec:
       patch: |-
         - op: remove
           path: /spec/dataSourceRef
-    # local-path supports neither CSI clone nor snapshot, so read the live volume
-    # directly instead of cloning it.
-    - target:
-        kind: SnapshotPolicy
-        name: bind9-data
-      patch: |-
-        apiVersion: kopiur.home-operations.com/v1alpha1
-        kind: SnapshotPolicy
-        metadata:
-          name: bind9-data
-        spec:
-          copyMethod: Direct

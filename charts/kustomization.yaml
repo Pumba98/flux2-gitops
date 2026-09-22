@@ -17,7 +17,6 @@ resources:
 - home-operations-charts.yaml
 - jetstack-charts.yaml
 - kubereboot-charts.yaml
-- local-path-provisioner-charts.yaml
 - longhorn-charts.yaml
 - metallb-charts.yaml
 - metrics-server-charts.yaml
