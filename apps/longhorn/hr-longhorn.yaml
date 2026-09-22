@@ -43,7 +43,7 @@ spec:
       autoCleanupSystemGeneratedSnapshot: true
       autoCleanupRecurringJobBackupSnapshot: true
       concurrentAutomaticEngineUpgradePerNodeLimit: "1"
-      orphanResourceAutoDeletion: replica-data
+      orphanResourceAutoDeletion: replica-data;instance
       snapshotDataIntegrity: enabled
       snapshotDataIntegrityImmediateCheckAfterSnapshotCreation: "disabled"
       snapshotDataIntegrityCronjob: "0 4 * * *"
