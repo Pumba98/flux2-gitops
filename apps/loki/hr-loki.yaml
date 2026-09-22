@@ -41,6 +41,10 @@ spec:
         replication_factor: 1
       limits_config:
         retention_period: 7d
+      compactor:
+        working_directory: /var/loki/compactor
+        retention_enabled: true
+        delete_request_store: filesystem
       rulerConfig:
         alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
     write:

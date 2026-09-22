@@ -57,10 +57,12 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
+        sizeLimit: 10Gi
         globalMounts:
           - path: /transcode
       cache:
         enabled: true
         type: emptyDir
+        sizeLimit: 10Gi
         globalMounts:
           - path: /cache
