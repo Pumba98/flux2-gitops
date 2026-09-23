@@ -58,7 +58,7 @@ spec:
     route:
       main:
         annotations:
-          external-dns.alpha.kubernetes.io/target: "${SECRET_GATEWAY}"
+          external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
         - "immich.${SECRET_DOMAIN}"
         parentRefs:
