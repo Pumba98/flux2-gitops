@@ -17,7 +17,7 @@ spec:
             description: "Redis instance is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
         - alert: RedisMissingMaster
-          expr: '(count(redis_instance_info{role="master"}) or vector(0)) < 1'
+          expr: '(count(redis_instance_info{role="master"}) or vector(0)) < 1 and count(redis_instance_info) > 0'
           for: 0m
           labels:
             severity: critical
