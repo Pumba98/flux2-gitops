@@ -208,6 +208,16 @@ spec:
                 - 'http://localhost:18000'
               scopes: [ openid, profile, email, groups ]
               claims_policy: 'default'
+            - client_name: 'MyFinNest'
+              client_id: 'zjIwLBQHXEJRJskQny5dwTPkgTJe7DO16~8CSg_.4wwn3.rh8o2mWWeu.U0wGfczdjAG6~uM'
+              client_secret:
+                path: '/secrets/authelia/oidc.client.myfinnest.value'
+              authorization_policy: 'two_factor'
+              consent_mode: implicit
+              redirect_uris:
+                - 'https://myfinnest.${SECRET_DOMAIN}/auth/callback'
+              scopes: [openid, profile, email]
+              token_endpoint_auth_method: 'client_secret_post'
       session:
         name: authelia_session
         same_site: lax
@@ -253,3 +263,4 @@ spec:
             - key: 'oidc.client.linkwarden.value'
             - key: 'oidc.client.jellyfin.value'
             - key: 'oidc.client.headlamp.value'
+            - key: 'oidc.client.myfinnest.value'

@@ -1,0 +1,65 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: myfinnest
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: myfinnest
+      version: 2.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: myfinnest-charts
+        namespace: flux-system
+  dependsOn:
+    - name: envoy-gateway
+      namespace: networking
+    - name: longhorn
+      namespace: longhorn-system
+  values:
+    defaultPodOptions:
+      imagePullSecrets:
+        - name: regcred
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            env:
+              AUTH_MODE: oidc
+              OIDC_CLIENT_ID: zjIwLBQHXEJRJskQny5dwTPkgTJe7DO16~8CSg_.4wwn3.rh8o2mWWeu.U0wGfczdjAG6~uM
+              OIDC_ISSUER_URL: https://auth.${SECRET_DOMAIN}
+              OIDC_REDIRECT_URI: https://myfinnest.${SECRET_DOMAIN}/auth/callback
+            envFrom:
+              - secretRef:
+                  name: myfinnest
+      sync-worker:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            envFrom:
+              - secretRef:
+                  name: myfinnest-sync-worker
+    secrets:
+      app-secrets:
+        enabled: false
+      sync-secrets:
+        enabled: false
+    route:
+      main:
+        hostnames:
+          - "myfinnest.${SECRET_DOMAIN}"
+        parentRefs:
+          - name: internal
+            namespace: networking
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: http
+    persistence:
+      data:
+        existingClaim: myfinnest-data
