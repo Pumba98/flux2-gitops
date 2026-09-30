@@ -5,7 +5,8 @@ metadata:
   name: talos
 spec:
   policy:
-    waitForVolumeDetach: true
+    # waitForVolumeDetach: true # tuppr drain fails with longhorn pdb, using talos drainTimeout instead
+    drainTimeout: 15m
   healthChecks:
     - apiVersion: longhorn.io/v1beta2
       kind: Volume
