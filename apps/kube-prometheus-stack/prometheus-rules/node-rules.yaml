@@ -142,15 +142,6 @@ spec:
             summary: Host CPU steal noisy neighbor (instance {{ $labels.instance }})
             description: "CPU steal is > 15%. A noisy neighbor is killing VM performances or a spot instance may be out of credit.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-        - alert: HostCpuHighIowait
-          expr: 'avg by (instance) (rate(node_cpu_seconds_total{mode="iowait"}[5m])) > .10'
-          for: 10m
-          labels:
-            severity: warning
-          annotations:
-            summary: Host CPU high iowait (instance {{ $labels.instance }})
-            description: "CPU iowait > 10%. Your CPU is idling waiting for storage to respond.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-
         - alert: HostUnusualDiskIo
           expr: 'rate(node_disk_io_time_seconds_total[5m]) > 0.8'
           for: 5m
