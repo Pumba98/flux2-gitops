@@ -56,7 +56,7 @@ spec:
   policyRef:
     name: linkwarden-postgresql
   schedule:
-    cron: "0 6 * * *"
+    cron: "30 5 * * *"
     runOnCreate: false
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1

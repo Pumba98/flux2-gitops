@@ -40,7 +40,7 @@ spec:
   policyRef:
     name: myfinnest-data
   schedule:
-    cron: "0 6 * * *"
+    cron: "30 6 * * *"
     runOnCreate: false
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1

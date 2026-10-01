@@ -63,7 +63,7 @@ spec:
   policyRef:
     name: syncthing-files-data
   schedule:
-    cron: "0 6 * * *"
+    cron: "30 5 * * *"
     runOnCreate: false
 # Disaster recovery: this is a static SMB volume (no volume-populator). To
 # restore, apply a Restore that writes back into the existing PVC:

@@ -52,7 +52,7 @@ spec:
   policyRef:
     name: immich-postgresql-data
   schedule:
-    cron: "0 6 * * *"
+    cron: "0 5 * * *"
     runOnCreate: false
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1
