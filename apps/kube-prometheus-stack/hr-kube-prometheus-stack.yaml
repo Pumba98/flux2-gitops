@@ -23,6 +23,10 @@ spec:
       namespace: longhorn-system
   values:
     defaultRules:
+      rules:
+        kubeApiserverAvailability: false
+        kubeApiserverBurnrate: false
+        kubeApiserverSlos: false
       disabled:
         CPUThrottlingHigh: true
     prometheus-node-exporter:
