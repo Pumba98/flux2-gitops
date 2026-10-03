@@ -33,6 +33,10 @@ spec:
               MEMOS_DSN: postgresql://memos:${SECRET_MEMOS_DB_PASSWORD}@memos-postgresql-primary:5432/memos?sslmode=disable
               MEMOS_PUBLIC: false
               MEMOS_PASSWORD_AUTH: false
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 10001
+              runAsGroup: 10001
             resources:
               requests:
                 cpu: 10m

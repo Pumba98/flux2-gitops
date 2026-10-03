@@ -29,6 +29,10 @@ spec:
             image:
               repository: syncthing/syncthing
               tag: 2.1.7@sha256:2b71da7c0d0a91a6ae5285ad079226fecc0a365d08b27720e1f7037b018f7546
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
             resources:
               requests:
                 cpu: 100m
