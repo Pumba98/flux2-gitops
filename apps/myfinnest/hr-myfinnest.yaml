@@ -36,6 +36,12 @@ spec:
             envFrom:
               - secretRef:
                   name: myfinnest
+            resources:
+              requests:
+                cpu: 25m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
       sync-worker:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -44,6 +50,12 @@ spec:
             envFrom:
               - secretRef:
                   name: myfinnest-sync-worker
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 2Gi
     secrets:
       app-secrets:
         enabled: false

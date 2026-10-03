@@ -50,6 +50,12 @@ spec:
               SFTPGO_HTTPD__BINDINGS__0__OIDC__USERNAME_FIELD: "preferred_username"
               SFTPGO_HTTPD__BINDINGS__0__OIDC__IMPLICIT_ROLES: "true"
               SFTPGO_HTTPD__BINDINGS__0__ENABLED_LOGIN_METHODS: 3
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
             probes:
               liveness:
                 enabled: true

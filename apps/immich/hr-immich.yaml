@@ -39,6 +39,12 @@ spec:
               REDIS_HOSTNAME: immich-redis-master
               IMMICH_LOG_LEVEL: warn
               IMMICH_HELMET_FILE: "true"
+            resources:
+              requests:
+                cpu: 50m
+                memory: 1Gi
+              limits:
+                memory: 4Gi
             probes:
               liveness:
                 enabled: true

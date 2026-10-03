@@ -60,6 +60,12 @@ spec:
                     ]
                   }
                 }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
             probes:
               liveness:
                 enabled: true

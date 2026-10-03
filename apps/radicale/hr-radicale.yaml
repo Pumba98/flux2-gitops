@@ -29,6 +29,12 @@ spec:
             image:
               repository: tomsquest/docker-radicale
               tag: 3.8.1.1@sha256:e6d8c17bc4d75f3fd40e52b20421ba244c17ca08fb01cd7dc90d5d78ba51b58d
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
             probes:
               liveness:
                 enabled: true
