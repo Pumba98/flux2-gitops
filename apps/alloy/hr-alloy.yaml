@@ -23,6 +23,10 @@ spec:
     alloy:
       # Anonymous usage reporting to Grafana Labs.
       enableReporting: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 473
+        runAsGroup: 473
       resources:
         requests:
           cpu: 10m
