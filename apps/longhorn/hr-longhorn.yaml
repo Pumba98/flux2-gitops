@@ -27,6 +27,8 @@ spec:
         enable: false
       unmapMarkSnapChainRemoved: enabled
       dataEngine: v1
+    csi:
+      allowControllerSecretAccess: false
     # Exposed via httprout
     ingress:
       enabled: false
@@ -43,6 +45,7 @@ spec:
       autoCleanupSystemGeneratedSnapshot: true
       autoCleanupRecurringJobBackupSnapshot: true
       concurrentAutomaticEngineUpgradePerNodeLimit: "1"
+      allowInstanceManagerAutomaticUpgrade: true
       orphanResourceAutoDeletion: replica-data;instance
       snapshotDataIntegrity: enabled
       snapshotDataIntegrityImmediateCheckAfterSnapshotCreation: "disabled"
@@ -51,6 +54,7 @@ spec:
       unmapMarkSnapChainRemoved: enabled
       v1DataEngine: true
       v2DataEngine: false
+      dataEngineInterruptModeEnabled: true
       allowCollectingLonghornUsageMetrics: false
       freezeFilesystemForSnapshot: enabled
       autoCleanupSnapshotWhenDeleteBackup: true
