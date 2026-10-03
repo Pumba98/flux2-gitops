@@ -20,6 +20,10 @@ spec:
       namespace: longhorn-system
     - name: tandoor-recipes-postgresql
   values:
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       main:
         containers:
@@ -60,6 +64,10 @@ spec:
                     ]
                   }
                 }
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
             resources:
               requests:
                 cpu: 10m
