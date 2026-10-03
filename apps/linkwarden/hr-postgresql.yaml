@@ -25,6 +25,7 @@ spec:
         runAsUser: 999
         runAsGroup: 999
         fsGroup: 999
+        runAsNonRoot: true
     controllers:
       primary:
         type: statefulset
@@ -73,22 +74,7 @@ spec:
               readiness:
                 enabled: true
                 port: 9187
-        initContainers:
-          init-postgres-permissions:
-            image:
-              repository: alpine
-              tag: 3.24@sha256:3f4d6b32e26703c6082839234f43769d5046b3ac7c910033911d1e71d8cd630a
-            command: 
-            - /bin/sh
-            - -c
-            - |
-              chown -R 999:999 $PGDATA
-              chmod 700 $PGDATA
-            env:
-              PGDATA: /var/lib/postgresql
-            securityContext:
-              runAsUser: 0
-              runAsGroup: 0
+        # initContainers:
           # # Init Container for Major PostgreSQL Upgrades, not needed permanently
           # pgautoupgrade:
           #   image:
