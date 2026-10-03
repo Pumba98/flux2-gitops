@@ -205,6 +205,25 @@ spec:
         datasources:
           enabled: true
           searchNamespace: ALL
+          env:
+            HEALTH_PORT: "8081"
+        livenessProbe:
+          exec:
+            command:
+              - /app/.venv/bin/python
+              - -c
+              - import os, urllib.request; urllib.request.urlopen("http://127.0.0.1:" + os.environ.get("HEALTH_PORT", "8080") + "/healthz", timeout=5)
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+              - /app/.venv/bin/python
+              - -c
+              - import os, urllib.request; urllib.request.urlopen("http://127.0.0.1:" + os.environ.get("HEALTH_PORT", "8080") + "/healthz", timeout=5)
+          periodSeconds: 30
+          timeoutSeconds: 10
         resources:
           requests:
             cpu: 50m
