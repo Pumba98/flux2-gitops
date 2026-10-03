@@ -58,12 +58,10 @@ spec:
     keepWeekly: 1
   mover:
     securityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      runAsNonRoot: false
-      capabilities:
-        drop: ["ALL"]
-        add: ["DAC_READ_SEARCH"]
+      runAsUser: 33
+      runAsGroup: 33
+    podSecurityContext:
+      fsGroup: 33
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: SnapshotSchedule

@@ -38,6 +38,12 @@ spec:
   retention:
     keepDaily: 7
     keepWeekly: 1
+  mover:
+    securityContext:
+      runAsUser: 101
+      runAsGroup: 101
+    podSecurityContext:
+      fsGroup: 101
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: SnapshotSchedule
@@ -65,7 +71,11 @@ spec:
     populator: {}
   credentialProjection:
     enabled: true
-  mover:
-    privilegedMode: true
   policy:
     onMissingSnapshot: Continue
+  mover:
+    securityContext:
+      runAsUser: 101
+      runAsGroup: 101
+    podSecurityContext:
+      fsGroup: 101
