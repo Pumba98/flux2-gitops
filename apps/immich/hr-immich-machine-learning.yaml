@@ -35,6 +35,12 @@ spec:
               DB_USERNAME: immich
               DB_PASSWORD: "${SECRET_IMMICH_DB_PASSWORD}"
               REDIS_HOSTNAME: immich-redis-master
+            resources:
+              requests:
+                cpu: 25m
+                memory: 256Mi
+              limits:
+                memory: 4Gi
             probes:
               liveness:
                 enabled: true

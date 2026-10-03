@@ -28,6 +28,28 @@ spec:
             image:
               repository: ghcr.io/jellyfin/jellyfin
               tag: 12.4@sha256:fea863d0cd9ec445985d9c75fc6ed64e38a1d2766cf0c250a33d553f4fc1b771
+            resources:
+              requests:
+                cpu: 50m
+                memory: 512Mi
+              limits:
+                memory: 4Gi
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /health
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /health
+              startup:
+                enabled: true
+                type: HTTP
+                path: /health
+                spec:
+                  failureThreshold: 60
+                  periodSeconds: 5
     service:
       main:
         controller: main

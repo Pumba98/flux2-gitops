@@ -28,6 +28,28 @@ spec:
             image:
               repository: seerr/seerr
               tag: v3.5.1@sha256:d8fab675b55ad293ded98fd71efcfd46054cbad9746534ae1cc4794a88c0b3be
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /api/v1/status
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /api/v1/status
+              startup:
+                enabled: true
+                type: HTTP
+                path: /api/v1/status
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
     service:
       main:
         controller: main

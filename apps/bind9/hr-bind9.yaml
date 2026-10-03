@@ -31,6 +31,12 @@ spec:
             image:
               repository: ubuntu/bind9
               tag: 9.20-26.04_stable@sha256:84bbcf553e8da7d418b986f573bd88ae6a74a0692a2ce04c19e2af33218702ed
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
             probes:
               liveness:
                 enabled: true
