@@ -41,6 +41,7 @@ spec:
               - "${SECRET_CLOUDFLARE_TUNNEL_ID}"
             probes:
               liveness:
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
@@ -51,6 +52,7 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness:
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
