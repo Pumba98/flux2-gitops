@@ -48,8 +48,10 @@ spec:
             probes:
               liveness:
                 enabled: true
+                port: 6379
               readiness:
                 enabled: true
+                port: 6379
           metrics:
             image:
               repository: oliver006/redis_exporter
@@ -66,8 +68,10 @@ spec:
             probes:
               liveness:
                 enabled: true
+                port: 9121
               readiness:
                 enabled: true
+                port: 9121
         statefulset:
           volumeClaimTemplates:
             - name: redis-data

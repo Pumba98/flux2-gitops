@@ -47,8 +47,10 @@ spec:
             probes:
               liveness:
                 enabled: true
+                port: 5432
               readiness:
                 enabled: true
+                port: 5432
           metrics:
             image:
               repository: quay.io/prometheuscommunity/postgres-exporter
@@ -67,8 +69,10 @@ spec:
             probes:
               liveness:
                 enabled: true
+                port: 9187
               readiness:
                 enabled: true
+                port: 9187
         initContainers:
           init-postgres-permissions:
             image:
