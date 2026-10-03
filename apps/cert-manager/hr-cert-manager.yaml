@@ -27,8 +27,27 @@ spec:
     extraArgs:
     - --dns01-recursive-nameservers=1.1.1.1:53
     - --dns01-recursive-nameservers-only
+    resources:
+      requests:
+        cpu: 10m
+        memory: 128Mi
+      limits:
+        memory: 256Mi
     cainjector:
       replicaCount: 1
+      resources:
+        requests:
+          cpu: 10m
+          memory: 128Mi
+        limits:
+          memory: 256Mi
+    webhook:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Mi
+        limits:
+          memory: 128Mi
     podDnsPolicy: "None"
     podDnsConfig:
       nameservers:
