@@ -35,6 +35,7 @@ spec:
               ALLOWED_HOSTS: recipes.${SECRET_DOMAIN}
               SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
               TZ: Europe/Berlin
+              HOME: /tmp
               DB_ENGINE: django.db.backends.postgresql
               POSTGRES_HOST: tandoor-recipes-postgresql-primary
               POSTGRES_PORT: "5432"
