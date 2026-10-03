@@ -39,6 +39,10 @@ spec:
               REDIS_HOSTNAME: immich-redis-master
               IMMICH_LOG_LEVEL: warn
               IMMICH_HELMET_FILE: "true"
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
             resources:
               requests:
                 cpu: 50m
