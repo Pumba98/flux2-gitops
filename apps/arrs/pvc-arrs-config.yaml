@@ -40,13 +40,10 @@ spec:
     keepWeekly: 1
   mover:
     securityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      runAsNonRoot: false
-      capabilities:
-        drop: ["ALL"]
-        add: ["DAC_READ_SEARCH"]
-    privilegedMode: true # captures UID/GID ownership so Restore can preserve it
+      runAsUser: 1000
+      runAsGroup: 1000
+    podSecurityContext:
+      fsGroup: 1000
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: SnapshotSchedule
@@ -74,10 +71,14 @@ spec:
     populator: {}
   credentialProjection:
     enabled: true
-  mover:
-    privilegedMode: true
   policy:
     onMissingSnapshot: Continue
+  mover:
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+    podSecurityContext:
+      fsGroup: 1000
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -120,13 +121,10 @@ spec:
     keepWeekly: 1
   mover:
     securityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      runAsNonRoot: false
-      capabilities:
-        drop: ["ALL"]
-        add: ["DAC_READ_SEARCH"]
-    privilegedMode: true # captures UID/GID ownership so Restore can preserve it
+      runAsUser: 1000
+      runAsGroup: 1000
+    podSecurityContext:
+      fsGroup: 1000
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: SnapshotSchedule
@@ -154,10 +152,14 @@ spec:
     populator: {}
   credentialProjection:
     enabled: true
-  mover:
-    privilegedMode: true
   policy:
     onMissingSnapshot: Continue
+  mover:
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+    podSecurityContext:
+      fsGroup: 1000
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -200,13 +202,10 @@ spec:
     keepWeekly: 1
   mover:
     securityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      runAsNonRoot: false
-      capabilities:
-        drop: ["ALL"]
-        add: ["DAC_READ_SEARCH"]
-    privilegedMode: true # captures UID/GID ownership so Restore can preserve it
+      runAsUser: 1000
+      runAsGroup: 1000
+    podSecurityContext:
+      fsGroup: 1000
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: SnapshotSchedule
@@ -234,10 +233,14 @@ spec:
     populator: {}
   credentialProjection:
     enabled: true
-  mover:
-    privilegedMode: true
   policy:
     onMissingSnapshot: Continue
+  mover:
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+    podSecurityContext:
+      fsGroup: 1000
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -280,13 +283,10 @@ spec:
     keepWeekly: 1
   mover:
     securityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      runAsNonRoot: false
-      capabilities:
-        drop: ["ALL"]
-        add: ["DAC_READ_SEARCH"]
-    privilegedMode: true # captures UID/GID ownership so Restore can preserve it
+      runAsUser: 1000
+      runAsGroup: 1000
+    podSecurityContext:
+      fsGroup: 1000
 ---
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: SnapshotSchedule
@@ -314,7 +314,11 @@ spec:
     populator: {}
   credentialProjection:
     enabled: true
-  mover:
-    privilegedMode: true
   policy:
     onMissingSnapshot: Continue
+  mover:
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+    podSecurityContext:
+      fsGroup: 1000
