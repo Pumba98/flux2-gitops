@@ -35,8 +35,34 @@ spec:
           operator: Exists
         - effect: NoExecute
           operator: Exists
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32Mi
+        limits:
+          memory: 128Mi
+    kube-state-metrics:
+      resources:
+        requests:
+          cpu: 25m
+          memory: 256Mi
+        limits:
+          memory: 512Mi
     prometheusOperator:
       createCustomResource: false
+      resources:
+        requests:
+          cpu: 10m
+          memory: 128Mi
+        limits:
+          memory: 256Mi
+      prometheusConfigReloader:
+        resources:
+          requests:
+            cpu: 5m
+            memory: 32Mi
+          limits:
+            memory: 128Mi
     kubeControllerManager:
       enabled: false
     kubeScheduler:
@@ -50,6 +76,13 @@ spec:
         registry: quay.io
         repository: prometheus/alertmanager
         tag: v0.34.1@sha256:e9733bafb1bdef9b00e25a21f8f99dc26a22224bf16641ad754d1649f4c3357a
+      alertmanagerSpec:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            memory: 256Mi
       # Exposed via httproutes.yaml
       ingress:
         enabled: false
@@ -172,6 +205,18 @@ spec:
         datasources:
           enabled: true
           searchNamespace: ALL
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 256Mi
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 1536Mi
       serviceMonitor:
         enabled: true
       # Exposed via httproute
@@ -191,6 +236,12 @@ spec:
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         retention: 7d
+        resources:
+          requests:
+            cpu: 250m
+            memory: 1536Mi
+          limits:
+            memory: 4Gi
         storageSpec:
           volumeClaimTemplate:
             spec:
