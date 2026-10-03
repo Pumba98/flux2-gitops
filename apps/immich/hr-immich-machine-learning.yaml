@@ -22,6 +22,11 @@ spec:
     - name: immich-redis
     - name: immich-postgresql
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -39,6 +44,10 @@ spec:
               runAsNonRoot: true
               runAsUser: 1000
               runAsGroup: 1000
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 25m

@@ -31,10 +31,18 @@ spec:
       strategy:
         type: RollingUpdate
       securityContext:
+        pod:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
         container:
           runAsNonRoot: true
           runAsUser: 8000
           runAsGroup: 8000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
       resources:
         requests:
           cpu: 10m

@@ -26,6 +26,8 @@ spec:
         runAsGroup: 999
         fsGroup: 999
         runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       master:
         type: statefulset
@@ -39,6 +41,11 @@ spec:
               - --save 60 1
             env:
               REDIS_REPLICATION_MODE: master
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 10m
@@ -59,6 +66,11 @@ spec:
               tag: v1.93.0@sha256:6ca518a72f30f7f576ef92963de1b91d3c3f5fd3aeac949f878bfda183587820
             env:
               REDIS_ADDR: localhost:6379
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 10m

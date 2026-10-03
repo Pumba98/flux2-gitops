@@ -23,6 +23,11 @@ spec:
     - name: paperless-ngx-redis
     - name: paperless-ngx-postgresql
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -76,6 +81,10 @@ spec:
               runAsNonRoot: true
               runAsUser: 33
               runAsGroup: 33
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 25m

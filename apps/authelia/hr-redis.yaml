@@ -26,6 +26,8 @@ spec:
         runAsGroup: 999
         fsGroup: 999
         runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       master:
         type: statefulset
@@ -44,6 +46,11 @@ spec:
                   secretKeyRef:
                     name: authelia
                     key: session.redis.password.txt
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 10m
@@ -69,6 +76,11 @@ spec:
                   secretKeyRef:
                     name: authelia
                     key: session.redis.password.txt
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 10m

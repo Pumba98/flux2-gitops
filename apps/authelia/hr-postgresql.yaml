@@ -26,6 +26,8 @@ spec:
         runAsGroup: 999
         fsGroup: 999
         runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       primary:
         type: statefulset
@@ -38,6 +40,11 @@ spec:
               POSTGRES_DB: authelia
               POSTGRES_USER: authelia
               POSTGRES_PASSWORD: ${SECRET_AUTHELIA_DB_PASSWORD}
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 25m
@@ -60,6 +67,11 @@ spec:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
               DATA_SOURCE_USER: authelia
               DATA_SOURCE_PASS: ${SECRET_AUTHELIA_DB_PASSWORD}
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 10m

@@ -20,6 +20,11 @@ spec:
       namespace: longhorn-system
     - name: memos-postgresql
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -37,6 +42,10 @@ spec:
               runAsNonRoot: true
               runAsUser: 10001
               runAsGroup: 10001
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 10m
