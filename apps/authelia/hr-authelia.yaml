@@ -30,6 +30,11 @@ spec:
       replicas: 1
       strategy:
         type: RollingUpdate
+      securityContext:
+        container:
+          runAsNonRoot: true
+          runAsUser: 8000
+          runAsGroup: 8000
       resources:
         requests:
           cpu: 10m
