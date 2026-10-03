@@ -27,6 +27,9 @@ spec:
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -52,6 +55,10 @@ spec:
               SFTPGO_HTTPD__BINDINGS__0__ENABLED_LOGIN_METHODS: 3
             securityContext:
               runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 10m

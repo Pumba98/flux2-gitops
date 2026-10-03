@@ -17,6 +17,11 @@ spec:
     - name: envoy-gateway
       namespace: networking
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         annotations:
@@ -29,6 +34,10 @@ spec:
               pullPolicy: IfNotPresent
             securityContext:
               runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 5m

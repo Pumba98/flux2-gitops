@@ -26,6 +26,10 @@ spec:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
         containers:
           main:
             env:
@@ -45,6 +49,10 @@ spec:
       sync-worker:
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
         containers:
           main:
             envFrom:

@@ -17,6 +17,11 @@ spec:
     - name: envoy-gateway
       namespace: networking
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         annotations:
@@ -41,6 +46,10 @@ spec:
               - "${SECRET_CLOUDFLARE_TUNNEL_ID}"
             securityContext:
               runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 10m

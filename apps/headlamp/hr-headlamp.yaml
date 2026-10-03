@@ -19,6 +19,15 @@ spec:
   values:
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
+    podSecurityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
     resources:
       requests:
         cpu: 10m
@@ -36,6 +45,10 @@ spec:
           runAsNonRoot: true
           runAsUser: 100
           runAsGroup: 101
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
         volumeMounts:
           - mountPath: /build/plugins
             name: headlamp-plugins

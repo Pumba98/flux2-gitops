@@ -22,6 +22,9 @@ spec:
     defaultPodOptions:
       securityContext:
         fsGroup: 101
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         annotations:
@@ -33,6 +36,10 @@ spec:
               tag: 9.20-26.04_stable@sha256:84bbcf553e8da7d418b986f573bd88ae6a74a0692a2ce04c19e2af33218702ed
             securityContext:
               runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 10m
@@ -63,6 +70,10 @@ spec:
               runAsNonRoot: true
               runAsUser: 101
               runAsGroup: 101
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
     service:
       main:
         controller: main
