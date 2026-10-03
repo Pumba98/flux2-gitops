@@ -20,7 +20,6 @@ metadata:
   name: networking
   labels:
     goldilocks.fairwinds.com/enabled: "true"
-    pod-security.kubernetes.io/enforce: privileged # for PodGateway
 ---
 apiVersion: v1
 kind: Namespace
@@ -28,7 +27,14 @@ metadata:
   name: selfhosted
   labels:
     goldilocks.fairwinds.com/enabled: "true"
-    pod-security.kubernetes.io/enforce: privileged # for sftpgo
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pod-gateway-system
+  labels:
+    goldilocks.fairwinds.com/enabled: "true"
+    pod-security.kubernetes.io/enforce: privileged # for PodGateway
 ---
 apiVersion: v1
 kind: Namespace

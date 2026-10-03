@@ -21,7 +21,7 @@ spec:
     - name: longhorn
       namespace: longhorn-system
     - name: pod-gateway-vpn
-      namespace: networking
+      namespace: pod-gateway-system
   values:
     controllers:
       main:
