@@ -44,6 +44,28 @@ spec:
                   secretKeyRef:
                     name: arrs-secrets
                     key: RADARR_API_KEY
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       sonarr:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -63,6 +85,28 @@ spec:
                   secretKeyRef:
                     name: arrs-secrets
                     key: SONARR_API_KEY
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       bazarr:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -82,6 +126,28 @@ spec:
                   secretKeyRef:
                     name: arrs-secrets
                     key: SONARR_API_KEY
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /api/system/ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /api/system/ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /api/system/ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       prowlarr:
         containers:
           app:
@@ -94,12 +160,56 @@ spec:
               TZ: Etc/UTC
               PROWLARR__AUTH__METHOD: External
               PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 25m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       flaresolverr:
         containers:
           app:
             image:
               repository: ghcr.io/flaresolverr/flaresolverr
               tag: v3.5.2@sha256:c80ae007ce2ccdcd217a12426e4f039ef763ff90738c808d38810c3e59323767
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /health
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /health
+              startup:
+                enabled: true
+                type: HTTP
+                path: /health
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 50m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
     service:
       radarr:
         controller: radarr
