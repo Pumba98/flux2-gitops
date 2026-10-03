@@ -72,11 +72,11 @@ spec:
     kubeProxy:
       enabled: false
     alertmanager:
-      image:
-        registry: quay.io
-        repository: prometheus/alertmanager
-        tag: v0.34.1@sha256:e9733bafb1bdef9b00e25a21f8f99dc26a22224bf16641ad754d1649f4c3357a
       alertmanagerSpec:
+        image:
+          registry: quay.io
+          repository: prometheus/alertmanager
+          tag: v0.34.1
         resources:
           requests:
             cpu: 10m
@@ -223,14 +223,14 @@ spec:
       ingress:
         enabled: false
     prometheus:
-      image:
-        registry: quay.io
-        repository: prometheus/prometheus
-        tag: v3.15.0@sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e
       # Exposed via httproute
       ingress:
         enabled: false
       prometheusSpec:
+        image:
+          registry: quay.io
+          repository: prometheus/prometheus
+          tag: v3.15.0-distroless
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
