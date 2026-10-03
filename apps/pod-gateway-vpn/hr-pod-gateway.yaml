@@ -22,6 +22,12 @@ spec:
             image:
               repository: ghcr.io/angelnu/pod-gateway
               tag: v1.13.0@sha256:a5b032e15f7570493977b330a5a86dcffebb807d35685ad803e47afb62d105f2
+            resources:
+              requests:
+                cpu: 5m
+                memory: 16Mi
+              limits:
+                memory: 64Mi
           gluetun:
             enabled: true
             image: 
@@ -39,6 +45,34 @@ spec:
               capabilities:
                 add:
                   - NET_ADMIN
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                    - /gluetun-entrypoint
+                    - healthcheck
+                  initialDelaySeconds: 30
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 5
+      webhook:
+        containers:
+          main:
+            resources:
+              requests:
+                cpu: 5m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
     webhook:
       image:
         repository: ghcr.io/angelnu/gateway-admision-controller

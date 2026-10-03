@@ -30,6 +30,12 @@ spec:
       replicas: 1
       strategy:
         type: RollingUpdate
+      resources:
+        requests:
+          cpu: 10m
+          memory: 192Mi
+        limits:
+          memory: 512Mi
       extraVolumes:
       - name: users-volume
         secret:

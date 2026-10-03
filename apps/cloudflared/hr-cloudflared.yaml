@@ -39,6 +39,12 @@ spec:
               - /etc/cloudflared/config/config.yaml
               - run
               - "${SECRET_CLOUDFLARE_TUNNEL_ID}"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
             probes:
               liveness:
                 enabled: true
