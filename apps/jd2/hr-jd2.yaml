@@ -33,6 +33,13 @@ spec:
               pullPolicy: IfNotPresent
             env:
               KEEP_APP_RUNNING: true
+              JDOWNLOADER_MAX_MEM: 1G
+            resources:
+              requests:
+                cpu: 50m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
             probes:
               liveness:
                 enabled: true
