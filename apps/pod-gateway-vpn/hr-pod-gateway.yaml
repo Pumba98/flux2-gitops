@@ -67,6 +67,9 @@ spec:
       webhook:
         containers:
           main:
+            image:
+              repository: ghcr.io/angelnu/gateway-admision-controller
+              tag: v3.12.0@sha256:6f6ab596afd5fef0ca4648eadfb21cd37ba86fa5afa8b85edcc072976a61fbed
             securityContext:
               runAsNonRoot: true
               runAsUser: 65532
@@ -77,10 +80,6 @@ spec:
                 memory: 32Mi
               limits:
                 memory: 128Mi
-    webhook:
-      image:
-        repository: ghcr.io/angelnu/gateway-admision-controller
-        tag: v3.12.0@sha256:6f6ab596afd5fef0ca4648eadfb21cd37ba86fa5afa8b85edcc072976a61fbed
     networkpolicies:
       main:
         enabled: true
