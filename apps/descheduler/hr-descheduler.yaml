@@ -19,6 +19,13 @@ spec:
       namespace: kube-system
   values:
     kind: Deployment
+    resources:
+      requests:
+        cpu: 10m
+        memory: 128Mi
+      limits:
+        cpu: null
+        memory: 256Mi
     deschedulerPolicy:
       metricsProviders:
         - source: KubernetesMetrics

@@ -17,3 +17,54 @@ spec:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
+  values:
+    controller:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 192Mi
+        limits:
+          memory: 384Mi
+    speaker:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 128Mi
+        limits:
+          memory: 256Mi
+    frr-k8s:
+      frrk8s:
+        resources:
+          requests:
+            cpu: 5m
+            memory: 64Mi
+          limits:
+            memory: 192Mi
+        frr:
+          resources:
+            requests:
+              cpu: 5m
+              memory: 64Mi
+            limits:
+              memory: 192Mi
+        reloader:
+          resources:
+            requests:
+              cpu: 5m
+              memory: 16Mi
+            limits:
+              memory: 64Mi
+        frrMetrics:
+          resources:
+            requests:
+              cpu: 5m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
+        frrStatus:
+          resources:
+            requests:
+              cpu: 5m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
