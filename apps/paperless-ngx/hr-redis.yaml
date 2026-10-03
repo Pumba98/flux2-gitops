@@ -40,8 +40,8 @@ spec:
               REDIS_REPLICATION_MODE: master
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
+                memory: 64Mi
               limits:
                 cpu: 150m
                 memory: 192Mi
@@ -58,8 +58,8 @@ spec:
               REDIS_ADDR: localhost:6379
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
+                memory: 32Mi
               limits:
                 cpu: 150m
                 memory: 192Mi

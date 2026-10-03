@@ -39,11 +39,11 @@ spec:
               POSTGRES_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
             resources:
               requests:
-                cpu: 500m
+                cpu: 50m
                 memory: 512Mi
               limits:
                 cpu: 750m
-                memory: 768Mi
+                memory: 1536Mi
             probes:
               liveness:
                 enabled: true
@@ -59,8 +59,8 @@ spec:
               DATA_SOURCE_PASS: ${SECRET_IMMICH_DB_PASSWORD}
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
+                memory: 32Mi
               limits:
                 cpu: 150m
                 memory: 192Mi

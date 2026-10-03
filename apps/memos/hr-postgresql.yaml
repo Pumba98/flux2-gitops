@@ -39,8 +39,8 @@ spec:
               POSTGRES_PASSWORD: ${SECRET_MEMOS_DB_PASSWORD}
             resources:
               requests:
-                cpu: 500m
-                memory: 512Mi
+                cpu: 25m
+                memory: 128Mi
               limits:
                 cpu: 750m
                 memory: 768Mi
@@ -59,8 +59,8 @@ spec:
               DATA_SOURCE_PASS: ${SECRET_MEMOS_DB_PASSWORD}
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
+                memory: 32Mi
               limits:
                 cpu: 150m
                 memory: 192Mi
