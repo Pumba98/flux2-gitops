@@ -39,6 +39,8 @@ spec:
               - /etc/cloudflared/config/config.yaml
               - run
               - "${SECRET_CLOUDFLARE_TUNNEL_ID}"
+            securityContext:
+              runAsNonRoot: true
             resources:
               requests:
                 cpu: 10m

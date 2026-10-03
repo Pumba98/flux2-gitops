@@ -67,6 +67,10 @@ spec:
       webhook:
         containers:
           main:
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 65532
+              runAsGroup: 65532
             resources:
               requests:
                 cpu: 5m

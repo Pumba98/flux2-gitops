@@ -50,6 +50,8 @@ spec:
               SFTPGO_HTTPD__BINDINGS__0__OIDC__USERNAME_FIELD: "preferred_username"
               SFTPGO_HTTPD__BINDINGS__0__OIDC__IMPLICIT_ROLES: "true"
               SFTPGO_HTTPD__BINDINGS__0__ENABLED_LOGIN_METHODS: 3
+            securityContext:
+              runAsNonRoot: true
             resources:
               requests:
                 cpu: 10m
