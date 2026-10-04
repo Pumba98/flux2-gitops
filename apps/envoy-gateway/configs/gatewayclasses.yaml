@@ -23,7 +23,7 @@ spec:
         container:
           resources:
             requests:
-              cpu: 25m
+              cpu: 20m
               memory: 128Mi
             limits:
               memory: 512Mi
@@ -37,7 +37,7 @@ spec:
                     - name: shutdown-manager
                       resources:
                         limits:
-                          memory: 192Mi
+                          memory: 256Mi
       envoyService:
         patch:
           type: StrategicMerge
@@ -71,7 +71,7 @@ spec:
         container:
           resources:
             requests:
-              cpu: 25m
+              cpu: 20m
               memory: 128Mi
             limits:
               memory: 512Mi
@@ -85,6 +85,6 @@ spec:
                     - name: shutdown-manager
                       resources:
                         limits:
-                          memory: 192Mi
+                          memory: 256Mi
       envoyService:
         type: ClusterIP

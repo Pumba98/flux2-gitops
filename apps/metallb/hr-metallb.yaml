@@ -22,9 +22,9 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 192Mi
+          memory: 128Mi
         limits:
-          memory: 384Mi
+          memory: 512Mi
     speaker:
       resources:
         requests:
@@ -36,35 +36,35 @@ spec:
       frrk8s:
         resources:
           requests:
-            cpu: 5m
+            cpu: 10m
             memory: 64Mi
           limits:
-            memory: 192Mi
+            memory: 256Mi
         frr:
           resources:
             requests:
-              cpu: 5m
+              cpu: 10m
               memory: 64Mi
             limits:
-              memory: 192Mi
+              memory: 256Mi
         reloader:
           resources:
             requests:
-              cpu: 5m
+              cpu: 10m
               memory: 16Mi
             limits:
               memory: 64Mi
         frrMetrics:
           resources:
             requests:
-              cpu: 5m
+              cpu: 10m
               memory: 64Mi
             limits:
               memory: 128Mi
         frrStatus:
           resources:
             requests:
-              cpu: 5m
+              cpu: 10m
               memory: 64Mi
             limits:
               memory: 128Mi

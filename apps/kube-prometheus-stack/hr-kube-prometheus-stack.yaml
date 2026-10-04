@@ -44,7 +44,7 @@ spec:
     kube-state-metrics:
       resources:
         requests:
-          cpu: 25m
+          cpu: 20m
           memory: 256Mi
         limits:
           memory: 512Mi
@@ -59,7 +59,7 @@ spec:
       prometheusConfigReloader:
         resources:
           requests:
-            cpu: 5m
+            cpu: 10m
             memory: 32Mi
           limits:
             memory: 128Mi
@@ -202,28 +202,25 @@ spec:
         dashboards:
           enabled: true
           searchNamespace: ALL
+          initDashboards: true
+          restartPolicy: Always
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8084
+            periodSeconds: 5
+            failureThreshold: 60
         datasources:
           enabled: true
           searchNamespace: ALL
-          env:
-            HEALTH_PORT: "8081"
-        livenessProbe:
-          exec:
-            command:
-              - /app/.venv/bin/python
-              - -c
-              - import os, urllib.request; urllib.request.urlopen("http://127.0.0.1:" + os.environ.get("HEALTH_PORT", "8080") + "/healthz", timeout=5)
-          periodSeconds: 30
-          timeoutSeconds: 10
-          failureThreshold: 3
-        readinessProbe:
-          exec:
-            command:
-              - /app/.venv/bin/python
-              - -c
-              - import os, urllib.request; urllib.request.urlopen("http://127.0.0.1:" + os.environ.get("HEALTH_PORT", "8080") + "/healthz", timeout=5)
-          periodSeconds: 30
-          timeoutSeconds: 10
+          initDatasources: true
+          restartPolicy: Always
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8082
+            periodSeconds: 5
+            failureThreshold: 60
         resources:
           requests:
             cpu: 50m
@@ -235,7 +232,7 @@ spec:
           cpu: 100m
           memory: 512Mi
         limits:
-          memory: 1536Mi
+          memory: 2Gi
       serviceMonitor:
         enabled: true
       # Exposed via httproute
@@ -258,7 +255,7 @@ spec:
         resources:
           requests:
             cpu: 250m
-            memory: 1536Mi
+            memory: 2Gi
           limits:
             memory: 4Gi
         storageSpec:

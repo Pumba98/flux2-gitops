@@ -27,7 +27,7 @@ spec:
               tag: v1.13.0@sha256:a5b032e15f7570493977b330a5a86dcffebb807d35685ad803e47afb62d105f2
             resources:
               requests:
-                cpu: 5m
+                cpu: 10m
                 memory: 16Mi
               limits:
                 memory: 64Mi
@@ -79,7 +79,7 @@ spec:
               runAsGroup: 65532
             resources:
               requests:
-                cpu: 5m
+                cpu: 10m
                 memory: 32Mi
               limits:
                 memory: 128Mi
