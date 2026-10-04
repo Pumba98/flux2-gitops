@@ -31,6 +31,19 @@ spec:
     controllers:
       primary:
         type: statefulset
+        # initContainers:
+        #   # Init Container for Major PostgreSQL Upgrades, not needed permanently
+        #   pgautoupgrade:
+        #     image:
+        #       repository: pgautoupgrade/pgautoupgrade
+        #       tag: 18-trixie
+        #     # securityContext:
+        #     #   runAsUser: 0
+        #     #   runAsGroup: 0
+        #     env:
+        #       PGAUTO_ONESHOT: "yes"
+        #       POSTGRES_DB: paperless-ngx
+        #       POSTGRES_PASSWORD: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
         containers:
           postgresql:
             image:
@@ -86,19 +99,6 @@ spec:
               readiness:
                 enabled: true
                 port: 9187
-        # initContainers:
-          # # Init Container for Major PostgreSQL Upgrades, not needed permanently
-          # pgautoupgrade:
-          #   image:
-          #     repository: pgautoupgrade/pgautoupgrade
-          #     tag: 18-trixie
-          #   # securityContext:
-          #   #   runAsUser: 0
-          #   #   runAsGroup: 0
-          #   env:
-          #     PGAUTO_ONESHOT: "yes"
-          #     POSTGRES_DB: paperless-ngx
-          #     POSTGRES_PASSWORD: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
     service:
       primary:
         controller: primary
