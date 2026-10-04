@@ -20,6 +20,7 @@ spec:
   values:
     kind: Deployment
     deschedulerPolicy:
+      nodeSelector: "!node-role.kubernetes.io/control-plane"
       metricsProviders:
         - source: KubernetesMetrics
       profiles:
