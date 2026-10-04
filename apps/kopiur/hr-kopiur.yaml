@@ -27,7 +27,7 @@ spec:
         mode: self
       resources:
         requests:
-          cpu: 25m
+          cpu: 20m
           memory: 64Mi
         limits:
           memory: 256Mi

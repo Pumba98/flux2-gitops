@@ -30,7 +30,7 @@ spec:
       envoyGateway:
         resources:
           requests:
-            memory: 100Mi
+            memory: 128Mi
             cpu: 50m
           limits:
-            memory: 500Mi
+            memory: 512Mi

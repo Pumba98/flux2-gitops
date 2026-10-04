@@ -60,11 +60,11 @@ spec:
                   - ALL
             resources:
               requests:
-                cpu: 25m
+                cpu: 20m
                 memory: 128Mi
               limits:
                 cpu: 750m
-                memory: 768Mi
+                memory: 1Gi
             probes:
               liveness:
                 enabled: true
@@ -91,7 +91,7 @@ spec:
                 memory: 32Mi
               limits:
                 cpu: 150m
-                memory: 192Mi
+                memory: 256Mi
             probes:
               liveness:
                 enabled: true

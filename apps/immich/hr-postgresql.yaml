@@ -62,7 +62,7 @@ spec:
                 memory: 512Mi
               limits:
                 cpu: 750m
-                memory: 1536Mi
+                memory: 2Gi
             probes:
               liveness:
                 enabled: true
@@ -89,7 +89,7 @@ spec:
                 memory: 32Mi
               limits:
                 cpu: 150m
-                memory: 192Mi
+                memory: 256Mi
             probes:
               liveness:
                 enabled: true

@@ -25,10 +25,10 @@ spec:
             key: cloudflare_api_token
     resources:
       requests:
-        memory: 100Mi
-        cpu: 25m
+        memory: 128Mi
+        cpu: 20m
       limits:
-        memory: 250Mi
+        memory: 256Mi
     logLevel: debug
     sources:
     - gateway-httproute
