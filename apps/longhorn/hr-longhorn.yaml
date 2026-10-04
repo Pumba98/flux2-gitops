@@ -29,6 +29,20 @@ spec:
       dataEngine: v1
     csi:
       allowControllerSecretAccess: false
+    longhornManager:
+      resources:
+        requests:
+          cpu: 150m
+          memory: 512Mi
+        limits:
+          memory: 1Gi
+    longhornGlobalManager:
+      resources:
+        requests:
+          cpu: 50m
+          memory: 64Mi
+        limits:
+          memory: 256Mi
     # Exposed via httprout
     ingress:
       enabled: false

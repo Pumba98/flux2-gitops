@@ -25,9 +25,23 @@ spec:
         runAsUser: 999
         runAsGroup: 999
         fsGroup: 999
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       primary:
         type: statefulset
+        # initContainers:
+        #   # Init Container for Major PostgreSQL Upgrades, not needed permanently
+        #   pgautoupgrade:
+        #     image:
+        #       repository: ghcr.io/pumba98/pgautoupgrade-vchord
+        #       tag: 18-debian-v0.5.3
+        #     env:
+        #       PGAUTO_ONESHOT: "yes"
+        #       POSTGRES_USER: immich
+        #       POSTGRES_DB: immich
+        #       POSTGRES_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
         containers:
           postgresql:
             image:
@@ -37,18 +51,25 @@ spec:
               POSTGRES_DB: immich
               POSTGRES_USER: immich
               POSTGRES_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
-                cpu: 500m
+                cpu: 50m
                 memory: 512Mi
               limits:
                 cpu: 750m
-                memory: 768Mi
+                memory: 2Gi
             probes:
               liveness:
                 enabled: true
+                port: 5432
               readiness:
                 enabled: true
+                port: 5432
           metrics:
             image:
               repository: quay.io/prometheuscommunity/postgres-exporter
@@ -57,44 +78,25 @@ spec:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
               DATA_SOURCE_USER: immich
               DATA_SOURCE_PASS: ${SECRET_IMMICH_DB_PASSWORD}
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
+                memory: 32Mi
               limits:
                 cpu: 150m
-                memory: 192Mi
+                memory: 256Mi
             probes:
               liveness:
                 enabled: true
+                port: 9187
               readiness:
                 enabled: true
-        initContainers:
-          init-postgres-permissions:
-            image:
-              repository: alpine
-              tag: 3.24@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6
-            command: 
-            - /bin/sh
-            - -c
-            - |
-              chown -R 999:999 $PGDATA
-              chmod 700 $PGDATA
-            env:
-              PGDATA: /var/lib/postgresql
-            securityContext:
-              runAsUser: 0
-              runAsGroup: 0
-          # # Init Container for Major PostgreSQL Upgrades, not needed permanently
-          # pgautoupgrade:
-          #   image:
-          #     repository: ghcr.io/pumba98/pgautoupgrade-vchord
-          #     tag: 18-debian-v0.5.3
-          #   env:
-          #     PGAUTO_ONESHOT: "yes"
-          #     POSTGRES_USER: immich
-          #     POSTGRES_DB: immich
-          #     POSTGRES_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
+                port: 9187
     service:
       primary:
         controller: primary

@@ -23,6 +23,8 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         annotations:
@@ -44,6 +46,11 @@ spec:
             envFrom:
               - secretRef:
                   name: garage-secrets
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 100m
@@ -80,6 +87,11 @@ spec:
               - /bin/sh
               - -c
               - mkdir -p /var/lib/garage/store/data
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
     service:
       main:
         controller: main

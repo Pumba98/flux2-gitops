@@ -25,6 +25,9 @@ spec:
         runAsUser: 999
         runAsGroup: 999
         fsGroup: 999
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       master:
         type: statefulset
@@ -43,18 +46,25 @@ spec:
                   secretKeyRef:
                     name: authelia
                     key: session.redis.password.txt
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
+                memory: 64Mi
               limits:
                 cpu: 150m
-                memory: 192Mi
+                memory: 256Mi
             probes:
               liveness:
                 enabled: true
+                port: 6379
               readiness:
                 enabled: true
+                port: 6379
           metrics:
             image:
               repository: oliver006/redis_exporter
@@ -66,18 +76,25 @@ spec:
                   secretKeyRef:
                     name: authelia
                     key: session.redis.password.txt
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
+                memory: 32Mi
               limits:
                 cpu: 150m
-                memory: 192Mi
+                memory: 256Mi
             probes:
               liveness:
                 enabled: true
+                port: 9121
               readiness:
                 enabled: true
+                port: 9121
         statefulset:
           volumeClaimTemplates:
             - name: redis-data

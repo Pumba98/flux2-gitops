@@ -30,6 +30,25 @@ spec:
       replicas: 1
       strategy:
         type: RollingUpdate
+      securityContext:
+        pod:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        container:
+          runAsNonRoot: true
+          runAsUser: 8000
+          runAsGroup: 8000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+      resources:
+        requests:
+          cpu: 10m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
       extraVolumes:
       - name: users-volume
         secret:

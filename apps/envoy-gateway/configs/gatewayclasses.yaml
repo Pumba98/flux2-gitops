@@ -19,6 +19,25 @@ spec:
   provider:
     type: Kubernetes
     kubernetes:
+      envoyDeployment:
+        container:
+          resources:
+            requests:
+              cpu: 20m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+        patch:
+          type: StrategicMerge
+          value:
+            spec:
+              template:
+                spec:
+                  containers:
+                    - name: shutdown-manager
+                      resources:
+                        limits:
+                          memory: 256Mi
       envoyService:
         patch:
           type: StrategicMerge
@@ -48,5 +67,24 @@ spec:
   provider:
     type: Kubernetes
     kubernetes:
+      envoyDeployment:
+        container:
+          resources:
+            requests:
+              cpu: 20m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+        patch:
+          type: StrategicMerge
+          value:
+            spec:
+              template:
+                spec:
+                  containers:
+                    - name: shutdown-manager
+                      resources:
+                        limits:
+                          memory: 256Mi
       envoyService:
         type: ClusterIP

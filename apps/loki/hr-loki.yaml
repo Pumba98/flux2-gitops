@@ -47,6 +47,12 @@ spec:
         delete_request_store: filesystem
       rulerConfig:
         alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
+      livenessProbe:
+        tcpSocket:
+          port: http-metrics
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        failureThreshold: 6
     write:
       replicas: 0
     read:
@@ -58,13 +64,46 @@ spec:
       persistence:
         size: 8Gi
         storageClass: longhorn-xfs
+      resources:
+        requests:
+          cpu: 50m
+          memory: 512Mi
+        limits:
+          memory: 1Gi
+    sidecar:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 128Mi
+        limits:
+          memory: 256Mi
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: 8080
+      readinessProbe:
+        httpGet:
+          path: /healthz
+          port: 8080
+    gateway:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32Mi
+        limits:
+          memory: 128Mi
+      livenessProbe:
+        httpGet:
+          path: /
+          port: http-metrics
+        initialDelaySeconds: 15
     test:
       enabled: false
     monitoring:
       selfMonitoring:
         enabled: false
-      lokiCanary:
-        enabled: false
+    lokiCanary:
+      enabled: false
     resultsCache:
       enabled: false
     chunksCache:

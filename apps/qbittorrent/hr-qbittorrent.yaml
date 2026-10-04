@@ -21,7 +21,7 @@ spec:
     - name: longhorn
       namespace: longhorn-system
     - name: pod-gateway-vpn
-      namespace: networking
+      namespace: pod-gateway-system
   values:
     controllers:
       main:
@@ -33,6 +33,26 @@ spec:
             env:
               WEBUI_PORT: 8080
               TORRENTING_PORT: 6881
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 911
+              runAsGroup: 911
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 1Gi
     service:
       main:
         controller: main

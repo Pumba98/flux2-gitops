@@ -22,6 +22,11 @@ spec:
     - name: immich-redis
     - name: immich-postgresql
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -35,6 +40,20 @@ spec:
               DB_USERNAME: immich
               DB_PASSWORD: "${SECRET_IMMICH_DB_PASSWORD}"
               REDIS_HOSTNAME: immich-redis-master
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 20m
+                memory: 256Mi
+              limits:
+                memory: 4Gi
             probes:
               liveness:
                 enabled: true
@@ -51,3 +70,11 @@ spec:
     persistence:
       cache:
         type: emptyDir
+      dotcache:
+        type: emptyDir
+        globalMounts:
+          - path: /.cache
+      dotconfig:
+        type: emptyDir
+        globalMounts:
+          - path: /.config

@@ -23,6 +23,23 @@ spec:
     alloy:
       # Anonymous usage reporting to Grafana Labs.
       enableReporting: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 473
+        runAsGroup: 473
+      resources:
+        requests:
+          cpu: 10m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
+      livenessProbe:
+        httpGet:
+          path: /-/ready
+          port: 12345
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        failureThreshold: 6
       configMap:
         content: |-
           discovery.kubernetes "pods" {
@@ -63,6 +80,13 @@ spec:
               url = "http://loki-gateway/loki/api/v1/push"
             }
           }
+    configReloader:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Mi
+        limits:
+          memory: 128Mi
     controller:
       type: daemonset
       # Collect logs from the control-plane nodes too.

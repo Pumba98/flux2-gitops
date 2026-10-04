@@ -23,6 +23,11 @@ spec:
     - name: paperless-ngx-redis
     - name: paperless-ngx-postgresql
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -39,8 +44,6 @@ spec:
               PAPERLESS_DBUSER: paperless-ngx
               PAPERLESS_DBPASS: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
               PAPERLESS_REDIS: redis://paperless-ngx-redis-master:6379
-              USERMAP_UID: 33
-              USERMAP_GID: 33
               PAPERLESS_CONSUMPTION_DIR: /paperless/consume
               PAPERLESS_DATA_DIR: /paperless/data
               PAPERLESS_MEDIA_ROOT: /paperless/media
@@ -74,6 +77,20 @@ spec:
                     ]
                   }
                 }
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 33
+              runAsGroup: 33
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 20m
+                memory: 1Gi
+              limits:
+                memory: 4Gi
             probes:
               liveness:
                 enabled: true

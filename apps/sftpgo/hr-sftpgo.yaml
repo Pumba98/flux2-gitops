@@ -27,6 +27,9 @@ spec:
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -50,6 +53,18 @@ spec:
               SFTPGO_HTTPD__BINDINGS__0__OIDC__USERNAME_FIELD: "preferred_username"
               SFTPGO_HTTPD__BINDINGS__0__OIDC__IMPLICIT_ROLES: "true"
               SFTPGO_HTTPD__BINDINGS__0__ENABLED_LOGIN_METHODS: 3
+            securityContext:
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
             probes:
               liveness:
                 enabled: true

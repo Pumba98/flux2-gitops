@@ -25,6 +25,9 @@ spec:
         runAsUser: 999
         runAsGroup: 999
         fsGroup: 999
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       master:
         type: statefulset
@@ -38,36 +41,50 @@ spec:
               - --save 60 1
             env:
               REDIS_REPLICATION_MODE: master
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
+                memory: 64Mi
               limits:
                 cpu: 150m
-                memory: 192Mi
+                memory: 256Mi
             probes:
               liveness:
                 enabled: true
+                port: 6379
               readiness:
                 enabled: true
+                port: 6379
           metrics:
             image:
               repository: oliver006/redis_exporter
               tag: v1.93.0@sha256:6ca518a72f30f7f576ef92963de1b91d3c3f5fd3aeac949f878bfda183587820
             env:
               REDIS_ADDR: localhost:6379
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
+                memory: 32Mi
               limits:
                 cpu: 150m
-                memory: 192Mi
+                memory: 256Mi
             probes:
               liveness:
                 enabled: true
+                port: 9121
               readiness:
                 enabled: true
+                port: 9121
         statefulset:
           volumeClaimTemplates:
             - name: redis-data

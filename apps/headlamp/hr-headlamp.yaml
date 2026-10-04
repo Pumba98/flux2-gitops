@@ -19,6 +19,21 @@ spec:
   values:
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
+    podSecurityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+    resources:
+      requests:
+        cpu: 10m
+        memory: 128Mi
+      limits:
+        memory: 512Mi
     initContainers:
       - image: ghcr.io/headlamp-k8s/headlamp-plugin-flux:v0.7.0@sha256:636c7a5ae0d4eb196c192f8f1cde06f20f1f5ebdf1863f6e57d22444d8b8360c
         command:
@@ -26,6 +41,14 @@ spec:
           - -c
           - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
         name: headlamp-plugins
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 100
+          runAsGroup: 101
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
         volumeMounts:
           - mountPath: /build/plugins
             name: headlamp-plugins

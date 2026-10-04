@@ -22,7 +22,7 @@ spec:
     - name: longhorn
       namespace: longhorn-system
     - name: pod-gateway-vpn
-      namespace: networking
+      namespace: pod-gateway-system
   values:
     controllers:
       radarr:
@@ -34,8 +34,6 @@ spec:
               repository: ghcr.io/linuxserver/radarr
               tag: 6.4.4@sha256:adb6c09d6b729ea5e642c99cea35af72702ef476bf4763f153299ac5db9f0b4f
             env:
-              PUID: "1000"
-              PGID: "1000"
               TZ: Etc/UTC
               RADARR__AUTH__METHOD: External
               RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
@@ -44,6 +42,32 @@ spec:
                   secretKeyRef:
                     name: arrs-secrets
                     key: RADARR_API_KEY
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       sonarr:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -53,8 +77,6 @@ spec:
               repository: ghcr.io/linuxserver/sonarr
               tag: 4.0.20@sha256:f247545d23ba8b233d6604575347e48a623fe6ad75dda02348bf81917f3b5c06
             env:
-              PUID: "1000"
-              PGID: "1000"
               TZ: Etc/UTC
               SONARR__AUTH__METHOD: External
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
@@ -63,6 +85,32 @@ spec:
                   secretKeyRef:
                     name: arrs-secrets
                     key: SONARR_API_KEY
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       bazarr:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -72,8 +120,6 @@ spec:
               repository: ghcr.io/linuxserver/bazarr
               tag: 1.6.2@sha256:8b30e81c4aec2991f469e78fae8afaa89ecc9b21a80e3897f50427216b55470c
             env:
-              PUID: "1000"
-              PGID: "1000"
               TZ: Etc/UTC
               BAZARR__AUTH__METHOD: External
               BAZARR__AUTH__REQUIRED: DisabledForLocalAddresses
@@ -82,6 +128,32 @@ spec:
                   secretKeyRef:
                     name: arrs-secrets
                     key: SONARR_API_KEY
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /api/system/ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /api/system/ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /api/system/ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       prowlarr:
         containers:
           app:
@@ -89,17 +161,67 @@ spec:
               repository: ghcr.io/linuxserver/prowlarr
               tag: 2.6.5@sha256:f2b26429893d4c4cb71941b7ee50b1bdecd9d5f9f9e02d5410615e9f4f7c8d95
             env:
-              PUID: "1000"
-              PGID: "1000"
               TZ: Etc/UTC
               PROWLARR__AUTH__METHOD: External
               PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 20m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       flaresolverr:
         containers:
           app:
             image:
               repository: ghcr.io/flaresolverr/flaresolverr
               tag: v3.5.2@sha256:c80ae007ce2ccdcd217a12426e4f039ef763ff90738c808d38810c3e59323767
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /health
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /health
+              startup:
+                enabled: true
+                type: HTTP
+                path: /health
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 50m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
     service:
       radarr:
         controller: radarr

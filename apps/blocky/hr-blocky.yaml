@@ -19,6 +19,11 @@ spec:
     - name: envoy-gateway
       namespace: networking
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         replicas: 2
@@ -30,6 +35,18 @@ spec:
             image:
               repository: ghcr.io/0xerr0r/blocky
               tag: v0.35.0@sha256:4f165b63db0d76c96ecc47c7a8f57caeedc003a912bdce29abb0e283ce02e16b
+            securityContext:
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 20m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
             probes:
               liveness:
                 enabled: true

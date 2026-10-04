@@ -20,6 +20,13 @@ spec:
       namespace: longhorn-system
     - name: tandoor-recipes-postgresql
   values:
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -31,6 +38,7 @@ spec:
               ALLOWED_HOSTS: recipes.${SECRET_DOMAIN}
               SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
               TZ: Europe/Berlin
+              HOME: /tmp
               DB_ENGINE: django.db.backends.postgresql
               POSTGRES_HOST: tandoor-recipes-postgresql-primary
               POSTGRES_PORT: "5432"
@@ -60,6 +68,20 @@ spec:
                     ]
                   }
                 }
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
             probes:
               liveness:
                 enabled: true

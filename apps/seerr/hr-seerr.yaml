@@ -21,6 +21,11 @@ spec:
     - name: longhorn
       namespace: longhorn-system
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -28,6 +33,36 @@ spec:
             image:
               repository: seerr/seerr
               tag: v3.5.0@sha256:27602401178d54f1964442287b9f23f67a3fa2252645ee8065839ea1c3f69e45
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /api/v1/status
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /api/v1/status
+              startup:
+                enabled: true
+                type: HTTP
+                path: /api/v1/status
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
     service:
       main:
         controller: main
