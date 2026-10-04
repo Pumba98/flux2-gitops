@@ -137,6 +137,8 @@ spec:
         - backendRefs:
           - identifier: radarr
             port: http
+          timeouts:
+            request: 120s
       sonarr:
         hostnames:
         - "sonarr.${SECRET_DOMAIN}"
@@ -147,6 +149,8 @@ spec:
         - backendRefs:
           - identifier: sonarr
             port: http
+          timeouts:
+            request: 120s
       bazarr:
         hostnames:
         - "bazarr.${SECRET_DOMAIN}"
