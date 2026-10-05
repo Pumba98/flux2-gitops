@@ -20,6 +20,10 @@ spec:
               defaultClassReplicaCount: 1
             defaultSettings:
               nodeDrainPolicy: always-allow
+            # No backups on the fallback cluster
+            defaultBackupStore:
+              backupTarget: ""
+              backupTargetCredentialSecret: ""
     - target:
         kind: StorageClass
         name: longhorn-backup
@@ -30,6 +34,7 @@ spec:
           name: longhorn-backup
         parameters:
           numberOfReplicas: "1"
+          recurringJobSelector: '[ { "name":"snapshot-6h", "isGroup":false } ]'
     - target:
         kind: StorageClass
         name: longhorn-xfs
@@ -60,3 +65,13 @@ spec:
         kind: HTTPRoute
         metadata:
           name: longhorn
+    # No backups on the fallback cluster.
+    - target:
+        kind: RecurringJob
+        name: backup-daily
+      patch: |-
+        $patch: delete
+        apiVersion: longhorn.io/v1beta2
+        kind: RecurringJob
+        metadata:
+          name: backup-daily
