@@ -3,6 +3,8 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: internal
+  labels:
+    dns-instance: bind
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
