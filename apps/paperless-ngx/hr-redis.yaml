@@ -53,7 +53,7 @@ spec:
           metrics:
             image:
               repository: oliver006/redis_exporter
-              tag: v1.93.0@sha256:6ca518a72f30f7f576ef92963de1b91d3c3f5fd3aeac949f878bfda183587820
+              tag: v1.94.0@sha256:0842ef7110e62b40bbde2d5c11f38c6fbd99f7100c75e3866637c1b335a1eff7
             env:
               REDIS_ADDR: localhost:6379
             resources:
