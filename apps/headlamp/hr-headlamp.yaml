@@ -37,6 +37,7 @@ spec:
           enabled: true
           name: headlamp-secrets
           hasScopes: true
+        autoLogin: true
       pluginsDir: /build/plugins
     volumeMounts:
       - mountPath: /build/plugins
