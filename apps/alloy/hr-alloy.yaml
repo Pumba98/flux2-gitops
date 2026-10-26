@@ -38,6 +38,12 @@ spec:
             targets = discovery.kubernetes.pods.targets
 
             rule {
+              source_labels = ["__meta_kubernetes_pod_phase", "__meta_kubernetes_pod_controller_kind"]
+              regex         = "(Succeeded|Failed);(ReplicaSet|DaemonSet|StatefulSet)"
+              action        = "drop"
+            }
+
+            rule {
               source_labels = ["__meta_kubernetes_namespace"]
               target_label  = "namespace"
             }
