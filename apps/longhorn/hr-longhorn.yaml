@@ -60,6 +60,7 @@ spec:
       autoCleanupSnapshotWhenDeleteBackup: true
       autoCleanupSnapshotAfterOnDemandBackupCompleted: true
       rwxVolumeFastFailover: true
+      priorityClass: system-node-critical
     defaultBackupStore:
       backupTarget: s3://longhorn@us-east-1/
       backupTargetCredentialSecret: longhorn-system-secrets

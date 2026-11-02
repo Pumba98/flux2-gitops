@@ -68,3 +68,23 @@ spec:
                 - RemovePodsViolatingNodeTaints
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingInterPodAntiAffinity
+        - name: requests
+          pluginConfig:
+            - name: DefaultEvictor
+              args:
+                podProtections:
+                  defaultDisabled:
+                    - PodsWithLocalStorage
+            - name: LowNodeUtilization
+              args:
+                useDeviationThresholds: true
+                thresholds:
+                  cpu: 20
+                  memory: 20
+                targetThresholds:
+                  cpu: 20
+                  memory: 20
+          plugins:
+            balance:
+              enabled:
+                - LowNodeUtilization
