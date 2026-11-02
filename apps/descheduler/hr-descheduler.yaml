@@ -49,11 +49,9 @@ spec:
                 metricsUtilization:
                   source: KubernetesMetrics
                 thresholds:
-                  cpu: 10
                   memory: 10
                   pods: 10
                 targetThresholds:
-                  cpu: 10
                   memory: 10
                   pods: 10
           plugins:
@@ -80,10 +78,8 @@ spec:
                 useDeviationThresholds: true
                 thresholds:
                   cpu: 20
-                  memory: 20
                 targetThresholds:
                   cpu: 20
-                  memory: 20
           plugins:
             balance:
               enabled:
