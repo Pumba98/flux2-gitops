@@ -27,7 +27,7 @@ spec:
 
         - alert: RedisTooManyMasters
           expr: 'count by (service) (redis_instance_info{role="master"}) > 1'
-          for: 0m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -36,7 +36,7 @@ spec:
 
         - alert: RedisDisconnectedSlaves
           expr: 'count without (instance, job) (redis_connected_slaves) - sum without (instance, job) (redis_connected_slaves) - 1 > 0'
-          for: 0m
+          for: 5m
           labels:
             severity: critical
           annotations:
