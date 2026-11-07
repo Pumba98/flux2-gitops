@@ -45,7 +45,7 @@ spec:
                 cpu: 20m
                 memory: 512Mi
               limits:
-                memory: 2Gi
+                memory: 1Gi
       sync-worker:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -61,9 +61,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 256Mi
+                memory: 128Mi
               limits:
-                memory: 2Gi
+                memory: 1Gi
     secrets:
       app-secrets:
         enabled: false

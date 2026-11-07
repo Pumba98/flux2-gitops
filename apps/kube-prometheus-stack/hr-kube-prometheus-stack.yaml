@@ -45,7 +45,7 @@ spec:
       resources:
         requests:
           cpu: 20m
-          memory: 256Mi
+          memory: 128Mi
         limits:
           memory: 512Mi
     prometheusOperator:
@@ -53,7 +53,7 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 128Mi
+          memory: 64Mi
         limits:
           memory: 256Mi
       prometheusConfigReloader:
@@ -223,13 +223,13 @@ spec:
             failureThreshold: 60
         resources:
           requests:
-            cpu: 50m
+            cpu: 10m
             memory: 128Mi
           limits:
             memory: 256Mi
       resources:
         requests:
-          cpu: 100m
+          cpu: 20m
           memory: 512Mi
         limits:
           memory: 2Gi
@@ -254,7 +254,7 @@ spec:
         retention: 7d
         resources:
           requests:
-            cpu: 250m
+            cpu: 70m
             memory: 2Gi
           limits:
             memory: 4Gi

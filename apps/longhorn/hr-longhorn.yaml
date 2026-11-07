@@ -32,14 +32,14 @@ spec:
     longhornManager:
       resources:
         requests:
-          cpu: 150m
-          memory: 512Mi
+          cpu: 60m
+          memory: 256Mi
         limits:
           memory: 1Gi
     longhornGlobalManager:
       resources:
         requests:
-          cpu: 50m
+          cpu: 10m
           memory: 64Mi
         limits:
           memory: 256Mi

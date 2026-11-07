@@ -56,10 +56,10 @@ spec:
                   - ALL
             resources:
               requests:
-                cpu: 50m
+                cpu: 10m
                 memory: 512Mi
               limits:
-                memory: 2Gi
+                memory: 1Gi
             probes:
               liveness:
                 enabled: true

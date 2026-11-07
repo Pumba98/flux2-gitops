@@ -25,7 +25,7 @@ spec:
             key: cloudflare_api_token
     resources:
       requests:
-        memory: 128Mi
+        memory: 64Mi
         cpu: 20m
       limits:
         memory: 256Mi

@@ -30,7 +30,7 @@ spec:
     resources:
       requests:
         cpu: 10m
-        memory: 128Mi
+        memory: 64Mi
       limits:
         memory: 256Mi
     cainjector:
@@ -38,14 +38,14 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 128Mi
+          memory: 64Mi
         limits:
           memory: 256Mi
     webhook:
       resources:
         requests:
           cpu: 10m
-          memory: 64Mi
+          memory: 32Mi
         limits:
           memory: 128Mi
     podDnsPolicy: "None"
