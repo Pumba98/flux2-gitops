@@ -1,0 +1,16 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: loki-app
+  namespace: flux-system
+spec:
+  patches:
+    # single node: required anti-affinity blocks the gateway's rolling-update surge
+    - target:
+        kind: HelmRelease
+        name: loki
+      patch: |-
+        - op: add
+          path: /spec/values/gateway/affinity
+          value: null

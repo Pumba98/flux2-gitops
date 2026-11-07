@@ -22,5 +22,6 @@ patches:
 - path: bind9.yaml
 - path: blocky.yaml
 - path: kube-prometheus-stack.yaml
+- path: loki.yaml
 - path: longhorn.yaml
 - path: metallb.yaml
