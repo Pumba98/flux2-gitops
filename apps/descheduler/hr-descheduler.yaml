@@ -22,10 +22,10 @@ spec:
     resources:
       requests:
         cpu: 10m
-        memory: 128Mi
+        memory: 64Mi
       limits:
         cpu: null
-        memory: 256Mi
+        memory: 128Mi
     deschedulerPolicy:
       nodeSelector: "!node-role.kubernetes.io/control-plane"
       metricsProviders:
@@ -73,21 +73,3 @@ spec:
                 - RemovePodsViolatingNodeTaints
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingInterPodAntiAffinity
-        - name: requests
-          pluginConfig:
-            - name: DefaultEvictor
-              args:
-                podProtections:
-                  defaultDisabled:
-                    - PodsWithLocalStorage
-            - name: LowNodeUtilization
-              args:
-                useDeviationThresholds: true
-                thresholds:
-                  cpu: 20
-                targetThresholds:
-                  cpu: 20
-          plugins:
-            balance:
-              enabled:
-                - LowNodeUtilization
