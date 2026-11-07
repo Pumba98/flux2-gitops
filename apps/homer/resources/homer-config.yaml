@@ -1,6 +1,7 @@
+---
 title: "Dashboard"
-#subtitle: ""
-#logo: ""
+# subtitle: ""
+# logo: ""
 
 header: true
 footer: false
@@ -40,7 +41,7 @@ colors:
 links: []
 
 services:
-#### Cloud ####
+  #### Cloud ####
   - name: "Cloud"
     icon: "fas fa-cloud"
     items:
@@ -79,7 +80,7 @@ services:
         url: "https://jellyfin.${SECRET_DOMAIN}"
 
 
-#### Cloud ####
+  #### Cloud ####
   - name: "Cloud"
     icon: "fas fa-cloud"
     items:
@@ -109,12 +110,12 @@ services:
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/plex.png"
         url: "https://plex.nas.${SECRET_DOMAIN}"
         subtitle: "Synology NAS"
-      # - name: "Jellyfin"
-      #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/jellyfin.png"
-      #   url: "https://jellyfin.nas.${SECRET_DOMAIN}"
-      #   subtitle: "Synology NAS"
+  # - name: "Jellyfin"
+  #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/jellyfin.png"
+  #   url: "https://jellyfin.nas.${SECRET_DOMAIN}"
+  #   subtitle: "Synology NAS"
 
-#### Management ####
+  #### Management ####
   - name: "Management"
     icon: "fas fa-door-open"
     items:
@@ -141,7 +142,7 @@ services:
         logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/prowlarr.png"
         url: "https://prowlarr.${SECRET_DOMAIN}"
 
-#### Monitoring ####
+  #### Monitoring ####
   - name: "Monitoring"
     icon: "fas fa-desktop"
     items:
