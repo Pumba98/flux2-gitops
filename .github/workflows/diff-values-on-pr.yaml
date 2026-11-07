@@ -1,3 +1,4 @@
+---
 name: Create Helm Diff
 
 on: # yamllint disable-line rule:truthy

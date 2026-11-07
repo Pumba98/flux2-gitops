@@ -33,8 +33,8 @@ spec:
   credentialProjection:
     enabled: true
   sources:
-    - pvc:
-        name: sftpgo-config
+  - pvc:
+      name: sftpgo-config
   retention:
     keepDaily: 7
     keepWeekly: 1

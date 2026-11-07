@@ -33,8 +33,8 @@ spec:
   credentialProjection:
     enabled: true
   sources:
-    - pvc:
-        name: qbittorrent-config
+  - pvc:
+      name: qbittorrent-config
   retention:
     keepDaily: 7
     keepWeekly: 1

@@ -66,14 +66,14 @@ spec:
     route:
       main:
         hostnames:
-        - "qb.${SECRET_DOMAIN}"
+          - "qb.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: main
-            port: http
+          - backendRefs:
+              - identifier: main
+                port: http
     persistence:
       config:
         existingClaim: qbittorrent-config

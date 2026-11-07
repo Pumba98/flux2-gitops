@@ -30,7 +30,7 @@ spec:
   volumeName: arrs-media-pv
   storageClassName: smb
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Ti

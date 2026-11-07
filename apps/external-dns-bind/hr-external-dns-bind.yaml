@@ -44,8 +44,8 @@ spec:
         memory: 256Mi
     logLevel: debug
     sources:
-    - gateway-httproute
-    - service
+      - gateway-httproute
+      - service
     policy: sync
     # domainFilters:
     # - "${SECRET_DOMAIN}"

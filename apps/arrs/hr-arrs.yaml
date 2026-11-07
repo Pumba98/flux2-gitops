@@ -251,48 +251,48 @@ spec:
     route:
       radarr:
         hostnames:
-        - "radarr.${SECRET_DOMAIN}"
+          - "radarr.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: radarr
-            port: http
-          timeouts:
-            request: 120s
+          - backendRefs:
+              - identifier: radarr
+                port: http
+            timeouts:
+              request: 120s
       sonarr:
         hostnames:
-        - "sonarr.${SECRET_DOMAIN}"
+          - "sonarr.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: sonarr
-            port: http
-          timeouts:
-            request: 120s
+          - backendRefs:
+              - identifier: sonarr
+                port: http
+            timeouts:
+              request: 120s
       bazarr:
         hostnames:
-        - "bazarr.${SECRET_DOMAIN}"
+          - "bazarr.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: bazarr
-            port: http
+          - backendRefs:
+              - identifier: bazarr
+                port: http
       prowlarr:
         hostnames:
-        - "prowlarr.${SECRET_DOMAIN}"
+          - "prowlarr.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: prowlarr
-            port: http
+          - backendRefs:
+              - identifier: prowlarr
+                port: http
     persistence:
       media:
         existingClaim: arrs-media

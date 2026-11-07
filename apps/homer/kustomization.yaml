@@ -4,8 +4,8 @@ kind: Kustomization
 resources:
 - hr-homer.yaml
 configMapGenerator:
-  - name: homer-config
-    files:
-      - config.yml=./resources/homer-config.yaml
+- name: homer-config
+  files:
+  - config.yml=./resources/homer-config.yaml
 generatorOptions:
   disableNameSuffixHash: true

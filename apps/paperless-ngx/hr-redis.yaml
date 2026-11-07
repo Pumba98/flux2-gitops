@@ -91,7 +91,7 @@ spec:
               size: 10Mi
               accessMode: ReadWriteOnce
               globalMounts:
-              - path: /data
+                - path: /data
     service:
       master:
         controller: master

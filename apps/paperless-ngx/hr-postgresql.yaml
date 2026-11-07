@@ -114,8 +114,8 @@ spec:
       data:
         existingClaim: paperless-ngx-postgresql
         globalMounts:
-        - path: /var/lib/postgresql
-          subPath: data
+          - path: /var/lib/postgresql
+            subPath: data
     serviceMonitor:
       main:
         enabled: true

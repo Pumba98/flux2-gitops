@@ -72,14 +72,14 @@ spec:
     route:
       main:
         hostnames:
-        - "seerr.${SECRET_DOMAIN}"
+          - "seerr.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: main
-            port: http
+          - backendRefs:
+              - identifier: main
+                port: http
     persistence:
       config:
         existingClaim: seerr-config

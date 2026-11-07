@@ -78,14 +78,14 @@ spec:
     route:
       main:
         hostnames:
-        - "blocky.${SECRET_DOMAIN}"
+          - "blocky.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: main
-            port: http
+          - backendRefs:
+              - identifier: main
+                port: http
     persistence:
       config:
         type: configMap
@@ -94,6 +94,6 @@ spec:
           - path: /app/config.yml
             subPath: config.yml
             readOnly: true
-    # serviceMonitor:
-    #   main:
-    #     enabled: true
+# serviceMonitor:
+#   main:
+#     enabled: true

@@ -91,35 +91,35 @@ spec:
           slack_api_url: "${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}"
           resolve_timeout: 5m
         receivers:
-        - name: 'null'
-        - name: 'discord'
-          slack_configs:
-          - channel: '#prometheus'
-            icon_url: https://avatars3.githubusercontent.com/u/3380462
-            username: 'Prometheus'
-            send_resolved: true
-            # https://github.com/onedr0p/home-cluster/blob/main/cluster/apps/monitoring/kube-prometheus-stack/helm-release.yaml#L33
-            title: |-
-              [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}
-            text: >-
-              {{ range .Alerts -}}
-                **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} `{{ .Labels.severity }}`{{ end }}
-              {{ if ne .Annotations.summary ""}}**Summary:** {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}**Message:** {{ .Annotations.message }} {{ else if ne .Annotations.description ""}}**Description:** {{ .Annotations.description }}{{ end }}
-                **Details:**
-                {{ range .Labels.SortedPairs }} • {{ .Name }}: `{{ .Value }}`
-                {{ end }}
-              {{ end }}
+          - name: 'null'
+          - name: 'discord'
+            slack_configs:
+              - channel: '#prometheus'
+                icon_url: https://avatars3.githubusercontent.com/u/3380462
+                username: 'Prometheus'
+                send_resolved: true
+                # https://github.com/onedr0p/home-cluster/blob/main/cluster/apps/monitoring/kube-prometheus-stack/helm-release.yaml#L33
+                title: |-
+                  [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}
+                text: >-
+                  {{ range .Alerts -}}
+                    **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} `{{ .Labels.severity }}`{{ end }}
+                  {{ if ne .Annotations.summary ""}}**Summary:** {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}**Message:** {{ .Annotations.message }} {{ else if ne .Annotations.description ""}}**Description:** {{ .Annotations.description }}{{ end }}
+                    **Details:**
+                    {{ range .Labels.SortedPairs }} • {{ .Name }}: `{{ .Value }}`
+                    {{ end }}
+                  {{ end }}
         route:
-          group_by: ['...'] #['alertname', 'job']
+          group_by: ['...'] # ['alertname', 'job']
           group_wait: 30s
           group_interval: 5m
           repeat_interval: 6h
           receiver: 'discord'
           routes:
-          - receiver: 'null'
-            matchers:
-            - severity =~ "none"
-          - receiver: 'discord'
+            - receiver: 'null'
+              matchers:
+                - severity =~ "none"
+            - receiver: 'discord'
     grafana:
       enabled: true
       image:
@@ -143,7 +143,7 @@ spec:
           name: Authelia
           icon: signin
           client_id: wCDESryfxgaEQUrgISZWrcNgNQCCUL3u1PZulzpSTaRvkQTpN4CQvrWx6RTa69flzhonmC5p
-          #client_secret: 
+          # client_secret:
           scopes: openid profile email groups
           empty_scopes: false
           auth_url: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
@@ -159,14 +159,14 @@ spec:
         dashboardproviders.yaml:
           apiVersion: 1
           providers:
-          - name: "default"
-            orgId: 1
-            folder: ""
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/default
+            - name: "default"
+              orgId: 1
+              folder: ""
+              type: file
+              disableDeletion: false
+              editable: true
+              options:
+                path: /var/lib/grafana/dashboards/default
       plugins:
         - grafana-piechart-panel
       dashboards:
@@ -264,15 +264,15 @@ spec:
               resources:
                 requests:
                   storage: 25Gi
-        # additionalScrapeConfigs:
-        # - job_name: node-exporter
-        #   honor_timestamps: true
-        #   static_configs:
-        #   - targets:
-        #     - "192.168.1.10:9100"
-        #     - "192.168.1.11:9100"
-        #     - "192.168.1.15:9100"
+  # additionalScrapeConfigs:
+  # - job_name: node-exporter
+  #   honor_timestamps: true
+  #   static_configs:
+  #   - targets:
+  #     - "192.168.1.10:9100"
+  #     - "192.168.1.11:9100"
+  #     - "192.168.1.15:9100"
   valuesFrom:
-  - kind: ConfigMap
-    name: flux-kube-state-metrics-config
-    valuesKey: kube-state-metrics-config.yaml
+    - kind: ConfigMap
+      name: flux-kube-state-metrics-config
+      valuesKey: kube-state-metrics-config.yaml

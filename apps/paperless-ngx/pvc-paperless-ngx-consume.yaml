@@ -32,7 +32,7 @@ spec:
   volumeName: paperless-ngx-consume-static-pv
   storageClassName: smb
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   resources:
     requests:
       storage: 5Gi

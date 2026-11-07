@@ -33,8 +33,8 @@ spec:
   credentialProjection:
     enabled: true
   sources:
-    - pvc:
-        name: paperless-ngx-postgresql
+  - pvc:
+      name: paperless-ngx-postgresql
   retention:
     keepDaily: 7
     keepWeekly: 1

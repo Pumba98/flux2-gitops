@@ -33,8 +33,8 @@ spec:
   credentialProjection:
     enabled: true
   sources:
-    - pvc:
-        name: radarr-data
+  - pvc:
+      name: radarr-data
   retention:
     keepDaily: 7
     keepWeekly: 1
@@ -114,8 +114,8 @@ spec:
   credentialProjection:
     enabled: true
   sources:
-    - pvc:
-        name: sonarr-data
+  - pvc:
+      name: sonarr-data
   retention:
     keepDaily: 7
     keepWeekly: 1
@@ -195,8 +195,8 @@ spec:
   credentialProjection:
     enabled: true
   sources:
-    - pvc:
-        name: bazarr-data
+  - pvc:
+      name: bazarr-data
   retention:
     keepDaily: 7
     keepWeekly: 1
@@ -276,8 +276,8 @@ spec:
   credentialProjection:
     enabled: true
   sources:
-    - pvc:
-        name: prowlarr-data
+  - pvc:
+      name: prowlarr-data
   retention:
     keepDaily: 7
     keepWeekly: 1

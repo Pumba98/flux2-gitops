@@ -74,14 +74,14 @@ spec:
     route:
       main:
         hostnames:
-        - "jellyfin.${SECRET_DOMAIN}"
+          - "jellyfin.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: main
-            port: http
+          - backendRefs:
+              - identifier: main
+                port: http
     persistence:
       config:
         existingClaim: jellyfin-config

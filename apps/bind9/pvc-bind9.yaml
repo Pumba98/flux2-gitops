@@ -33,8 +33,8 @@ spec:
   credentialProjection:
     enabled: true
   sources:
-    - pvc:
-        name: bind9-data
+  - pvc:
+      name: bind9-data
   retention:
     keepDaily: 7
     keepWeekly: 1

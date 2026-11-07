@@ -30,7 +30,7 @@ spec:
   volumeName: syncthing-files-static-pv
   storageClassName: smb
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Ti

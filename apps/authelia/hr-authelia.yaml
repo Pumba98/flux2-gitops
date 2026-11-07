@@ -50,13 +50,13 @@ spec:
         limits:
           memory: 512Mi
       extraVolumes:
-      - name: users-volume
-        secret:
-          secretName: authelia-users
+        - name: users-volume
+          secret:
+            secretName: authelia-users
       extraVolumeMounts:
-      - name: users-volume
-        mountPath: /config/users_database.yml
-        subPath: users_database.yml
+        - name: users-volume
+          mountPath: /config/users_database.yml
+          subPath: users_database.yml
     configMap:
       theme: dark
       server:
@@ -88,37 +88,37 @@ spec:
       definitions:
         network:
           private:
-          - ${PRIVATE_NETWORK}
-          - 100.64.0.0/10
+            - ${PRIVATE_NETWORK}
+            - 100.64.0.0/10
       access_control:
         default_policy: deny
         rules:
-        # Always require auth
-        - policy: two_factor
-          domain:
-          - syncthing.${SECRET_DOMAIN}
-        - policy: two_factor
-          domain:
-          - radicale.${SECRET_DOMAIN}
-          resources:
-          - '^/.web/.*'
-        - policy: bypass
-          domain:
-          - radicale.${SECRET_DOMAIN}
-        # Disable Authelia for local network
-        - policy: bypass
-          domain: "*.${SECRET_DOMAIN}"
-          networks:
-          - private
-        # Disable Authelia for sftpgo shared files
-        - policy: bypass
-          domain: "sftpgo.${SECRET_DOMAIN}"
-          resources:
-          - '^/web/client/pubshares.*'
-          - '^/static.*'
-        # Applications without auth
-        - policy: two_factor
-          domain: "*.${SECRET_DOMAIN}"
+          # Always require auth
+          - policy: two_factor
+            domain:
+              - syncthing.${SECRET_DOMAIN}
+          - policy: two_factor
+            domain:
+              - radicale.${SECRET_DOMAIN}
+            resources:
+              - '^/.web/.*'
+          - policy: bypass
+            domain:
+              - radicale.${SECRET_DOMAIN}
+          # Disable Authelia for local network
+          - policy: bypass
+            domain: "*.${SECRET_DOMAIN}"
+            networks:
+              - private
+          # Disable Authelia for sftpgo shared files
+          - policy: bypass
+            domain: "sftpgo.${SECRET_DOMAIN}"
+            resources:
+              - '^/web/client/pubshares.*'
+              - '^/static.*'
+          # Applications without auth
+          - policy: two_factor
+            domain: "*.${SECRET_DOMAIN}"
 
       identity_providers:
         oidc:
@@ -138,7 +138,7 @@ spec:
                 path: '/secrets/authelia/oidc.jwk.RS256.pem'
           claims_policies:
             default:
-              id_token: [ email, preferred_username, groups ]
+              id_token: [email, preferred_username, groups]
           clients:
             - client_name: 'Immich'
               # docker run authelia/authelia:latest authelia crypto rand --length 72 --charset rfc3986
@@ -186,7 +186,7 @@ spec:
               consent_mode: implicit
               redirect_uris:
                 - 'https://grafana.${SECRET_DOMAIN}/login/generic_oauth'
-              scopes: [ openid, profile, email, groups ]
+              scopes: [openid, profile, email, groups]
               claims_policy: 'default'
             - client_name: 'SFTPGo'
               client_id: 'MJ04uHbUwWj00-RYG3X4QACoW-45EF0u0ahDEpv48yDT~caYFZMb240_nT8Z3kHrY6jmvY~Q'
@@ -196,7 +196,7 @@ spec:
               consent_mode: implicit
               redirect_uris:
                 - 'https://sftpgo.${SECRET_DOMAIN}/web/oidc/redirect'
-              scopes: [ openid, profile, email, preferred_username ]
+              scopes: [openid, profile, email, preferred_username]
               claims_policy: 'default'
             - client_name: 'Linkwarden'
               client_id: 'hqIfa24KNqYGpyBr1Q400RH1zgUxQnmIvE.e5sYyog-9aQLqbuUarr0F6OoOxSewwEaiXbic'
@@ -225,7 +225,7 @@ spec:
                 - 'https://headlamp.${SECRET_DOMAIN}/oidc-callback'
                 - 'http://localhost:8000'
                 - 'http://localhost:18000'
-              scopes: [ openid, profile, email, groups ]
+              scopes: [openid, profile, email, groups]
               claims_policy: 'default'
             - client_name: 'MyFinNest'
               client_id: 'zjIwLBQHXEJRJskQny5dwTPkgTJe7DO16~8CSg_.4wwn3.rh8o2mWWeu.U0wGfczdjAG6~uM'

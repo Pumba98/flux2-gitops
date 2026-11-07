@@ -95,14 +95,14 @@ spec:
     route:
       main:
         hostnames:
-        - "syncthing.${SECRET_DOMAIN}"
+          - "syncthing.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: main
-            port: http
+          - backendRefs:
+              - identifier: main
+                port: http
     persistence:
       config:
         existingClaim: syncthing-config
