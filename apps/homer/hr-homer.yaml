@@ -17,6 +17,11 @@ spec:
     - name: envoy-gateway
       namespace: networking
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         annotations:
@@ -27,6 +32,18 @@ spec:
               repository: ghcr.io/bastienwirtz/homer
               tag: v26.08.3@sha256:febc8967c9f7648ec37633ef3ae1ec90dbe8b7c46fecab80299f08f05be7ecb6
               pullPolicy: IfNotPresent
+            securityContext:
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
             probes:
               liveness:
                 enabled: true
@@ -48,21 +65,21 @@ spec:
         annotations:
           external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
-        - "homer.${SECRET_DOMAIN}"
+          - "homer.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
-        - name: external
-          namespace: networking
+          - name: internal
+            namespace: networking
+          - name: external
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: main
-            port: http
+          - backendRefs:
+              - identifier: main
+                port: http
     persistence:
       config:
         type: configMap
         name: homer-config
         globalMounts:
-        - path: "/www/assets/config.yml"
-          subPath: config.yml
-          readOnly: true
+          - path: "/www/assets/config.yml"
+            subPath: config.yml
+            readOnly: true

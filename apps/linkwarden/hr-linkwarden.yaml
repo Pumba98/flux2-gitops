@@ -20,6 +20,13 @@ spec:
       namespace: longhorn-system
     - name: linkwarden-postgresql
   values:
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         annotations:
@@ -39,6 +46,20 @@ spec:
             envFrom:
               - secretRef:
                   name: linkwarden
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                memory: 1Gi
             probes:
               liveness:
                 enabled: true
@@ -71,4 +92,4 @@ spec:
       data:
         existingClaim: linkwarden-data
         globalMounts:
-        - path: /data/data
+          - path: /data/data

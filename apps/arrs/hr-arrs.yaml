@@ -22,7 +22,7 @@ spec:
     - name: longhorn
       namespace: longhorn-system
     - name: pod-gateway-vpn
-      namespace: networking
+      namespace: pod-gateway-system
   values:
     controllers:
       radarr:
@@ -34,8 +34,6 @@ spec:
               repository: ghcr.io/linuxserver/radarr
               tag: 6.4.4@sha256:ade5937813c6ae415b29db729386e53fea3ecf067a019849bafbe2d2a6ec02ba
             env:
-              PUID: "1000"
-              PGID: "1000"
               TZ: Etc/UTC
               RADARR__AUTH__METHOD: External
               RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
@@ -44,6 +42,32 @@ spec:
                   secretKeyRef:
                     name: arrs-secrets
                     key: RADARR_API_KEY
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       sonarr:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -53,8 +77,6 @@ spec:
               repository: ghcr.io/linuxserver/sonarr
               tag: 4.0.20@sha256:673dc4609a5672bc8e46069c86ffcea283a86b48d34a6c93d8da8c24a1b87571
             env:
-              PUID: "1000"
-              PGID: "1000"
               TZ: Etc/UTC
               SONARR__AUTH__METHOD: External
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
@@ -63,6 +85,32 @@ spec:
                   secretKeyRef:
                     name: arrs-secrets
                     key: SONARR_API_KEY
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       bazarr:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -72,8 +120,6 @@ spec:
               repository: ghcr.io/linuxserver/bazarr
               tag: 1.6.2@sha256:7ef0e58216900dbce30b123e0eb65f5cb30e36f126de9474acdd2022fb069c54
             env:
-              PUID: "1000"
-              PGID: "1000"
               TZ: Etc/UTC
               BAZARR__AUTH__METHOD: External
               BAZARR__AUTH__REQUIRED: DisabledForLocalAddresses
@@ -82,6 +128,32 @@ spec:
                   secretKeyRef:
                     name: arrs-secrets
                     key: SONARR_API_KEY
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /api/system/ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /api/system/ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /api/system/ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       prowlarr:
         containers:
           app:
@@ -89,17 +161,67 @@ spec:
               repository: ghcr.io/linuxserver/prowlarr
               tag: 2.7.0@sha256:431d7efebcef466e56adaa40a7a2fa2b0e85159a037b8bf465eaadbf0cf5bedf
             env:
-              PUID: "1000"
-              PGID: "1000"
               TZ: Etc/UTC
               PROWLARR__AUTH__METHOD: External
               PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /ping
+              startup:
+                enabled: true
+                type: HTTP
+                path: /ping
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 20m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
       flaresolverr:
         containers:
           app:
             image:
               repository: ghcr.io/flaresolverr/flaresolverr
               tag: v3.5.2@sha256:c80ae007ce2ccdcd217a12426e4f039ef763ff90738c808d38810c3e59323767
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+                path: /health
+              readiness:
+                enabled: true
+                type: HTTP
+                path: /health
+              startup:
+                enabled: true
+                type: HTTP
+                path: /health
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
     service:
       radarr:
         controller: radarr
@@ -129,48 +251,48 @@ spec:
     route:
       radarr:
         hostnames:
-        - "radarr.${SECRET_DOMAIN}"
+          - "radarr.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: radarr
-            port: http
-          timeouts:
-            request: 120s
+          - backendRefs:
+              - identifier: radarr
+                port: http
+            timeouts:
+              request: 120s
       sonarr:
         hostnames:
-        - "sonarr.${SECRET_DOMAIN}"
+          - "sonarr.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: sonarr
-            port: http
-          timeouts:
-            request: 120s
+          - backendRefs:
+              - identifier: sonarr
+                port: http
+            timeouts:
+              request: 120s
       bazarr:
         hostnames:
-        - "bazarr.${SECRET_DOMAIN}"
+          - "bazarr.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: bazarr
-            port: http
+          - backendRefs:
+              - identifier: bazarr
+                port: http
       prowlarr:
         hostnames:
-        - "prowlarr.${SECRET_DOMAIN}"
+          - "prowlarr.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: prowlarr
-            port: http
+          - backendRefs:
+              - identifier: prowlarr
+                port: http
     persistence:
       media:
         existingClaim: arrs-media

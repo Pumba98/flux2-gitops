@@ -21,7 +21,7 @@ spec:
     - name: longhorn
       namespace: longhorn-system
     - name: pod-gateway-vpn
-      namespace: networking
+      namespace: pod-gateway-system
   values:
     controllers:
       main:
@@ -33,6 +33,13 @@ spec:
               pullPolicy: IfNotPresent
             env:
               KEEP_APP_RUNNING: true
+              JDOWNLOADER_MAX_MEM: 1G
+            resources:
+              requests:
+                cpu: 50m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
             probes:
               liveness:
                 enabled: true
@@ -54,16 +61,16 @@ spec:
         annotations:
           external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
-        - "jd2.${SECRET_DOMAIN}"
+          - "jd2.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
-        - name: external
-          namespace: networking
+          - name: internal
+            namespace: networking
+          - name: external
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: main
-            port: http
+          - backendRefs:
+              - identifier: main
+                port: http
     persistence:
       config:
         existingClaim: jd2-config

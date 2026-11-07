@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/pod-gateway-vpn
-  targetNamespace: networking
+  targetNamespace: pod-gateway-system
   interval: 10m
   prune: true
   sourceRef:
@@ -16,4 +16,4 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: pod-gateway-vpn
-      namespace: networking
+      namespace: pod-gateway-system

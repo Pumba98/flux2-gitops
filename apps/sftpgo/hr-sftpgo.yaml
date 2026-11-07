@@ -27,6 +27,9 @@ spec:
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -50,6 +53,18 @@ spec:
               SFTPGO_HTTPD__BINDINGS__0__OIDC__USERNAME_FIELD: "preferred_username"
               SFTPGO_HTTPD__BINDINGS__0__OIDC__IMPLICIT_ROLES: "true"
               SFTPGO_HTTPD__BINDINGS__0__ENABLED_LOGIN_METHODS: 3
+            securityContext:
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 512Mi
             probes:
               liveness:
                 enabled: true
@@ -101,16 +116,16 @@ spec:
         annotations:
           external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
-        - "sftpgo.${SECRET_DOMAIN}"
+          - "sftpgo.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
-        - name: external
-          namespace: networking
+          - name: internal
+            namespace: networking
+          - name: external
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: main
-            port: http
+          - backendRefs:
+              - identifier: main
+                port: http
     persistence:
       config:
         existingClaim: sftpgo-config

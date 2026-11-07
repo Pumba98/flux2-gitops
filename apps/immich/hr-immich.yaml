@@ -24,6 +24,11 @@ spec:
     - name: immich-redis
     - name: immich-postgresql
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -39,6 +44,20 @@ spec:
               REDIS_HOSTNAME: immich-redis-master
               IMMICH_LOG_LEVEL: warn
               IMMICH_HELMET_FILE: "true"
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 50m
+                memory: 1Gi
+              limits:
+                memory: 4Gi
             probes:
               liveness:
                 enabled: true
@@ -60,16 +79,16 @@ spec:
         annotations:
           external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
-        - "immich.${SECRET_DOMAIN}"
+          - "immich.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
-        - name: external
-          namespace: networking
+          - name: internal
+            namespace: networking
+          - name: external
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: main
-            port: http
+          - backendRefs:
+              - identifier: main
+                port: http
     persistence:
       data:
         existingClaim: immich

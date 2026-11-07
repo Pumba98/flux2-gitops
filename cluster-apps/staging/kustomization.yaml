@@ -48,6 +48,6 @@ resources:
 - ../tuppr.yaml
 
 patches:
-#- path: certificate-exporter.yaml
+# - path: certificate-exporter.yaml
 - path: envoy-gateway.yaml
-#- path: longhorn.yaml
+# - path: longhorn.yaml

@@ -17,6 +17,11 @@ spec:
     - name: envoy-gateway
       namespace: networking
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         annotations:
@@ -39,8 +44,21 @@ spec:
               - /etc/cloudflared/config/config.yaml
               - run
               - "${SECRET_CLOUDFLARE_TUNNEL_ID}"
+            securityContext:
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
             probes:
               liveness:
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
@@ -51,6 +69,7 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness:
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
@@ -113,9 +132,9 @@ spec:
                 - port: 53
                   protocol: UDP
             - to:
-              - ipBlock:
-                  cidr: 0.0.0.0/0
-                  except:
-                  - 10.0.0.0/8
-                  - 172.16.0.0/12
-                  - 192.168.0.0/16
+                - ipBlock:
+                    cidr: 0.0.0.0/0
+                    except:
+                      - 10.0.0.0/8
+                      - 172.16.0.0/12
+                      - 192.168.0.0/16

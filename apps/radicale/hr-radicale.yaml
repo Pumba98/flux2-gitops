@@ -20,6 +20,11 @@ spec:
     - name: longhorn
       namespace: longhorn-system
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         annotations:
@@ -29,6 +34,20 @@ spec:
             image:
               repository: tomsquest/docker-radicale
               tag: 3.9.0.0@sha256:2f215d0e6a78ff68c280975af6ce580b05976f70c62b51640397e3eb5a7aa0e9
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 2999
+              runAsGroup: 2999
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
             probes:
               liveness:
                 enabled: true
@@ -47,16 +66,16 @@ spec:
         annotations:
           external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
-        - "radicale.${SECRET_DOMAIN}"
+          - "radicale.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
-        - name: external
-          namespace: networking
+          - name: internal
+            namespace: networking
+          - name: external
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: main
-            port: http
+          - backendRefs:
+              - identifier: main
+                port: http
     persistence:
       config:
         type: configMap

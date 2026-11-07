@@ -22,6 +22,11 @@ spec:
     - name: longhorn
       namespace: longhorn-system
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     controllers:
       main:
         containers:
@@ -29,6 +34,20 @@ spec:
             image:
               repository: syncthing/syncthing
               tag: 2.1.7@sha256:2b71da7c0d0a91a6ae5285ad079226fecc0a365d08b27720e1f7037b018f7546
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
             probes:
               liveness:
                 enabled: true
@@ -76,14 +95,14 @@ spec:
     route:
       main:
         hostnames:
-        - "syncthing.${SECRET_DOMAIN}"
+          - "syncthing.${SECRET_DOMAIN}"
         parentRefs:
-        - name: internal
-          namespace: networking
+          - name: internal
+            namespace: networking
         rules:
-        - backendRefs:
-          - identifier: main
-            port: http
+          - backendRefs:
+              - identifier: main
+                port: http
     persistence:
       config:
         existingClaim: syncthing-config

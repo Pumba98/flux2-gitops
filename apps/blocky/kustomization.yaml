@@ -4,8 +4,8 @@ kind: Kustomization
 resources:
 - hr-blocky.yaml
 configMapGenerator:
-  - name: blocky-config
-    files:
-      - config.yml=./resources/blocky-config.yaml
+- name: blocky-config
+  files:
+  - config.yml=./resources/blocky-config.yaml
 generatorOptions:
   disableNameSuffixHash: true

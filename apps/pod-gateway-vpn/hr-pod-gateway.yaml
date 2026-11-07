@@ -14,6 +14,9 @@ spec:
         name: angelnu-charts
         namespace: flux-system
       interval: 5m
+  install:
+    remediation:
+      retries: 3
   values:
     controllers:
       main:
@@ -22,9 +25,15 @@ spec:
             image:
               repository: ghcr.io/angelnu/pod-gateway
               tag: v1.13.0@sha256:a5b032e15f7570493977b330a5a86dcffebb807d35685ad803e47afb62d105f2
+            resources:
+              requests:
+                cpu: 10m
+                memory: 16Mi
+              limits:
+                memory: 64Mi
           gluetun:
             enabled: true
-            image: 
+            image:
               repository: qmcgaw/gluetun
               tag: v3.41.3@sha256:fa19cc76b2af13d57a8d3dc3066f2ada061b1c761b8aecf989b3877c0486e027
             env:
@@ -38,32 +47,63 @@ spec:
             securityContext:
               capabilities:
                 add:
-                  - NET_ADMIN
-    webhook:
-      image:
-        repository: ghcr.io/angelnu/gateway-admision-controller
-        tag: v3.12.0@sha256:6f6ab596afd5fef0ca4648eadfb21cd37ba86fa5afa8b85edcc072976a61fbed
+                - NET_ADMIN
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 256Mi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                    - /gluetun-entrypoint
+                    - healthcheck
+                  initialDelaySeconds: 30
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 5
+      webhook:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/angelnu/gateway-admision-controller
+              tag: v3.12.0@sha256:6f6ab596afd5fef0ca4648eadfb21cd37ba86fa5afa8b85edcc072976a61fbed
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 65532
+              runAsGroup: 65532
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
     networkpolicies:
       main:
         enabled: true
         egress:
-          - to:
-              - ipBlock:
-                  cidr: 0.0.0.0/0
-            ports:
-              # VPN traffic
-              - port: 1194
-                protocol: UDP
-          - to:
-              - ipBlock:
-                  cidr: ${NETWORK_K8S_CLUSTER_CIDR}
-          - to:
-              - ipBlock:
-                  cidr: ${NETWORK_K8S_SERVICE_CIDR}
+        - to:
+          - ipBlock:
+              cidr: 0.0.0.0/0
+          ports:
+          # VPN traffic
+          - port: 1194
+            protocol: UDP
+        - to:
+          - ipBlock:
+              cidr: ${NETWORK_K8S_CLUSTER_CIDR}
+        - to:
+          - ipBlock:
+              cidr: ${NETWORK_K8S_SERVICE_CIDR}
 
     DNS: ${POD_GATEWAY_VPN_VXLAN}.1
     routed_namespaces:
-      - vpn
+    - vpn
     settings:
       VXLAN_IP_NETWORK: ${POD_GATEWAY_VPN_VXLAN}
       VPN_INTERFACE: tun0
@@ -80,17 +120,17 @@ spec:
   # label, so movers are never injected and egress straight to object storage
   # (the same VPN-bypass volsync had with setGateway: "false").
   postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              kind: MutatingWebhookConfiguration
-            patch: |
-              - op: add
-                path: /webhooks/0/objectSelector
-                value:
-                  matchExpressions:
-                    - key: kopiur.home-operations.com/config
-                      operator: DoesNotExist
-                    - key: app.kubernetes.io/managed-by
-                      operator: NotIn
-                      values: ["kopiur"]
+  - kustomize:
+      patches:
+      - target:
+          kind: MutatingWebhookConfiguration
+        patch: |
+          - op: add
+            path: /webhooks/0/objectSelector
+            value:
+              matchExpressions:
+                - key: kopiur.home-operations.com/config
+                  operator: DoesNotExist
+                - key: app.kubernetes.io/managed-by
+                  operator: NotIn
+                  values: ["kopiur"]

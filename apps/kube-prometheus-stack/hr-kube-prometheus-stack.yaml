@@ -35,8 +35,34 @@ spec:
           operator: Exists
         - effect: NoExecute
           operator: Exists
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32Mi
+        limits:
+          memory: 128Mi
+    kube-state-metrics:
+      resources:
+        requests:
+          cpu: 20m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
     prometheusOperator:
       createCustomResource: false
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Mi
+        limits:
+          memory: 256Mi
+      prometheusConfigReloader:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 128Mi
     kubeControllerManager:
       enabled: false
     kubeScheduler:
@@ -46,10 +72,17 @@ spec:
     kubeProxy:
       enabled: false
     alertmanager:
-      image:
-        registry: quay.io
-        repository: prometheus/alertmanager
-        tag: v0.34.2@sha256:39d8bb3966c694a124428a3a88fbcffd40bd069129ecd47c059f8a3f17c55f3b
+      alertmanagerSpec:
+        image:
+          registry: quay.io
+          repository: prometheus/alertmanager
+          tag: v0.34.2@sha256:39d8bb3966c694a124428a3a88fbcffd40bd069129ecd47c059f8a3f17c55f3b
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            memory: 256Mi
       # Exposed via httproutes.yaml
       ingress:
         enabled: false
@@ -58,35 +91,35 @@ spec:
           slack_api_url: "${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}"
           resolve_timeout: 5m
         receivers:
-        - name: 'null'
-        - name: 'discord'
-          slack_configs:
-          - channel: '#prometheus'
-            icon_url: https://avatars3.githubusercontent.com/u/3380462
-            username: 'Prometheus'
-            send_resolved: true
-            # https://github.com/onedr0p/home-cluster/blob/main/cluster/apps/monitoring/kube-prometheus-stack/helm-release.yaml#L33
-            title: |-
-              [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}
-            text: >-
-              {{ range .Alerts -}}
-                **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} `{{ .Labels.severity }}`{{ end }}
-              {{ if ne .Annotations.summary ""}}**Summary:** {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}**Message:** {{ .Annotations.message }} {{ else if ne .Annotations.description ""}}**Description:** {{ .Annotations.description }}{{ end }}
-                **Details:**
-                {{ range .Labels.SortedPairs }} • {{ .Name }}: `{{ .Value }}`
-                {{ end }}
-              {{ end }}
+          - name: 'null'
+          - name: 'discord'
+            slack_configs:
+              - channel: '#prometheus'
+                icon_url: https://avatars3.githubusercontent.com/u/3380462
+                username: 'Prometheus'
+                send_resolved: true
+                # https://github.com/onedr0p/home-cluster/blob/main/cluster/apps/monitoring/kube-prometheus-stack/helm-release.yaml#L33
+                title: |-
+                  [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}
+                text: >-
+                  {{ range .Alerts -}}
+                    **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} `{{ .Labels.severity }}`{{ end }}
+                  {{ if ne .Annotations.summary ""}}**Summary:** {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}**Message:** {{ .Annotations.message }} {{ else if ne .Annotations.description ""}}**Description:** {{ .Annotations.description }}{{ end }}
+                    **Details:**
+                    {{ range .Labels.SortedPairs }} • {{ .Name }}: `{{ .Value }}`
+                    {{ end }}
+                  {{ end }}
         route:
-          group_by: ['...'] #['alertname', 'job']
+          group_by: ['...'] # ['alertname', 'job']
           group_wait: 30s
           group_interval: 5m
           repeat_interval: 6h
           receiver: 'discord'
           routes:
-          - receiver: 'null'
-            matchers:
-            - severity =~ "none"
-          - receiver: 'discord'
+            - receiver: 'null'
+              matchers:
+                - severity =~ "none"
+            - receiver: 'discord'
     grafana:
       enabled: true
       image:
@@ -110,7 +143,7 @@ spec:
           name: Authelia
           icon: signin
           client_id: wCDESryfxgaEQUrgISZWrcNgNQCCUL3u1PZulzpSTaRvkQTpN4CQvrWx6RTa69flzhonmC5p
-          #client_secret: 
+          # client_secret:
           scopes: openid profile email groups
           empty_scopes: false
           auth_url: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
@@ -126,14 +159,14 @@ spec:
         dashboardproviders.yaml:
           apiVersion: 1
           providers:
-          - name: "default"
-            orgId: 1
-            folder: ""
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/default
+            - name: "default"
+              orgId: 1
+              folder: ""
+              type: file
+              disableDeletion: false
+              editable: true
+              options:
+                path: /var/lib/grafana/dashboards/default
       plugins:
         - grafana-piechart-panel
       dashboards:
@@ -169,43 +202,77 @@ spec:
         dashboards:
           enabled: true
           searchNamespace: ALL
+          initDashboards: true
+          restartPolicy: Always
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8084
+            periodSeconds: 5
+            failureThreshold: 60
         datasources:
           enabled: true
           searchNamespace: ALL
+          initDatasources: true
+          restartPolicy: Always
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8082
+            periodSeconds: 5
+            failureThreshold: 60
+        resources:
+          requests:
+            cpu: 10m
+            memory: 128Mi
+          limits:
+            memory: 256Mi
+      resources:
+        requests:
+          cpu: 20m
+          memory: 512Mi
+        limits:
+          memory: 2Gi
       serviceMonitor:
         enabled: true
       # Exposed via httproute
       ingress:
         enabled: false
     prometheus:
-      image:
-        registry: quay.io
-        repository: prometheus/prometheus
-        tag: v3.16.0@sha256:9332054523223e2ddc18d8101799d54a4a8d823b030c53216f063a6c117773cd
       # Exposed via httproute
       ingress:
         enabled: false
       prometheusSpec:
+        image:
+          registry: quay.io
+          repository: prometheus/prometheus
+          tag: v3.16.0-distroless@sha256:9764044e09eb2c9e1abdb12d0f0188d4efb7384b0262d3c080f0fc59045c89ba
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         retention: 7d
+        resources:
+          requests:
+            cpu: 70m
+            memory: 2Gi
+          limits:
+            memory: 4Gi
         storageSpec:
           volumeClaimTemplate:
             spec:
               resources:
                 requests:
                   storage: 25Gi
-        # additionalScrapeConfigs:
-        # - job_name: node-exporter
-        #   honor_timestamps: true
-        #   static_configs:
-        #   - targets:
-        #     - "192.168.1.10:9100"
-        #     - "192.168.1.11:9100"
-        #     - "192.168.1.15:9100"
+  # additionalScrapeConfigs:
+  # - job_name: node-exporter
+  #   honor_timestamps: true
+  #   static_configs:
+  #   - targets:
+  #     - "192.168.1.10:9100"
+  #     - "192.168.1.11:9100"
+  #     - "192.168.1.15:9100"
   valuesFrom:
-  - kind: ConfigMap
-    name: flux-kube-state-metrics-config
-    valuesKey: kube-state-metrics-config.yaml
+    - kind: ConfigMap
+      name: flux-kube-state-metrics-config
+      valuesKey: kube-state-metrics-config.yaml
