@@ -32,7 +32,7 @@ spec:
           postgresql:
             image:
               repository: ghcr.io/immich-app/postgres
-              tag: 18-vectorchord0.5.3
+              tag: 18-vectorchord1.1.1@sha256:b427de4534e09120dd32cba873a2e88f9d026db7a0d813b226c5421c30669546
             env:
               POSTGRES_DB: immich
               POSTGRES_USER: immich
