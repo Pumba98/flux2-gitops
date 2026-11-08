@@ -1,5 +1,5 @@
 ---
-name: Flux Local
+name: Flate
 
 on: # yamllint disable-line rule:truthy
   pull_request:
@@ -28,15 +28,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v7
-    - name: Setup Flux CLI
-      uses: fluxcd/flux2/action@v2.10.0
+    - name: Setup flate
+      uses: home-operations/flate/action@v0.6.5
     - name: Login to GHCR
       run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --registry-config "${{ runner.temp }}/registry-config.json" --username "${{ github.actor }}" --password-stdin
     - name: Build and validate
-      uses: allenporter/flux-local/action/test@8.4.0
-      with:
-        path: base/${{ matrix.cluster }}
-        enable-helm: true
-        sources: flux-system
-        api-versions: policy/v1/PodDisruptionBudget,monitoring.coreos.com/v1
-        registry-config: ${{ runner.temp }}/registry-config.json
+      run: >-
+        flate test all
+        --path base/${{ matrix.cluster }}
+        --registry-config "${{ runner.temp }}/registry-config.json"
+        --api-versions policy/v1/PodDisruptionBudget,monitoring.coreos.com/v1

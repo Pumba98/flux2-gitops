@@ -76,7 +76,7 @@ The Talos machine configuration lives in a separate Terraform repository.
 ## :robot:&nbsp; Automation
 
 [Renovate](https://docs.renovatebot.com/) keeps Helm charts, container images, Talos and Kubernetes up to date and automerges patch and most minor updates.
-Every pull request is validated with [flux-local](https://github.com/allenporter/flux-local), which builds all Flux Kustomizations and renders the HelmReleases for each cluster.
+Every pull request is validated with [flate](https://github.com/home-operations/flate), which renders all Flux Kustomizations and HelmReleases for each cluster offline.
 
 ## :handshake:&nbsp; Thanks
 
