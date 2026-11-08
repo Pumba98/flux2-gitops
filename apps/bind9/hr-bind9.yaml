@@ -60,6 +60,7 @@ spec:
               - /bin/sh
               - -c
               - |
+                [ "${CLUSTER_BIND9_ROLE}" = master ] || exit 0
                 cp -n /tmp/*.zone /var/lib/bind/ && chown 101:101 /var/lib/bind/*.zone
             securityContext:
               runAsNonRoot: true
