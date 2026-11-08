@@ -19,7 +19,6 @@ resources:
 - ../tuppr.yaml
 
 patches:
-- path: bind9.yaml
 - path: blocky.yaml
 - path: kube-prometheus-stack.yaml
 - path: loki.yaml
