@@ -27,12 +27,7 @@ spec:
           limits:
             memory: 256Mi
       admissionController:
-        resources:
-          requests:
-            cpu: 20m
-            memory: 32Mi
-          limits:
-            memory: 128Mi
+        enabled: false
     controller:
       resources:
         requests:
