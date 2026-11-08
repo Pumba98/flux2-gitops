@@ -14,13 +14,6 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
       interval: 5m
-  dependsOn:
-    - name: csi-driver-smb
-      namespace: kube-system
-    - name: envoy-gateway
-      namespace: networking
-    - name: immich-redis
-    - name: immich-postgresql
   values:
     defaultPodOptions:
       securityContext:
@@ -34,12 +27,6 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v3.3.6@sha256:14367bfb374b8576ddf49abd67c5ca0190a4c7fcf6303cdad65d7f7bf1a50bc2
-            env:
-              DB_HOSTNAME: immich-postgresql
-              DB_DATABASE_NAME: immich
-              DB_USERNAME: immich
-              DB_PASSWORD: "${SECRET_IMMICH_DB_PASSWORD}"
-              REDIS_HOSTNAME: immich-redis-master
             securityContext:
               runAsNonRoot: true
               runAsUser: 1000
