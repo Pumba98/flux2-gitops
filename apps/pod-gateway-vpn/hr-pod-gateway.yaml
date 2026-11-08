@@ -86,20 +86,21 @@ spec:
     networkpolicies:
       main:
         enabled: true
-        egress:
-        - to:
-          - ipBlock:
-              cidr: 0.0.0.0/0
-          ports:
-          # VPN traffic
-          - port: 1194
-            protocol: UDP
-        - to:
-          - ipBlock:
-              cidr: ${NETWORK_K8S_CLUSTER_CIDR}
-        - to:
-          - ipBlock:
-              cidr: ${NETWORK_K8S_SERVICE_CIDR}
+        rules:
+          egress:
+          - to:
+            - ipBlock:
+                cidr: 0.0.0.0/0
+            ports:
+            # WireGuard
+            - port: 51820
+              protocol: UDP
+          - to:
+            - ipBlock:
+                cidr: ${NETWORK_K8S_CLUSTER_CIDR}
+          - to:
+            - ipBlock:
+                cidr: ${NETWORK_K8S_SERVICE_CIDR}
 
     DNS: ${POD_GATEWAY_VPN_VXLAN}.1
     routed_namespaces:
