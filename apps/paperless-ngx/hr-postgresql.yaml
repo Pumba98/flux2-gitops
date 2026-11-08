@@ -37,7 +37,7 @@ spec:
         #     env:
         #       PGAUTO_ONESHOT: "yes"
         #       POSTGRES_DB: paperless-ngx
-        #       POSTGRES_PASSWORD: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
+        #       POSTGRES_PASSWORD: {valueFrom: {secretKeyRef: {name: paperless-ngx-secrets, key: DB_PASSWORD}}}
         containers:
           postgresql:
             image:
@@ -46,7 +46,11 @@ spec:
             env:
               POSTGRES_DB: paperless-ngx
               POSTGRES_USER: paperless-ngx
-              POSTGRES_PASSWORD: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
+              POSTGRES_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-ngx-secrets
+                    key: DB_PASSWORD
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -73,7 +77,11 @@ spec:
             env:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
               DATA_SOURCE_USER: paperless-ngx
-              DATA_SOURCE_PASS: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
+              DATA_SOURCE_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-ngx-secrets
+                    key: DB_PASSWORD
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:

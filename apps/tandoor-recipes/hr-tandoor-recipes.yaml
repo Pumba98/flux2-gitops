@@ -30,9 +30,11 @@ spec:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
               tag: 2.7.2@sha256:1b6d43c3c0f5d2888aa564d9daf29883212b79ad496f59f3c684c099eb1a57b9
+            envFrom:
+              - secretRef:
+                  name: tandoor-recipes-secrets
             env:
               ALLOWED_HOSTS: recipes.${SECRET_DOMAIN}
-              SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_SECRET_KEY}
               TZ: Europe/Berlin
               HOME: /tmp
               DB_ENGINE: django.db.backends.postgresql
@@ -40,7 +42,7 @@ spec:
               POSTGRES_PORT: "5432"
               POSTGRES_DB: tandoor-receipes
               POSTGRES_USER: tandoor-receipes
-              POSTGRES_PASSWORD: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
+              POSTGRES_PASSWORD: $(DB_PASSWORD)
               ENABLE_SIGNUP: 0
               HIDE_LOGIN_FORM: 1
               ENABLE_PDF_EXPORT: 1
@@ -55,7 +57,7 @@ spec:
                         "provider_id": "authelia",
                         "name": "Authelia",
                         "client_id": "2HilffOuYvUuFZ6mBu0elHbv6KAQrwQsCCsAs5SaIIUq.ZyiwKb70upbQQmI7sXjBs~i60Tz",
-                        "secret": "${SECRET_TANDOOR_RECEIPES_OAUTH_CLIENT_SECRET}",
+                        "secret": "$(OAUTH_CLIENT_SECRET)",
                         "settings": {
                           "server_url": "https://auth.${SECRET_DOMAIN}",
                           "token_auth_method": "client_secret_basic"

@@ -34,7 +34,7 @@ spec:
         #     env:
         #       PGAUTO_ONESHOT: "yes"
         #       POSTGRES_DB: authelia
-        #       POSTGRES_PASSWORD: ${SECRET_AUTHELIA_DB_PASSWORD}
+        #       POSTGRES_PASSWORD: {valueFrom: {secretKeyRef: {name: authelia, key: storage.postgres.password.txt}}}
         containers:
           postgresql:
             image:
@@ -43,7 +43,11 @@ spec:
             env:
               POSTGRES_DB: authelia
               POSTGRES_USER: authelia
-              POSTGRES_PASSWORD: ${SECRET_AUTHELIA_DB_PASSWORD}
+              POSTGRES_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: authelia
+                    key: storage.postgres.password.txt
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -70,7 +74,11 @@ spec:
             env:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
               DATA_SOURCE_USER: authelia
-              DATA_SOURCE_PASS: ${SECRET_AUTHELIA_DB_PASSWORD}
+              DATA_SOURCE_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: authelia
+                    key: storage.postgres.password.txt
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:

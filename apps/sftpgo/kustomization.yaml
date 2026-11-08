@@ -2,6 +2,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- secret-sftpgo.sops.yaml
 - hr-sftpgo.yaml
 - pvc-sftpgo.yaml
 - pvc-sftpgo-config.yaml

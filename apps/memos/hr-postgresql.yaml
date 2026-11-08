@@ -34,7 +34,7 @@ spec:
         #     env:
         #       PGAUTO_ONESHOT: "yes"
         #       POSTGRES_DB: memos
-        #       POSTGRES_PASSWORD: ${SECRET_MEMOS_DB_PASSWORD}
+        #       POSTGRES_PASSWORD: {valueFrom: {secretKeyRef: {name: memos-secrets, key: DB_PASSWORD}}}
         containers:
           postgresql:
             image:
@@ -43,7 +43,11 @@ spec:
             env:
               POSTGRES_DB: memos
               POSTGRES_USER: memos
-              POSTGRES_PASSWORD: ${SECRET_MEMOS_DB_PASSWORD}
+              POSTGRES_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: memos-secrets
+                    key: DB_PASSWORD
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -70,7 +74,11 @@ spec:
             env:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
               DATA_SOURCE_USER: memos
-              DATA_SOURCE_PASS: ${SECRET_MEMOS_DB_PASSWORD}
+              DATA_SOURCE_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: memos-secrets
+                    key: DB_PASSWORD
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
