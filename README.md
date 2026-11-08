@@ -84,6 +84,10 @@ Big shout out to [k8s@home](https://github.com/k8s-at-home) and everyone from [a
 
 ## :open_book:&nbsp; Notes
 
+<details>
+    <summary>:round_pushpin: Installation Notes</summary>
+<br>
+
 **tl;dr**
 ```
 export CLUSTER=staging
