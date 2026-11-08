@@ -107,41 +107,24 @@ spec:
               - radicale.${SECRET_DOMAIN}
             resources:
               - '^/\.web/.*'
-          # Own login, used by native clients from anywhere
+          # CalDAV/CardDAV clients from anywhere, radicale has its own login
           - policy: bypass
             domain:
               - radicale.${SECRET_DOMAIN}
-          - policy: bypass
-            domain:
-              - immich.${SECRET_DOMAIN}
-              - linkwarden.${SECRET_DOMAIN}
-              - memos.${SECRET_DOMAIN}
-              - paperless.${SECRET_DOMAIN}
-              - recipes.${SECRET_DOMAIN}
-            resources:
-              - '^/api/.*'
-              - '^/\.well-known/immich$'
           - policy: bypass
             domain:
               - sftpgo.${SECRET_DOMAIN}
             resources:
               - '^/web/client/pubshares.*'
               - '^/static.*'
-          # Own login, no Authelia from the local network
+          # Native app clients on the local network, these apps have their own login
           - policy: bypass
             domain:
-              - grafana.${SECRET_DOMAIN}
-              - headlamp.${SECRET_DOMAIN}
               - immich.${SECRET_DOMAIN}
               - jellyfin.${SECRET_DOMAIN}
               - linkwarden.${SECRET_DOMAIN}
-              - memos.${SECRET_DOMAIN}
-              - myfinnest.${SECRET_DOMAIN}
               - paperless.${SECRET_DOMAIN}
-              - qb.${SECRET_DOMAIN}
               - recipes.${SECRET_DOMAIN}
-              - seerr.${SECRET_DOMAIN}
-              - sftpgo.${SECRET_DOMAIN}
             networks:
               - private
           - policy: two_factor
