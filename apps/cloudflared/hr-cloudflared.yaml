@@ -117,7 +117,7 @@ spec:
                     matchLabels:
                       gateway.envoyproxy.io/owning-gateway-name: external
               ports:
-                - port: 443
+                - port: 10443
                   protocol: TCP
             - to:
                 - namespaceSelector:
