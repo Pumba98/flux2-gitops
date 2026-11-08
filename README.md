@@ -65,7 +65,6 @@ The following apps are installed on the clusters.
 | [Goldilocks](https://github.com/FairwindsOps/goldilocks)                          | Utility to help identifying good resource requests and limits |
 | [X.509 Certificate Exporter](https://github.com/enix/x509-certificate-exporter)   | A Prometheus exporter to monitor x509 certificates            |
 | [SMB CSI Driver](https://github.com/kubernetes-csi/csi-driver-smb)                | CSI Driver for SMB                                            |
-| [kured](https://github.com/kubereboot/kured)                                      | Kubernetes Reboot Daemon (only used for Monitoring)           |
 | [Kubernetes Metrics Server](https://github.com/kubernetes-sigs/metrics-server)    | Source of container resource metrics for Kubernetes           |
 
 ## :robot:&nbsp; Automation

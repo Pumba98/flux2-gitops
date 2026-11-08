@@ -16,7 +16,6 @@ resources:
 - headlamp-charts.yaml
 - home-operations-charts.yaml
 - jetstack-charts.yaml
-- kubereboot-charts.yaml
 - longhorn-charts.yaml
 - metallb-charts.yaml
 - metrics-server-charts.yaml
