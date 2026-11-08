@@ -52,13 +52,10 @@ spec:
                         limits:
                           memory: 256Mi
       envoyService:
-        patch:
-          type: StrategicMerge
-          value:
-            spec:
-              type: LoadBalancer
-              loadBalancerIP: "${LB_IP_INGRESS_INTERNAL}"
-              externalTrafficPolicy: Local
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        annotations:
+          metallb.io/loadBalancerIPs: "${LB_IP_INGRESS_INTERNAL}"
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass

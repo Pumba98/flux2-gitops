@@ -80,7 +80,8 @@ spec:
       transfer:
         controller: main
         type: LoadBalancer
-        loadBalancerIP: "${LB_IP_SYNCTHING_SVC}"
+        annotations:
+          metallb.io/loadBalancerIPs: "${LB_IP_SYNCTHING_SVC}"
         externalTrafficPolicy: Local
         ports:
           transfer:

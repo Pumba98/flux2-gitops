@@ -101,9 +101,9 @@ spec:
       transfer:
         controller: main
         type: LoadBalancer
-        loadBalancerIP: "${LB_IP_SFTPGO_SVC}"
         externalTrafficPolicy: Local
         annotations:
+          metallb.io/loadBalancerIPs: "${LB_IP_SFTPGO_SVC}"
           external-dns.kubernetes.io/hostname: sftp.${SECRET_DOMAIN}
           # external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         ports:

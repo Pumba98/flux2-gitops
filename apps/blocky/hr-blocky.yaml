@@ -66,7 +66,8 @@ spec:
       dns:
         controller: main
         type: LoadBalancer
-        loadBalancerIP: "${LB_IP_BLOCKY_SVC}"
+        annotations:
+          metallb.io/loadBalancerIPs: "${LB_IP_BLOCKY_SVC}"
         externalTrafficPolicy: Local
         ports:
           dns-tcp:
