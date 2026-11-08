@@ -84,15 +84,19 @@ spec:
             port: 53
             protocol: UDP
     persistence:
-      config:
+      tsig:
         type: secret
         name: bind9-secrets
         globalMounts:
-          - path: /etc/bind/named.conf
-            subPath: named-${CLUSTER_BIND9_ROLE}.conf
-            readOnly: true
           - path: /etc/bind/tsig.keys
             subPath: tsig.keys
+            readOnly: true
+      config:
+        type: configMap
+        name: bind9-config
+        globalMounts:
+          - path: /etc/bind/named.conf
+            subPath: named-${CLUSTER_BIND9_ROLE}.conf
             readOnly: true
           - path: /tmp/domain.zone
             subPath: domain.zone

@@ -1,0 +1,13 @@
+$ORIGIN ${SECRET_DOMAIN}.
+$TTL 86400      ; 1 day
+@                   IN SOA  ns1.${SECRET_DOMAIN}. ${SECRET_DOMAIN}. (
+                                2003080800 ; serial
+                                900        ; refresh (15 minutes)
+                                900        ; retry (15 minutes)
+                                1800       ; expire (30 minutes)
+                                60         ; minimum (1 minute)
+                                )
+                        NS      ns1.${SECRET_DOMAIN}.
+                        NS      ns2.${SECRET_DOMAIN}.
+ns1                     A       192.168.100.11
+ns2                     A       192.168.60.11
