@@ -5,4 +5,5 @@ resources:
 - hr-myfinnest.yaml
 - secret-myfinnest.sops.yaml
 - secret-myfinnest-sync-worker.sops.yaml
+- secret-regcred.sops.yaml
 - pvc-myfinnest.yaml
