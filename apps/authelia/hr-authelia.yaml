@@ -92,15 +92,6 @@ spec:
         file:
           enabled: true
           path: /config/users_database.yml
-          password:
-            algorithm: argon2
-            argon2:
-              variant: argon2id
-              iterations: 1
-              key_length: 32
-              salt_length: 16
-              memory: 1024
-              parallelism: 8
       webauthn:
         enable_passkey_login: true
       definitions:
