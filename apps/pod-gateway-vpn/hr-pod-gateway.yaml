@@ -14,9 +14,6 @@ spec:
         name: angelnu-charts
         namespace: flux-system
       interval: 5m
-  install:
-    remediation:
-      retries: 3
   values:
     controllers:
       main:
