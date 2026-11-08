@@ -3,6 +3,8 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: syncthing-static-pv
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   capacity:
     storage: 1Ti
@@ -26,6 +28,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: syncthing-data
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   volumeName: syncthing-static-pv
   storageClassName: smb
