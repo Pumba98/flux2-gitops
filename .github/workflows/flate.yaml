@@ -30,11 +30,27 @@ jobs:
       uses: actions/checkout@v7
     - name: Setup flate
       uses: home-operations/flate/action@v0.6.5
-    - name: Login to GHCR
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --registry-config "${{ runner.temp }}/registry-config.json" --username "${{ github.actor }}" --password-stdin
+    # flate wipes SOPS values, so give the private chart source a cleartext pull secret
+    - name: Provide GHCR pull secret
+      env:
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ACTOR: ${{ github.actor }}
+      run: |
+        auth=$(printf '%s:%s' "$ACTOR" "$TOKEN" | base64 -w0)
+        echo "::add-mask::$auth"
+        config=$(printf '{"auths":{"ghcr.io":{"auth":"%s"}}}' "$auth" | base64 -w0)
+        echo "::add-mask::$config"
+        cat > charts/secret-regcred.sops.yaml <<EOF
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: regcred
+        type: kubernetes.io/dockerconfigjson
+        data:
+          .dockerconfigjson: $config
+        EOF
     - name: Build and validate
       run: >-
         env -u FLATE_BASE flate test all
         --path base/${{ matrix.cluster }}
-        --registry-config "${{ runner.temp }}/registry-config.json"
         --api-versions policy/v1/PodDisruptionBudget,monitoring.coreos.com/v1
