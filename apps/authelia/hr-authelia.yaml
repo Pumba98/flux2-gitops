@@ -102,30 +102,48 @@ spec:
       access_control:
         default_policy: deny
         rules:
-          # Always require auth
-          - policy: two_factor
-            domain:
-              - syncthing.${SECRET_DOMAIN}
           - policy: two_factor
             domain:
               - radicale.${SECRET_DOMAIN}
             resources:
-              - '^/.web/.*'
+              - '^/\.web/.*'
+          # Own login, used by native clients from anywhere
           - policy: bypass
             domain:
               - radicale.${SECRET_DOMAIN}
-          # Disable Authelia for local network
           - policy: bypass
-            domain: "*.${SECRET_DOMAIN}"
-            networks:
-              - private
-          # Disable Authelia for sftpgo shared files
+            domain:
+              - immich.${SECRET_DOMAIN}
+              - linkwarden.${SECRET_DOMAIN}
+              - memos.${SECRET_DOMAIN}
+              - paperless.${SECRET_DOMAIN}
+              - recipes.${SECRET_DOMAIN}
+            resources:
+              - '^/api/.*'
+              - '^/\.well-known/immich$'
           - policy: bypass
-            domain: "sftpgo.${SECRET_DOMAIN}"
+            domain:
+              - sftpgo.${SECRET_DOMAIN}
             resources:
               - '^/web/client/pubshares.*'
               - '^/static.*'
-          # Applications without auth
+          # Own login, no Authelia from the local network
+          - policy: bypass
+            domain:
+              - grafana.${SECRET_DOMAIN}
+              - headlamp.${SECRET_DOMAIN}
+              - immich.${SECRET_DOMAIN}
+              - jellyfin.${SECRET_DOMAIN}
+              - linkwarden.${SECRET_DOMAIN}
+              - memos.${SECRET_DOMAIN}
+              - myfinnest.${SECRET_DOMAIN}
+              - paperless.${SECRET_DOMAIN}
+              - qb.${SECRET_DOMAIN}
+              - recipes.${SECRET_DOMAIN}
+              - seerr.${SECRET_DOMAIN}
+              - sftpgo.${SECRET_DOMAIN}
+            networks:
+              - private
           - policy: two_factor
             domain: "*.${SECRET_DOMAIN}"
 
