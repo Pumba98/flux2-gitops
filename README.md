@@ -41,7 +41,6 @@ The following apps are installed on the clusters.
 | [MetalLB](https://metallb.universe.tf)                                            | Bare metal LoadBalancer                                       |
 | [Cert-Manager](https://cert-manager.io)                                           | Letsencrypt certificates with Cloudflare DNS                  |
 | [ExternalDNS](https://github.com/kubernetes-sigs/external-dns)                    | Configure Cloudflare DNS Servers                              |
-| [kube-vip](https://github.com/kube-vip/kube-vip)                                  | Virtual IP Load-Balancer for Control Plane High Availability  |
 | [Kube-Prometheus Stack](https://github.com/prometheus-operator/kube-prometheus)   | Prometheus & Exporters to monitor the cluster                 |
 | [Grafana](https://grafana.com)                                                    | Monitoring & Logging Dashboard                                |
 | [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager)           | Monitoring Alerts                                             |

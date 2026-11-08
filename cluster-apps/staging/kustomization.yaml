@@ -27,7 +27,6 @@ resources:
 - ../kopiur.yaml
 - ../seerr.yaml
 - ../kube-prometheus-stack.yaml
-# - ../kube-vip.yaml
 - ../linkwarden.yaml
 - ../loki.yaml
 - ../longhorn.yaml
