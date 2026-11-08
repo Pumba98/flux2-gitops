@@ -9,5 +9,5 @@ $TTL 86400      ; 1 day
                                 )
                         NS      ns1.${SECRET_DOMAIN2}.
                         NS      ns2.${SECRET_DOMAIN2}.
-ns1                     A       192.168.100.11
-ns2                     A       192.168.60.11
+ns1                     A       ${BIND_PRIMARY_IP}
+ns2                     A       ${BIND_SECONDARY_IP}
