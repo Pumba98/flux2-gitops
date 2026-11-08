@@ -44,7 +44,7 @@
     {
       matchPackageNames: [
         'ghcr.io/siderolabs/kubelet',
-        'ghcr.io/siderolabs/installer',
+        'ghcr.io/siderolabs/talos',
       ],
       separateMultipleMinor: true,
     },
@@ -146,7 +146,7 @@
       ],
       matchPackageNames: [
         '!ghcr.io/siderolabs/kubelet',
-        '!ghcr.io/siderolabs/installer',
+        '!ghcr.io/siderolabs/talos',
         '!metallb',
         '!longhorn',
         '!rancher',
