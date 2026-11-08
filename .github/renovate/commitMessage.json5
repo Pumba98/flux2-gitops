@@ -4,6 +4,11 @@
       "matchDatasources": ["docker"],
       "enabled": true,
       "commitMessageTopic": "container image {{depName}}"
+    },
+    {
+      "matchManagers": ["flux"],
+      "matchDatasources": ["docker"],
+      "commitMessageTopic": "helm release {{depName}}"
     }
   ]
 }

@@ -21,6 +21,12 @@
       "addLabels": ["renovate/helm"]
     },
     {
+      "matchManagers": ["flux"],
+      "matchDatasources": ["docker"],
+      "addLabels": ["renovate/helm"]
+    },
+    {
+      "matchManagers": ["!flux"],
       "matchDatasources": ["docker"],
       "addLabels": ["renovate/image"]
     },

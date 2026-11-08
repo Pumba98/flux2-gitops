@@ -2,6 +2,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- secret-immich.sops.yaml
 - pvc-postgresql.yaml
 - pvc-immich.yaml
 - hr-postgresql.yaml

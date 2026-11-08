@@ -1,0 +1,56 @@
+---
+name: Flate
+
+on: # yamllint disable-line rule:truthy
+  pull_request:
+    branches:
+    - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  test:
+    name: Test ${{ matrix.cluster }}
+    runs-on: ubuntu-26.04
+    strategy:
+      fail-fast: false
+      matrix:
+        cluster:
+        - production
+        - staging
+        - fallback
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+    - name: Setup flate
+      uses: home-operations/flate/action@v0.6.5
+    # flate wipes SOPS values, so give the private chart source a cleartext pull secret
+    - name: Provide GHCR pull secret
+      env:
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ACTOR: ${{ github.actor }}
+      run: |
+        auth=$(printf '%s:%s' "$ACTOR" "$TOKEN" | base64 -w0)
+        echo "::add-mask::$auth"
+        config=$(printf '{"auths":{"ghcr.io":{"auth":"%s"}}}' "$auth" | base64 -w0)
+        echo "::add-mask::$config"
+        cat > charts/secret-regcred.sops.yaml <<EOF
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: regcred
+        type: kubernetes.io/dockerconfigjson
+        data:
+          .dockerconfigjson: $config
+        EOF
+    - name: Build and validate
+      run: >-
+        env -u FLATE_BASE flate test all
+        --path base/${{ matrix.cluster }}
+        --api-versions policy/v1/PodDisruptionBudget,monitoring.coreos.com/v1

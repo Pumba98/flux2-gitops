@@ -13,9 +13,6 @@ spec:
         kind: HelmRepository
         name: envoy-gateway-charts
         namespace: flux-system
-  dependsOn:
-    - name: metallb
-      namespace: metallb-system
   install:
     crds: CreateReplace
   upgrade:

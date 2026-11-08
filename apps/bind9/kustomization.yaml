@@ -5,3 +5,12 @@ resources:
 - hr-bind9.yaml
 - pvc-bind9.yaml
 - secret-bind9.sops.yaml
+configMapGenerator:
+- name: bind9-config
+  files:
+  - resources/named-master.conf
+  - resources/named-slave.conf
+  - resources/domain.zone
+  - resources/domain2.zone
+generatorOptions:
+  disableNameSuffixHash: true

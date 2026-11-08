@@ -13,23 +13,41 @@ spec:
         kind: HelmRepository
         name: authelia-charts
         namespace: flux-system
-      interval: 5m
   dependsOn:
-    - name: kube-prometheus-stack
-      namespace: monitoring
-    - name: longhorn
-      namespace: longhorn-system
     - name: authelia-redis
     - name: authelia-postgresql
+  # chart pins the file backend to 1 replica; safe here as users file is read-only and state is in redis/postgres
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: authelia
+            patch: |
+              - op: replace
+                path: /spec/replicas
+                value: 2
   values:
     # Exposed via httproute-authelia.yaml
     ingress:
       enabled: false
+    podDisruptionBudget:
+      enabled: true
+      minAvailable: 1
     pod:
       kind: Deployment
-      replicas: 1
       strategy:
         type: RollingUpdate
+      selectors:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 100
+                podAffinityTerm:
+                  topologyKey: kubernetes.io/hostname
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: authelia
       securityContext:
         pod:
           runAsNonRoot: true
@@ -74,15 +92,6 @@ spec:
         file:
           enabled: true
           path: /config/users_database.yml
-          password:
-            algorithm: argon2
-            argon2:
-              variant: argon2id
-              iterations: 1
-              key_length: 32
-              salt_length: 16
-              memory: 1024
-              parallelism: 8
       webauthn:
         enable_passkey_login: true
       definitions:
@@ -93,30 +102,31 @@ spec:
       access_control:
         default_policy: deny
         rules:
-          # Always require auth
-          - policy: two_factor
-            domain:
-              - syncthing.${SECRET_DOMAIN}
           - policy: two_factor
             domain:
               - radicale.${SECRET_DOMAIN}
             resources:
-              - '^/.web/.*'
+              - '^/\.web/.*'
+          # CalDAV/CardDAV clients from anywhere, radicale has its own login
           - policy: bypass
             domain:
               - radicale.${SECRET_DOMAIN}
-          # Disable Authelia for local network
           - policy: bypass
-            domain: "*.${SECRET_DOMAIN}"
-            networks:
-              - private
-          # Disable Authelia for sftpgo shared files
-          - policy: bypass
-            domain: "sftpgo.${SECRET_DOMAIN}"
+            domain:
+              - sftpgo.${SECRET_DOMAIN}
             resources:
               - '^/web/client/pubshares.*'
               - '^/static.*'
-          # Applications without auth
+          # Native app clients on the local network, these apps have their own login
+          - policy: bypass
+            domain:
+              - immich.${SECRET_DOMAIN}
+              - jellyfin.${SECRET_DOMAIN}
+              - linkwarden.${SECRET_DOMAIN}
+              - paperless.${SECRET_DOMAIN}
+              - recipes.${SECRET_DOMAIN}
+            networks:
+              - private
           - policy: two_factor
             domain: "*.${SECRET_DOMAIN}"
 

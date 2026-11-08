@@ -13,12 +13,6 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
-  dependsOn:
-    - name: kube-prometheus-stack
-      namespace: monitoring
-    - name: longhorn
-      namespace: longhorn-system
   values:
     defaultPodOptions:
       securityContext:
@@ -40,7 +34,7 @@ spec:
         #     env:
         #       PGAUTO_ONESHOT: "yes"
         #       POSTGRES_DB: linkwarden
-        #       POSTGRES_PASSWORD: ${SECRET_LINKWARDEN_DB_PASSWORD}
+        #       POSTGRES_PASSWORD: {valueFrom: {secretKeyRef: {name: linkwarden, key: DB_PASSWORD}}}
         containers:
           postgresql:
             image:
@@ -49,7 +43,11 @@ spec:
             env:
               POSTGRES_DB: linkwarden
               POSTGRES_USER: linkwarden
-              POSTGRES_PASSWORD: ${SECRET_LINKWARDEN_DB_PASSWORD}
+              POSTGRES_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: linkwarden
+                    key: DB_PASSWORD
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -76,7 +74,11 @@ spec:
             env:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
               DATA_SOURCE_USER: linkwarden
-              DATA_SOURCE_PASS: ${SECRET_LINKWARDEN_DB_PASSWORD}
+              DATA_SOURCE_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: linkwarden
+                    key: DB_PASSWORD
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:

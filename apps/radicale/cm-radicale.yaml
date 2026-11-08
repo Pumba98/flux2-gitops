@@ -11,7 +11,8 @@ data:
     [auth]
     type = htpasswd
     htpasswd_filename = /config/users
-    htpasswd_encryption = plain
+    htpasswd_encryption = autodetect
+    cache_logins = True
     delay = 1
     realm = Password Required
 

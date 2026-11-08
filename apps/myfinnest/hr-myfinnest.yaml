@@ -13,11 +13,6 @@ spec:
         kind: HelmRepository
         name: myfinnest-charts
         namespace: flux-system
-  dependsOn:
-    - name: envoy-gateway
-      namespace: networking
-    - name: longhorn
-      namespace: longhorn-system
   values:
     defaultPodOptions:
       imagePullSecrets:

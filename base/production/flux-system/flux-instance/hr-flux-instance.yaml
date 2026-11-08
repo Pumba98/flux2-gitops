@@ -19,6 +19,15 @@ spec:
       namespace: flux-system
   values:
     instance:
+      kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: helm-controller
+            patch: |
+              - op: add
+                path: /spec/template/spec/containers/0/args/-
+                value: --feature-gates=DefaultToRetryOnFailure=true,CancelHealthCheckOnNewRevision=true
       sync:
         kind: GitRepository
         url: ssh://git@github.com/Pumba98/flux2-gitops

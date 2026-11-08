@@ -14,10 +14,6 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
   dependsOn:
-    - name: envoy-gateway
-      namespace: networking
-    - name: longhorn
-      namespace: longhorn-system
     - name: linkwarden-postgresql
   values:
     defaultPodOptions:
@@ -38,7 +34,7 @@ spec:
               tag: v2.16.3@sha256:0664c28a039bda8ffa6663389e8536b2fc717219e329f85b83faca7efed3b144
             env:
               NEXTAUTH_URL: https://linkwarden.${SECRET_DOMAIN}/api/v1/auth
-              DATABASE_URL: "postgres://linkwarden:${SECRET_LINKWARDEN_DB_PASSWORD}@linkwarden-postgresql-primary:5432/linkwarden"
+              DATABASE_URL: "postgres://linkwarden:$(DB_PASSWORD)@linkwarden-postgresql-primary:5432/linkwarden"
               NEXT_PUBLIC_DISABLE_REGISTRATION: true
               NEXT_PUBLIC_CREDENTIALS_ENABLED: false
               NEXT_PUBLIC_AUTHELIA_ENABLED: true

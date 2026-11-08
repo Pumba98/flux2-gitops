@@ -13,9 +13,6 @@ spec:
         kind: HelmRepository
         name: enix-charts
         namespace: flux-system
-  dependsOn:
-    - name: kube-prometheus-stack
-      namespace: monitoring
   values:
     # talos
     secretsExporter:

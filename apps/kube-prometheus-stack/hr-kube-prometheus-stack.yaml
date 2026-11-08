@@ -13,14 +13,10 @@ spec:
         kind: HelmRepository
         name: prometheus-charts
         namespace: flux-system
-      interval: 5m
   install:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
-  dependsOn:
-    - name: longhorn
-      namespace: longhorn-system
   values:
     defaultRules:
       rules:
@@ -49,7 +45,6 @@ spec:
         limits:
           memory: 512Mi
     prometheusOperator:
-      createCustomResource: false
       resources:
         requests:
           cpu: 10m
@@ -83,25 +78,26 @@ spec:
             memory: 64Mi
           limits:
             memory: 256Mi
+        secrets:
+          - alertmanager-discord
       # Exposed via httproutes.yaml
       ingress:
         enabled: false
       config:
         global:
-          slack_api_url: "${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}"
           resolve_timeout: 5m
         receivers:
           - name: 'null'
           - name: 'discord'
-            slack_configs:
-              - channel: '#prometheus'
-                icon_url: https://avatars3.githubusercontent.com/u/3380462
+            discord_configs:
+              - webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord/webhook-url
+                avatar_url: https://avatars3.githubusercontent.com/u/3380462
                 username: 'Prometheus'
                 send_resolved: true
                 # https://github.com/onedr0p/home-cluster/blob/main/cluster/apps/monitoring/kube-prometheus-stack/helm-release.yaml#L33
                 title: |-
                   [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}
-                text: >-
+                message: >-
                   {{ range .Alerts -}}
                     **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} `{{ .Labels.severity }}`{{ end }}
                   {{ if ne .Annotations.summary ""}}**Summary:** {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}**Message:** {{ .Annotations.message }} {{ else if ne .Annotations.description ""}}**Description:** {{ .Annotations.description }}{{ end }}
@@ -167,8 +163,6 @@ spec:
               editable: true
               options:
                 path: /var/lib/grafana/dashboards/default
-      plugins:
-        - grafana-piechart-panel
       dashboards:
         default:
           # # Ref: https://grafana.com/grafana/dashboards/13502
@@ -177,10 +171,10 @@ spec:
           #   revision: 10
           #   datasource: Prometheus
           flux-cluster:
-            url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
+            url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
             datasource: Prometheus
           flux-control-plane:
-            url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
+            url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
             datasource: Prometheus
           certificate-exporter:
             gnetId: 13922

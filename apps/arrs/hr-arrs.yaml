@@ -13,16 +13,6 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
-  dependsOn:
-    - name: envoy-gateway
-      namespace: networking
-    - name: csi-driver-smb
-      namespace: kube-system
-    - name: longhorn
-      namespace: longhorn-system
-    - name: pod-gateway-vpn
-      namespace: pod-gateway-system
   values:
     controllers:
       radarr:
@@ -121,13 +111,6 @@ spec:
               tag: 1.6.2@sha256:7ef0e58216900dbce30b123e0eb65f5cb30e36f126de9474acdd2022fb069c54
             env:
               TZ: Etc/UTC
-              BAZARR__AUTH__METHOD: External
-              BAZARR__AUTH__REQUIRED: DisabledForLocalAddresses
-              BAZARR__AUTH__APIKEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: arrs-secrets
-                    key: SONARR_API_KEY
             securityContext:
               runAsNonRoot: true
               runAsUser: 1000

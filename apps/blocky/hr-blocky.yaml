@@ -13,11 +13,6 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-  dependsOn:
-    - name: metallb
-      namespace: metallb-system
-    - name: envoy-gateway
-      namespace: networking
   values:
     defaultPodOptions:
       securityContext:
@@ -66,7 +61,8 @@ spec:
       dns:
         controller: main
         type: LoadBalancer
-        loadBalancerIP: "${LB_IP_BLOCKY_SVC}"
+        annotations:
+          metallb.io/loadBalancerIPs: "${LB_IP_BLOCKY_SVC}"
         externalTrafficPolicy: Local
         ports:
           dns-tcp:

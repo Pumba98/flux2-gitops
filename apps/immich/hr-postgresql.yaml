@@ -13,12 +13,6 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
-  dependsOn:
-    - name: kube-prometheus-stack
-      namespace: monitoring
-    - name: longhorn
-      namespace: longhorn-system
   values:
     defaultPodOptions:
       securityContext:
@@ -41,7 +35,7 @@ spec:
         #       PGAUTO_ONESHOT: "yes"
         #       POSTGRES_USER: immich
         #       POSTGRES_DB: immich
-        #       POSTGRES_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
+        #       POSTGRES_PASSWORD: {valueFrom: {secretKeyRef: {name: immich-secrets, key: DB_PASSWORD}}}
         containers:
           postgresql:
             image:
@@ -50,7 +44,11 @@ spec:
             env:
               POSTGRES_DB: immich
               POSTGRES_USER: immich
-              POSTGRES_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
+              POSTGRES_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-secrets
+                    key: DB_PASSWORD
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -77,7 +75,11 @@ spec:
             env:
               DATA_SOURCE_URI: localhost:5432/postgres?sslmode=disable
               DATA_SOURCE_USER: immich
-              DATA_SOURCE_PASS: ${SECRET_IMMICH_DB_PASSWORD}
+              DATA_SOURCE_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-secrets
+                    key: DB_PASSWORD
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:

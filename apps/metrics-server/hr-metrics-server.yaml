@@ -13,10 +13,6 @@ spec:
         kind: HelmRepository
         name: metrics-server-charts
         namespace: flux-system
-      interval: 5m
-  dependsOn:
-    - name: kube-prometheus-stack
-      namespace: monitoring
   values:
     args:
       - --kubelet-insecure-tls

@@ -19,7 +19,20 @@ spec:
   provider:
     type: Kubernetes
     kubernetes:
+      envoyPDB:
+        minAvailable: 1
       envoyDeployment:
+        replicas: 2
+        pod:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    topologyKey: kubernetes.io/hostname
+                    labelSelector:
+                      matchLabels:
+                        gateway.envoyproxy.io/owning-gateway-name: internal
         container:
           resources:
             requests:
@@ -39,13 +52,10 @@ spec:
                         limits:
                           memory: 256Mi
       envoyService:
-        patch:
-          type: StrategicMerge
-          value:
-            spec:
-              type: LoadBalancer
-              loadBalancerIP: "${LB_IP_INGRESS_INTERNAL}"
-              externalTrafficPolicy: Local
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        annotations:
+          metallb.io/loadBalancerIPs: "${LB_IP_INGRESS_INTERNAL}"
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
@@ -67,7 +77,20 @@ spec:
   provider:
     type: Kubernetes
     kubernetes:
+      envoyPDB:
+        minAvailable: 1
       envoyDeployment:
+        replicas: 2
+        pod:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    topologyKey: kubernetes.io/hostname
+                    labelSelector:
+                      matchLabels:
+                        gateway.envoyproxy.io/owning-gateway-name: external
         container:
           resources:
             requests:

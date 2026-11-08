@@ -13,14 +13,7 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
   dependsOn:
-    - name: csi-driver-smb
-      namespace: kube-system
-    - name: envoy-gateway
-      namespace: networking
-    - name: longhorn
-      namespace: longhorn-system
     - name: immich-redis
     - name: immich-postgresql
   values:
@@ -36,11 +29,13 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v3.3.6@sha256:e1981983b1c13f6024b57d72e7ecae3342eed1581201ab09fb248932d86c593a
+            envFrom:
+              - secretRef:
+                  name: immich-secrets
             env:
               DB_HOSTNAME: immich-postgresql-primary
               DB_DATABASE_NAME: immich
               DB_USERNAME: immich
-              DB_PASSWORD: "${SECRET_IMMICH_DB_PASSWORD}"
               REDIS_HOSTNAME: immich-redis-master
               IMMICH_LOG_LEVEL: warn
               IMMICH_HELMET_FILE: "true"

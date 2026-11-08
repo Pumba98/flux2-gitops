@@ -14,12 +14,6 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
   dependsOn:
-    - name: envoy-gateway
-      namespace: networking
-    - name: longhorn
-      namespace: longhorn-system
-    - name: csi-driver-smb
-      namespace: kube-system
     - name: paperless-ngx-redis
     - name: paperless-ngx-postgresql
   values:
@@ -35,6 +29,9 @@ spec:
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
               tag: 3.4.2@sha256:d704e84f88300eb6ab001ab15720a2330ff99169cf9f94d6b8fcc44b63a84c84
+            envFrom:
+              - secretRef:
+                  name: paperless-ngx-secrets
             env:
               COMPOSE_PROJECT_NAME: paperless-ngx
               PAPERLESS_TIME_ZONE: Europe/Berlin
@@ -42,7 +39,7 @@ spec:
               PAPERLESS_DBHOST: paperless-ngx-postgresql-primary
               PAPERLESS_DBNAME: paperless-ngx
               PAPERLESS_DBUSER: paperless-ngx
-              PAPERLESS_DBPASS: ${SECRET_PAPERLESS_NGX_DB_PASSWORD}
+              PAPERLESS_DBPASS: $(DB_PASSWORD)
               PAPERLESS_REDIS: redis://paperless-ngx-redis-master:6379
               PAPERLESS_CONSUMPTION_DIR: /paperless/consume
               PAPERLESS_DATA_DIR: /paperless/data
@@ -54,7 +51,7 @@ spec:
               PAPERLESS_CONSUMER_RECURSIVE: true
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: true
               PAPERLESS_OCR_LANGUAGE: deu+eng
-              PAPERLESS_SECRET_KEY: ${SECRET_PAPERLESS_NGX_SECRET_KEY}
+              PAPERLESS_SECRET_KEY: $(SECRET_KEY)
               PAPERLESS_DISABLE_REGULAR_LOGIN: true
               PAPERLESS_REDIRECT_LOGIN_TO_SSO: true
               PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
@@ -68,7 +65,7 @@ spec:
                         "provider_id": "authelia",
                         "name": "Authelia",
                         "client_id": "KNv~V~FBVK5R0bznkuHPV.fo-FmdqO0gUyifPqE6wH5SFTUgZma7uCJJTEinTNshwBVi4eWe",
-                        "secret": "${SECRET_PAPERLESS_NGX_OAUTH_CLIENT_SECRET}",
+                        "secret": "$(OAUTH_CLIENT_SECRET)",
                         "settings": {
                           "server_url": "https://auth.${SECRET_DOMAIN}",
                           "token_auth_method": "client_secret_basic"

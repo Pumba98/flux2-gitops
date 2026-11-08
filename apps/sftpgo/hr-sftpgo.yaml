@@ -13,16 +13,6 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
-  dependsOn:
-    - name: envoy-gateway
-      namespace: networking
-    - name: csi-driver-smb
-      namespace: kube-system
-    - name: longhorn
-      namespace: longhorn-system
-    - name: authelia
-      namespace: networking
   values:
     defaultPodOptions:
       securityContext:
@@ -37,6 +27,9 @@ spec:
             image:
               repository: ghcr.io/drakkan/sftpgo
               tag: v2.7.6@sha256:1edd28d80de2a008863fbfc58c8ff7db47b1b410bae48d4e6076192337809b11
+            envFrom:
+              - secretRef:
+                  name: sftpgo-secrets
             env:
               SFTPGO_DATA_PROVIDER__DRIVER: sqlite
               SFTPGO_TELEMETRY__BIND_ADDRESS: 0.0.0.0
@@ -46,7 +39,7 @@ spec:
               SFTPGO_HTTPD__BINDINGS__0__ADDRESS: 0.0.0.0
               SFTPGO_HTTPD__BINDINGS__0__PORT: 8080
               SFTPGO_HTTPD__BINDINGS__0__OIDC__CLIENT_ID: "MJ04uHbUwWj00-RYG3X4QACoW-45EF0u0ahDEpv48yDT~caYFZMb240_nT8Z3kHrY6jmvY~Q"
-              SFTPGO_HTTPD__BINDINGS__0__OIDC__CLIENT_SECRET: "${SECRET_SFTPGO_OAUTH_CLIENT_SECRET}"
+              SFTPGO_HTTPD__BINDINGS__0__OIDC__CLIENT_SECRET: "$(OAUTH_CLIENT_SECRET)"
               SFTPGO_HTTPD__BINDINGS__0__OIDC__CONFIG_URL: "https://auth.${SECRET_DOMAIN}"
               SFTPGO_HTTPD__BINDINGS__0__OIDC__REDIRECT_BASE_URL: "https://sftpgo.${SECRET_DOMAIN}"
               SFTPGO_HTTPD__BINDINGS__0__OIDC__SCOPES: "openid,profile,email,preferred_username"
@@ -101,9 +94,9 @@ spec:
       transfer:
         controller: main
         type: LoadBalancer
-        loadBalancerIP: "${LB_IP_SFTPGO_SVC}"
         externalTrafficPolicy: Local
         annotations:
+          metallb.io/loadBalancerIPs: "${LB_IP_SFTPGO_SVC}"
           external-dns.kubernetes.io/hostname: sftp.${SECRET_DOMAIN}
           # external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         ports:
