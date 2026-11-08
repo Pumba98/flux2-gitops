@@ -17,7 +17,7 @@ spec:
         spec:
           values:
             persistence:
-              defaultClassReplicaCount: 1
+              defaultClassReplicaCount: 2
     - target:
         kind: StorageClass
         name: longhorn-backup
@@ -27,7 +27,7 @@ spec:
         metadata:
           name: longhorn-backup
         parameters:
-          numberOfReplicas: "1"
+          numberOfReplicas: "2"
     - target:
         kind: StorageClass
         name: longhorn-xfs
@@ -37,4 +37,4 @@ spec:
         metadata:
           name: longhorn-xfs
         parameters:
-          numberOfReplicas: "1"
+          numberOfReplicas: "2"

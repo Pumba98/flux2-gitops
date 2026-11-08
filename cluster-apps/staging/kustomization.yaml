@@ -47,4 +47,4 @@ resources:
 
 patches:
 - path: envoy-gateway.yaml
-# - path: longhorn.yaml
+- path: longhorn.yaml
