@@ -33,8 +33,8 @@ spec:
     sources:
       - gateway-httproute
     policy: sync
-    # domainFilters:
-    # - "${SECRET_DOMAIN}"
+    domainFilters:
+      - "${SECRET_DOMAIN}"
     provider:
       name: cloudflare
     extraArgs:

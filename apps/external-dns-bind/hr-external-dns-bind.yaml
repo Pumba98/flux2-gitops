@@ -47,8 +47,8 @@ spec:
       - gateway-httproute
       - service
     policy: sync
-    # domainFilters:
-    # - "${SECRET_DOMAIN}"
+    domainFilters:
+      - "${SECRET_DOMAIN}"
     provider:
       name: rfc2136
     extraArgs:
