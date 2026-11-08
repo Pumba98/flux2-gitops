@@ -36,7 +36,7 @@ spec:
               tag: 2.7.2@sha256:1b6d43c3c0f5d2888aa564d9daf29883212b79ad496f59f3c684c099eb1a57b9
             env:
               ALLOWED_HOSTS: recipes.${SECRET_DOMAIN}
-              SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_DB_PASSWORD}
+              SECRET_KEY: ${SECRET_TANDOOR_RECEIPES_SECRET_KEY}
               TZ: Europe/Berlin
               HOME: /tmp
               DB_ENGINE: django.db.backends.postgresql
