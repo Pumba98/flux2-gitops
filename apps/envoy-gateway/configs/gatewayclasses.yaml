@@ -19,7 +19,20 @@ spec:
   provider:
     type: Kubernetes
     kubernetes:
+      envoyPDB:
+        minAvailable: 1
       envoyDeployment:
+        replicas: 2
+        pod:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    topologyKey: kubernetes.io/hostname
+                    labelSelector:
+                      matchLabels:
+                        gateway.envoyproxy.io/owning-gateway-name: internal
         container:
           resources:
             requests:
@@ -67,7 +80,20 @@ spec:
   provider:
     type: Kubernetes
     kubernetes:
+      envoyPDB:
+        minAvailable: 1
       envoyDeployment:
+        replicas: 2
+        pod:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    topologyKey: kubernetes.io/hostname
+                    labelSelector:
+                      matchLabels:
+                        gateway.envoyproxy.io/owning-gateway-name: external
         container:
           resources:
             requests:
