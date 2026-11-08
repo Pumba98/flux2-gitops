@@ -3,8 +3,6 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: qbittorrent-static-pv
-  annotations:
-    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   capacity:
     storage: 250Gi
@@ -28,8 +26,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: qbittorrent-downloads
-  annotations:
-    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   volumeName: qbittorrent-static-pv
   storageClassName: smb

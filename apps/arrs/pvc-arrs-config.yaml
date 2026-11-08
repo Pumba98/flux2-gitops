@@ -3,8 +3,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: radarr-data
-  annotations:
-    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   storageClassName: longhorn-backup
   accessModes:
@@ -79,8 +77,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: sonarr-data
-  annotations:
-    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   storageClassName: longhorn-backup
   accessModes:
@@ -155,8 +151,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: bazarr-data
-  annotations:
-    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   storageClassName: longhorn-backup
   accessModes:
@@ -231,8 +225,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: prowlarr-data
-  annotations:
-    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   storageClassName: longhorn-backup
   accessModes:
