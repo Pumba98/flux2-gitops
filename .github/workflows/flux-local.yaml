@@ -31,7 +31,7 @@ jobs:
     - name: Setup Flux CLI
       uses: fluxcd/flux2/action@v2.10.0
     - name: Login to GHCR
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username "${{ github.actor }}" --password-stdin
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --registry-config "${{ runner.temp }}/registry-config.json" --username "${{ github.actor }}" --password-stdin
     - name: Build and validate
       uses: allenporter/flux-local/action/test@8.4.0
       with:
@@ -39,3 +39,4 @@ jobs:
         enable-helm: true
         sources: flux-system
         api-versions: policy/v1/PodDisruptionBudget,monitoring.coreos.com/v1
+        registry-config: ${{ runner.temp }}/registry-config.json
