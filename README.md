@@ -5,15 +5,10 @@
 
 # k8s clusters backed by Flux v2
 
-[Talos](https://www.talos.dev/) Kubernetes clusters managed with [GitOps](https://opengitops.dev/) by [Flux](https://fluxcd.io/).
-The Git repository drives the state of the clusters; secrets are encrypted with [SOPS](https://fluxcd.io/flux/guides/mozilla-sops/) and [age](https://age-encryption.org/).
+Kubernetes clusters using the [GitOps](https://www.weave.works/blog/what-is-gitops-really) tool [Flux](https://fluxcd.io/).  
+The Git repository is the driving the state of the Kubernetes clusters.  
+The awesome [Flux SOPS integration](https://toolkit.fluxcd.io/guides/mozilla-sops/) is used to encrypt secrets with [age](https://age-encryption.org/).  
 The Talos machine configuration lives in a separate Terraform repository.
-
-| Cluster      | Nodes                                    | Branch    |
-| ------------ | ---------------------------------------- | --------- |
-| `production` | 3 control planes, 3 workers              | `main`    |
-| `fallback`   | 1 bare-metal node, secondary DNS         | `main`    |
-| `staging`    | 1 control plane, 2 workers (not running) | `staging` |
 
 ## 📂 Repository structure
 
@@ -88,20 +83,6 @@ Every pull request is validated with [flux-local](https://github.com/allenporter
 Big shout out to [k8s@home](https://github.com/k8s-at-home) and everyone from [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes) for the inspiration :heart:
 
 ## :open_book:&nbsp; Notes
-
-<details>
-    <summary>:floppy_disk: Restoring volumes on a new cluster</summary>
-<br>
-
-PVCs backed up by [kopiur](https://github.com/home-operations/kopiur) carry a commented-out `dataSourceRef` pointing at their `Restore`.
-Uncomment it before the cluster is (re)created and the PVC is populated from the latest snapshot.
-Comment it again once the PVCs are bound: `dataSourceRef` is immutable, so Flux fails on clusters where the PVC already exists.
-
-</details>
-
-<details>
-    <summary>:round_pushpin: Installation Notes</summary>
-<br>
 
 **tl;dr**
 ```
