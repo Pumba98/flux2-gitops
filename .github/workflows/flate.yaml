@@ -34,7 +34,7 @@ jobs:
       run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --registry-config "${{ runner.temp }}/registry-config.json" --username "${{ github.actor }}" --password-stdin
     - name: Build and validate
       run: >-
-        flate test all
+        env -u FLATE_BASE flate test all
         --path base/${{ matrix.cluster }}
         --registry-config "${{ runner.temp }}/registry-config.json"
         --api-versions policy/v1/PodDisruptionBudget,monitoring.coreos.com/v1
