@@ -5,78 +5,99 @@
 
 # k8s clusters backed by Flux v2
 
-Kubernetes clusters using the [GitOps](https://www.weave.works/blog/what-is-gitops-really) tool [Flux](https://fluxcd.io/).  
-The Git repository is the driving the state of the Kubernetes clusters.  
-The awesome [Flux SOPS integration](https://toolkit.fluxcd.io/guides/mozilla-sops/) is used to encrypt secrets with [age](https://age-encryption.org/).
+[Talos](https://www.talos.dev/) Kubernetes clusters managed with [GitOps](https://opengitops.dev/) by [Flux](https://fluxcd.io/).
+The Git repository drives the state of the clusters; secrets are encrypted with [SOPS](https://fluxcd.io/flux/guides/mozilla-sops/) and [age](https://age-encryption.org/).
+The Talos machine configuration lives in a separate Terraform repository.
+
+| Cluster      | Nodes                                    | Branch    |
+| ------------ | ---------------------------------------- | --------- |
+| `production` | 3 control planes, 3 workers              | `main`    |
+| `fallback`   | 1 bare-metal node, secondary DNS         | `main`    |
+| `staging`    | 1 control plane, 2 workers (not running) | `staging` |
 
 ## 📂 Repository structure
 
-The Git repository contains the following directories:
-
 ```sh
 📁
-├─📁 apps            # apps available for intallation
-├─📁 cluster-apps    # kustomization and overlays for app installations per cluster
-│  ├─📁 staging
+├─📁 apps            # app manifests, one directory per app
+├─📁 cluster-apps    # Flux Kustomizations per app and the per-cluster selection and overlays
 │  ├─📁 production
-│  └─📁 fallback
-├─📁 charts          # helm chart repos
-├─📁 configs         # configs per cluster
+│  ├─📁 fallback
+│  └─📁 staging
+├─📁 charts          # Helm repositories
+├─📁 configs         # substitution settings and secrets, shared and per cluster
 └─📁 base
-   ├─📁 flux-system  # flux bootstrap secrets
-   ├─📁 staging      # flux operator, instance & configuration per cluster
-   ├─📁 production   # flux operator, instance & configuration per cluster
-   └─📁 fallback     # flux operator, instance & configuration per cluster
+   ├─📁 flux-system  # bootstrap secrets (git deploy key, age key)
+   ├─📁 production   # Flux operator, instance and root Kustomizations per cluster
+   ├─📁 fallback
+   └─📁 staging
 ```
 
 ## :computer:&nbsp; Software
 
-The following apps are installed on the clusters.
-
-| Software                                                                          | Purpose                                                       |
-| --------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| [Flux2](https://fluxcd.io)                                                        | GitOps Tool managing the cluster                              |
-| [Longhorn](https://longhorn.io)                                                   | Persistent Block Storage Provisioner                          |
-| [Envoy Gateway](https://gateway.envoyproxy.io)                                    | Gateway API ingress and forward auth                          |
-| [MetalLB](https://metallb.universe.tf)                                            | Bare metal LoadBalancer                                       |
-| [Cert-Manager](https://cert-manager.io)                                           | Letsencrypt certificates with Cloudflare DNS                  |
-| [ExternalDNS](https://github.com/kubernetes-sigs/external-dns)                    | Configure Cloudflare DNS Servers                              |
-| [Kube-Prometheus Stack](https://github.com/prometheus-operator/kube-prometheus)   | Prometheus & Exporters to monitor the cluster                 |
-| [Grafana](https://grafana.com)                                                    | Monitoring & Logging Dashboard                                |
-| [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager)           | Monitoring Alerts                                             |
-| [Grafana Loki](https://grafana.com/oss/loki)                                      | Log aggregation system                                        |
-| [tuppr](https://github.com/home-operations/tuppr)                                 | Automated Talos & Kubernetes upgrades                         |
-| [Headlamp](https://headlamp.dev)                                                  | Kubernetes web UI with OIDC login and a Flux plugin           |
-| [Garage](https://garagehq.deuxfleurs.fr/)                                         | Amazon S3 compatible lightweight Object Storage               |
-| [Authelia](https://www.authelia.com)                                              | SSO & 2FA authentication server for Cluster Web Apps          |
-| [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx)                   | Document management system                                    |
-| [Tandoor-Recipes](https://github.com/TandoorRecipes/recipes)                      | Recipe Manager and Meal Planner                               |
-| [SFTPGo](https://sftpgo.com/)                                                     | Full-featured SFTP Server                                     |
-| [Immich](https://immich.app/)                                                     | Photo and video management solution                           |
-| [Memos](https://www.usememos.com/)                                                | A privacy-first, lightweight note-taking service              |
-| [Syncthing](https://syncthing.net/)                                               | Continuous file synchronization service                       |
-| [Radicale](https://radicale.org/)                                                 | CalDAV and CardDAV Server                                     |
-| [Homer](https://github.com/bastienwirtz/homer)                                    | Static dashboard for the cluster applications                 |
-| [Bind](https://www.isc.org/bind/)                                                 | Full-featured DNS System                                      |
-| [Blocky](https://0xerr0r.github.io/blocky/latest/)                                | Fast and lightweight DNS proxy as ad-blocker                  |
-| [Pod-Gateway](https://github.com/k8s-at-home/pod-gateway)                         | Route traffic through a VPN gateway                           |
-| [Descheduler](https://github.com/kubernetes-sigs/descheduler)                     | Evicts pods to optimize scheduling                            |
-| [Goldilocks](https://github.com/FairwindsOps/goldilocks)                          | Utility to help identifying good resource requests and limits |
-| [X.509 Certificate Exporter](https://github.com/enix/x509-certificate-exporter)   | A Prometheus exporter to monitor x509 certificates            |
-| [SMB CSI Driver](https://github.com/kubernetes-csi/csi-driver-smb)                | CSI Driver for SMB                                            |
-| [Kubernetes Metrics Server](https://github.com/kubernetes-sigs/metrics-server)    | Source of container resource metrics for Kubernetes           |
+| Software                                                                        | Purpose                                              |
+| ------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| [Flux2 & Flux Operator](https://fluxcd.io)                                      | GitOps tool managing the clusters                    |
+| [tuppr](https://github.com/home-operations/tuppr)                               | Automated Talos & Kubernetes upgrades                |
+| [Longhorn](https://longhorn.io)                                                 | Replicated block storage                             |
+| [SMB CSI Driver](https://github.com/kubernetes-csi/csi-driver-smb)              | NAS shares as persistent volumes                     |
+| [Snapshot Controller](https://github.com/kubernetes-csi/external-snapshotter)   | CSI volume snapshots                                 |
+| [kopiur](https://github.com/home-operations/kopiur)                             | PVC backups to S3 with Kopia                         |
+| [Garage](https://garagehq.deuxfleurs.fr)                                        | S3 compatible object storage, Longhorn backup target |
+| [MetalLB](https://metallb.universe.tf)                                          | Bare metal LoadBalancer                              |
+| [Envoy Gateway](https://gateway.envoyproxy.io)                                  | Gateway API ingress and forward auth                 |
+| [Cloudflared](https://github.com/cloudflare/cloudflared)                        | Cloudflare Tunnel for external access                |
+| [Cert-Manager](https://cert-manager.io)                                         | Let's Encrypt certificates via Cloudflare DNS        |
+| [ExternalDNS](https://github.com/kubernetes-sigs/external-dns)                  | DNS records in Cloudflare and Bind                   |
+| [Bind](https://www.isc.org/bind)                                                | Authoritative DNS for the local network              |
+| [Blocky](https://0xerr0r.github.io/blocky)                                      | DNS proxy and ad-blocker                             |
+| [Pod-Gateway](https://github.com/angelnu/pod-gateway)                           | Route pods through a VPN gateway                     |
+| [Authelia](https://www.authelia.com)                                            | SSO, 2FA and OIDC provider                           |
+| [Kube-Prometheus Stack](https://github.com/prometheus-community/helm-charts)    | Prometheus, Alertmanager and Grafana                 |
+| [Grafana Loki](https://grafana.com/oss/loki)                                    | Log aggregation                                      |
+| [Grafana Alloy](https://grafana.com/oss/alloy)                                  | Ships pod logs to Loki                               |
+| [X.509 Certificate Exporter](https://github.com/enix/x509-certificate-exporter) | Certificate expiry metrics                           |
+| [Kubernetes Metrics Server](https://github.com/kubernetes-sigs/metrics-server)  | Resource metrics for the cluster                     |
+| [Goldilocks](https://github.com/FairwindsOps/goldilocks)                        | Resource request recommendations                     |
+| [Descheduler](https://github.com/kubernetes-sigs/descheduler)                   | Rebalances pods across nodes                         |
+| [Reloader](https://github.com/stakater/Reloader)                                | Restarts workloads on config and secret changes      |
+| [Headlamp](https://headlamp.dev)                                                | Kubernetes web UI with OIDC login and Flux plugin    |
+| [Homer](https://github.com/bastienwirtz/homer)                                  | Dashboard for the cluster applications               |
+| [Immich](https://immich.app)                                                    | Photo and video management                           |
+| [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx)                 | Document management                                  |
+| [Tandoor Recipes](https://github.com/TandoorRecipes/recipes)                    | Recipe manager and meal planner                      |
+| [Linkwarden](https://linkwarden.app)                                            | Bookmark manager                                     |
+| [Memos](https://www.usememos.com)                                               | Lightweight note-taking                              |
+| [Radicale](https://radicale.org)                                                | CalDAV and CardDAV server                            |
+| [Syncthing](https://syncthing.net)                                              | Continuous file synchronization                      |
+| [SFTPGo](https://sftpgo.com)                                                    | SFTP and web file sharing                            |
+| [Jellyfin](https://jellyfin.org)                                                | Media server                                         |
+| [Seerr](https://github.com/seerr-team/seerr)                                    | Media requests                                       |
+| [Radarr, Sonarr, Bazarr, Prowlarr](https://wiki.servarr.com)                    | Media automation                                     |
+| [qBittorrent](https://www.qbittorrent.org)                                      | Torrent client behind the VPN gateway                |
+| [JDownloader 2](https://jdownloader.org)                                        | Download manager behind the VPN gateway              |
+| MyFinNest                                                                       | Personal finance app                                 |
 
 ## :robot:&nbsp; Automation
 
-[Renovate](https://www.whitesourcesoftware.com/free-developer-tools/renovate) Bot makes sure the components are never outdated.
-
-It creates PullRequests when Helm charts or Docker images have newer versions available and even keeps Flux, Talos and Kubernetes up-to-date.
+[Renovate](https://docs.renovatebot.com/) keeps Helm charts, container images, Talos and Kubernetes up to date and automerges patch and most minor updates.
+Every pull request is validated with [flux-local](https://github.com/allenporter/flux-local), which builds all Flux Kustomizations and renders the HelmReleases for each cluster.
 
 ## :handshake:&nbsp; Thanks
 
 Big shout out to [k8s@home](https://github.com/k8s-at-home) and everyone from [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes) for the inspiration :heart:
 
 ## :open_book:&nbsp; Notes
+
+<details>
+    <summary>:floppy_disk: Restoring volumes on a new cluster</summary>
+<br>
+
+PVCs backed up by [kopiur](https://github.com/home-operations/kopiur) carry a commented-out `dataSourceRef` pointing at their `Restore`.
+Uncomment it before the cluster is (re)created and the PVC is populated from the latest snapshot.
+Comment it again once the PVCs are bound: `dataSourceRef` is immutable, so Flux fails on clusters where the PVC already exists.
+
+</details>
 
 <details>
     <summary>:round_pushpin: Installation Notes</summary>
