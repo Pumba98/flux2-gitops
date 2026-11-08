@@ -13,12 +13,7 @@ spec:
         kind: HelmRepository
         name: authelia-charts
         namespace: flux-system
-      interval: 5m
   dependsOn:
-    - name: kube-prometheus-stack
-      namespace: monitoring
-    - name: longhorn
-      namespace: longhorn-system
     - name: authelia-redis
     - name: authelia-postgresql
   # chart pins the file backend to 1 replica; safe here as users file is read-only and state is in redis/postgres

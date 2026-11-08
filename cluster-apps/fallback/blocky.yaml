@@ -12,17 +12,5 @@ spec:
         kind: HelmRelease
         name: blocky
       patch: |-
-        apiVersion: helm.toolkit.fluxcd.io/v2
-        kind: HelmRelease
-        metadata:
-          name: blocky
-        spec:
-          dependsOn:
-            - name: metallb
-              namespace: metallb-system
-    - target:
-        kind: HelmRelease
-        name: blocky
-      patch: |-
         - op: remove
           path: /spec/values/route

@@ -13,9 +13,6 @@ spec:
         kind: HelmRepository
         name: headlamp-charts
         namespace: flux-system
-  dependsOn:
-    - name: envoy-gateway
-      namespace: networking
   values:
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"

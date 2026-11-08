@@ -14,10 +14,6 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
   dependsOn:
-    - name: envoy-gateway
-      namespace: networking
-    - name: longhorn
-      namespace: longhorn-system
     - name: linkwarden-postgresql
   values:
     defaultPodOptions:

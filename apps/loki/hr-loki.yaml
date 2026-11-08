@@ -13,12 +13,6 @@ spec:
         kind: HelmRepository
         name: grafana-charts
         namespace: flux-system
-      interval: 5m
-  dependsOn:
-    - name: longhorn
-      namespace: longhorn-system
-    - name: kube-prometheus-stack
-      namespace: monitoring
   values:
     deploymentMode: SingleBinary
     loki:

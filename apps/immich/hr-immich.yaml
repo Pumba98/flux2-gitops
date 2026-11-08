@@ -13,14 +13,7 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
   dependsOn:
-    - name: csi-driver-smb
-      namespace: kube-system
-    - name: envoy-gateway
-      namespace: networking
-    - name: longhorn
-      namespace: longhorn-system
     - name: immich-redis
     - name: immich-postgresql
   values:

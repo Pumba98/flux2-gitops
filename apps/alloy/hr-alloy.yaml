@@ -13,9 +13,6 @@ spec:
         kind: HelmRepository
         name: grafana-charts
         namespace: flux-system
-      interval: 5m
-  dependsOn:
-    - name: loki
   values:
     image:
       repository: grafana/alloy

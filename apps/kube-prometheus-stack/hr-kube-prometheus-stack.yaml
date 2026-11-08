@@ -13,14 +13,10 @@ spec:
         kind: HelmRepository
         name: prometheus-charts
         namespace: flux-system
-      interval: 5m
   install:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
-  dependsOn:
-    - name: longhorn
-      namespace: longhorn-system
   values:
     defaultRules:
       rules:

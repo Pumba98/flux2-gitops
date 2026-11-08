@@ -13,9 +13,6 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-  dependsOn:
-    - name: envoy-gateway
-      namespace: networking
   values:
     defaultPodOptions:
       securityContext:
