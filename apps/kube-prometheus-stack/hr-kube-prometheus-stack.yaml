@@ -71,7 +71,7 @@ spec:
         image:
           registry: quay.io
           repository: prometheus/alertmanager
-          tag: v0.34.2@sha256:39d8bb3966c694a124428a3a88fbcffd40bd069129ecd47c059f8a3f17c55f3b
+          tag: v0.34.2
         resources:
           requests:
             cpu: 10m
@@ -240,7 +240,7 @@ spec:
         image:
           registry: quay.io
           repository: prometheus/prometheus
-          tag: v3.16.0-distroless@sha256:9764044e09eb2c9e1abdb12d0f0188d4efb7384b0262d3c080f0fc59045c89ba
+          tag: v3.16.0-distroless
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false

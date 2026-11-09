@@ -122,6 +122,16 @@
       pinDigests: false,
     },
     {
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        'quay.io/prometheus/prometheus',
+        'quay.io/prometheus/alertmanager',
+      ],
+      pinDigests: false,
+    },
+    {
       matchUpdateTypes: [
         'pin',
         'pinDigest',
