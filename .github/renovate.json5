@@ -10,6 +10,14 @@
     'github>Pumba98/flux2-gitops//.github/renovate/labels.json5',
   ],
   dependencyDashboardTitle: 'Renovate Dashboard',
+  hostRules: [
+    {
+      matchHost: 'ghcr.io',
+      hostType: 'docker',
+      username: 'Pumba98',
+      password: '{{ secrets.GHCR_READ_PACKAGES_TOKEN }}',
+    },
+  ],
   suppressNotifications: [
     'prIgnoreNotification',
   ],
@@ -103,14 +111,19 @@
       matchDatasources: [
         'docker',
       ],
-      matchDepNames: [
-        '!app-template',
-        '!kube-prometheus-stack',
-        '!weave-gitops',
-        '!postgresql',
-        '!redis',
-      ],
       pinDigests: true,
+    },
+    {
+      matchDepTypes: [
+        'HelmChart',
+      ],
+      pinDigests: false,
+    },
+    {
+      matchManagers: [
+        'custom.regex',
+      ],
+      pinDigests: false,
     },
     {
       matchDatasources: [
