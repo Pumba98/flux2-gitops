@@ -53,4 +53,6 @@ jobs:
       run: >-
         env -u FLATE_BASE flate test all
         --path base/${{ matrix.cluster }}
+        --supply .github/flate-supply/${{ matrix.cluster }}.yaml
+        --strict-substitutions
         --api-versions policy/v1/PodDisruptionBudget,monitoring.coreos.com/v1
