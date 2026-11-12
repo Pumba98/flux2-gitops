@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: kopiur
-      version: 0.10.19
+      version: 0.10.20
       sourceRef:
         kind: HelmRepository
         name: home-operations-charts
