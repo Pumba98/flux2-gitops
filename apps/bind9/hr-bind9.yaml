@@ -28,7 +28,7 @@ spec:
           main:
             image:
               repository: ubuntu/bind9
-              tag: 9.20-26.04_stable@sha256:287f013eaf4854af771b6b720d6f808b9abe508c48ec6508985586555f78d3a8
+              tag: 9.20-26.04_stable@sha256:624ea036d6e939afb939532b49a7596a9ca54fff92d748440e40494b73e4ca08
             securityContext:
               runAsNonRoot: true
               allowPrivilegeEscalation: false
