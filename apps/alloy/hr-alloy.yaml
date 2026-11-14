@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: grafana/alloy
-      tag: v1.21.3
+      tag: v1.22.0
     alloy:
       # Anonymous usage reporting to Grafana Labs.
       enableReporting: false
