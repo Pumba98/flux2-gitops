@@ -1,0 +1,30 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: containers
+spec:
+  groups:
+    - name: containers
+      rules:
+        - record: node_namespace_pod_container:oom_killed:last10m
+          expr: |
+            max by (node, namespace, pod, container) (
+              (
+                kube_pod_container_status_last_terminated_timestamp > time() - 600
+                and on (namespace, pod, container)
+                kube_pod_container_status_last_terminated_reason{reason="OOMKilled"} == 1
+              )
+              * on (namespace, pod) group_left (node) max by (namespace, pod, node) (kube_pod_info)
+            )
+
+        - alert: ContainerOomKilled
+          expr: 'node_namespace_pod_container:oom_killed:last10m'
+          for: 0m
+          labels:
+            severity: warning
+          annotations:
+            summary: Container OOM killed ({{ $labels.namespace }}/{{ $labels.pod }} {{ $labels.container }})
+            description: >-
+              Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} on node {{ $labels.node }}
+              was OOM killed at {{ $value | humanizeTimestamp }}{{ with printf `kube_pod_container_resource_limits{resource="memory",namespace="%s",pod="%s",container="%s"}` $labels.namespace $labels.pod $labels.container | query }} (memory limit {{ . | first | value | humanize1024 }}B){{ end }}.

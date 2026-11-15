@@ -5,3 +5,4 @@ resources:
 - postgresql-rules.yaml
 - redis-rules.yaml
 - node-rules.yaml
+- container-rules.yaml
