@@ -29,7 +29,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v7
     - name: Setup flate
-      uses: home-operations/flate/action@v0.6.5
+      uses: home-operations/flate/action@v0.7.3
     # flate wipes SOPS values, so give the private chart source a cleartext pull secret
     - name: Provide GHCR pull secret
       env:
