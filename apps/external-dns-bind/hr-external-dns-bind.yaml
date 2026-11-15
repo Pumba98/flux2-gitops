@@ -14,6 +14,8 @@ spec:
         name: external-dns-charts
         namespace: flux-system
   values:
+    serviceMonitor:
+      enabled: true
     env:
       - name: EXTERNAL_DNS_RFC2136_ZONE
         value: "${SECRET_DOMAIN}"

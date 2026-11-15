@@ -58,14 +58,10 @@ spec:
             memory: 32Mi
           limits:
             memory: 128Mi
-    kubeControllerManager:
-      enabled: false
-    kubeScheduler:
-      enabled: false
     kubeEtcd:
-      enabled: false
-    kubeProxy:
-      enabled: false
+      service:
+        selector:
+          component: kube-apiserver
     alertmanager:
       alertmanagerSpec:
         image:

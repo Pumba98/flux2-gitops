@@ -6,3 +6,4 @@ resources:
 - redis-rules.yaml
 - node-rules.yaml
 - container-rules.yaml
+- external-dns-rules.yaml

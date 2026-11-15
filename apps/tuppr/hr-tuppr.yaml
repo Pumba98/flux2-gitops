@@ -18,6 +18,13 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    monitoring:
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
+      dashboards:
+        enabled: true
     resources:
       requests:
         cpu: 10m

@@ -18,6 +18,14 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    monitoring:
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
+        backupStaleAfterSeconds: 93600
+      dashboards:
+        enabled: true
     installScope: cluster
     features:
       credentialProjection:
