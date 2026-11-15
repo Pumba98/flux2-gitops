@@ -14,6 +14,12 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
   values:
+    serviceMonitor:
+      main:
+        service:
+          identifier: main
+        endpoints:
+          - port: http
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true

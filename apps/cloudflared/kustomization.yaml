@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
 - hr-cloudflared.yaml
 - secret-cloudflared.sops.yaml
+- prometheus-rules.yaml
 configMapGenerator:
 - name: cloudflared-config
   files:

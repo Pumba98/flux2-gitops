@@ -96,6 +96,15 @@ spec:
     monitoring:
       selfMonitoring:
         enabled: false
+      serviceMonitor:
+        enabled: true
+        metricsInstance:
+          enabled: false
+      rules:
+        enabled: true
+        configs:
+          LokiCanaryLatency:
+            enabled: false
     lokiCanary:
       enabled: false
     resultsCache:

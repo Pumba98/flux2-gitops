@@ -1,0 +1,41 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: external-dns
+spec:
+  groups:
+    - name: external-dns
+      rules:
+        - alert: ExternalDnsSyncStale
+          expr: time() - max by (namespace, job) (external_dns_controller_last_sync_timestamp_seconds) > 900
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: '{{ $labels.job }} has not synced DNS records for {{ $value | humanizeDuration }}'
+            description: The last successful sync of {{ $labels.namespace }}/{{ $labels.job }} with its DNS provider was {{ $value | humanizeDuration }} ago.
+        - alert: ExternalDnsSoftErrors
+          expr: max by (namespace, job) (external_dns_controller_consecutive_soft_errors) > 3
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: '{{ $labels.job }} has {{ $value }} consecutive reconcile errors'
+            description: '{{ $labels.namespace }}/{{ $labels.job }} keeps failing to reconcile with its DNS provider.'
+        - alert: ExternalDnsSourceErrors
+          expr: sum by (namespace, job) (increase(external_dns_source_errors_total[15m])) > 0
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: '{{ $labels.job }} fails to read its sources'
+            description: '{{ $labels.namespace }}/{{ $labels.job }} has been failing to list Kubernetes sources (HTTPRoutes, Services, ...) for 15m.'
+        - alert: ExternalDnsRegistryErrors
+          expr: sum by (namespace, job) (increase(external_dns_registry_errors_total[15m])) > 0
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: '{{ $labels.job }} fails to read its registry'
+            description: '{{ $labels.namespace }}/{{ $labels.job }} has been failing to read ownership TXT records from its DNS provider for 15m.'

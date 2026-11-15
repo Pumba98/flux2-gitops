@@ -76,6 +76,24 @@ spec:
           labels:
             issue: Longhorn instance manager {{$labels.instance_manager}} on {{$labels.node}} consumes 3 times the CPU request.
             severity: warning
+        - alert: LonghornBackupFailed
+          annotations:
+            description: Longhorn backup {{$labels.backup}} of volume {{$labels.volume}} ({{$labels.recurring_job}}) is in Error state.
+              It keeps firing until the backup is deleted or pruned by retention.
+            summary: Longhorn backup {{$labels.backup}} failed
+          expr: longhorn_backup_state == 4
+          for: 5m
+          labels:
+            severity: warning
+        - alert: LonghornBackupTargetUnavailable
+          annotations:
+            description: Longhorn backup target {{$labels.backup_target}} has been unavailable for more than 15 minutes. Backups cannot be
+              created or restored.
+            summary: Longhorn backup target {{$labels.backup_target}} is unavailable
+          expr: longhorn_backup_target_status{condition="unavailable"} == 1
+          for: 15m
+          labels:
+            severity: critical
 # - alert: LonghornNodeCPUUsageWarning
 #   annotations:
 #     description: Longhorn node {{$labels.node}} has CPU Usage / CPU capacity is {{$value}}% for

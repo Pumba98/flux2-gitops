@@ -18,5 +18,6 @@ spec:
       name: external-dns-bind
       namespace: networking
   dependsOn:
+    - name: kube-prometheus-stack-app
     - name: bind9-app
     - name: envoy-gateway-app

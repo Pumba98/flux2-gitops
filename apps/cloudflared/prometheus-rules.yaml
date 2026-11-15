@@ -1,0 +1,36 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: cloudflared
+spec:
+  groups:
+    - name: cloudflared
+      rules:
+        - alert: CloudflaredTunnelDown
+          expr: max by (namespace, pod) (cloudflared_tunnel_ha_connections) == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Cloudflare tunnel {{ $labels.pod }} has no edge connections
+            description: cloudflared {{ $labels.namespace }}/{{ $labels.pod }} has had no connection to the Cloudflare edge for 5m. External services are unreachable.
+        - alert: CloudflaredTunnelDegraded
+          expr: max by (namespace, pod) (cloudflared_tunnel_ha_connections) < 2
+          for: 30m
+          labels:
+            severity: warning
+          annotations:
+            summary: Cloudflare tunnel {{ $labels.pod }} has {{ $value }} edge connection(s)
+            description: cloudflared {{ $labels.namespace }}/{{ $labels.pod }} has had fewer than 2 edge connections for 30m.
+        - alert: CloudflaredRequestErrors
+          expr: |
+            sum by (namespace, pod) (rate(cloudflared_tunnel_request_errors[15m]))
+              / sum by (namespace, pod) (rate(cloudflared_tunnel_total_requests[15m])) > 0.05
+            and sum by (namespace, pod) (rate(cloudflared_tunnel_total_requests[15m])) > 0.01
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: Cloudflare tunnel {{ $labels.pod }} is failing {{ $value | humanizePercentage }} of requests
+            description: More than 5% of requests through cloudflared {{ $labels.namespace }}/{{ $labels.pod }} failed to reach the origin over the last 15m.
