@@ -49,8 +49,6 @@ spec:
             port: 5800
     route:
       main:
-        annotations:
-          external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
           - "jd2.${SECRET_DOMAIN}"
         parentRefs:

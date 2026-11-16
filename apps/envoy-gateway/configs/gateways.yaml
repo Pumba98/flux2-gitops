@@ -43,6 +43,7 @@ metadata:
     dns-instance: cloudflare
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
+    external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
 spec:
   gatewayClassName: envoy-external
   listeners:

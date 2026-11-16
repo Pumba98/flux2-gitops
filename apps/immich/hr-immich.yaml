@@ -71,8 +71,6 @@ spec:
             port: 2283
     route:
       main:
-        annotations:
-          external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
           - "immich.${SECRET_DOMAIN}"
         parentRefs:

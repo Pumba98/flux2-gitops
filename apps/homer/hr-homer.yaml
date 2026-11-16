@@ -59,8 +59,6 @@ spec:
             port: 8080
     route:
       main:
-        annotations:
-          external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
           - "homer.${SECRET_DOMAIN}"
         parentRefs:

@@ -98,8 +98,6 @@ spec:
             port: 80
     route:
       main:
-        annotations:
-          external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
           - "recipes.${SECRET_DOMAIN}"
         parentRefs:

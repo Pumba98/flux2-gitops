@@ -71,8 +71,6 @@ spec:
             port: 3000
     route:
       main:
-        annotations:
-          external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
           - "linkwarden.${SECRET_DOMAIN}"
         parentRefs:

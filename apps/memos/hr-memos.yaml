@@ -66,8 +66,6 @@ spec:
             port: 5230
     route:
       main:
-        annotations:
-          external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
           - "memos.${SECRET_DOMAIN}"
         parentRefs:

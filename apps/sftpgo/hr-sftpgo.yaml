@@ -106,8 +106,6 @@ spec:
             protocol: TCP
     route:
       main:
-        annotations:
-          external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
           - "sftpgo.${SECRET_DOMAIN}"
         parentRefs:

@@ -57,8 +57,6 @@ spec:
             port: 5232
     route:
       main:
-        annotations:
-          external-dns.kubernetes.io/target: "${SECRET_GATEWAY}"
         hostnames:
           - "radicale.${SECRET_DOMAIN}"
         parentRefs:
