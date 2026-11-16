@@ -69,3 +69,22 @@ spec:
                 - RemovePodsViolatingNodeTaints
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingInterPodAntiAffinity
+        - name: failed-pods
+          pluginConfig:
+            - name: DefaultEvictor
+              args:
+                podProtections:
+                  defaultDisabled:
+                    - PodsWithLocalStorage
+            - name: RemoveFailedPods
+              args:
+                reasons:
+                  - Terminated
+                  - NodeShutdown
+                excludeOwnerKinds:
+                  - Job
+                minPodLifetimeSeconds: 300
+          plugins:
+            deschedule:
+              enabled:
+                - RemoveFailedPods
