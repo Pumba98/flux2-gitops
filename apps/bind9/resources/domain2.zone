@@ -1,10 +1,10 @@
 $ORIGIN ${SECRET_DOMAIN2}.
 $TTL 86400      ; 1 day
 @                    IN SOA  ns1.${SECRET_DOMAIN2}. ${SECRET_DOMAIN2}. (
-                                2003080800 ; serial
+                                2026111700 ; serial
                                 900        ; refresh (15 minutes)
-                                900        ; retry (15 minutes)
-                                1800       ; expire (30 minutes)
+                                300        ; retry (5 minutes)
+                                2419200    ; expire (4 weeks)
                                 60         ; minimum (1 minute)
                                 )
                         NS      ns1.${SECRET_DOMAIN2}.
