@@ -75,3 +75,21 @@ spec:
         kind: RecurringJob
         metadata:
           name: backup-daily
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: longhorn-monitoring
+  namespace: flux-system
+spec:
+  # No backup target on the fallback cluster.
+  patches:
+    - target:
+        kind: PrometheusRule
+        name: longhorn
+      patch: |-
+        - op: test
+          path: /spec/groups/0/rules/6/alert
+          value: LonghornBackupTargetUnavailable
+        - op: remove
+          path: /spec/groups/0/rules/6
