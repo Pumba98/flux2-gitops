@@ -13,6 +13,8 @@ spec:
   mountOptions:
     - dir_mode=0777
     - file_mode=0777
+    - uid=911
+    - gid=911
   csi:
     driver: smb.csi.k8s.io
     volumeHandle: qbittorrent-smb-volume
