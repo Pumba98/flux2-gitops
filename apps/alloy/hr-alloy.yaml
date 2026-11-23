@@ -75,7 +75,18 @@ spec:
 
           loki.source.kubernetes "pods" {
             targets    = discovery.relabel.pods.output
+            forward_to = [loki.process.pods.receiver]
+          }
+
+          loki.process "pods" {
             forward_to = [loki.write.loki.receiver]
+
+            // kube-network-policies (Talos-managed, --v=2) logs every packet verdict
+            stage.match {
+              selector            = "{namespace=\"kube-system\", container=\"kube-network-policies\"} !~ \"^[WEF][0-9]{4} \""
+              action              = "drop"
+              drop_counter_reason = "netpol_packet_trace"
+            }
           }
 
           loki.write "loki" {
