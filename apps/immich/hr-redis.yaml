@@ -29,7 +29,7 @@ spec:
           redis:
             image:
               repository: public.ecr.aws/docker/library/redis
-              tag: 8.10.3@sha256:1f88291b4c57bdf249f02eb085a8669889b2d2954e91d4de5118a5da6b78dd53
+              tag: 8.10.3@sha256:7671653d5e27b7e1a4cee76b46e63753b36c75b475dc8fcd88d2d31143a258c2
             command:
               - redis-server
               - --save 60 1
