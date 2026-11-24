@@ -61,7 +61,10 @@ spec:
               - -c
               - |
                 [ "${CLUSTER_BIND9_ROLE}" = master ] || exit 0
-                cp -n /tmp/*.zone /var/lib/bind/ && chown 101:101 /var/lib/bind/*.zone
+                for f in /tmp/*.zone; do
+                  t="/var/lib/bind/$(basename "$f")"
+                  [ -e "$t" ] || install -m 664 "$f" "$t"
+                done
             securityContext:
               runAsNonRoot: true
               runAsUser: 101

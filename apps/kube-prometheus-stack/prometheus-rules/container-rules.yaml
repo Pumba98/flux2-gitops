@@ -28,3 +28,17 @@ spec:
             description: >-
               Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} on node {{ $labels.node }}
               was OOM killed at {{ $value | humanizeTimestamp }}{{ with printf `kube_pod_container_resource_limits{resource="memory",namespace="%s",pod="%s",container="%s"}` $labels.namespace $labels.pod $labels.container | query }} (memory limit {{ . | first | value | humanize1024 }}B){{ end }}.
+
+        - alert: KubeInitContainerCrashLooping
+          expr: |
+            max by (namespace, container) (
+              max_over_time(kube_pod_init_container_status_waiting_reason{job="kube-state-metrics",reason="CrashLoopBackOff"}[5m])
+            ) >= 1
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: Init container crash looping ({{ $labels.namespace }} {{ $labels.container }})
+            description: >-
+              Init container {{ $labels.container }} in namespace {{ $labels.namespace }} has been in CrashLoopBackOff
+              for 15m, across pod replacements.
